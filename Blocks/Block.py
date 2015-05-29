@@ -213,6 +213,7 @@ class Block():
       return self.getGenus().getLabelPrefix()+self.label+self.getGenus().getLabelSuffix();
 
    def setBlockLabel(self, newLabel):
+      from Blocks.BlockStub import BlockStub
       if (self.linkToStubs and self.hasStubs()):
           BlockStub.parentNameChanged(workspace, self.label, newLabel, self.blockID);
 

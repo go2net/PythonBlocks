@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
 <!-- eric6 tasks file for project PythonBlocks -->
-<!-- Saved: 2015-05-28, 20:17:18 -->
+<!-- Saved: 2015-05-30, 00:53:25 -->
 <Tasks version="5.1">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1">
@@ -103,24 +103,6 @@
       <Linenumber>234</Linenumber>
     </Resource>
   </Task>
-  <Task priority="1" completed="False" type="3">
-    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
-    <Description></Description>
-    <Created>2015-05-27, 23:24:07</Created>
-    <Resource>
-      <Filename>Blocks/Block.py</Filename>
-      <Linenumber>294</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="3">
-    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
-    <Description></Description>
-    <Created>2015-05-27, 23:24:07</Created>
-    <Resource>
-      <Filename>Blocks/Block.py</Filename>
-      <Linenumber>417</Linenumber>
-    </Resource>
-  </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: what if tag does not exist?  should we throw exception or add new tag?</Summary>
     <Description></Description>
@@ -155,6 +137,24 @@
     <Resource>
       <Filename>Blocks/BlockShape.py</Filename>
       <Linenumber>115</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-30, 00:53:22</Created>
+    <Resource>
+      <Filename>Blocks/Block.py</Filename>
+      <Linenumber>295</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-30, 00:53:22</Created>
+    <Resource>
+      <Filename>Blocks/Block.py</Filename>
+      <Linenumber>418</Linenumber>
     </Resource>
   </Task>
 </Tasks>

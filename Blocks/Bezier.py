@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import math
 
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtCore
 
 class Bezier():
 
    def __init__(self,start_point, c1,c2, end_point):
-      steps = 20
+      steps = 50
       controlPoints = (start_point,c1,c2,end_point)
-      oldPoint = controlPoints[0]
-
+      
       self.curvePoints = []
       self.bezier_curve_range(steps, controlPoints)
 

@@ -130,18 +130,11 @@ class LabelWidget(QtGui.QWidget):
   def setEditingState(self,editing) :
     if (editing):
       self.editingText = True;
-      #print(self.textLabel.text().strip())
       self.textField.setText(self.textLabel.text().strip());
       self.labelBeforeEdit = self.textLabel.text();
-      #self.textField.setParent(self)
-      #self.textLabel.setParent(self)
       self.textField.show()
-      self.textLabel.hide()
-      
-      #self.textLabel.setFocus()
-      #this.removeAll();
-      #this.add(textField);
-    #textField.grabFocus();
+      self.textLabel.hide()      
+      self.textField.setFocus()
     else:
       print(self.editingText)
       # update to current textfield.text
@@ -157,11 +150,6 @@ class LabelWidget(QtGui.QWidget):
           self.setText(self.textField.toPlainText());
         else:
           self.setText(self.labelBeforeEdit);
-           
-
-      #self.textLabel.setParent(self)
-      #self.textField.setParent(None)
-
   def fireTextChanged(self, text):
     print("abstract fireTextChanged")
     pass
@@ -238,6 +226,11 @@ class BlockLabelTextField(QtGui.QTextEdit):
       self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
       self.setVerticalScrollBarPolicy (QtCore.Qt.ScrollBarAlwaysOff)
       #self.setFrameShape(QtGui.QFrame.Panel)
+      
+  def focusInEvent(self, event):
+    print("focusInEvent")
+    #self.labelWidget.setEditingState(False)
+    
   def focusOutEvent(self, event):
     print("focusOutEvent")
     self.labelWidget.setEditingState(False)

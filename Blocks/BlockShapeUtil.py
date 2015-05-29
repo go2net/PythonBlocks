@@ -189,17 +189,17 @@ class BlockShapeUtil():
 
 
       endCurvePoint = QtCore.QPoint(cornerPoint.x() + xDistanceFromCornerToEndCurve,
-   											cornerPoint.y() + yDistanceFromCornerToEndCurve);
+        cornerPoint.y() + yDistanceFromCornerToEndCurve);
 
 
       # finally draw the cornerShape
       BlockShapeUtil.cornerShape(gp,
-   					#start at:
-   					startCurvePoint.x(), startCurvePoint.y(),
-   					#corner at:
-   					cornerPoint.x(), cornerPoint.y(),
-   					#end at:
-   					endCurvePoint.x(), endCurvePoint.y());
+        #start at:
+        startCurvePoint.x(), startCurvePoint.y(),
+        #corner at:
+        cornerPoint.x(), cornerPoint.y(),
+        #end at:
+        endCurvePoint.x(), endCurvePoint.y());
 
       #    		System.out.println("StartCurve at: " + startCurvePoint);
       #    		System.out.println("Corner at: " + cornerPoint);
@@ -283,302 +283,277 @@ class BlockShapeUtil():
       #bevelCache.put(key2, img);
       return img;
 
-   '''
-    * Appends path gp2 to gp1.
-    * Taken from pre-redesign code.
-    * @param reversed is true if the segments are added in reverse order
-   '''
-import math
 class ShapeBevel():
-   def getLightVector( x, y,z):
-      # normalized light vector
-     light = [x,y,z];
-     lightLen = math.sqrt(light[0]*light[0]+light[1]*light[1]+light[2]*light[2]);
-     light[0] /= lightLen; light[1] /= lightLen; light[2] /= lightLen;
-     return light;
+  def getLightVector( x, y,z):
+    # normalized light vector
+    light = [x,y,z];
+    lightLen = math.sqrt(light[0]*light[0]+light[1]*light[1]+light[2]*light[2]);
+    light[0] /= lightLen; light[1] /= lightLen; light[2] /= lightLen;
+    return light;
 
-   def getFrontFaceOverlay(light):
-      frontNorm = [0,0,1];
-      frontGrayAlpha = [0,0]; # receives gray,alpha
-      ShapeBevel.getLightingOverlay(frontNorm,light,frontGrayAlpha);
-      return QtGui.QColor(frontGrayAlpha[0],frontGrayAlpha[0],frontGrayAlpha[0],frontGrayAlpha[1]);
-
-   '''
-   * takes a normalized surface normal and normalized light vector and returns
-   * a (gray,alpha) color value to be applied to the block
-   '''
-   def getLightingOverlay( norm, light, grayAlpha):
-      # dot product with light produces diffuse shading
-      lum = norm[0]*light[0] + norm[1]*light[1] + norm[2]*light[2];
-      # amount of white to apply (float const is an arbitrary strength)
-      shine = (2*norm[2]*lum - light[2]);
-      if (shine < 0): shine = 0;
-      shine = shine*shine*shine*shine*0.9;
-      if (lum < 0): lum = 0;
-      # amount of black to apply (float const is an arbitrary strength)
-      shad = (1.0-lum);
-      shad = shad*shad;
-      shad *= 0.8;
-      # combine the effects of overlaying shad black and shine white
-      grayAlpha[1] = shad+shine-shad*shine;
-      if (shine > 0): grayAlpha[0] = shine/grayAlpha[1];
-      else: grayAlpha[0] = 0;
-
-   def createShapeBevel(g2,theShape,flatness,numBands, bevelSize,light):
-      # draw bands from inside of shape to outside (important)
-      numBands = 3
-      #g2.drawPolygon(theShape.toFillPolygon ())
-      #return
-
-      for  i in range(numBands-1,-1,-1):
-         # get the path around the block area, flattening any curves
-         # 0.2 is flattening tolerance, big == faster, small == smoother
-         bi = BevelIterator(theShape,flatness);
-
-         # cos and sin of angle between surface normal and screen plane
-         theCos = 1.0-(i+0.5)/numBands; # center of band
-         theSin = math.sqrt(1-theCos*theCos);
-
-         _from = 0; # draw strips from outer edge,
-         to = 1.0/numBands*(i+1)*bevelSize; # to this distance
-         # the overlap makes sure there is no tiny space between the bands
-
-         pen = QtGui.QPen()
-         #g2.setStroke(BasicStroke(to-_from));
-         pen.setWidth(to-_from)
-         p = QtCore.QPoint(0,0)
-         norm = [0,0,0]
-         grayAlpha = [0,0]; # receives gray and alpha
-
-         while (not bi.isDone()):
-            #count++;
-            bi.nextSegment();
-
-            norm[0] = bi.perpVec.x()*theCos;
-            norm[1] = bi.perpVec.y()*theCos;
-            norm[2] = theSin;
-            ShapeBevel.getLightingOverlay(norm,light,grayAlpha);
-            brush = QtGui.QBrush(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255));
-            pen.setColor(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255))
-            #g2.setComposite(AlphaComposite.Src);
-
-            gp =  QtGui.QPainterPath();
-            p = bi.insetPoint2(_from); gp.moveTo(p);
-            p = bi.insetPoint3(_from); gp.lineTo(p);
-            p = bi.insetPoint3(to); gp.lineTo(p);
-            p = bi.insetPoint2(to); gp.lineTo(p);
-            gp.closeSubpath ();
-            g2.fillPath(gp,brush);
+  def getFrontFaceOverlay(light):
+    frontNorm = [0,0,1];
+    frontGrayAlpha = [0,0]; # receives gray,alpha
+    ShapeBevel.getLightingOverlay(frontNorm,light,frontGrayAlpha);
+    return QtGui.QColor(frontGrayAlpha[0],frontGrayAlpha[0],frontGrayAlpha[0],frontGrayAlpha[1]);
 
 
-   def getLightingOverlay( norm, light, grayAlpha ):
-      # dot product with light produces diffuse shading
-      lum = norm[0]*light[0] + norm[1]*light[1] + norm[2]*light[2];
-      # amount of white to apply (float const is an arbitrary strength)
-      shine = (2*norm[2]*lum - light[2]);
-      if (shine < 0): shine = 0;
-      shine = shine*shine*shine*shine*0.9;
-      if (lum < 0): lum = 0;
-      # amount of black to apply (float const is an arbitrary strength)
-      shad = (1.0-lum);
-      shad = shad*shad;
-      shad *= 0.8;
-      # combine the effects of overlaying shad black and shine white
-      grayAlpha[1] = shad+shine-shad*shine;
-      if (shine > 0): grayAlpha[0] = shine/grayAlpha[1];
-      else: grayAlpha[0] = 0;
+  def getLightingOverlay( norm, light, grayAlpha):
+    '''
+    * takes a normalized surface normal and normalized light vector and returns
+    * a (gray,alpha) color value to be applied to the block
+    '''     
+    # dot product with light produces diffuse shading
+    lum = norm[0]*light[0] + norm[1]*light[1] + norm[2]*light[2];
+    # amount of white to apply (float const is an arbitrary strength)
+    shine = (2*norm[2]*lum - light[2]);
+    if (shine < 0): shine = 0;
+    shine = shine*shine*shine*shine*0.9;
+    if (lum < 0): lum = 0;
+    # amount of black to apply (float const is an arbitrary strength)
+    shad = (1.0-lum);
+    shad = shad*shad;
+    shad *= 0.8;
+    # combine the effects of overlaying shad black and shine white
+    grayAlpha[1] = shad+shine-shad*shine;
+    if (shine > 0): grayAlpha[0] = shine/grayAlpha[1];
+    else: grayAlpha[0] = 0;
+
+  def createShapeBevel(g2,theShape,flatness,numBands, bevelSize,light):
+    # draw bands from inside of shape to outside (important)
+    numBands = 3
+
+    for  i in range(numBands-1,-1,-1):
+       # get the path around the block area, flattening any curves
+       # 0.2 is flattening tolerance, big == faster, small == smoother
+       bi = BevelIterator(theShape,flatness);
+
+       # cos and sin of angle between surface normal and screen plane
+       theCos = 1.0-(i+0.5)/numBands; # center of band
+       theSin = math.sqrt(1-theCos*theCos);
+
+       _from = 0; # draw strips from outer edge,
+       to = 1.0/numBands*(i+1)*bevelSize; # to this distance
+       # the overlap makes sure there is no tiny space between the bands
+
+       pen = QtGui.QPen()
+       #g2.setStroke(BasicStroke(to-_from));
+       pen.setWidth(to-_from)
+       p = QtCore.QPoint(0,0)
+       norm = [0,0,0]
+       grayAlpha = [0,0]; # receives gray and alpha
+
+       while (not bi.isDone()):
+          #count++;
+          bi.nextSegment();
+
+          norm[0] = bi.perpVec.x()*theCos;
+          norm[1] = bi.perpVec.y()*theCos;
+          norm[2] = theSin;
+          ShapeBevel.getLightingOverlay(norm,light,grayAlpha);
+          brush = QtGui.QBrush(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255));
+          pen.setColor(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255))
+          #g2.setComposite(AlphaComposite.Src);
+
+          gp =  QtGui.QPainterPath();
+          p = bi.insetPoint2(_from); gp.moveTo(p);
+          p = bi.insetPoint3(_from); gp.lineTo(p);
+          p = bi.insetPoint3(to); gp.lineTo(p);
+          p = bi.insetPoint2(to); gp.lineTo(p);
+          gp.closeSubpath ();
+          g2.fillPath(gp,brush);
 
 class BevelIterator():
 
-   def __init__(self,area, flatness):
+  def __init__(self,area, flatness):
+    # the point that comes before the current segment's start-point */
+    self.pt1 = QtCore.QPointF(0,0);
+    # the start-point of the current segment */
+    self.pt2 = QtCore.QPointF(0,0);
+    # the end-point of the current segment */
+    self.pt3 = QtCore.QPointF(0,0);
+    # the point that comes after the current segment's end-point */
+    self.pt4 = QtCore.QPointF(0,0);
+    # a vector pointing inwards from <code>pt2</code>, bisecting the angle at that point,
+    # scaled to have a length appropriate for a bevel of thickness 1.0 (in other words, lying
+    # on the line that is parallel to the current segment and a distance of 1.0 inwards). */
+    self.inset2 = QtCore.QPointF(0,0);
+    # a vector pointing inwards from <code>pt3</code>, bisecting the angle at that point,
+    # scaled to have a length appropriate for a bevel of thickness 1.0 (in other words, lying
+    # on the line that is parallel to the current segment and a distance of 1.0 inwards). */
+    self.inset3 = QtCore.QPointF(0,0);
+    # a unit vector perpendicular to the current segment, pointing outwards */
+    self.perpVec = QtCore.QPointF(0,0);
 
-      # the point that comes before the current segment's start-point */
-      self.pt1 = QtCore.QPointF(0,0);
-      # the start-point of the current segment */
-      self.pt2 = QtCore.QPointF(0,0);
-      # the end-point of the current segment */
-      self.pt3 = QtCore.QPointF(0,0);
-      # the point that comes after the current segment's end-point */
-      self.pt4 = QtCore.QPointF(0,0);
-      # a vector pointing inwards from <code>pt2</code>, bisecting the angle at that point,
-      # scaled to have a length appropriate for a bevel of thickness 1.0 (in other words, lying
-      # on the line that is parallel to the current segment and a distance of 1.0 inwards). */
-      self.inset2 = QtCore.QPointF(0,0);
-      # a vector pointing inwards from <code>pt3</code>, bisecting the angle at that point,
-      # scaled to have a length appropriate for a bevel of thickness 1.0 (in other words, lying
-      # on the line that is parallel to the current segment and a distance of 1.0 inwards). */
-      self.inset3 = QtCore.QPointF(0,0);
-      # a unit vector perpendicular to the current segment, pointing outwards */
-      self.perpVec = QtCore.QPointF(0,0);
+    self.point_index = 0
+    self.array = [0,0,0,0,0,0];
+    self.area = area;
+    self.flatness = flatness;
 
-      self.point_index = 0
-      self.array = [0,0,0,0,0,0];
-      self.area = area;
-      self.flatness = flatness;
+    self.points = self.doGetPoints(area,flatness);
+    #print (self.points)
+    self._iter = iter(self.points)
 
-      self.points = self.doGetPoints(area,flatness);
-      #print (self.points)
-      self._iter = iter(self.points)
+    self.progress = -2;
+    self.pathIterAdvance();
+    self.doGetPoint()
+    self.pt1 = self.currentPoint
+    self.pathIterAdvance();
+    self.pt2 = self.currentPoint
+    self.pathIterAdvance();
+    self.pt3 = self.currentPoint
+    self.pathIterAdvance();
+    self.pt4 = self.currentPoint
 
-      self.progress = -2;
-      self.pathIterAdvance();
-      self.doGetPoint()
-      self.pt1 = self.currentPoint
-      self.pathIterAdvance();
-      self.pt2 = self.currentPoint
-      self.pathIterAdvance();
-      self.pt3 = self.currentPoint
-      self.pathIterAdvance();
-      self.pt4 = self.currentPoint
+    self.inset2 = self.getInsetVector(self.pt1,self.pt2,self.pt3)
+    self.inset3 = self.getInsetVector(self.pt2,self.pt3,self.pt4)
+    self.perpVec = self.getPerpVec(self.pt2,self.pt3);
 
-      self.inset2 = self.getInsetVector(self.pt1,self.pt2,self.pt3)
-      self.inset3 = self.getInsetVector(self.pt2,self.pt3,self.pt4)
-      self.perpVec = self.getPerpVec(self.pt2,self.pt3);
+  def printPath(path):
+    for i in range(0, path.elementCount()):
+      cur = path.elementAt(i);
 
-   def printPath(path):
-      for i in range(0, path.elementCount()):
-         cur = path.elementAt(i);
+      if(cur.type == QtGui.QPainterPath.MoveToElement):
+        print("M %d %d"%(cur.x,cur.y))
+      elif(cur.type == QtGui.QPainterPath.LineToElement):
+        print("L %d %d"%(cur.x,cur.y))
+      elif(cur.type == QtGui.QPainterPath.CurveToElement):
+        c1 = path.elementAt(i + 1);
+        c2 = path.elementAt(i + 2);
 
-         if(cur.type == QtGui.QPainterPath.MoveToElement):
-            print("M %d %d"%(cur.x,cur.y))
-         elif(cur.type == QtGui.QPainterPath.LineToElement):
-            print("L %d %d"%(cur.x,cur.y))
-         elif(cur.type == QtGui.QPainterPath.CurveToElement):
-            c1 = path.elementAt(i + 1);
-            c2 = path.elementAt(i + 2);
-
-            assert(c1.type == QtGui.QPainterPath.CurveToDataElement);
-            assert(c2.type == QtGui.QPainterPath.CurveToDataElement);
-
-
-            print("C (%d %d) (%d %d) (%d %d)"%(cur.x,cur.y,c1.x,c1.y,c2.x,c2.y));
-
-            i += 2;
-         elif(cur.type == QtGui.QPainterPath.CurveToDataElement):
-            pass
-
-   def doGetPoints(self,area,flatness):
-
-      points = []
-
-      #BevelIterator.printPath(area)
-
-      index = 0
-
-      p = QtCore.QPointF(0,0)
-      while(index < area.elementCount()):
-         cur = area.elementAt(index);
-         p1 = QtCore.QPointF(cur)
-         if(cur.type == QtGui.QPainterPath.CurveToElement):
-
-            p2 = QtCore.QPointF(area.elementAt(index+1))
-            p3 = QtCore.QPointF(area.elementAt(index+2))
-
-            assert(area.elementAt(index+1).type == QtGui.QPainterPath.CurveToDataElement)
-            assert(area.elementAt(index+2).type == QtGui.QPainterPath.CurveToDataElement)
-
-            bezier = Bezier(p,p1,p2,p3)
-            curve_points = bezier.getCurvePoints()
-
-            points += curve_points
-            index += 2
-         else:
-            points.append(p1)
-            p = p1
-            index += 1
-      return points
-
-   def doGetPoint(self):
-      self.currentPoint = self.current_value
-      return self.currentPoint;
-
-   def pathIterAdvance(self):
-      if (self.progress < -1):
-         self.current_value = next(self._iter)
-         self.currentPoint = self.current_value
-         self.progress+=1;
-         return
-
-      try:
-         self.current_value = next(self._iter)
-         if (self.progress >= 0):
-            self.progress+=1; # this isn't the first time around, counting now
-      except StopIteration:
-         self._iter = iter(self.points)
-         self.current_value = next(self._iter)
-         self.progress += 1
-
-      p = self.currentPoint;
-      self.doGetPoint();
-      if ((p.x()-self.currentPoint.x())*(p.x()-self.currentPoint.x())+(p.y()-self.currentPoint.y())*(p.y()-self.currentPoint.y())
-         < 0.001):
-         self.pathIterAdvance();
-
-   def isDone(self):
-      return self.progress >= 2;
-
-   def nextSegment(self):
-      if (not self.isDone()):
-         self.pathIterAdvance();
-         self.pt1 = self.pt2
-         self.pt2 = self.pt3
-         self.pt3 = self.pt4
-         self.pt4 = self.currentPoint
-         self.inset2 = self.inset3
-         self.inset3 = self.getInsetVector(self.pt2,self.pt3,self.pt4);
-         self.perpVec = self.getPerpVec(self.pt2,self.pt3);
+        assert(c1.type == QtGui.QPainterPath.CurveToDataElement);
+        assert(c2.type == QtGui.QPainterPath.CurveToDataElement);
 
 
-   '''
-   * a vector parallel to the angle bisector of angle 123,
-   * pointing into the block area
-   * that assumes a bevel size of 1
-   '''
-   def getInsetVector(self, pt1, pt2, pt3):
-      v1 = QtCore.QPointF(pt1.x()-pt2.x(),pt1.y()-pt2.y())
-      v2 = QtCore.QPointF(pt3.x()-pt2.x(),pt3.y()-pt2.y())
+        print("C (%d %d) (%d %d) (%d %d)"%(cur.x,cur.y,c1.x,c1.y,c2.x,c2.y));
 
-      # normalize them
-      len = math.sqrt(v1.x()*v1.x()+v1.y()*v1.y());
-      v1.setX(v1.x()/len)
-      v1.setY(v1.y()/len)
+        i += 2;
+      elif(cur.type == QtGui.QPainterPath.CurveToDataElement):
+          pass
 
-      len = math.sqrt(v2.x()*v2.x()+v2.y()*v2.y());
-      v2.setX(v2.x()/len)
-      v2.setY(v2.y()/len)
+  def doGetPoints(self,area,flatness):
 
-      out = QtCore.QPointF(v1.x()+v2.x(),v1.y()+v2.y()); # add vectors
-      if (out.x() == 0 and out.y() == 0):
-         out.setX(-v1.y());
-         out.setY(v1.x());
+    points = []
 
+    #BevelIterator.printPath(area)
+
+    index = 0
+
+    p = QtCore.QPointF(0,0)
+    while(index < area.elementCount()):
+      cur = area.elementAt(index);
+      p1 = QtCore.QPointF(cur)
+      if(cur.type == QtGui.QPainterPath.CurveToElement):
+
+        p2 = QtCore.QPointF(area.elementAt(index+1))
+        p3 = QtCore.QPointF(area.elementAt(index+2))
+
+        assert(area.elementAt(index+1).type == QtGui.QPainterPath.CurveToDataElement)
+        assert(area.elementAt(index+2).type == QtGui.QPainterPath.CurveToDataElement)
+
+        bezier = Bezier(p,p1,p2,p3)
+        curve_points = bezier.getCurvePoints()
+
+        points += curve_points
+        index += 2
       else:
-         # fix length
-         if((-v1.y()*v2.x()+v1.x()*v2.y()) != 0):
-            scale = 1.0/(-v1.y()*v2.x()+v1.x()*v2.y());
-         else:
-            scale = 1.0
-         out.setX(out.x() *scale)
-         out.setY(out.y() *scale)
-      return out
+        points.append(p1)
+        p = p1
+        index += 1
+    return points
 
-   # returns unit vector perpendicular to the line joining the points */
-   def getPerpVec(self,pt1, pt2):
-      # perpendicular vector
-      vec = QtCore.QPointF(-(pt2.y()-pt1.y()),(pt2.x()-pt1.x()));
-      # normalize
-      len = math.sqrt(vec.x()*vec.x()+vec.y()*vec.y());
-      vec.setX(vec.x()/len)
-      vec.setY(vec.y()/len)
-      return vec
+  def doGetPoint(self):
+    self.currentPoint = self.current_value
+    return self.currentPoint;
 
-   def insetPoint2(self,scalar):
+  def pathIterAdvance(self):
+    if (self.progress < -1):
+       self.current_value = next(self._iter)
+       self.currentPoint = self.current_value
+       self.progress+=1;
+       return
+
+    try:
+       self.current_value = next(self._iter)
+       if (self.progress >= 0):
+          self.progress+=1; # this isn't the first time around, counting now
+    except StopIteration:
+       self._iter = iter(self.points)
+       self.current_value = next(self._iter)
+       self.progress += 1
+
+    p = self.currentPoint;
+    self.doGetPoint();
+    if ((p.x()-self.currentPoint.x())*(p.x()-self.currentPoint.x())+(p.y()-self.currentPoint.y())*(p.y()-self.currentPoint.y())
+       < 0.001):
+       self.pathIterAdvance();
+
+  def isDone(self):
+    return self.progress >= 2;
+
+  def nextSegment(self):
+    if (not self.isDone()):
+       self.pathIterAdvance();
+       self.pt1 = self.pt2
+       self.pt2 = self.pt3
+       self.pt3 = self.pt4
+       self.pt4 = self.currentPoint
+       self.inset2 = self.inset3
+       self.inset3 = self.getInsetVector(self.pt2,self.pt3,self.pt4);
+       self.perpVec = self.getPerpVec(self.pt2,self.pt3);
+
+
+  def getInsetVector(self, pt1, pt2, pt3):
+    '''
+    * a vector parallel to the angle bisector of angle 123,
+    * pointing into the block area
+    * that assumes a bevel size of 1
+    '''
+     
+    v1 = QtCore.QPointF(pt1.x()-pt2.x(),pt1.y()-pt2.y())
+    v2 = QtCore.QPointF(pt3.x()-pt2.x(),pt3.y()-pt2.y())
+
+    # normalize them
+    len = math.sqrt(v1.x()*v1.x()+v1.y()*v1.y());
+    v1.setX(v1.x()/len)
+    v1.setY(v1.y()/len)
+
+    len = math.sqrt(v2.x()*v2.x()+v2.y()*v2.y());
+    v2.setX(v2.x()/len)
+    v2.setY(v2.y()/len)
+
+    out = QtCore.QPointF(v1.x()+v2.x(),v1.y()+v2.y()); # add vectors
+    if (out.x() == 0 and out.y() == 0):
+       out.setX(-v1.y());
+       out.setY(v1.x());
+
+    else:
+       # fix length
+       if((-v1.y()*v2.x()+v1.x()*v2.y()) != 0):
+          scale = 1.0/(-v1.y()*v2.x()+v1.x()*v2.y());
+       else:
+          scale = 1.0
+       out.setX(out.x() *scale)
+       out.setY(out.y() *scale)
+    return out
+
+  # returns unit vector perpendicular to the line joining the points */
+  def getPerpVec(self,pt1, pt2):
+    # perpendicular vector
+    vec = QtCore.QPointF(-(pt2.y()-pt1.y()),(pt2.x()-pt1.x()));
+    # normalize
+    len = math.sqrt(vec.x()*vec.x()+vec.y()*vec.y());
+    vec.setX(vec.x()/len)
+    vec.setY(vec.y()/len)
+    return vec
+
+  def insetPoint2(self,scalar):
       p = QtCore.QPointF()
       p.setX(self.pt2.x()+self.inset2.x()*scalar);
       p.setY(self.pt2.y()+self.inset2.y()*scalar);
       return p;
 
-   def insetPoint3(self,scalar):
+  def insetPoint3(self,scalar):
       p = QtCore.QPointF()
       p.setX(self.pt3.x()+self.inset3.x()*scalar);
       p.setY(self.pt3.y()+self.inset3.y()*scalar);
