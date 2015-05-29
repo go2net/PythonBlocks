@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
+<!-- eric6 tasks file for project PythonBlocks -->
+<!-- Saved: 2015-05-28, 20:17:18 -->
+<Tasks version="5.1">
+  <ProjectScanFilter></ProjectScanFilter>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: add proc param dimensions</Summary>
+    <Description></Description>
+    <Created>2015-05-23, 21:55:31</Created>
+    <Resource>
+      <Filename>Blocks/BlockConnectorShape.py</Filename>
+      <Linenumber>100</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:lastBottomPathWidth = (int)BOTTOM_SOCKET_SIDE_SPACER;</Summary>
+    <Description></Description>
+    <Created>2015-05-23, 21:57:38</Created>
+    <Resource>
+      <Filename>Blocks/InfixBlockShape.py</Filename>
+      <Linenumber>186</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 20:12:04</Created>
+    <Resource>
+      <Filename>blocks/Block.py</Filename>
+      <Linenumber>271</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 20:12:04</Created>
+    <Resource>
+      <Filename>blocks/Block.py</Filename>
+      <Linenumber>394</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: System expects PAGE_ADDED event</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 21:07:01</Created>
+    <Resource>
+      <Filename>blocks/Workspace.py</Filename>
+      <Linenumber>211</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: HUGE HACK, get rid of this. bascally, the facotry has priority</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 21:07:01</Created>
+    <Resource>
+      <Filename>blocks/Workspace.py</Filename>
+      <Linenumber>234</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: what if tag does not exist?  should we throw exception or add new tag?</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 21:27:12</Created>
+    <Resource>
+      <Filename>Blocks/RenderableBlock - Copy.py</Filename>
+      <Linenumber>522</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: djwendel - this is a patch, but the root of the problem</Summary>
+    <Description></Description>
+    <Created>2015-05-24, 21:27:12</Created>
+    <Resource>
+      <Filename>Blocks/RenderableBlock - Copy.py</Filename>
+      <Linenumber>753</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: System expects PAGE_ADDED event</Summary>
+    <Description></Description>
+    <Created>2015-05-27, 14:50:19</Created>
+    <Resource>
+      <Filename>Blocks/WorkspaceController.py</Filename>
+      <Linenumber>193</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: System expects PAGE_ADDED event</Summary>
+    <Description></Description>
+    <Created>2015-05-27, 14:52:28</Created>
+    <Resource>
+      <Filename>Blocks/Workspace.py</Filename>
+      <Linenumber>211</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: HUGE HACK, get rid of this. bascally, the facotry has priority</Summary>
+    <Description></Description>
+    <Created>2015-05-27, 14:52:28</Created>
+    <Resource>
+      <Filename>Blocks/Workspace.py</Filename>
+      <Linenumber>234</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-27, 23:24:07</Created>
+    <Resource>
+      <Filename>Blocks/Block.py</Filename>
+      <Linenumber>294</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="3">
+    <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
+    <Description></Description>
+    <Created>2015-05-27, 23:24:07</Created>
+    <Resource>
+      <Filename>Blocks/Block.py</Filename>
+      <Linenumber>417</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: what if tag does not exist?  should we throw exception or add new tag?</Summary>
+    <Description></Description>
+    <Created>2015-05-28, 20:17:11</Created>
+    <Resource>
+      <Filename>Blocks/RenderableBlock.py</Filename>
+      <Linenumber>528</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: djwendel - this is a patch, but the root of the problem</Summary>
+    <Description></Description>
+    <Created>2015-05-28, 20:17:11</Created>
+    <Resource>
+      <Filename>Blocks/RenderableBlock.py</Filename>
+      <Linenumber>762</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: this is a patch, but we need to fix the root of the problem!</Summary>
+    <Description></Description>
+    <Created>2015-05-28, 20:17:11</Created>
+    <Resource>
+      <Filename>Blocks/RenderableBlock.py</Filename>
+      <Linenumber>935</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: this contains a lot of starlogo specific checks - should be refactored into slcodeblocks?</Summary>
+    <Description></Description>
+    <Created>2015-05-28, 20:17:15</Created>
+    <Resource>
+      <Filename>Blocks/BlockShape.py</Filename>
+      <Linenumber>115</Linenumber>
+    </Resource>
+  </Task>
+</Tasks>

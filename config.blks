@@ -1,0 +1,243 @@
+<?xml version="1.0" ?>
+<CODEBLOCKS>
+	<Blocks>
+		<Block genus-name="stomp" id="120">
+			<Location>
+				<X>142.0</X>
+				<Y>81.0</Y>
+			</Location>
+			<BeforeBlockId>119</BeforeBlockId>
+			<AfterBlockId>121</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="122" connector-kind="socket" connector-type="number" init-type="number" label="height" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="joy-xaxis" id="122">
+			<Location>
+				<X>240.0</X>
+				<Y>84.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="120" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="setshape" id="121">
+			<Location>
+				<X>142.0</X>
+				<Y>111.0</Y>
+			</Location>
+			<BeforeBlockId>120</BeforeBlockId>
+			<AfterBlockId>124</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="if" id="124">
+			<Location>
+				<X>142.0</X>
+				<Y>141.0</Y>
+			</Location>
+			<BeforeBlockId>121</BeforeBlockId>
+			<Sockets num-sockets="2">
+				<BlockConnector con-block-id="131" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="139" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="proc-param-boolean" id="131">
+			<Location>
+				<X>202.0</X>
+				<Y>144.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="124" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="single"/>
+			</Plug>
+		</Block>
+		<Block genus-name="stomp" id="130">
+			<Location>
+				<X>313.0</X>
+				<Y>267.0</Y>
+			</Location>
+			<BeforeBlockId>129</BeforeBlockId>
+			<AfterBlockId>141</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="number" init-type="number" label="height" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="pc" id="126">
+			<Location>
+				<X>161.0</X>
+				<Y>472.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="125" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="if" id="129">
+			<Location>
+				<X>256.0</X>
+				<Y>235.0</Y>
+			</Location>
+			<BeforeBlockId>127</BeforeBlockId>
+			<AfterBlockId>136</AfterBlockId>
+			<Sockets num-sockets="2">
+				<BlockConnector connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="130" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="fd" id="128">
+			<Location>
+				<X>199.0</X>
+				<Y>413.0</Y>
+			</Location>
+			<BeforeBlockId>133</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="number" init-type="number" label="steps" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="bk" id="133">
+			<Location>
+				<X>199.0</X>
+				<Y>383.0</Y>
+			</Location>
+			<BeforeBlockId>127</BeforeBlockId>
+			<AfterBlockId>128</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="number" init-type="number" label="steps" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="keyboard-up" id="118">
+			<Location>
+				<X>145.0</X>
+				<Y>22.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="117" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="lt" id="119">
+			<Location>
+				<X>142.0</X>
+				<Y>51.0</Y>
+			</Location>
+			<BeforeBlockId>117</BeforeBlockId>
+			<AfterBlockId>120</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="138" connector-kind="socket" connector-type="number" init-type="number" label="degs" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="set-score" id="125">
+			<Location>
+				<X>85.0</X>
+				<Y>469.0</Y>
+			</Location>
+			<BeforeBlockId>117</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="126" connector-kind="socket" connector-type="number" init-type="number" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="setbreed" id="136">
+			<Location>
+				<X>256.0</X>
+				<Y>338.0</Y>
+			</Location>
+			<BeforeBlockId>129</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="134" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="string-append" id="134">
+			<Location>
+				<X>334.0</X>
+				<Y>341.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="136" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+			</Plug>
+			<Sockets num-sockets="2">
+				<BlockConnector con-block-id="135" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="bottom"/>
+				<BlockConnector con-block-id="137" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="bottom"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="shape" id="135">
+			<Location>
+				<X>344.0</X>
+				<Y>344.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="134" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="proc-param-string" id="137">
+			<Location>
+				<X>449.0</X>
+				<Y>344.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="134" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Plug>
+		</Block>
+		<Block genus-name="joy-yaxis" id="138">
+			<Location>
+				<X>216.0</X>
+				<Y>54.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="119" connector-kind="plug" connector-type="number" init-type="number" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="setbreed" id="139">
+			<Location>
+				<X>199.0</X>
+				<Y>173.0</Y>
+			</Location>
+			<BeforeBlockId>124</BeforeBlockId>
+			<AfterBlockId>127</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="if" id="127">
+			<Location>
+				<X>199.0</X>
+				<Y>203.0</Y>
+			</Location>
+			<BeforeBlockId>139</BeforeBlockId>
+			<AfterBlockId>133</AfterBlockId>
+			<Sockets num-sockets="2">
+				<BlockConnector connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="129" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="forever" id="132">
+			<Location>
+				<X>22.0</X>
+				<Y>11.0</Y>
+			</Location>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="117" connector-kind="socket" connector-type="cmd" init-type="cmd" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="if" id="117">
+			<Location>
+				<X>85.0</X>
+				<Y>19.0</Y>
+			</Location>
+			<BeforeBlockId>132</BeforeBlockId>
+			<AfterBlockId>125</AfterBlockId>
+			<Sockets num-sockets="2">
+				<BlockConnector con-block-id="118" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="119" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="setshape" id="141">
+			<Location>
+				<X>313.0</X>
+				<Y>297.0</Y>
+			</Location>
+			<BeforeBlockId>130</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+	</Blocks>
+</CODEBLOCKS>
