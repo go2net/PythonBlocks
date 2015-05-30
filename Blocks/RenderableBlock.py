@@ -377,28 +377,26 @@ class RenderableBlock(QtGui.QWidget):
       #Bevel().bevelImage(buff,image.width(),image.height(),self.back_color.rgba());
       #bevelImage = QtGui.QImage(sip.voidptr(addressof(buff)), image.width(), image.height(), QtGui.QImage.Format_ARGB32)
       bevelImage = BlockShapeUtil.getBevelImage(updatedDimensionRect.width(), updatedDimensionRect.height(), self.blockArea);
-      #bevelImage.save("d:\\temp.bmp")
+      #bevelImage.save("d:\\temp.png")
       #GraphicsManager.recycleGCCompatibleImage(image);
       #del image
 
       self.buffImg = GraphicsManager.getGCCompatibleImage(
-				self.blockArea.controlPointRect().width()+1,
-				self.blockArea.controlPointRect().height()+1,
-            self.back_color);
+        self.blockArea.controlPointRect().width()+1,
+        self.blockArea.controlPointRect().height()+1,
+        self.back_color);
 
       p = QtGui.QPainter();
       p.begin(self.buffImg)
       blockColor = self.getBLockColor();
       blockColor.setAlpha(180)
       brush = QtGui.QBrush(blockColor);
-      p.setPen(blockColor);
+      #p.setPen(blockColor);
       p.fillPath(self.blockArea,brush)
-      p.drawPath(self.blockArea);
+      #p.drawPath(self.blockArea);
       p.drawImage(0,0,bevelImage);
-
       p.end()
-
-      #del bevelImage
+      del p
 
    def synchronizeSockets(self):
       changed = False;

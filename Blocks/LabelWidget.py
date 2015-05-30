@@ -71,7 +71,7 @@ class LabelWidget(QtGui.QWidget):
     print('leaveEvent')
     self.suggestEditable(False);
     
-  def mouseReleaseEvent(self, ev):
+  def mouseReleaseEvent(self, event):
     # Set to editing state upon mouse click if this block label is editable
     # if clicked and if the label is editable,
     if (self.isEditable):
@@ -81,6 +81,7 @@ class LabelWidget(QtGui.QWidget):
       #self.textField.setSelectionStart(0);
       self.textField.selectAll()
       
+    event.ignore();  
   def textChanged(self):
     if(self.loading): return
 

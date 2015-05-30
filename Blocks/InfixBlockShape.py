@@ -160,7 +160,7 @@ class InfixBlockShape(BlockShape):
         * specified painterPath
         * @param connectedBlockShape the BlockShape of the specified connectedBlock
        '''
-      from RenderableBlock import RenderableBlock
+      from Blocks.RenderableBlock import RenderableBlock
       # int lastBottomPathWidth;
 
 

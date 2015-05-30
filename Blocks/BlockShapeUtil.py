@@ -351,8 +351,9 @@ class ShapeBevel():
           norm[1] = bi.perpVec.y()*theCos;
           norm[2] = theSin;
           ShapeBevel.getLightingOverlay(norm,light,grayAlpha);
+          #print(grayAlpha)
           brush = QtGui.QBrush(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255));
-          pen.setColor(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255))
+          #pen.setColor(QtGui.QColor(grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[0]*255,grayAlpha[1]*255))
           #g2.setComposite(AlphaComposite.Src);
 
           gp =  QtGui.QPainterPath();
