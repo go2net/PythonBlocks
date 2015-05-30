@@ -145,8 +145,8 @@ class RenderableBlock(QtGui.QWidget):
       updatedDimensionRect = QtCore.QRectF(
 				self.x(),
 				self.y(),
-				self.blockArea.controlPointRect().width()+1,
-				self.blockArea.controlPointRect().height()+1);
+				self.blockArea.controlPointRect().width(),
+				self.blockArea.controlPointRect().height());
 
       if (not self.contentsRect() == updatedDimensionRect):
          self.moveConnectedBlocks(); # bounds have changed, so move connected blocks
@@ -377,26 +377,29 @@ class RenderableBlock(QtGui.QWidget):
       #Bevel().bevelImage(buff,image.width(),image.height(),self.back_color.rgba());
       #bevelImage = QtGui.QImage(sip.voidptr(addressof(buff)), image.width(), image.height(), QtGui.QImage.Format_ARGB32)
       bevelImage = BlockShapeUtil.getBevelImage(updatedDimensionRect.width(), updatedDimensionRect.height(), self.blockArea);
-      #bevelImage.save("d:\\temp.png")
+      bevelImage.save("d:\\temp.png")
       #GraphicsManager.recycleGCCompatibleImage(image);
       #del image
 
       self.buffImg = GraphicsManager.getGCCompatibleImage(
-        self.blockArea.controlPointRect().width()+1,
-        self.blockArea.controlPointRect().height()+1,
+        self.blockArea.controlPointRect().width(),
+        self.blockArea.controlPointRect().height(),
         self.back_color);
 
-      p = QtGui.QPainter();
+      p = QtGui.QPainter();      
       p.begin(self.buffImg)
+      p.setRenderHint(QtGui.QPainter.Antialiasing, True)
       blockColor = self.getBLockColor();
       blockColor.setAlpha(180)
       brush = QtGui.QBrush(blockColor);
-      #p.setPen(blockColor);
+      p.setPen(QtGui.QColor(blockColor.red(), blockColor.green(), blockColor.blue(), 180));
       p.fillPath(self.blockArea,brush)
       #p.drawPath(self.blockArea);
       p.drawImage(0,0,bevelImage);
       p.end()
       del p
+      
+      self.buffImg.save("d:\\temp1.png")
 
    def synchronizeSockets(self):
       changed = False;

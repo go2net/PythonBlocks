@@ -8,7 +8,7 @@ from PyQt4 import QtCore
 class Bezier():
 
    def __init__(self,start_point, c1,c2, end_point):
-      steps = 50
+      steps = 20
       controlPoints = (start_point,c1,c2,end_point)
       
       self.curvePoints = []

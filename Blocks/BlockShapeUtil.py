@@ -11,7 +11,7 @@
 from PyQt4 import QtGui,QtCore
 from Blocks.Bezier import Bezier
 import math
-debug = False
+debug = True
 
 class BlockShapeUtil():
 
@@ -43,7 +43,8 @@ class BlockShapeUtil():
       BlockShapeUtil.cubicTo(gp, x1, y1, x2, y2, x3, y3)
    def cubicTo(gp, x1, y1, x2, y2, x3, y3):
       if debug:
-         print("Draw cubic from point({0},{1}) to point({4},{5}) via point({2},{3})".format(x1,y1,x2,y2,x3,y3))
+         currentPoint = gp.currentPosition();
+         print("Draw cubic from point({0},{1}) to point({2},{3}) via control point({4},{5} and {6},{7})".format(currentPoint.x(), currentPoint.y(), x3,y3,x1,y1,x2,y2))
       gp.cubicTo( x1, y1, x2, y2, x3, y3);
    def moveTo(gp, x, y):
       currentPoint = gp.currentPosition();
@@ -273,6 +274,7 @@ class BlockShapeUtil():
             #(width, height, Transparency.TRANSLUCENT);
       img.fill(255);
       painter = QtGui.QPainter(img);
+      painter.setRenderHint(QtGui.QPainter.Antialiasing, True)
       #g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       #brush = QtGui.QBrush(ShapeBevel.getFrontFaceOverlay(light));
       #painter.setColor(ShapeBevel.getFrontFaceOverlay(light));

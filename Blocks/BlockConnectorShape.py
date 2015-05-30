@@ -210,7 +210,7 @@ class BlockConnectorShape():
          # inversion
          self._lineTo( -BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 3.0/4);
          self._lineTo( 0, BlockConnectorShape.DATA_PLUG_HEIGHT);
-   	#Starlogo Boolean
+         #Starlogo Boolean
       elif (connectionShapeInt == BlockConnectorShape.CIRCLE_1):
          self._curveTo(
          		(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH) * 4.0 / 3, 0,
@@ -233,7 +233,7 @@ class BlockConnectorShape():
          self._curveTo(-BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 3.0/4,
          		-BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT,
          		0, BlockConnectorShape.DATA_PLUG_HEIGHT);
-   	#Starlogo String
+   	     #Starlogo String
       elif (connectionShapeInt == BlockConnectorShape.SQUARE_1):
          self._lineTo( 0, BlockConnectorShape.DATA_PLUG_HEIGHT * 0.15);
          self._lineTo( BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 0.15);
@@ -332,7 +332,7 @@ class BlockConnectorShape():
 
       else:
          # System.out.println("Connection Type Not Identified: " + connectionShape);
-      	pass
+         pass
 
 
 
@@ -359,13 +359,13 @@ class BlockConnectorShape():
 
       # first corner inside command input
       BlockShapeUtil.cornerTo(blockPath,
-   		QtCore.QPointF(
-   				blockPath.currentPosition().x() - BlockConnectorShape.COMMAND_INPUT_BAR_WIDTH +  BlockShape.CORNER_RADIUS,
-   				blockPath.currentPosition().y()),
-   		QtCore.QPointF(
-   				blockPath.currentPosition().x() - BlockConnectorShape.COMMAND_INPUT_BAR_WIDTH +  BlockShape.CORNER_RADIUS,
-   				blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
-   		BlockShape.CORNER_RADIUS);
+      QtCore.QPointF(
+          blockPath.currentPosition().x() - BlockConnectorShape.COMMAND_INPUT_BAR_WIDTH +  BlockShape.CORNER_RADIUS,
+          blockPath.currentPosition().y()),
+      QtCore.QPointF(
+          blockPath.currentPosition().x() - BlockConnectorShape.COMMAND_INPUT_BAR_WIDTH +  BlockShape.CORNER_RADIUS,
+          blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
+      BlockShape.CORNER_RADIUS);
 
 
 
@@ -374,13 +374,13 @@ class BlockConnectorShape():
 
       # second corner at bottom of command input
       BlockShapeUtil.cornerTo(blockPath,
-   		QtCore.QPointF(
-   				blockPath.currentPosition().x(),
-   				blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
-   		QtCore.QPointF(
-   				blockPath.currentPosition().x() + BlockShape.CORNER_RADIUS,
-   				blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
-   		BlockShape.CORNER_RADIUS);
+      QtCore.QPointF(
+          blockPath.currentPosition().x(),
+          blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
+      QtCore.QPointF(
+          blockPath.currentPosition().x() + BlockShape.CORNER_RADIUS,
+          blockPath.currentPosition().y() + BlockShape.CORNER_RADIUS),
+      BlockShape.CORNER_RADIUS);
 
 
       # extend left to match y coordinate of initial point
@@ -419,7 +419,7 @@ class BlockConnectorShape():
       # scale (flip)
       scale_transform = QtGui.QTransform()
       scale_transform.scale(xScale, yScale);
-   	# translate across the origin
+      # translate across the origin
       translate_transform = QtGui.QTransform()
       translate_transform.translate (xTranslate, yTranslate);
       # apply the transforms
