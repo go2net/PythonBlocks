@@ -64,11 +64,11 @@ class LabelWidget(QtGui.QWidget):
       self.textLabel.setParent(self)
       
   def enterEvent(self,event):
-    print('enterEvent')
+    # print('enterEvent')
     self.suggestEditable(True);
     
   def leaveEvent(self,event):
-    print('leaveEvent')
+    #print('leaveEvent')
     self.suggestEditable(False);
     
   def mouseReleaseEvent(self, event):
@@ -137,7 +137,7 @@ class LabelWidget(QtGui.QWidget):
       self.textLabel.hide()      
       self.textField.setFocus()
     else:
-      print(self.editingText)
+      #print(self.editingText)
       # update to current textfield.text
       # if text entered was not empty and if it was editing before
       if(self.editingText):
@@ -147,12 +147,12 @@ class LabelWidget(QtGui.QWidget):
         # TODO if allow labels to have leading and trailing spaces, will need to modify this if statement
         
         if(self.isTextValid(self.textField.toPlainText().strip())):
-          print(self.textField.toPlainText().strip())
+          #print(self.textField.toPlainText().strip())
           self.setText(self.textField.toPlainText());
         else:
           self.setText(self.labelBeforeEdit);
   def fireTextChanged(self, text):
-    print("abstract fireTextChanged")
+    #print("abstract fireTextChanged")
     pass
 
   def updateLabelText(self,text):
@@ -229,11 +229,12 @@ class BlockLabelTextField(QtGui.QTextEdit):
       #self.setFrameShape(QtGui.QFrame.Panel)
       
   def focusInEvent(self, event):
-    print("focusInEvent")
+    pass
+    #print("focusInEvent")
     #self.labelWidget.setEditingState(False)
     
   def focusOutEvent(self, event):
-    print("focusOutEvent")
+    #print("focusOutEvent")
     self.labelWidget.setEditingState(False)
   
   # split all text into list of strings by separator '\n' (new line symbol)

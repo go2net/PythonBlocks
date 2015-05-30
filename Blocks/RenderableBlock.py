@@ -377,7 +377,7 @@ class RenderableBlock(QtGui.QWidget):
       #Bevel().bevelImage(buff,image.width(),image.height(),self.back_color.rgba());
       #bevelImage = QtGui.QImage(sip.voidptr(addressof(buff)), image.width(), image.height(), QtGui.QImage.Format_ARGB32)
       bevelImage = BlockShapeUtil.getBevelImage(updatedDimensionRect.width(), updatedDimensionRect.height(), self.blockArea);
-      bevelImage.save("d:\\temp.png")
+      #bevelImage.save("d:\\temp.png")
       #GraphicsManager.recycleGCCompatibleImage(image);
       #del image
 
@@ -399,7 +399,7 @@ class RenderableBlock(QtGui.QWidget):
       p.end()
       del p
       
-      self.buffImg.save("d:\\temp1.png")
+      #self.buffImg.save("d:\\temp1.png")
 
    def synchronizeSockets(self):
       changed = False;

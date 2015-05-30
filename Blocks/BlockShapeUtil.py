@@ -11,7 +11,7 @@
 from PyQt4 import QtGui,QtCore
 from Blocks.Bezier import Bezier
 import math
-debug = True
+debug = False
 
 class BlockShapeUtil():
 
