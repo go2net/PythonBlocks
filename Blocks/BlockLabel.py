@@ -94,7 +94,6 @@ class BlockLabel():
       return (self.widget.width()/self.zoom)-LabelWidget.DROP_DOWN_MENU_WIDTH;
     else:
       width = self.widget.width()
-      print(width)
       return (self.widget.width()/self.zoom);
 
   def getAbstractHeight(self):

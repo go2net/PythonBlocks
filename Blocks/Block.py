@@ -215,7 +215,7 @@ class Block():
    def setBlockLabel(self, newLabel):
       from Blocks.BlockStub import BlockStub
       if (self.linkToStubs and self.hasStubs()):
-          BlockStub.parentNameChanged(workspace, self.label, newLabel, self.blockID);
+          BlockStub.parentNameChanged(self.label, newLabel, self.blockID);
 
       self.label = newLabel;
 
