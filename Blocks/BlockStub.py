@@ -10,10 +10,23 @@
 #-------------------------------------------------------------------------------
 from Blocks.Block import Block
 class BlockStub(Block):
-  parentNameToParentBlock = []
+  parentNameToParentBlock = {}
   parentNameToBlockStubs = {}
-  def __init__(self):
-    pass
+  def __init__(self, initParentID, parentGenus, parentName, stubGenus):
+
+    self.parentGenus = parentGenus;
+    self.parentName = parentName;
+    self.stubGenus = stubGenus;    
+    
+    # there's a chance that the parent for this has not been added to parentNameToBlockStubs mapping
+    key = parentName + parentGenus;
+    if(key in BlockStub.parentNameToBlockStubs):
+      BlockStub.parentNameToBlockStubs[parentName+parentGenus].append(self.getBlockID());
+    else:
+      stubs = []
+      stubs.append(self.getBlockID());
+      BlockStub.parentNameToBlockStubs[key] = stubs
+
 
   def parentConnectorsChanged( parentID):
     key = Block.getBlock(parentID).getBlockLabel() + Block.getBlock(parentID).getGenusName();
@@ -27,6 +40,7 @@ class BlockStub(Block):
           blockStub.updateConnectors();
           # System.out.println("updated connectors of: "+blockStub);
           blockStub.notifyRenderable();
+
 
   def notifyRenderable(self):
     RenderableBlock.getRenderableBlock(blockID).repaint();
