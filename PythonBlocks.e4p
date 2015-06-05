@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-05-24, 21:15:24 -->
+<!-- Saved: 2015-06-06, 01:07:15 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -60,6 +60,8 @@
     <Source>Blocks/WorkspaceWidget.py</Source>
     <Source>Blocks/__init__.py</Source>
     <Source>Blocks/Generator.py</Source>
+    <Source>Generators/__init__.py</Source>
+    <Source>Generators/PythonGen.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
