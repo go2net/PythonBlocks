@@ -1,4 +1,5 @@
 from Blocks.Generator import Generator
+import re
 
 class PythonGen(Generator):
   '''
@@ -37,6 +38,72 @@ class PythonGen(Generator):
     self.name_ = "Python"
     self.functions["controls_if"] = self.controls_if
     self.functions["if"] = self.ifBlock
+    self.definitions_ = {}
+
+  def scrub_(self, block, code):
+    '''
+     * Common tasks for generating Python from blocks.
+     * Handles comments for the specified block and any connected value blocks.
+     * Calls any statements following this block.
+     * @param {!Blockly.Block} block The current block.
+     * @param {string} code The Python code created for this block.
+     * @return {string} Python code with comments and subsequent blocks added.
+     * @private
+    '''
+    return code
+    commentCode = '';
+    # Only collect comments for blocks that aren't inline.
+    if (not block.outputConnection or not block.outputConnection.targetConnection):
+      # Collect comment for this block.
+      comment = block.getCommentText();
+      if (comment):
+        commentCode += Blockly.Python.prefixLines(comment, '# ') + '\n';
+
+      # Collect comments for all value arguments.
+      # Don't collect comments for nested statements.
+      for  x in range(0, len(block.inputList)):
+        if (block.inputList[x].type == Blockly.INPUT_VALUE):
+          childBlock = block.inputList[x].connection.targetBlock();
+          if (childBlock):
+            comment = Blockly.Python.allNestedComments(childBlock);
+            if (comment):
+              commentCode += Blockly.Python.prefixLines(comment, '# ');
+
+    nextBlock = block.nextConnection and block.nextConnection.targetBlock();
+    nextCode = Blockly.Python.blockToCode(nextBlock);
+    return commentCode + code + nextCode;
+
+  def scrubNakedValue(self, line):
+    '''
+     * Naked values are top-level blocks with outputs that aren't plugged into
+     * anything.
+     * @param {string} line Line of generated code.
+     * @return {string} Legal line of code.
+    '''
+    return line + '\n';
+
+
+  def finish(self, code):
+    '''
+     * Prepend the generated code with the variable definitions.
+     * @param {string} code Generated code.
+     * @return {string} Completed code.
+    '''
+    # Convert the definitions dictionary into a list.
+    imports = [];
+    definitions = [];
+    for name in self.definitions_:
+      define = self.definitions_[name]       
+      if re.match("(from\s+\S+\s+)?import\s+\S", define):
+        imports.append(define);
+      else:
+        definitions.append(define);
+        
+    allDefs = '\n'.join(map(str, imports)) + '\n\n' + '\n\n'.join(map(str, definitions))
+    allDefs = re.sub('\n\n+', '\n\n',allDefs)
+    allDefs = re.sub('\n*$', '\n\n\n',allDefs)
+    return allDefs + code;
+
 
   def controls_if(self, block):
     # If/elseif/else condition.
@@ -45,6 +112,7 @@ class PythonGen(Generator):
       block, 
       'IF' + n, 
       PythonGen.ORDER_NONE) or 'False';
+ 
     branch = self.statementToCode(block, 'DO' + n) or PythonGen.PASS;
     code = 'if ' + argument + ':\n' + branch;
     for n in range(1, block.elseifCount+1):
@@ -64,11 +132,12 @@ class PythonGen(Generator):
     argument = self.valueToCode(
       block, 
       'TEST', 
-      PythonGen.ORDER_NONE)# or 'False';
-    print("argument="+argument)  
+      PythonGen.ORDER_NONE) or 'False';
+      
+    #print("argument="+argument)  
     branch = self.statementToCode(block, 'THEN') or PythonGen.PASS;
     code = 'if ' + argument + ':\n' + branch;
-    print (code)
+    #print (code)
     
     '''
     for n in range(1, block.elseifCount+1):

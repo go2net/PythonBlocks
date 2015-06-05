@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
 <!-- eric6 tasks file for project PythonBlocks -->
-<!-- Saved: 2015-06-02, 20:35:11 -->
+<!-- Saved: 2015-06-05, 21:44:13 -->
 <Tasks version="5.1">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1">
@@ -43,19 +43,19 @@
   <Task priority="1" completed="False" type="3">
     <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
     <Description></Description>
-    <Created>2015-06-02, 20:35:08</Created>
+    <Created>2015-06-05, 21:44:10</Created>
     <Resource>
       <Filename>Blocks/Block.py</Filename>
-      <Linenumber>295</Linenumber>
+      <Linenumber>296</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="3">
     <Summary>NOTE: must update the sockets of this before updating its stubs as stubs use this as a reference to update its own sockets</Summary>
     <Description></Description>
-    <Created>2015-06-02, 20:35:08</Created>
+    <Created>2015-06-05, 21:44:10</Created>
     <Resource>
       <Filename>Blocks/Block.py</Filename>
-      <Linenumber>418</Linenumber>
+      <Linenumber>419</Linenumber>
     </Resource>
   </Task>
 </Tasks>

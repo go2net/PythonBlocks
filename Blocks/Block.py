@@ -48,7 +48,8 @@ class Block():
       self.disabled = False
       self.sockets = []
       self.argumentDescriptions = []
-
+      self.outputConnection = None
+      
       # copy connectors from BlockGenus
       #try:
       genus = BlockGenus.getGenusWithName(genusName)

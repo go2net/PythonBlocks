@@ -1,6 +1,7 @@
 #from Blocks.Workspace import Workspace
 class Generator():
   def __init__(self, workspace):
+    self.STATEMENT_PREFIX = None
     self.workspace = workspace
     self.functions = {}
 
@@ -19,7 +20,7 @@ class Generator():
       # Skip past this block if it is disabled.
       return self.blockToCode(block.getNextBlock());
     
-    print(block.getGenusName())
+    #print(block.getGenusName())
 
     if ( block.getGenusName() not in self.functions):
       raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
@@ -58,7 +59,8 @@ class Generator():
     blocks = self.workspace.getTopBlocks(False);
     for block in blocks:
       line = self.blockToCode(block);
-      if (not isinstance(tuple, list)):
+
+      if (isinstance(line, list)):
         # Value blocks return tuples of code and operator order.
         # Top-level blocks don't care about operator order.
         line = line[0];
@@ -69,10 +71,12 @@ class Generator():
           # it wants to append a semicolon, or something.
           line = self.scrubNakedValue(line);
 
-        code.append(line);
+        code.append(line);  
+       
+    code = '\n'.join(map(str, code))  # Blank line between each section.
+    
+    code = self.finish(code);    
 
-    code = code.join('\n');  # Blank line between each section.
-    code = self.finish(code);
     # Final scrubbing of whitespace.
     code = code.replace('/^\s+\n/', '');
     code = code.replace('/\n\s+$/', '\n');
