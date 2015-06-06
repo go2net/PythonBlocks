@@ -32,7 +32,7 @@ class Generator():
     # Prior to 24 September 2013 'this' was the only way to access the block.
     # The current prefered method of accessing the block is through the second
     # argument to func.call, which becomes the first parameter to the generator.
-    code = func(block);
+    code = func(self, block);
     if (isinstance(code, list)):
       # Value blocks return tuples of code and operator order.
       return [self.scrub_(block, code[0]), code[1]];
@@ -84,19 +84,21 @@ class Generator():
     return code;  
     
   def valueToCode(self, block, name, order):
+
     if (order == None):
       raise Exception('Expecting valid order from block "' + block.type + '".');
 
     targetBlock = block.getInputTargetBlock(name);
-    print(targetBlock)
-    if (targetBlock == None):
-      return '';
 
+    if (targetBlock == None):
+      return ''
+      
     tuple = self.blockToCode(targetBlock);
     if (tuple == ''):
       # Disabled block.
       return '';
 
+    print (tuple)
     if (not isinstance(tuple, list)):
       # Value blocks must return code and order of operations info.
       # Statement blocks must only return code.

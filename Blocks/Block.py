@@ -170,6 +170,10 @@ class Block():
    def getGenus(self):
      return BlockGenus.getGenusWithName(self.genusName)
 
+   def changeGenusTo(self,  genusName):
+      self.genusName = genusName;
+      self.label = BlockGenus.getGenusWithName(genusName).getInitialLabel();
+
    def hasPlug(self):
      return not (self.plug == None);
 
@@ -185,6 +189,10 @@ class Block():
 
    def hasSiblings(self):
      return self.getGenus().hasSiblings();
+
+   def getSiblingsList(self):
+      return self.getGenus().getSiblingsList()
+
 
    def hasBeforeConnector(self):
       return self.before != None;

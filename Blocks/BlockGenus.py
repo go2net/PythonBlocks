@@ -348,7 +348,7 @@ class BlockGenus():
       * @param root the Element carrying the specifications of the BlockGenuses
       '''
       genusNodes=root.findall("BlockGenuses/BlockGenus"); # look for genus
-
+    
       for genusNode in genusNodes: # find them
          '''
          # # # # # # # # # # # # # # # # # /
@@ -459,32 +459,32 @@ class BlockGenus():
          BlockGenus.nameToGenus[newGenus.genusName] = newGenus
 
 
+      
       # # # # # # # # # # # # # # # # # # /
       # / LOAD BLOCK FAMILY INFORMATION # /
       # # # # # # # # # # # # # # # # # # /
-      families = root.findall("BlockFamily")
-
+      families = root.findall("BlockFamilies/BlockFamily")
       famList = []
       for i in range(0,len(families)):
-         family=families[i];
-         for j in range(0, len(family.childNodes)):
-            member = family.childNodes[j]
-            if (member.tag == ("FamilyMember")): # a family member entry
-               name = member.firstChild.nodeValue
-               #assert BlockGenus.nameToGenus.get(name) != null : "Unknown BlockGenus: "+name;
-               #assert !BlockGenus.nameToGenus.get(name).isLabelEditable : "Genus "+name+" is in a family, but its name is editable";
-               famList.append(name);
+        family=families[i]
+        children = family.getchildren()
+        for j in range(0, len(children)):
+          member = children[j]
+          if (member.tag == ("FamilyMember")): # a family member entry
+             name = member.text
+             #assert BlockGenus.nameToGenus.get(name) != null : "Unknown BlockGenus: "+name;
+             #assert !BlockGenus.nameToGenus.get(name).isLabelEditable : "Genus "+name+" is in a family, but its name is editable";
+             famList.append(name);
 
+        if(len(famList) > 0):
+          for memName in famList:
+            newFamList = famList[:]
+            newFamList.remove(memName); # filter out current memName, so that only
+            # sibling names are included
 
+            BlockGenus.nameToGenus[memName].familyList = newFamList
 
-         if(len(famList) > 0):
-            for memName in famList:
-               newFamList = famList
-               newFamList.remove(memName); # filter out current memName, so that only
-               # sibling names are included
-               BlockGenus.nameToGenus[memName].familyList = newFamList
-
-         famList= []
+        famList= []
 
    def hasSiblings(self):
       '''
@@ -494,6 +494,10 @@ class BlockGenus():
       * @return true if this genus has siblings; False otherwise.
       '''
       return (len(self.familyList) > 0)
+
+   def getSiblingsList(self):
+    return self.familyList
+
 
    def getInitSockets(self):
       '''

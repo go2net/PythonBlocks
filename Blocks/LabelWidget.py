@@ -11,6 +11,7 @@
 from PyQt4 import QtCore,QtGui
 from PyQt4.QtCore import SIGNAL
 class LabelWidget(QtGui.QWidget):
+  DROP_DOWN_MENU_WIDTH = 7;
   def __init__(self,initLabelText,  fieldColor, tooltipBackground):
       QtGui.QWidget.__init__(self)
       
@@ -22,10 +23,11 @@ class LabelWidget(QtGui.QWidget):
       self.tooltipBackground = tooltipBackground;
       self.labelBeforeEdit = initLabelText;
 
-      self.textField = BlockLabelTextField(self)
-      
-
+      self.textField = BlockLabelTextField(self)      
       self.textLabel = ShadowLabel()
+      self.menu = LabelMenu()      
+      self.popupmenu = None
+      
       self.hasSiblings = False
       self.isEditable = False
       self.editingText = False
@@ -62,7 +64,8 @@ class LabelWidget(QtGui.QWidget):
       
       self.textField.setParent(self)
       self.textLabel.setParent(self)
-      
+      self.menu.setParent(self)
+  
   def enterEvent(self,event):
     # print('enterEvent')
     self.suggestEditable(True);
@@ -70,6 +73,11 @@ class LabelWidget(QtGui.QWidget):
   def leaveEvent(self,event):
     #print('leaveEvent')
     self.suggestEditable(False);
+
+
+  def doStuff(self, item):
+    self.fireGenusChanged()
+    pass
     
   def mouseReleaseEvent(self, event):
     # Set to editing state upon mouse click if this block label is editable
@@ -80,8 +88,35 @@ class LabelWidget(QtGui.QWidget):
       self.setEditingState(True);
       #self.textField.setSelectionStart(0);
       self.textField.selectAll()
-      
+    if(self.hasSiblings):
+        self.popupmenu.popup(event.globalPos())
+        
     event.ignore();  
+    
+  def setSiblings(self,  hasSiblings, siblings):
+    self.hasSiblings = hasSiblings;
+    self.menu.setSiblings(siblings);
+    self.updateDimensions()
+    
+    if (self.hasSiblings):
+      self.textField.hide()
+      self.textLabel.hide()    
+      self.menu.show() 
+      
+      self.popupmenu = QtGui.QMenu();
+      # if connected to a block, add self and add siblings
+
+      for sibling in siblings:
+        selfGenus = sibling[0];
+        entry = self.popupmenu.addAction(sibling[1])
+        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda item=selfGenus: self.fireGenusChanged(item))
+     
+      #self.add(self.menu, BorderLayout.EAST);
+    else:
+      self.textField.hide()
+      self.textLabel.show()    
+      self.menu.hide() 
+  
   def textChanged(self):
     if(self.loading): return
 
@@ -116,25 +151,30 @@ class LabelWidget(QtGui.QWidget):
       return self.textLabel.text().strip();
 
   def setText(self,value):
-      self.updateLabelText(str(value).strip());
-      '''
-      if(isinstance(value, basestring)):
-         self.updateLabelText(value.trim());
-      elif(isinstance(value, double)):
-         updateLabelText(str(value));
-      elif(isinstance(value, double)):
-         updateLabelText( "True" if value else "False");
-      '''
+
+    self.updateLabelText(str(value).strip());
+    '''
+    if(isinstance(value, basestring)):
+       self.updateLabelText(value.trim());
+    elif(isinstance(value, double)):
+       updateLabelText(str(value));
+    elif(isinstance(value, double)):
+       updateLabelText( "True" if value else "False");
+    '''
   def setEditable(self,isEditable):
    	self.isEditable = isEditable;
 
   def setEditingState(self,editing) :
+    #print(self.getText())
     if (editing):
       self.editingText = True;
       self.textField.setText(self.textLabel.text().strip());
       self.labelBeforeEdit = self.textLabel.text();
+      
       self.textField.show()
-      self.textLabel.hide()      
+      self.textLabel.hide()    
+      self.menu.hide()  
+      
       self.textField.setFocus()
     else:
       #print(self.editingText)
@@ -151,11 +191,18 @@ class LabelWidget(QtGui.QWidget):
           self.setText(self.textField.toPlainText());
         else:
           self.setText(self.labelBeforeEdit);
+          
   def fireTextChanged(self, text):
     #print("abstract fireTextChanged")
     pass
+    
+  def fireGenusChanged(self, text):
+    #print("abstract fireTextChanged")
+    pass
+  
 
   def updateLabelText(self,text):
+
     # leave some space to click on
     if (text == ""):
        text = "     ";
@@ -163,10 +210,12 @@ class LabelWidget(QtGui.QWidget):
     #update the text everywhere
     self.textLabel.setText(text);
     self.textField.setText(text);
-
+    self.menu.setText(text);
+    
     self.textLabel.adjustSize()
     self.textField.adjustSize()
-
+    self.menu.adjustSize()
+    
     # resize to new text
     self.updateDimensions();
 
@@ -182,12 +231,16 @@ class LabelWidget(QtGui.QWidget):
     # show text label and additional ComboPopup if one exists
     #self.textField.setParent(None)
     #self.textLabel.setParent(self)
-    self.textField.hide()
-    self.textLabel.show()
-    #if (self.hasSiblings):
-    #   self.add(self.menu, BorderLayout.EAST);
 
-
+    if (self.hasSiblings):
+      self.textField.hide()
+      self.textLabel.hide()    
+      self.menu.show() 
+      #self.add(self.menu, BorderLayout.EAST);
+    else:
+      self.textField.hide()
+      self.textLabel.show()
+      self.menu.hide()
 
   def updateDimensions(self):
     
@@ -199,15 +252,22 @@ class LabelWidget(QtGui.QWidget):
         self.textField.width()+5,
         self.textField.height());
     else:
-      updatedDimension = QtCore.QSize(
-        self.textLabel.width()+5,
-        self.textLabel.height());
+      if (self.hasSiblings):
+        updatedDimension = QtCore.QSize(
+          self.menu.width()+5,
+          self.menu.height());     
+      else:
+        updatedDimension = QtCore.QSize(
+          self.textLabel.width()+5,
+          self.textLabel.height());
         
     if(self.hasSiblings):
-       updatedDimension.width += LabelWidget.DROP_DOWN_MENU_WIDTH;
+       updatedDimension.setWidth( self.textLabel.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
 
     self.textField.resize(updatedDimension);
     self.textLabel.resize(updatedDimension);
+    self.menu.resize(updatedDimension);
+    
     self.resize(updatedDimension);
     #self.fireDimensionsChanged(this.getSize());
 
@@ -215,6 +275,7 @@ class LabelWidget(QtGui.QWidget):
   def setFont(self,font):
       self.textField.setCurrentFont(font)
       self.textLabel.setFont(font)
+      self.menu.setFont(font)
 
 class BlockLabelTextField(QtGui.QTextEdit):
   def __init__(self, labelWidget):    
@@ -248,6 +309,64 @@ class BlockLabelTextField(QtGui.QTextEdit):
     pixelsHigh = fm.boundingRect(str).height();
 
     return QtCore.QSize(pixelsWide+6,pixelsHigh)
+
+
+
+      
+class LabelMenu111(QtGui.QLabel):
+
+  def __init__(self):
+    QtGui.QLabel.__init__(self)
+    #self.popupmenu = QtGui.QMenu
+    #self.triangle = QtGui.QPainterPath()    
+    #self.setOpaque(false);
+    #self.addMouseListener(this);
+    #self.addMouseMotionListener(this);
+    #self.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    #self.popupmenu = QtGui.QMenu();
+
+    '''
+     * @param siblings = array of siblin's genus and initial label
+     *  { {genus, label}, {genus, label}, {genus, label} ....}
+    '''
+  def setSiblings(self, siblings):
+    self.popupmenu = QtGui.QMenu();
+    # if connected to a block, add self and add siblings
+    for i in range(0, len(siblings)):
+      selfGenus = siblings[i][0];
+      #selfItem = QtGui.QMenuItem(siblings[i][1]);
+      
+      #selfItem.addActionListener(new ActionListener(){
+      #  public void actionPerformed(ActionEvent e){
+      #      fireGenusChanged(selfGenus);
+      #      showMenuIcon(false);
+      #    }
+      #  });
+      #self.popupmenu.add(selfItem);
+
+    def contains(self,  p):
+      return self.triangle != None and self.triangle.contains(p);
+
+    def paintEvent(self,event):
+      print('paintEvent')
+      QtGui.QWidget.paintEvent(self,event)
+      painter = QtGui.QPainter();
+      painter.begin(self)
+      painter.setRenderHint(QtGui.QPainter.Antialiasing, True)
+      
+      triangle = QtGui.QPainterPath()  
+      triangle.moveTo(0,self.height()/4);
+      triangle.lineTo(self.width()-1, self.height()/4);
+      triangle.lineTo(self.width()/2-1, self.height()/4+LabelWidget.DROP_DOWN_MENU_WIDTH);
+      triangle.lineTo(0, self.height()/4);
+      triangle.closePath();
+    
+      painter.setColor(QtGui.QColor(255,255,255,100));
+      painter.fill(triangle);
+      painter.setColor(QtGui.QColor.BLACK);
+      painter.draw(triangle);
+      painter.end()
+      
 
 class ShadowLabel(QtGui.QLabel):
 
@@ -283,6 +402,7 @@ class ShadowLabel(QtGui.QLabel):
       return QtCore.QSize(pixelsWide,pixelsHigh)    
     
   def paintEvent(self,event):
+      #print('ShadowLabel paintEvent')
       #QtGui.QLabel.paintEvent(self,event)
       #return
       painter = QtGui.QPainter();
@@ -311,3 +431,82 @@ class ShadowLabel(QtGui.QLabel):
       #painter.drawText(0, 0,self.text());
 
       painter.end()
+      
+      
+class LabelMenu(ShadowLabel):
+
+  shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
+  shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
+
+  def __init__(self):
+      ShadowLabel.__init__(self)
+      self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
+      self.popupmenu = QtGui.QMenu();
+      #self.offsetSize = 1;
+      #self.setMargin(0)
+      #self.setIndent(0)
+      #self.setStyleSheet("padding:0;")
+      #self.document().setDocumentMargin(0)
+      #self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+      #self.setVerticalScrollBarPolicy (QtCore.Qt.ScrollBarAlwaysOff)
+      #self.setFrameShape(QtGui.QFrame.NoFrame)
+      #self.setStyleSheet("border:1px solid rgb(255, 255, 255); ")
+  #def enterEvent(self,event):
+  #  self.labelWidget.suggestEditable(True);
+    
+  #def leaveEvent(self,event):
+  #  self.labelWidget.suggestEditable(False);
+
+    
+  def setSiblings(self, siblings):
+    self.popupmenu = QtGui.QMenu();
+    # if connected to a block, add self and add siblings
+
+    for sibling in siblings:
+      #selfGenus = sibling[0];
+      entry = self.popupmenu.addAction(sibling[1])
+      self.connect(entry,QtCore.SIGNAL('triggered()'), lambda item=sibling[1]: self.doStuff(item))
+      #selfItem = QtGui.QMenuItem(siblings[i][1]);
+      
+      #selfItem.addActionListener(new ActionListener(){
+      #  public void actionPerformed(ActionEvent e){
+      #      fireGenusChanged(selfGenus);
+      #      showMenuIcon(false);
+      #    }
+      #  });
+      #self.popupmenu.add(selfItem);
+    
+  def getPreferredSize(self):
+      return ShadowLabel.getPreferredSize(self)
+      str = self.text()
+      # gather font metrics in QTextEdit
+      textEditFont = self.font();
+      fm = QtGui.QFontMetrics(textEditFont);
+
+      pixelsWide = fm.boundingRect(str).width()+1;
+      pixelsHigh = fm.boundingRect(str).height()+1;
+
+      return QtCore.QSize(pixelsWide,pixelsHigh)    
+    
+  def paintEvent(self,event):
+    ShadowLabel.paintEvent(self,event)
+    #return
+    painter = QtGui.QPainter();
+    painter.begin(self)
+    painter.setRenderHint(QtGui.QPainter.Antialiasing, True)
+    
+    triangle = QtGui.QPainterPath()  
+    triangle_left = self.width()-LabelWidget.DROP_DOWN_MENU_WIDTH-3
+    triangle.moveTo(triangle_left,self.height()/3);
+    triangle.lineTo(self.width()-3, self.height()/3);
+    triangle.lineTo(triangle_left +LabelWidget.DROP_DOWN_MENU_WIDTH/2, self.height()/3+LabelWidget.DROP_DOWN_MENU_WIDTH-3);
+    triangle.lineTo(triangle_left, self.height()/3);
+    triangle.closeSubpath()
+
+    brush = QtGui.QBrush(QtGui.QColor(255,255,255,255));
+    #painter.setColor(QtGui.QColor(255,255,255,100));
+    painter.fillPath(triangle,brush)
+    painter.setPen(QtGui.QColor(0, 0, 0, 255));
+    #painter.setColor(QtGui.QColor.BLACK);
+    #painter.drawPath(triangle);
+    painter.end()

@@ -678,6 +678,17 @@ class RenderableBlock(QtGui.QWidget):
          curBlockID = Block.getBlock(curBlockID).getAfterBlockID();
 
       return finalDimension;
+   def repaintBlock(self):
+      self.clearBufferedImage();
+
+      if(self.isVisible()):
+        # NOTE: If it's not visible, this will throw an exception.
+        # as during the redraw, it will try to access location information
+        # of this
+        self.repaint();
+        #self.highlighter.repaint();
+
+
 
    #
    # Clears the BufferedImage of this

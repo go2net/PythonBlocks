@@ -1,4 +1,5 @@
 from Blocks.Generator import Generator
+
 import re
 
 class PythonGen(Generator):
@@ -34,10 +35,14 @@ class PythonGen(Generator):
   PASS = '  pass\n';
 
   def __init__(self, workspace):
+    from Generators.Python import Logic
     Generator.__init__(self,workspace)
     self.name_ = "Python"
-    self.functions["controls_if"] = self.controls_if
-    self.functions["if"] = self.ifBlock
+    
+    self.functions["controls_if"] = Logic.controls_if
+    self.functions["if"] = Logic.ifBlock
+    self.functions["true"] = Logic.true_
+    
     self.definitions_ = {}
 
   def scrub_(self, block, code):
@@ -105,49 +110,3 @@ class PythonGen(Generator):
     return allDefs + code;
 
 
-  def controls_if(self, block):
-    # If/elseif/else condition.
-    n = 0;
-    argument = self.valueToCode(
-      block, 
-      'IF' + n, 
-      PythonGen.ORDER_NONE) or 'False';
- 
-    branch = self.statementToCode(block, 'DO' + n) or PythonGen.PASS;
-    code = 'if ' + argument + ':\n' + branch;
-    for n in range(1, block.elseifCount+1):
-      argument = self.valueToCode(block, 'IF' + n,
-          PythonGen.ORDER_NONE) or 'False';
-      branch = self.statementToCode(block, 'DO' + n) or PythonGen.PASS;
-      code += 'elif ' + argument + ':\n' + branch;
-
-    if (block.elseCount_):
-      branch = self.statementToCode(block, 'ELSE') or PythonGen.PASS;
-      code += 'else:\n' + branch;
-    return code;
-
-  def ifBlock(self, block):
-    # If/elseif/else condition.
-    #n = 0;
-    argument = self.valueToCode(
-      block, 
-      'TEST', 
-      PythonGen.ORDER_NONE) or 'False';
-      
-    #print("argument="+argument)  
-    branch = self.statementToCode(block, 'THEN') or PythonGen.PASS;
-    code = 'if ' + argument + ':\n' + branch;
-    #print (code)
-    
-    '''
-    for n in range(1, block.elseifCount+1):
-      argument = self.valueToCode(block, 'IF' + n,
-          PythonGen.ORDER_NONE) or 'False';
-      branch = self.statementToCode(block, 'DO' + n) or PythonGen.PASS;
-      code += 'elif ' + argument + ':\n' + branch;
-
-    if (block.elseCount_):
-      branch = self.statementToCode(block, 'ELSE') or PythonGen.PASS;
-      code += 'else:\n' + branch;
-    '''
-    return code;

@@ -15,7 +15,7 @@ from PyQt4 import QtGui
 class NameLabel(BlockLabel):
 
    def __init__(self, initLabelText, labelType, isEditable, blockID):
-      BlockLabel.__init__(self,initLabelText, labelType, isEditable, blockID, False, QtGui.QColor(255,255,225))
+      BlockLabel.__init__(self,initLabelText, labelType, isEditable, blockID, True, QtGui.QColor(255,255,225))
       self.blockID = blockID;
 
 
