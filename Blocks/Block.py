@@ -170,9 +170,9 @@ class Block():
    def getGenus(self):
      return BlockGenus.getGenusWithName(self.genusName)
 
-   def changeGenusTo(self,  genusName):
-      self.genusName = genusName;
-      self.label = BlockGenus.getGenusWithName(genusName).getInitialLabel();
+   def changeLabelTo(self,  label):
+      #self.genusName = genusName;
+      self.label = label #BlockGenus.getGenusWithName(genusName).getInitialLabel();
 
    def hasPlug(self):
      return not (self.plug == None);

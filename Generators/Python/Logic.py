@@ -47,6 +47,6 @@ def ifBlock(pythonGen, block):
   '''
   return code;
   
-def true_(pythonGen, block):
-
-  return ["True", pythonGen.ORDER_ATOMIC];
+def boolean_(pythonGen, block):
+  code = 'True' if block.getBlockLabel()=='true' else 'False'
+  return [code, pythonGen.ORDER_ATOMIC];

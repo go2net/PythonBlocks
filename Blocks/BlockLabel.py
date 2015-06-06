@@ -61,29 +61,32 @@ class BlockLabel():
       if (Block.getBlock(blockID).hasSiblings()) :
         #/Map<String, String> siblings = new HashMap<String, String>();
         siblingsNames = Block.getBlock(blockID).getSiblingsList();
+        print(siblingsNames)
         siblings = []
         sibling = [Block.getBlock(blockID).getGenusName(), Block.getBlock(blockID).getInitialLabel()]
         siblings.append(sibling)
         for i in range(0,  len(siblingsNames)):
-          siblings.append([siblingsNames[i], BlockGenus.getGenusWithName(siblingsNames[i]).getInitialLabel()])
-
-        self.widget.setSiblings(hasComboPopup and Block.getBlock(blockID).hasSiblings(), siblings);
+          #print(siblingsNames[i])
+          oldBlock = Block.getBlock(self.blockID)
+          siblings.append([siblingsNames[i], BlockGenus.getGenusWithName(oldBlock.getGenusName()).getInitialLabel()])
+        
+        #print(siblings)
+        self.widget.setSiblings(hasComboPopup and Block.getBlock(blockID).hasSiblings(), siblingsNames);
       
       self.widget.fireTextChanged = self.textChanged
-      self.widget.fireGenusChanged = self.genusChanged
+      self.widget.fireGenusChanged = self.labelChanged
 
-  def genusChanged(self, genus):
+  def labelChanged(self, label):
     from Blocks.RenderableBlock import RenderableBlock
     if(self.widget.hasSiblings):
       oldBlock = Block.getBlock(self.blockID);
-      oldBlock.changeGenusTo(genus);
+      oldBlock.changeLabelTo(label);
       rb = RenderableBlock.getRenderableBlock(self.blockID);
       rb.repaintBlock();
       #Workspace.getInstance().notifyListeners(new WorkspaceEvent(rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_GENUS_CHANGED));
 
   def textChanged(self, text):
     from Blocks.RenderableBlock import RenderableBlock
-    print("textChanged")
     if (self.labelType == BlockLabel.Type.NAME_LABEL or 
         self.labelType == BlockLabel.Type.PORT_LABEL) and  (Block.getBlock(self.blockID).isLabelEditable()):
       if (self.labelType == (BlockLabel.Type.NAME_LABEL)):

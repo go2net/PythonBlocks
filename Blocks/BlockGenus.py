@@ -467,6 +467,10 @@ class BlockGenus():
       famList = []
       for i in range(0,len(families)):
         family=families[i]
+        genusName = ''
+        if("name" in family.attrib):
+           genusName = family.attrib["name"]
+               
         children = family.getchildren()
         for j in range(0, len(children)):
           member = children[j]
@@ -477,12 +481,17 @@ class BlockGenus():
              famList.append(name);
 
         if(len(famList) > 0):
-          for memName in famList:
-            newFamList = famList[:]
-            newFamList.remove(memName); # filter out current memName, so that only
-            # sibling names are included
 
-            BlockGenus.nameToGenus[memName].familyList = newFamList
+          if(genusName  != ''):
+            newFamList = famList[:]
+            BlockGenus.nameToGenus[genusName].familyList = newFamList
+          #else:
+          #  for memName in famList:
+          #    newFamList = famList[:]
+          #    newFamList.remove(memName); # filter out current memName, so that only
+          #    # sibling names are included
+
+          #    BlockGenus.nameToGenus[memName].familyList = newFamList
 
         famList= []
 

@@ -31,6 +31,9 @@ class LabelWidget(QtGui.QWidget):
       self.hasSiblings = False
       self.isEditable = False
       self.editingText = False
+      self.isPressed = False
+      
+      self.lastSelectedItem = None
       #self.setFocusPolicy(QtCore.Qt.StrongFocus)
       
       # set up textfield colors
@@ -75,11 +78,22 @@ class LabelWidget(QtGui.QWidget):
     self.suggestEditable(False);
 
 
-  def doStuff(self, item):
-    self.fireGenusChanged()
+  def doStuff(self, sender, item):
+    if(sender != self.lastSelectedItem):
+      self.lastSelectedItem.setChecked(False)
+      sender.setChecked(True)
+      self.lastSelectedItem = sender
+    
+    self.fireGenusChanged(item)
     pass
+   
+  
+  def mousePressEvent(self, event):
+    self.isPressed = True
+    event.ignore();  
     
   def mouseReleaseEvent(self, event):
+    if(not self.isPressed): return
     # Set to editing state upon mouse click if this block label is editable
     # if clicked and if the label is editable,
     if (self.isEditable):
@@ -107,9 +121,13 @@ class LabelWidget(QtGui.QWidget):
       # if connected to a block, add self and add siblings
 
       for sibling in siblings:
-        selfGenus = sibling[0];
-        entry = self.popupmenu.addAction(sibling[1])
-        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda item=selfGenus: self.fireGenusChanged(item))
+        selfGenus = sibling
+        entry = self.popupmenu.addAction(sibling)
+        entry.setCheckable (True)
+        if(selfGenus == self.getText()):
+          entry.setChecked(True)
+          self.lastSelectedItem = entry
+        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=selfGenus: self.doStuff(sender, item))
      
       #self.add(self.menu, BorderLayout.EAST);
     else:
@@ -118,12 +136,18 @@ class LabelWidget(QtGui.QWidget):
       self.menu.hide() 
   
   def textChanged(self):
+
     if(self.loading): return
 
-    self.textLabel.setText(self.textField.toPlainText());
-    self.textLabel.adjustSize()
+    if (self.hasSiblings):
+      self.menu.setText(self.textField.toPlainText());
+      self.menu.adjustSize()
+    else:
+      self.textLabel.setText(self.textField.toPlainText());
+      self.textLabel.adjustSize()
+    
     self.updateDimensions();
-
+      
     self.fireTextChanged(self.textField.toPlainText());
     
   def suggestEditable(self, suggest):
@@ -221,22 +245,11 @@ class LabelWidget(QtGui.QWidget):
 
     #the blockLabel needs to update the data in Block
     self.fireTextChanged(text);
-    
-    #print(self.editingText)
-    #print("x:{0},y:{1},w:{2},h:{3}".format(self.textLabel.x(), 
-    #self.textLabel.y(), 
-    #self.width(), 
-    #self.height()))
-         
-    # show text label and additional ComboPopup if one exists
-    #self.textField.setParent(None)
-    #self.textLabel.setParent(self)
 
     if (self.hasSiblings):
       self.textField.hide()
       self.textLabel.hide()    
       self.menu.show() 
-      #self.add(self.menu, BorderLayout.EAST);
     else:
       self.textField.hide()
       self.textLabel.show()
@@ -262,12 +275,12 @@ class LabelWidget(QtGui.QWidget):
           self.textLabel.height());
         
     if(self.hasSiblings):
-       updatedDimension.setWidth( self.textLabel.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
+      updatedDimension.setWidth( updatedDimension.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
 
     self.textField.resize(updatedDimension);
     self.textLabel.resize(updatedDimension);
     self.menu.resize(updatedDimension);
-    
+
     self.resize(updatedDimension);
     #self.fireDimensionsChanged(this.getSize());
 
