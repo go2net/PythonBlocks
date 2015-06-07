@@ -32,7 +32,7 @@ class LabelWidget(QtGui.QWidget):
       self.isEditable = False
       self.editingText = False
       self.isPressed = False
-      
+      self.menuShowed = False
       self.lastSelectedItem = None
       #self.setFocusPolicy(QtCore.Qt.StrongFocus)
       
@@ -80,11 +80,12 @@ class LabelWidget(QtGui.QWidget):
 
   def doStuff(self, sender, item):
     if(sender != self.lastSelectedItem):
-      self.lastSelectedItem.setChecked(False)
-      sender.setChecked(True)
+      if(self.lastSelectedItem != None):
+        self.lastSelectedItem.setChecked(False)      
       self.lastSelectedItem = sender
-    
-    self.fireGenusChanged(item)
+  
+    sender.setChecked(True)
+    self.fireGenusChanged(item[1])
     pass
    
   
@@ -103,7 +104,12 @@ class LabelWidget(QtGui.QWidget):
       #self.textField.setSelectionStart(0);
       self.textField.selectAll()
     if(self.hasSiblings):
-        self.popupmenu.popup(event.globalPos())
+      #if(self.popupmenu.isVisible()):
+      #  self.popupmenu.hide()
+        #self.menuShowed = False
+      #else:
+      self.popupmenu.popup(event.globalPos())
+        #self.menuShowed = True
         
     event.ignore();  
     
@@ -121,13 +127,12 @@ class LabelWidget(QtGui.QWidget):
       # if connected to a block, add self and add siblings
 
       for sibling in siblings:
-        selfGenus = sibling
-        entry = self.popupmenu.addAction(sibling)
+        entry = self.popupmenu.addAction(sibling[1])
         entry.setCheckable (True)
-        if(selfGenus == self.getText()):
+        if(sibling[1] == self.getText()):
           entry.setChecked(True)
           self.lastSelectedItem = entry
-        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=selfGenus: self.doStuff(sender, item))
+        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=sibling: self.doStuff(sender, item))
      
       #self.add(self.menu, BorderLayout.EAST);
     else:

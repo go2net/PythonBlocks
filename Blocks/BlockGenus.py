@@ -475,10 +475,11 @@ class BlockGenus():
         for j in range(0, len(children)):
           member = children[j]
           if (member.tag == ("FamilyMember")): # a family member entry
-             name = member.text
-             #assert BlockGenus.nameToGenus.get(name) != null : "Unknown BlockGenus: "+name;
-             #assert !BlockGenus.nameToGenus.get(name).isLabelEditable : "Genus "+name+" is in a family, but its name is editable";
-             famList.append(name);
+            name = member.text
+            label = name
+            if("label" in member.attrib):
+              label = member.attrib["label"]              
+            famList.append([name,label] );
 
         if(len(famList) > 0):
 

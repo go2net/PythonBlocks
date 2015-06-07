@@ -33,6 +33,7 @@ class Block():
 
       #print ("id=%d,NEXT_ID=%d"%(id,Block.NEXT_ID))
       if (label == None):
+         print(genusName)
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
 
       if (id in Block.ALL_BLOCKS):
