@@ -50,3 +50,10 @@ def ifBlock(pythonGen, block):
 def boolean(pythonGen, block):
   code = 'True' if block.getBlockLabel()=='true' else 'False'
   return [code, pythonGen.ORDER_ATOMIC];
+
+def print_(pythonGen, block):
+  # Print statement.
+  argument0 = "\'Hello\'" #pythonGen.valueToCode(block, 'TEXT',
+  #    PythonGen.ORDER_NONE) or '\'\'';
+  
+  return 'print(' + argument0 + ')\n';

@@ -42,6 +42,7 @@ class PythonGen(Generator):
     self.functions["controls_if"] = Logic.controls_if
     self.functions["if"] = Logic.ifBlock
     self.functions["boolean"] = Logic.boolean
+    self.functions["print"] = Logic.print_
     
     self.definitions_ = {}
 

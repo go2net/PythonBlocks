@@ -87,7 +87,9 @@ class WorkspaceController():
 
       try:
          langDefLocation = os.getcwd() + "\\"+ self.LANG_DEF_FILEPATH
-         self.langDefRoot = etree.parse(langDefLocation).getroot()
+         tree = etree.parse(langDefLocation)
+         self.langDefRoot = tree.getroot()
+
          # set the dirty flag for the language definition file
          # to true now that a new file has been set
          self.langDefDirty = True;

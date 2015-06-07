@@ -2,6 +2,7 @@
 class Generator():
   def __init__(self, workspace):
     self.STATEMENT_PREFIX = None
+    self.INDENT = '  ';
     self.workspace = workspace
     self.functions = {}
 
@@ -124,6 +125,10 @@ class Generator():
         # However all known (sane) languages use parentheses for grouping.
         code = '(' + code + ')';
     return code;
+    
+  def prefixLines(self, text, prefix) :
+    return prefix + text.replace('/\n(.)/g', '\n' + prefix + '$1');
+
 
 
   def statementToCode(self, block, name) :
@@ -136,12 +141,15 @@ class Generator():
     targetBlock = block.getInputTargetBlock(name);
     if (targetBlock == None):
       return '';
-      
+    print('***')  
     code = self.blockToCode(targetBlock);
-    if (not isinstance(tuple, str)):
-      # Value blocks must return code and order of operations info.
-      # Statement blocks must only return code.
-      raise Exception('Expecting code from statement block "' + targetBlock.type + '".');
+    print(code)
+    print('***')  
+
+    #if (not isinstance(code, str)):
+    #  # Value blocks must return code and order of operations info.
+    #  # Statement blocks must only return code.
+    #  raise Exception('Expecting code from statement block "' + targetBlock.type + '".');
 
     if (code != None) :
       code = self.prefixLines(code, self.INDENT);
