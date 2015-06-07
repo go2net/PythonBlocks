@@ -61,7 +61,7 @@ class BlockLabel():
       if (Block.getBlock(blockID).hasSiblings()) :
         #/Map<String, String> siblings = new HashMap<String, String>();
         siblingsNames = Block.getBlock(blockID).getSiblingsList();
-        print(siblingsNames)
+        #print(siblingsNames)
         siblings = []
         sibling = [Block.getBlock(blockID).getGenusName(), Block.getBlock(blockID).getInitialLabel()]
         siblings.append(sibling)

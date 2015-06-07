@@ -329,63 +329,6 @@ class BlockLabelTextField(QtGui.QTextEdit):
     return QtCore.QSize(pixelsWide+6,pixelsHigh)
 
 
-
-      
-class LabelMenu111(QtGui.QLabel):
-
-  def __init__(self):
-    QtGui.QLabel.__init__(self)
-    #self.popupmenu = QtGui.QMenu
-    #self.triangle = QtGui.QPainterPath()    
-    #self.setOpaque(false);
-    #self.addMouseListener(this);
-    #self.addMouseMotionListener(this);
-    #self.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    #self.popupmenu = QtGui.QMenu();
-
-    '''
-     * @param siblings = array of siblin's genus and initial label
-     *  { {genus, label}, {genus, label}, {genus, label} ....}
-    '''
-  def setSiblings(self, siblings):
-    self.popupmenu = QtGui.QMenu();
-    # if connected to a block, add self and add siblings
-    for i in range(0, len(siblings)):
-      selfGenus = siblings[i][0];
-      #selfItem = QtGui.QMenuItem(siblings[i][1]);
-      
-      #selfItem.addActionListener(new ActionListener(){
-      #  public void actionPerformed(ActionEvent e){
-      #      fireGenusChanged(selfGenus);
-      #      showMenuIcon(false);
-      #    }
-      #  });
-      #self.popupmenu.add(selfItem);
-
-    def contains(self,  p):
-      return self.triangle != None and self.triangle.contains(p);
-
-    def paintEvent(self,event):
-      print('paintEvent')
-      QtGui.QWidget.paintEvent(self,event)
-      painter = QtGui.QPainter();
-      painter.begin(self)
-      painter.setRenderHint(QtGui.QPainter.Antialiasing, True)
-      
-      triangle = QtGui.QPainterPath()  
-      triangle.moveTo(0,self.height()/4);
-      triangle.lineTo(self.width()-1, self.height()/4);
-      triangle.lineTo(self.width()/2-1, self.height()/4+LabelWidget.DROP_DOWN_MENU_WIDTH);
-      triangle.lineTo(0, self.height()/4);
-      triangle.closePath();
-    
-      painter.setColor(QtGui.QColor(255,255,255,100));
-      painter.fill(triangle);
-      painter.setColor(QtGui.QColor.BLACK);
-      painter.draw(triangle);
-      painter.end()
-      
-
 class ShadowLabel(QtGui.QLabel):
 
   shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];

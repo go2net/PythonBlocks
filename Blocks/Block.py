@@ -33,7 +33,6 @@ class Block():
 
       #print ("id=%d,NEXT_ID=%d"%(id,Block.NEXT_ID))
       if (label == None):
-         print(genusName)
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
 
       if (id in Block.ALL_BLOCKS):
@@ -585,7 +584,6 @@ class Block():
       pattern = "(.*)"
       # Matcher nameMatcher;
       
-      print(node.tag)
       if (node.tag == ("BlockStub")):
          isStubBlock = True;
          blockNode = None;
@@ -620,7 +618,6 @@ class Block():
          children = node.getchildren()
 
          for child in children:
-            print(child.tag)
             if (child.tag == ("Label")):
                  label = child.getTextContent();
             elif (child.tag == ("PageLabel")):
