@@ -519,7 +519,7 @@
 	
 		<!-- MATH -->
 		
-		<BlockGenus name="pi" kind="function" initlabel="¦Ð" color="255 0 255">
+		<BlockGenus name="pi" kind="function" initlabel="Ï€" color="255 0 255">
 			<description>
 				<text>
 					Reports the value of PI (approximately 3.14).
@@ -570,10 +570,10 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="quotient" kind="function" initlabel="¡Â" color="15 20 220">
+		<BlockGenus name="quotient" kind="function" initlabel="Ã·" color="15 20 220">
 			<description>
 				<text>
-					Reports the quotient of  two numbers (<arg n="1"/> ¡Â <arg n="2"/>).
+					Reports the quotient of  two numbers (<arg n="1"/> Ã· <arg n="2"/>).
 				</text>
 				<arg-description n="1" doc-name="left value">
 				</arg-description>

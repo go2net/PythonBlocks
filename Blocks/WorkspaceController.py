@@ -14,21 +14,24 @@ import os
 
 try:
   from lxml import etree
+  from lxml import ElementInclude
   print("running with lxml.etree")
 except ImportError:
   try:
     # Python 2.5
     import xml.etree.cElementTree as etree
+    from xml.etree import ElementInclude
     print("running with cElementTree on Python 2.5+")
   except ImportError:
     try:
       # Python 2.5
       import xml.etree.ElementTree as etree
+      from xml.etree import ElementInclude
       print("running with ElementTree on Python 2.5+")
     except ImportError:
       try:
         # normal cElementTree install
-        import cElementTree as etree
+        import cElementTree as etree        
         print("running with cElementTree")
       except ImportError:
         try:
@@ -88,8 +91,9 @@ class WorkspaceController():
       try:
          langDefLocation = os.getcwd() + "\\"+ self.LANG_DEF_FILEPATH
          tree = etree.parse(langDefLocation)
-         self.langDefRoot = tree.getroot()
-
+         root = tree.getroot()
+         ElementInclude.include(root)
+         self.langDefRoot = root
          # set the dirty flag for the language definition file
          # to true now that a new file has been set
          self.langDefDirty = True;
