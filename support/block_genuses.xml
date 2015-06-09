@@ -1208,7 +1208,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="setshape" kind="command" initlabel="set shape" color="27 180 225">
+		<BlockGenus name="setshape" kind="command" initlabel="set shape" label-prefix='"' label-suffix='"' color="27 180 225">
 			<description>
 				<text>
 					Causes this agent to change its shape to the supplied shape.

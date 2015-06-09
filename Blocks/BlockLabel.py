@@ -28,7 +28,7 @@ class BlockLabel():
   blockFontMedium_Plain = QtGui.QFont("Arial",  8, QtGui.QFont.Normal);
   blockFontLarge_Plain  = QtGui.QFont("Arial", 10, QtGui.QFont.Normal);
 
-  def __init__(self,initLabelText, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
+  def __init__(self,initLabelText, prefix, suffix, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
       from Blocks.RenderableBlock import RenderableBlock
       from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
       from Blocks.BlockGenus import BlockGenus
@@ -55,7 +55,7 @@ class BlockLabel():
       	self.widget.setFont(BlockLabel.blockFontMedium_Bold);
       
       # set initial text
-      self.widget.updateLabelText(initLabelText);
+      self.widget.updateLabelText(initLabelText, prefix, suffix);
       # add and show the textLabel initially
       self.widget.setEditingState(False);
       if (Block.getBlock(blockID).hasSiblings()) :

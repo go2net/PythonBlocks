@@ -13,7 +13,7 @@ from PyQt4 import QtGui
 
 class PageLabel(BlockLabel):
    def __init__(self,initLabelText, labelType, isEditable, blockID):
-      BlockLabel.__init__(self,initLabelText, labelType, isEditable, blockID, False, QtGui.QColor(255,255,0));
+      BlockLabel.__init__(self,initLabelText, '', '', labelType, isEditable, blockID, False, QtGui.QColor(255,255,0));
 
    def update(self):
       x = 5;

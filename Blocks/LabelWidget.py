@@ -15,6 +15,10 @@ class LabelWidget(QtGui.QWidget):
   def __init__(self,initLabelText,  fieldColor, tooltipBackground):
       QtGui.QWidget.__init__(self)
       
+      layout  = QtGui.QHBoxLayout()
+      self.setLayout(layout);
+      self.layout().setContentsMargins(0, 0, 0, 0)
+      
       self.loading  = True;
       
       if(initLabelText == None): initLabelText = "";
@@ -23,9 +27,12 @@ class LabelWidget(QtGui.QWidget):
       self.tooltipBackground = tooltipBackground;
       self.labelBeforeEdit = initLabelText;
 
+      self.labelPrefix = ShadowLabel(self)
+      self.labelSuffix = ShadowLabel(self)
+
       self.textField = BlockLabelTextField(self)      
-      self.textLabel = ShadowLabel()
-      self.menu = LabelMenu()      
+      self.textLabel = ShadowLabel(self)
+      self.menu = LabelMenu(self)      
       self.popupmenu = None
       
       self.hasSiblings = False
@@ -63,11 +70,15 @@ class LabelWidget(QtGui.QWidget):
       #                                     )
       #self.textLabel.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
       
+      #layout.addWidget(self.labelPrefix);
+      #layout.addWidget(self.textLabel);
+      #layout.addWidget(self.labeSuffix);
+      
       self.loading  = False;
       
-      self.textField.setParent(self)
-      self.textLabel.setParent(self)
-      self.menu.setParent(self)
+      #self.textField.setParent(self)
+      #self.textLabel.setParent(self)
+      #self.menu.setParent(self)
   
   def enterEvent(self,event):
     # print('enterEvent')
@@ -179,9 +190,9 @@ class LabelWidget(QtGui.QWidget):
   def getText(self):
       return self.textLabel.text().strip();
 
-  def setText(self,value):
+  def setText(self,text, prefix='',  suffix='' ):
 
-    self.updateLabelText(str(value).strip());
+    self.updateLabelText(str(text).strip(), prefix, suffix);
     '''
     if(isinstance(value, basestring)):
        self.updateLabelText(value.trim());
@@ -230,17 +241,33 @@ class LabelWidget(QtGui.QWidget):
     pass
   
 
-  def updateLabelText(self,text):
+  def updateLabelText(self,text, prefix,  suffix ):
 
     # leave some space to click on
     if (text == ""):
        text = "     ";
     #print(text)
     #update the text everywhere
+       
+    self.labelPrefix.setText(prefix)
+    self.labelSuffix.setText(suffix) 
+    
+    if(prefix == ''):
+      self.labelPrefix.hide()
+    else:
+      self.labelPrefix.show()
+      
+    if(suffix == ''):
+      self.labelSuffix.hide()
+    else:
+      self.labelSuffix.show()      
+    
     self.textLabel.setText(text);
     self.textField.setText(text);
     self.menu.setText(text);
     
+    self.labelPrefix.adjustSize()
+    self.labelSuffix.adjustSize()      
     self.textLabel.adjustSize()
     self.textField.adjustSize()
     self.menu.adjustSize()
@@ -261,43 +288,71 @@ class LabelWidget(QtGui.QWidget):
       self.menu.hide()
 
   def updateDimensions(self):
-    
-    if(self.editingText):
-      self.textField.resize(self.textLabel.width(),
-        self.textLabel.height());  
-        
-      updatedDimension = QtCore.QSize(
-        self.textField.width()+5,
-        self.textField.height());
-    else:
-      if (self.hasSiblings):
-        updatedDimension = QtCore.QSize(
-          self.menu.width()+5,
-          self.menu.height());     
-      else:
-        updatedDimension = QtCore.QSize(
-          self.textLabel.width()+5,
-          self.textLabel.height());
-        
-    if(self.hasSiblings):
-      updatedDimension.setWidth( updatedDimension.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
 
-    self.textField.resize(updatedDimension);
-    self.textLabel.resize(updatedDimension);
-    self.menu.resize(updatedDimension);
+    if(self.labelPrefix.text()!=''):
+      self.labelPrefix.resize(self.labelPrefix.width()+4,
+        self.labelPrefix.height());  
+    else:
+      self.labelPrefix.resize(0, 0)
+    
+    if(self.labelSuffix.text()!=''):
+      self.labelSuffix.resize(self.labelSuffix.width()+4,
+        self.labelSuffix.height());         
+    else:
+      self.labelSuffix.resize(0, 0)
+      
+    if(self.editingText):
+      self.textField.resize(self.textField.width()+5,
+        self.textField.height());  
+       
+      self.textField.move(self.labelPrefix.width(), 0)
+      self.labelSuffix.move(self.labelPrefix.width()+self.textField.width(), 0)
+      updatedDimension = QtCore.QSize(
+         self.labelPrefix.width()+self.textField.width()+self.labelSuffix.width(),
+          self.textLabel.height());        
+      
+    else:
+      if (self.hasSiblings):   
+        self.menu.resize(self.menu.width()+LabelWidget.DROP_DOWN_MENU_WIDTH+9,
+          self.menu.height()); 
+        
+        self.menu.move(self.labelPrefix.width(), 0)
+        self.labelSuffix.move(self.labelPrefix.width()+self.menu.width(), 0)
+        updatedDimension = QtCore.QSize(
+          self.labelPrefix.width()+self.menu.width()+self.labelSuffix.width(),
+          self.menu.height()); 
+      else:
+        self.textLabel.resize(self.textLabel.width()+5,
+          self.textLabel.height()); 
+          
+        self.textLabel.move(self.labelPrefix.width(), 0)
+        self.labelSuffix.move(self.labelPrefix.width()+self.textLabel.width(), 0)
+        updatedDimension = QtCore.QSize(
+         self.labelPrefix.width()+self.textLabel.width()+self.labelSuffix.width()+5,
+          self.textLabel.height());        
+      
+    #if(self.hasSiblings):
+    #  updatedDimension.setWidth( updatedDimension.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
+
+    #self.textField.resize(updatedDimension);
+    #self.textLabel.resize(updatedDimension);
+    #self.menu.resize(updatedDimension);
 
     self.resize(updatedDimension);
     #self.fireDimensionsChanged(this.getSize());
 
 
   def setFont(self,font):
+      
+      self.labelPrefix.setFont(font)
+      self.labelSuffix.setFont(font)
       self.textField.setCurrentFont(font)
       self.textLabel.setFont(font)
       self.menu.setFont(font)
 
 class BlockLabelTextField(QtGui.QTextEdit):
   def __init__(self, labelWidget):    
-      QtGui.QTextEdit.__init__(self)
+      QtGui.QTextEdit.__init__(self, labelWidget)
       self.labelWidget = labelWidget
       #self.setFocusPolicy(QtCore.Qt.StrongFocus)
       #self.setContentsMargins(0, 0, 0, 0)
@@ -334,8 +389,8 @@ class ShadowLabel(QtGui.QLabel):
   shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
   shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
 
-  def __init__(self):
-      QtGui.QLabel.__init__(self)
+  def __init__(self, parent=None):
+      QtGui.QLabel.__init__(self, parent)
       self.offsetSize = 1;
       self.setMargin(0)
       self.setIndent(0)
@@ -399,8 +454,8 @@ class LabelMenu(ShadowLabel):
   shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
   shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
 
-  def __init__(self):
-      ShadowLabel.__init__(self)
+  def __init__(self, parent=None):
+      ShadowLabel.__init__(self, parent)
       self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
       self.popupmenu = QtGui.QMenu();
       #self.offsetSize = 1;

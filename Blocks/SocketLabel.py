@@ -17,7 +17,7 @@ class SocketLabel(BlockLabel):
 
 
    def __init__(self, socket, initLabelText, labelType, isEditable, blockID):
-      BlockLabel.__init__(self, initLabelText, labelType, isEditable, blockID, False, QtGui.QColor(190, 250, 125));
+      BlockLabel.__init__(self, initLabelText, '', '', labelType, isEditable, blockID, False, QtGui.QColor(190, 250, 125));
       self.socket = socket;
 
    '''

@@ -218,9 +218,18 @@ class Block():
    def getBeforeConnector(self):
       return self.before;
 
-   def getBlockLabel(self):
+   def getBlockFullLabel(self):
       return self.getGenus().getLabelPrefix()+self.label+self.getGenus().getLabelSuffix();
+      
+   def getBlockLabel(self):
+      return self.label
 
+   def getLabelPrefix(self):
+      return self.getGenus().getLabelPrefix()
+      
+   def getLabelSuffix(self):
+      return self.getGenus().getLabelSuffix()
+      
    def setBlockLabel(self, newLabel):
       from Blocks.BlockStub import BlockStub
       if (self.linkToStubs and self.hasStubs()):
