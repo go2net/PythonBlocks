@@ -1225,7 +1225,7 @@
 				<LangSpecProperty key="stack-type" value="breed"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
-		
+			
 		<BlockGenus name="setbreed" kind="command" initlabel="set breed" color="27 180 225">
 			<description>
 				<text>
@@ -2342,5 +2342,41 @@
 				<LangSpecProperty key="special-value" value="animals/sonic-sonic"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
-		
+
+		<BlockGenus name="set_str_var" kind="command" initlabel="text" label-prefix='set' label-suffix='to' color="27 180 225">
+			<description>
+				<text>
+					Causes this agent to change its shape to the supplied shape.
+				</text>
+				<arg-description n="1" name="string" doc-name="string">
+					The shape
+				</arg-description>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-kind="socket" connector-type="string"></BlockConnector>
+			</BlockConnectors>
+			<LangSpecProperties>
+				<LangSpecProperty key="vm-cmd-name" value="setshape"></LangSpecProperty>
+				<LangSpecProperty key="stack-type" value="breed"></LangSpecProperty>
+			</LangSpecProperties>
+		</BlockGenus>	
+
+		<BlockGenus name="set_num_var" kind="command" initlabel="item" label-prefix='set' label-suffix='to' color="27 180 225">
+			<description>
+				<text>
+					Causes this agent to change its shape to the supplied shape.
+				</text>
+				<arg-description n="1" name="string" doc-name="string">
+					The shape
+				</arg-description>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-kind="socket" connector-type="number"></BlockConnector>
+			</BlockConnectors>
+			<LangSpecProperties>
+				<LangSpecProperty key="vm-cmd-name" value="setshape"></LangSpecProperty>
+				<LangSpecProperty key="stack-type" value="breed"></LangSpecProperty>
+			</LangSpecProperties>
+		</BlockGenus>	
+				
 	</BlockGenuses>

@@ -33,7 +33,7 @@ class BlockLabel():
       from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
       from Blocks.BlockGenus import BlockGenus
       
-      self.widget= LabelWidget(initLabelText, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
+      self.widget= LabelWidget(initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
       self.zoom = 1.0
       self.initLabelText = initLabelText
       self.labelType = labelType
@@ -55,7 +55,7 @@ class BlockLabel():
       	self.widget.setFont(BlockLabel.blockFontMedium_Bold);
       
       # set initial text
-      self.widget.updateLabelText(initLabelText, prefix, suffix);
+      self.widget.updateLabelText(initLabelText);
       # add and show the textLabel initially
       self.widget.setEditingState(False);
       if (Block.getBlock(blockID).hasSiblings()) :
