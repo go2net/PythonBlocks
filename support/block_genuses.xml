@@ -79,7 +79,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="string" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="str_const" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" label-prefix='“' label-suffix='”' color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.
@@ -2340,6 +2340,36 @@
 			<LangSpecProperties>
 				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
 				<LangSpecProperty key="special-value" value="animals/sonic-sonic"></LangSpecProperty>
+			</LangSpecProperties>
+		</BlockGenus>
+
+		<BlockGenus name="num_var" kind="data" initlabel="item" editable-label="yes" is-label-value="yes" color="255 0 255">
+			<description>
+				<text>
+					Reports the text shown.
+				</text>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-kind="plug" connector-type="number" position-type="mirror"></BlockConnector>		
+			</BlockConnectors>
+			<LangSpecProperties>
+				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
+				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+			</LangSpecProperties>
+		</BlockGenus>
+
+		<BlockGenus name="str_var" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" color="255 0 255">
+			<description>
+				<text>
+					Reports the text shown.
+				</text>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-kind="plug" connector-type="string" position-type="mirror"></BlockConnector>		
+			</BlockConnectors>
+			<LangSpecProperties>
+				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
+				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 

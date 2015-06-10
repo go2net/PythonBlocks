@@ -73,7 +73,7 @@ class RenderableBlock(QtGui.QWidget):
       self.blockLabel = NameLabel(self.getBlock().getBlockLabel(), self.getBlock().getLabelPrefix(), self.getBlock().getLabelSuffix(), BlockLabel.Type.NAME_LABEL, self.getBlock().isLabelEditable, self.blockID);
       self.blockLabel.setParent(self)
 
-      self.pageLabel = PageLabel(self.getBlock().getPageLabel(), BlockLabel.Type.PAGE_LABEL, False, self.blockID);
+      #self.pageLabel = PageLabel(self.getBlock().getPageLabel(), BlockLabel.Type.PAGE_LABEL, False, self.blockID);
 
       self.synchronizeSockets();
 
@@ -156,8 +156,8 @@ class RenderableBlock(QtGui.QWidget):
       #/////////////////////////////////////////
 		#//set position of block labels.
 		#//////////////////////////////////////////
-      if(self.pageLabel != None and self.getBlock().hasPageLabel()):
-         self.pageLabel.update()
+      #if(self.pageLabel != None and self.getBlock().hasPageLabel()):
+      #   self.pageLabel.update()
 
       if(self.blockLabel != None):
          self.blockLabel.update();
@@ -287,7 +287,7 @@ class RenderableBlock(QtGui.QWidget):
 
    def synchronizeLabelsAndSockets(self):
       blockLabelChanged = self.getBlock().getBlockLabel() != None and not self.blockLabel.getText()== (self.getBlock().getBlockLabel())
-      pageLabelChanged = self.getBlock().getPageLabel() != None and not self.pageLabel.getText() == (self.getBlock().getPageLabel())
+      #pageLabelChanged = self.getBlock().getPageLabel() != None and not self.pageLabel.getText() == (self.getBlock().getPageLabel())
       socketLabelsChanged = False;
 
       # If tag label isn't the same as socket label, synchronize.
@@ -316,10 +316,10 @@ class RenderableBlock(QtGui.QWidget):
       if(blockLabelChanged):
          self.blockLabel.setText(self.getBlock().getBlockLabel());
 
-      if(pageLabelChanged):
-         self.pageLabel.setText(getBlock().getPageLabel());
+      #if(pageLabelChanged):
+      #   self.pageLabel.setText(getBlock().getPageLabel());
 
-      if (blockLabelChanged or pageLabelChanged or socketLabelsChanged or self.commentLabelChanged):
+      if (blockLabelChanged or socketLabelsChanged or self.commentLabelChanged):
          self.reformBlockShape();
          self.commentLabelChanged = False;
 

@@ -25,8 +25,6 @@ class LabelWidget(QtGui.QWidget):
       self.loading  = True;
       
       if(initLabelText == None): initLabelText = "";
-      #self.setFocusTraversalKeysEnabled(False); # MOVE DEFAULT FOCUS TRAVERSAL KEYS SUCH AS TABS
-      #self.setLayout(BorderLayout());
       self.tooltipBackground = tooltipBackground;
       self.labelBeforeEdit = initLabelText;
 
@@ -36,72 +34,24 @@ class LabelWidget(QtGui.QWidget):
       self.textField = BlockLabelTextField(self)      
       self.textLabel = ShadowLabel(self)
       self.menu = LabelMenu(self)      
-      self.popupmenu = None
-      
+
       self.hasSiblings = False
       self.isEditable = False
       self.editingText = False
       self.isPressed = False
       self.menuShowed = False
       self.lastSelectedItem = None
-      #self.setFocusPolicy(QtCore.Qt.StrongFocus)
       
       # set up textfield colors
       self.textField.setTextColor(QtCore.Qt.white); #white text
       
       self.textField.connect(self.textField, SIGNAL('textChanged()'), self.textChanged)
-      #self.textField.textChanged.connect(self.textChanged)
       
       p = self.textField.palette();
       p.setColor(QtGui.QPalette.Base, fieldColor); #background matching block color
       self.textField.setPalette(p);
-      #self.textField.setStyleSheet("border: 1px solid black;")
-      #self.textField.setBackground(fieldColor);#background matching block color
-      #self.textField.setCaretColor(Color.WHITE);#white caret
-      #self.textField.setSelectionColor(Color.BLACK);#black highlight
-      #self.textField.setSelectedTextColor(Color.WHITE);#white text when highlighted
-      #self.textField.setBorder(textFieldBorder);
-      #self.textField.setMargin(textFieldBorder.getBorderInsets(textField));
-
-      #self.textLabel.setAutoFillBackground(True) # This is important!!
-      #color  = QtGui.QColor(233, 10, 150)
-      #alpha  = 0
-      #values = "{r}, {g}, {b}, {a}".format(r = fieldColor.red(),
-      #                                     g = fieldColor.green(),
-      #                                     b = fieldColor.blue(),
-      #                                     a = alpha
-      #                                     )
-      #self.textLabel.setStyleSheet("QLabel { background-color: rgba("+values+"); }")
-      
-      #layout.addWidget(self.labelPrefix);
-      #layout.addWidget(self.textLabel);
-      #layout.addWidget(self.labeSuffix);
-      
+       
       self.loading  = False;
-      
-      #self.textField.setParent(self)
-      #self.textLabel.setParent(self)
-      #self.menu.setParent(self)
-  
-  def enterEvent(self,event):
-    # print('enterEvent')
-    self.suggestEditable(True);
-    
-  def leaveEvent(self,event):
-    #print('leaveEvent')
-    self.suggestEditable(False);
-
-
-  def doStuff(self, sender, item):
-    if(sender != self.lastSelectedItem):
-      if(self.lastSelectedItem != None):
-        self.lastSelectedItem.setChecked(False)      
-      self.lastSelectedItem = sender
-  
-    sender.setChecked(True)
-    self.fireGenusChanged(item[1])
-    pass
-   
   
   def mousePressEvent(self, event):
     self.isPressed = True
@@ -111,47 +61,29 @@ class LabelWidget(QtGui.QWidget):
     if(not self.isPressed): return
     # Set to editing state upon mouse click if this block label is editable
     # if clicked and if the label is editable,
+    #print('mouseReleaseEvent')
+    #print(self.isEditable)
     if (self.isEditable):
       # if clicked and if the label is editable,
       # then set it to the editing state when the label is clicked on
       self.setEditingState(True);
       #self.textField.setSelectionStart(0);
       self.textField.selectAll()
-    if(self.hasSiblings):
-      #if(self.popupmenu.isVisible()):
-      #  self.popupmenu.hide()
-        #self.menuShowed = False
-      #else:
-      self.popupmenu.popup(event.globalPos())
-        #self.menuShowed = True
         
     event.ignore();  
     
   def setSiblings(self,  hasSiblings, siblings):
     self.hasSiblings = hasSiblings;
-    self.menu.setSiblings(siblings);
+    self.menu.setSiblings(hasSiblings, siblings);
     self.updateDimensions()
     
     if (self.hasSiblings):
       self.textField.hide()
-      self.textLabel.hide()    
+      self.textLabel.hide() 
       self.menu.show() 
-      
-      self.popupmenu = QtGui.QMenu();
-      # if connected to a block, add self and add siblings
-
-      for sibling in siblings:
-        entry = self.popupmenu.addAction(sibling[1])
-        entry.setCheckable (True)
-        if(sibling[1] == self.getText()):
-          entry.setChecked(True)
-          self.lastSelectedItem = entry
-        self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=sibling: self.doStuff(sender, item))
-     
-      #self.add(self.menu, BorderLayout.EAST);
     else:
       self.textField.hide()
-      self.textLabel.show()    
+      self.textLabel.show()   
       self.menu.hide() 
   
   def textChanged(self):
@@ -168,25 +100,7 @@ class LabelWidget(QtGui.QWidget):
     self.updateDimensions();
       
     self.fireTextChanged(self.textField.toPlainText());
-    
-  def suggestEditable(self, suggest):
-    '''
-     * Toggles the visual suggestion that this label may be editable depending on the specified
-     * suggest flag and properties of the block and label.  If suggest is true, the visual suggestion will display.  Otherwise, nothing 
-     * is shown.  For now, the visual suggestion is a simple white line boder.
-     * Other requirements for indicator to show: 
-     * - label type must be NAME
-     * - label must be editable
-     * - block can not be a factory block
-     * @param suggest 
-    '''
-    if(self.isEditable):
-      if(suggest):
-        self.setStyleSheet("border:1px solid rgb(255, 255, 255); ")
-        #setBorder(BorderFactory.createLineBorder(Color.white));#show white border
-      else:
-        self.setStyleSheet("border:0px solid rgb(255, 255, 255); ")
-        #setBorder(null);#hide white border
+
   
   def isTextValid(self, text):
     return text != ""
@@ -194,11 +108,13 @@ class LabelWidget(QtGui.QWidget):
   def getText(self):
       return self.textLabel.text().strip();
 
-  def setText(self,text):      
+  def setText(self,text):
     self.updateLabelText(str(text).strip());
 
   def setEditable(self,isEditable):
-   	self.isEditable = isEditable;
+    self.isEditable = isEditable;
+    self.textLabel.isEditable = isEditable 
+
 
   def setEditingState(self,editing) :
     #print(self.getText())
@@ -206,16 +122,16 @@ class LabelWidget(QtGui.QWidget):
       self.editingText = True;
       self.textField.setText(self.textLabel.text().strip());
       self.labelBeforeEdit = self.textLabel.text();
-      
       self.textField.show()
       self.textLabel.hide()    
       self.menu.hide()  
-      
       self.textField.setFocus()
+
     else:
       #print(self.editingText)
       # update to current textfield.text
       # if text entered was not empty and if it was editing before
+      
       if(self.editingText):
         self.editingText = False;
         
@@ -238,37 +154,20 @@ class LabelWidget(QtGui.QWidget):
   
 
   def updateLabelText(self,text):
-
+    #elf.loading = True
     # leave some space to click on
-    if (text == ""):
-       text = "     ";
-       
-    self.labelPrefix.setText(self.prefix)
-    self.labelSuffix.setText(self.suffix)     
-    self.textLabel.setText(text);
-    self.textField.setText(text);
-    self.menu.setText(text);
-    
-    self.labelPrefix.adjustSize()
-    self.labelSuffix.adjustSize()      
-    self.textLabel.adjustSize()
-    self.textField.adjustSize()
-    self.menu.adjustSize()
-    
-    # resize to new text
-    self.updateDimensions();
-
+     
     #the blockLabel needs to update the data in Block
-    self.fireTextChanged(text);
+    #self.fireTextChanged(text);
 
     if (self.hasSiblings):
       self.textField.hide()
-      self.textLabel.hide()    
+      self.textLabel.hide()
       self.menu.show() 
     else:
       self.textField.hide()
       self.textLabel.show()
-      self.menu.hide()
+      self.menu.hide() 
     
     if(self.prefix == ''):
       self.labelPrefix.hide()
@@ -279,23 +178,44 @@ class LabelWidget(QtGui.QWidget):
       self.labelSuffix.hide()
     else:
       self.labelSuffix.show()
+      
+    if (text == ""):
+       text = "     ";
 
+    self.labelPrefix.setText(self.prefix)
+    self.labelSuffix.setText(self.suffix) 
+    
+    self.textLabel.setText(text);
+    self.textField.setText(text);
+    self.menu.setText(text); 
+    
+    # resize to new text
+    self.updateDimensions();
+    
   def updateDimensions(self):
-
+   
+    self.labelPrefix.adjustSize()
+    self.labelSuffix.adjustSize()      
+    self.textLabel.adjustSize()
+    self.textField.adjustSize()
+    self.menu.adjustSize()
+    
     if(self.labelPrefix.text()!=''):
-      self.labelPrefix.resize(self.labelPrefix.width()+5,
+      self.labelPrefix.adjustSize()
+      self.labelPrefix.resize(self.labelPrefix.width()+8,
         self.labelPrefix.height());  
     else:
       self.labelPrefix.resize(0, 0)
     
     if(self.labelSuffix.text()!=''):
-      self.labelSuffix.resize(self.labelSuffix.width()+5,
+      self.labelSuffix.adjustSize()
+      self.labelSuffix.resize(self.labelSuffix.width()+3,
         self.labelSuffix.height());         
     else:
       self.labelSuffix.resize(0, 0)
       
     if(self.editingText):
-      self.textField.resize(self.textLabel.width()+5,
+      self.textField.resize(self.textLabel.width()+3,
         self.textLabel.height());  
        
       self.textField.move(self.labelPrefix.width(), 0)
@@ -305,23 +225,23 @@ class LabelWidget(QtGui.QWidget):
           self.textLabel.height());        
       
     else:
+      
       if (self.hasSiblings):   
-        self.menu.resize(self.menu.width()+LabelWidget.DROP_DOWN_MENU_WIDTH+9,
+        self.menu.resize(self.menu.width()+LabelWidget.DROP_DOWN_MENU_WIDTH+7,
           self.menu.height()); 
-        
         self.menu.move(self.labelPrefix.width(), 0)
         self.labelSuffix.move(self.labelPrefix.width()+self.menu.width(), 0)
         updatedDimension = QtCore.QSize(
           self.labelPrefix.width()+self.menu.width()+self.labelSuffix.width(),
           self.menu.height()); 
       else:
-        self.textLabel.resize(self.textLabel.width()+5,
+        self.textLabel.resize(self.textLabel.width()+7,
           self.textLabel.height()); 
           
         self.textLabel.move(self.labelPrefix.width(), 0)
         self.labelSuffix.move(self.labelPrefix.width()+self.textLabel.width(), 0)
         updatedDimension = QtCore.QSize(
-         self.labelPrefix.width()+self.textLabel.width()+self.labelSuffix.width()+5,
+         self.labelPrefix.width()+self.textLabel.width()+self.labelSuffix.width(),
           self.textLabel.height());        
       
     #if(self.hasSiblings):
@@ -336,7 +256,7 @@ class LabelWidget(QtGui.QWidget):
 
 
   def setFont(self,font):
-      
+
       self.labelPrefix.setFont(font)
       self.labelSuffix.setFont(font)
       self.textField.setCurrentFont(font)
@@ -382,11 +302,12 @@ class ShadowLabel(QtGui.QLabel):
   shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
   shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
 
-  def __init__(self, parent=None):
+  def __init__(self, parent, isEditable=False):
       QtGui.QLabel.__init__(self, parent)
       self.offsetSize = 1;
       self.setMargin(0)
       self.setIndent(0)
+      self.isEditable = isEditable
       #self.setStyleSheet("padding:0;")
       #self.document().setDocumentMargin(0)
       #self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
@@ -396,9 +317,35 @@ class ShadowLabel(QtGui.QLabel):
   #def enterEvent(self,event):
   #  self.labelWidget.suggestEditable(True);
     
-  #def leaveEvent(self,event):
-  #  self.labelWidget.suggestEditable(False);
+  def enterEvent(self,event):
+    print('enterEvent')
+    self.suggestEditable(True);
     
+  def leaveEvent(self,event):
+    print('leaveEvent')
+    self.suggestEditable(False);   
+  
+    
+  def suggestEditable(self, suggest):
+    '''
+     * Toggles the visual suggestion that this label may be editable depending on the specified
+     * suggest flag and properties of the block and label.  If suggest is true, the visual suggestion will display.  Otherwise, nothing 
+     * is shown.  For now, the visual suggestion is a simple white line boder.
+     * Other requirements for indicator to show: 
+     * - label type must be NAME
+     * - label must be editable
+     * - block can not be a factory block
+     * @param suggest 
+    '''
+    print(self.isEditable)
+    if(self.isEditable):
+      if(suggest):
+        self.setStyleSheet("border:1px solid rgb(255, 255, 255); ")
+        #setBorder(BorderFactory.createLineBorder(Color.white));#show white border
+      else:
+        self.setStyleSheet("border:0px solid rgb(255, 255, 255); ")
+        #setBorder(null);#hide white border
+  
   def getPreferredSize(self):
       str = self.text()
       # gather font metrics in QTextEdit
@@ -449,41 +396,42 @@ class LabelMenu(ShadowLabel):
 
   def __init__(self, parent=None):
       ShadowLabel.__init__(self, parent)
+      self.labelWidget = parent
       self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
-      self.popupmenu = QtGui.QMenu();
-      #self.offsetSize = 1;
-      #self.setMargin(0)
-      #self.setIndent(0)
-      #self.setStyleSheet("padding:0;")
-      #self.document().setDocumentMargin(0)
-      #self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-      #self.setVerticalScrollBarPolicy (QtCore.Qt.ScrollBarAlwaysOff)
-      #self.setFrameShape(QtGui.QFrame.NoFrame)
-      #self.setStyleSheet("border:1px solid rgb(255, 255, 255); ")
-  #def enterEvent(self,event):
-  #  self.labelWidget.suggestEditable(True);
+      self.lastSelectedItem = None
+      self.hasSiblings = False
+  
+  def mouseReleaseEvent(self, event):
+    if(self.labelWidget.hasSiblings):
+      self.popupmenu.popup(event.globalPos())
+       
+    event.ignore();  
     
-  #def leaveEvent(self,event):
-  #  self.labelWidget.suggestEditable(False);
 
+  def doStuff(self, sender, item):
+    if(sender != self.lastSelectedItem):
+      if(self.lastSelectedItem != None):
+        self.lastSelectedItem.setChecked(False)      
+      self.lastSelectedItem = sender
+  
+    sender.setChecked(True)
+    self.labelWidget.fireGenusChanged(item[1])
+    pass    
     
-  def setSiblings(self, siblings):
+    
+  def setSiblings(self, hasSiblings, siblings):
     self.popupmenu = QtGui.QMenu();
+    self.hasSiblings = hasSiblings
     # if connected to a block, add self and add siblings
-
-    for sibling in siblings:
-      #selfGenus = sibling[0];
-      entry = self.popupmenu.addAction(sibling[1])
-      self.connect(entry,QtCore.SIGNAL('triggered()'), lambda item=sibling[1]: self.doStuff(item))
-      #selfItem = QtGui.QMenuItem(siblings[i][1]);
       
-      #selfItem.addActionListener(new ActionListener(){
-      #  public void actionPerformed(ActionEvent e){
-      #      fireGenusChanged(selfGenus);
-      #      showMenuIcon(false);
-      #    }
-      #  });
-      #self.popupmenu.add(selfItem);
+    for sibling in siblings:
+      entry = self.popupmenu.addAction(sibling[1])
+      entry.setCheckable (True)
+      if(sibling[1] == self.text()):
+        entry.setChecked(True)
+        self.lastSelectedItem = entry
+      self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=sibling: self.doStuff(sender, item))    
+     
     
   def getPreferredSize(self):
       return ShadowLabel.getPreferredSize(self)
