@@ -14,14 +14,9 @@ class LabelWidget(QtGui.QWidget):
   DROP_DOWN_MENU_WIDTH = 7;
   def __init__(self,initLabelText, prefix, suffix,  fieldColor, tooltipBackground):
       QtGui.QWidget.__init__(self)
-      
+
       self.prefix = prefix
-      self.suffix = suffix
-      
-      layout  = QtGui.QHBoxLayout()
-      self.setLayout(layout);
-      self.layout().setContentsMargins(0, 0, 0, 0)
-      
+      self.suffix = suffix            
       self.loading  = True;
       
       if(initLabelText == None): initLabelText = "";
@@ -35,8 +30,9 @@ class LabelWidget(QtGui.QWidget):
       self.textLabel = ShadowLabel(self)
       self.menu = LabelMenu(self)      
 
-      self.hasSiblings = False
       self.isEditable = False
+      self.isVariable = False
+      self.hasMenu = False
       self.editingText = False
       self.isPressed = False
       self.menuShowed = False
@@ -52,7 +48,7 @@ class LabelWidget(QtGui.QWidget):
       self.textField.setPalette(p);
        
       self.loading  = False;
-  
+      
   def mousePressEvent(self, event):
     self.isPressed = True
     event.ignore();  
@@ -70,27 +66,29 @@ class LabelWidget(QtGui.QWidget):
       #self.textField.setSelectionStart(0);
       self.textField.selectAll()
         
-    event.ignore();  
+    event.ignore();   
+ 
+  def setMenu(self, hasSiblings, siblings, isVariable):
+    self.isVariable = isVariable
+    self.hasMenu = hasSiblings or self.isVariable
     
-  def setSiblings(self,  hasSiblings, siblings):
-    self.hasSiblings = hasSiblings;
-    self.menu.setSiblings(hasSiblings, siblings);
-    self.updateDimensions()
-    
-    if (self.hasSiblings):
+    if(self.hasMenu):
+      self.menu.setMenu(siblings, self.isVariable);
       self.textField.hide()
       self.textLabel.hide() 
-      self.menu.show() 
+      self.menu.show()     
     else:
       self.textField.hide()
       self.textLabel.show()   
-      self.menu.hide() 
+      self.menu.hide()
+      
+    self.updateDimensions()
   
   def textChanged(self):
 
     if(self.loading): return
 
-    if (self.hasSiblings):
+    if(self.hasMenu):
       self.menu.setText(self.textField.toPlainText());
       self.menu.adjustSize()
     else:
@@ -160,7 +158,7 @@ class LabelWidget(QtGui.QWidget):
     #the blockLabel needs to update the data in Block
     #self.fireTextChanged(text);
 
-    if (self.hasSiblings):
+    if(self.hasMenu):
       self.textField.hide()
       self.textLabel.hide()
       self.menu.show() 
@@ -226,11 +224,14 @@ class LabelWidget(QtGui.QWidget):
       
     else:
       
-      if (self.hasSiblings):   
+      if(self.hasMenu):
         self.menu.resize(self.menu.width()+LabelWidget.DROP_DOWN_MENU_WIDTH+7,
-          self.menu.height()); 
+          self.menu.height());
+          
         self.menu.move(self.labelPrefix.width(), 0)
-        self.labelSuffix.move(self.labelPrefix.width()+self.menu.width(), 0)
+        if(self.labelSuffix.text()!=''):
+          self.labelSuffix.move(self.labelPrefix.width()+self.menu.width(), 0)
+        
         updatedDimension = QtCore.QSize(
           self.labelPrefix.width()+self.menu.width()+self.labelSuffix.width(),
           self.menu.height()); 
@@ -241,19 +242,10 @@ class LabelWidget(QtGui.QWidget):
         self.textLabel.move(self.labelPrefix.width(), 0)
         self.labelSuffix.move(self.labelPrefix.width()+self.textLabel.width(), 0)
         updatedDimension = QtCore.QSize(
-         self.labelPrefix.width()+self.textLabel.width()+self.labelSuffix.width(),
+          self.labelPrefix.width()+self.textLabel.width()+self.labelSuffix.width(),
           self.textLabel.height());        
-      
-    #if(self.hasSiblings):
-    #  updatedDimension.setWidth( updatedDimension.width() +LabelWidget.DROP_DOWN_MENU_WIDTH+4)
-
-    #self.textField.resize(updatedDimension);
-    #self.textLabel.resize(updatedDimension);
-    #self.menu.resize(updatedDimension);
 
     self.resize(updatedDimension);
-    #self.fireDimensionsChanged(this.getSize());
-
 
   def setFont(self,font):
 
@@ -337,7 +329,7 @@ class ShadowLabel(QtGui.QLabel):
      * - block can not be a factory block
      * @param suggest 
     '''
-    print(self.isEditable)
+    #print(self.isEditable)
     if(self.isEditable):
       if(suggest):
         self.setStyleSheet("border:1px solid rgb(255, 255, 255); ")
@@ -399,12 +391,10 @@ class LabelMenu(ShadowLabel):
       self.labelWidget = parent
       self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
       self.lastSelectedItem = None
-      self.hasSiblings = False
+      self.isVariable = False
   
   def mouseReleaseEvent(self, event):
-    if(self.labelWidget.hasSiblings):
-      self.popupmenu.popup(event.globalPos())
-       
+    self.popupmenu.popup(event.globalPos())       
     event.ignore();  
     
 
@@ -418,11 +408,16 @@ class LabelMenu(ShadowLabel):
     self.labelWidget.fireGenusChanged(item[1])
     pass    
     
+  def renameVariable(self, sender, item):
+    print(self.text())
+    pass
+      
+  def newVariable(self, sender):
+    pass      
     
-  def setSiblings(self, hasSiblings, siblings):
+  def setMenu(self, siblings, isVariable):
+    self.isVariable = isVariable
     self.popupmenu = QtGui.QMenu();
-    self.hasSiblings = hasSiblings
-    # if connected to a block, add self and add siblings
       
     for sibling in siblings:
       entry = self.popupmenu.addAction(sibling[1])
@@ -431,7 +426,15 @@ class LabelMenu(ShadowLabel):
         entry.setChecked(True)
         self.lastSelectedItem = entry
       self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=sibling: self.doStuff(sender, item))    
-     
+    
+    if(isVariable):
+      if(len(siblings) > 0):
+         self.popupmenu.addSeparator()
+      entry = self.popupmenu.addAction('Rename variable')  
+      self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry, item=self.lastSelectedItem: self.renameVariable(sender, item)) 
+      
+      entry = self.popupmenu.addAction('New variable')  
+      self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry: self.newVariable(sender)) 
     
   def getPreferredSize(self):
       return ShadowLabel.getPreferredSize(self)

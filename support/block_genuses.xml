@@ -2343,7 +2343,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="num_var" kind="data" initlabel="item" editable-label="yes" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="num_var" kind="variable" initlabel="item" var-label="yes"  editable-label="no" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.
@@ -2358,7 +2358,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="str_var" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="str_var" kind="variable" initlabel="abc" var-label="yes" editable-label="no" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.

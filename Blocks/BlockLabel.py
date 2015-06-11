@@ -58,6 +58,8 @@ class BlockLabel():
       self.widget.updateLabelText(initLabelText);
       # add and show the textLabel initially
       self.widget.setEditingState(False);
+      
+      siblingsNames = []
       if (Block.getBlock(blockID).hasSiblings()) :
         #/Map<String, String> siblings = new HashMap<String, String>();
         siblingsNames = Block.getBlock(blockID).getSiblingsList();
@@ -71,14 +73,14 @@ class BlockLabel():
           siblings.append([siblingsNames[i], BlockGenus.getGenusWithName(oldBlock.getGenusName()).getInitialLabel()])
         
         #print(siblings)
-        self.widget.setSiblings(hasComboPopup and Block.getBlock(blockID).hasSiblings(), siblingsNames);
+      self.widget.setMenu(hasComboPopup and Block.getBlock(blockID).hasSiblings(), siblingsNames, Block.getBlock(blockID).isVariable());
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
 
   def labelChanged(self, label):
     from Blocks.RenderableBlock import RenderableBlock
-    if(self.widget.hasSiblings):
+    if(self.widget.hasMenu):
       oldBlock = Block.getBlock(self.blockID);
       oldBlock.changeLabelTo(label);
       rb = RenderableBlock.getRenderableBlock(self.blockID);
@@ -114,8 +116,8 @@ class BlockLabel():
           #workspace.notifyListeners(new WorkspaceEvent(workspace, rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_RENAMED));
 
   def getAbstractWidth(self):
-    if(self.widget.hasSiblings):
-      return (self.widget.width()/self.zoom)-LabelWidget.DROP_DOWN_MENU_WIDTH;
+    if(self.widget.hasMenu):
+      return (self.widget.width()/self.zoom)-9;
     else:
       width = self.widget.width()
       return (self.widget.width()/self.zoom);

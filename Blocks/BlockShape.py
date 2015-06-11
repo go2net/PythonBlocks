@@ -126,8 +126,8 @@ class BlockShape():
          width +=  10;
       elif (self.block.isDataBlock() or self.block.isFunctionBlock()):
          width += 8;
-      elif (self.block.isDeclaration()):
-         width += 20;
+      #elif (self.block.isDeclaration()):
+      #   width += 20;
       else:
          #assert false : "Block type not found." + block;
          # treat like a command block

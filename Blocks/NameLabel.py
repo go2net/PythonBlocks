@@ -26,7 +26,7 @@ class NameLabel(BlockLabel):
          x = 0;
          y = 0;
          if(rb.getBlock().isCommandBlock()): x+=5;
-         if(rb.getBlock().isDeclaration()): x+=12;
+         #if(rb.getBlock().isDeclaration()): x+=12;
          if(rb.getBlock().hasPlug()):
             x+=4+BlockConnectorShape.getConnectorDimensions(rb.getBlock().getPlug()).width();
          if(rb.getBlock().isInfix()):

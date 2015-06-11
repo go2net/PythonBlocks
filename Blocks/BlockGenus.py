@@ -64,6 +64,7 @@ class BlockGenus():
       self.hasDefArgs = genusToCopy.hasDefArgs
       self.initLabel = genusToCopy.initLabel
       self._isLabelEditable = genusToCopy._isLabelEditable;
+      #self._isVarLabel = genusToCopy._isVarLabel;
       self.isLabelValue = genusToCopy.isLabelValue;
       self.isStarter = genusToCopy.isStarter;
       self.isTerminator = genusToCopy.isTerminator;
@@ -377,6 +378,9 @@ class BlockGenus():
 
          if 'editable-label' in genusNode.attrib:
             newGenus._isLabelEditable = True if genusNode.attrib["editable-label"] == ("yes") else False
+
+         if 'var-label' in genusNode.attrib:
+            newGenus._isVarLabel = True if genusNode.attrib["var-label"] == ("yes") else False
 
          if 'label-unique' in genusNode.attrib:
             newGenus.labelMustBeUnique = True if genusNode.attrib["label-unique"] == ("yes") else False

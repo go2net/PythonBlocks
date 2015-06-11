@@ -264,6 +264,9 @@ class Block():
 
    def isFunctionBlock(self):
       return self.getGenus().isFunctionBlock();
+      
+   def isVariable(self):
+      return self.getGenus().isVariableDeclBlock();      
 
    def getArgumentDescription(self, index):
       if (index < len(self.argumentDescriptions) and index >= 0):
