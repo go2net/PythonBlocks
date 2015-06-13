@@ -31,7 +31,6 @@ class BlockLabel():
   def __init__(self,initLabelText, prefix, suffix, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
       from Blocks.RenderableBlock import RenderableBlock
       from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
-      from Blocks.BlockGenus import BlockGenus
       
       self.widget= LabelWidget(blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
       self.zoom = 1.0
@@ -60,21 +59,11 @@ class BlockLabel():
       # add and show the textLabel initially
       self.widget.setEditingState(False);
       
-      siblingsNames = []
+      famList = {}
       if (Block.getBlock(blockID).hasSiblings()) :
-        #/Map<String, String> siblings = new HashMap<String, String>();
-        siblingsNames = Block.getBlock(blockID).getSiblingsList();
-        #print(siblingsNames)
-        siblings = []
-        sibling = [Block.getBlock(blockID).getGenusName(), Block.getBlock(blockID).getInitialLabel()]
-        siblings.append(sibling)
-        for i in range(0,  len(siblingsNames)):
-          #print(siblingsNames[i])
-          oldBlock = Block.getBlock(self.blockID)
-          siblings.append([siblingsNames[i], BlockGenus.getGenusWithName(oldBlock.getGenusName()).getInitialLabel()])
-        
-        #print(siblings)
-      self.widget.setMenu(hasComboPopup and Block.getBlock(blockID).hasSiblings(), siblingsNames, Block.getBlock(blockID).isVariable());
+        famList = Block.getBlock(blockID).getSiblingsList();
+
+      self.widget.setMenu(hasComboPopup and Block.getBlock(blockID).hasSiblings(), famList, Block.getBlock(blockID).isVariable());
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
@@ -83,6 +72,7 @@ class BlockLabel():
 
   def labelChanged(self, label):
     from Blocks.RenderableBlock import RenderableBlock
+
     if(self.widget.hasMenu):
       oldBlock = Block.getBlock(self.blockID);
       oldBlock.changeLabelTo(label);
@@ -92,6 +82,8 @@ class BlockLabel():
 
   def textChanged(self, text):
     from Blocks.RenderableBlock import RenderableBlock
+    from Blocks.BlockStub import BlockStub
+    
     if (self.labelType == BlockLabel.Type.NAME_LABEL or 
         self.labelType == BlockLabel.Type.PORT_LABEL) and  (Block.getBlock(self.blockID).isLabelEditable()):
       if (self.labelType == (BlockLabel.Type.NAME_LABEL)):
@@ -107,7 +99,7 @@ class BlockLabel():
             # Blocks already store their socket names when saved so it is not necessary
             # nor desired to call the connectors changed event again.
             if (Block.getRenderableBlock(plug.getBlockID()).isLoading()):
-              BlockStub.parentConnectorsChanged(workspace, plug.getBlockID());
+              BlockStub.parentConnectorsChanged(self.workspace, plug.getBlockID());
 
       rb = RenderableBlock.getRenderableBlock(self.blockID);
 
@@ -120,32 +112,28 @@ class BlockLabel():
 
   def menuChanged(self, old_name, new_name):
     from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+
     block = Block.getBlock(self.blockID)
-    siblingsNames = block.getSiblingsList();
-    for sibling in siblingsNames:
-      if(sibling[1] == old_name):
-        sibling[1] = new_name
+    familyMap = block.getSiblingsList();
+    for key in familyMap:
+      if(familyMap[key] == old_name):
+        familyMap[key] = new_name
 
     factoryBlock = FactoryRenderableBlock.factoryRBs[block.getGenusName()]
     for rb in factoryBlock.child_list:
-      print(rb)
       blockLabel = rb.blockLabel
-      blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
-      blockLabel.labelChanged(new_name)
+      blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+      if(blockLabel.getText() == old_name):
+        blockLabel.labelChanged(new_name)
     
-    factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
-    factoryBlock.blockLabel.labelChanged(new_name)
-    
-    #print('menuChanged')
-    #self.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
-   
-    pass
+    factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+    if(factoryBlock.blockLabel.getText() == old_name):
+      factoryBlock.blockLabel.labelChanged(new_name)
     
   def getAbstractWidth(self):
     if(self.widget.hasMenu):
       return (self.widget.width()/self.zoom)-9;
     else:
-      width = self.widget.width()
       return (self.widget.width()/self.zoom);
 
   def getAbstractHeight(self):
@@ -176,5 +164,3 @@ class BlockLabel():
   def raise_(self):
       self.widget.raise_()
 
-if __name__ == '__main__':
-    main()

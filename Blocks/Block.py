@@ -480,7 +480,7 @@ class Block():
 
       if (not self.label == (self.getInitialLabel())):
          labelElement = document.createElement("Label");
-         labelElement.appendChild(document.createTextNode(label));
+         labelElement.appendChild(document.createTextNode(self.label ));
          blockElement.appendChild(labelElement);
 
 
@@ -631,11 +631,11 @@ class Block():
 
          for child in children:
             if (child.tag == ("Label")):
-                 label = child.getTextContent();
+                 label = child.text;
             elif (child.tag == ("PageLabel")):
-                 pagelabel = child.getTextContent();
+                 pagelabel = child.getTextContent;
             elif (child.tag == ("CompilerErrorMsg")):
-                 badMsg = child.getTextContent();
+                 badMsg = child.text;
             elif  (child.tag == ("BeforeBlockId")):
                  beforeID = int(child.text)
             elif  (child.tag == ("AfterBlockId")):

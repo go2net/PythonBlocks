@@ -25,7 +25,7 @@ class BlockGenus():
       self.properties = {}
       self.blockImageMap = {}
 
-      self.familyList = []
+      self.familyList = {}
       self.sockets = []
       self.stubList = []
       self.argumentDescriptions = []
@@ -468,8 +468,8 @@ class BlockGenus():
       # / LOAD BLOCK FAMILY INFORMATION # /
       # # # # # # # # # # # # # # # # # # /
       families = root.findall("BlockFamilies/BlockFamily")
-      famList = []
-      BlockGenus.famMap = {}
+      familyMap = {}
+      #BlockGenus.famMap = {}
       for i in range(0,len(families)):
         family=families[i]
         familyName = ''
@@ -484,14 +484,14 @@ class BlockGenus():
             label = name
             if("label" in member.attrib):
               label = member.attrib["label"] 
-            famList.append([name,label] );
+            familyMap[name] = label
         
-        if(len(famList) > 0):
+        if(len(familyMap) > 0):
 
           if(familyName  != ''):
-            BlockGenus.famMap[familyName] = famList[:]
-            newFamList = famList[:]
-            BlockGenus.nameToGenus[familyName].familyList = newFamList
+            #BlockGenus.famMap[familyName] = famList[:]
+            #newFamList = famList[:]
+            BlockGenus.nameToGenus[familyName].familyList = familyMap
           #else:
           #  for memName in famList:
           #    newFamList = famList[:]
@@ -500,7 +500,7 @@ class BlockGenus():
 
           #    BlockGenus.nameToGenus[memName].familyList = newFamList
 
-        famList= []
+        familyMap= {}
 
    def hasSiblings(self):
       '''
@@ -529,7 +529,7 @@ class BlockGenus():
        * @return a list of the stub kinds (or stub genus names) of this; if this genus does not have any stubs,
        * returns an empty list
       '''
-      return Collections.unmodifiableList(self.stubList)
+      return self.stubList
 
    def hasStubs(self):
       '''
@@ -584,7 +584,7 @@ class BlockGenus():
       '''
       return self.kind == "procedure"
 
-   def isProcedureParamBlock() :
+   def isProcedureParamBlock(self) :
       '''
        * Returns true if this block is a procedure parameter block; False otherwise
       '''
@@ -603,9 +603,9 @@ class BlockGenus():
        * @return is determined by whether it has at least one list connector of any type.
       '''
       hasListConn = False;
-      if (plug != None):
-         hasListConn = plug.getKind().contains("list");
-      for socket in sockets:
+      if (self.plug != None):
+         hasListConn = self.plug.getKind().contains("list");
+      for socket in self.sockets:
          hasListConn |= socket.getKind().contains("list");
       return hasListConn;
 
@@ -614,14 +614,14 @@ class BlockGenus():
        * Returns true if this genus has a "before" connector; False otherwise.
        * @return true is this genus has a "before" connector; False otherwise.
       '''
-      return not isStarter;
+      return not self.isStarter;
 
    def hasAfterConnector(self):
       '''
        * Returns true if this genus has a "after" connector; False otherwise.
        * @return true if this genus has a "after" connector; False otherwise.
       '''
-      return not isTerminator;
+      return not self.isTerminator;
 
    def isLabelValue(self):
       '''
@@ -630,7 +630,7 @@ class BlockGenus():
        * @return true if the value of this genus is contained within the label of this; False
        * otherwise
       '''
-      return isLabelValue
+      return self.isLabelValue
 
 #   def isLabelEditable(self):
       '''
@@ -644,13 +644,13 @@ class BlockGenus():
        * Returns true iff this genus can have page label.
        * @return true iff this genus can have page label
       '''
-      return isPageLabelEnabled
+      return self.isPageLabelEnabled
 
    def areSocketsExpandable(self):
       '''
        * Returns true iff this genus's sockets are expandable
       '''
-      return areSocketsExpandable
+      return self.areSocketsExpandable
 
    def isInfix(self):
       '''
@@ -664,7 +664,7 @@ class BlockGenus():
        * Returns the name of this genus
        * @return the name of this genus
       '''
-      return genusName
+      return self.genusName
 
    def getInitialLabel(self):
       '''

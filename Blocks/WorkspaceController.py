@@ -12,6 +12,8 @@
 import sys
 import os
 
+from xml.dom.minidom import Document
+
 try:
   from lxml import etree
   from lxml import ElementInclude
@@ -316,7 +318,6 @@ class WorkspaceController():
       '''
       #try:
          doc = self.getSaveNode();
-         print(doc)
 
          #writer = StringWriter();
          #transformerFactory = TransformerFactory.newInstance();

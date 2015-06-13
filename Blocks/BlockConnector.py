@@ -146,7 +146,7 @@ class BlockConnector():
 
 
    def getSaveNode(self, document, conKind):
-      from Block import Block
+      from Blocks.Block import Block
       connectorElement = document.createElement("BlockConnector");
       connectorElement.setAttribute("connector-kind", conKind);
       connectorElement.setAttribute("connector-type", self.kind);

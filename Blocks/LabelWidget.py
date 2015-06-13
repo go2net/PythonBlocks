@@ -40,7 +40,7 @@ class LabelWidget(QtGui.QWidget):
       # set up textfield colors
       self.textField.setTextColor(QtCore.Qt.white); #white text
       
-      #self.textField.textChanged.connect(self.textChanged)
+      self.textField.textChanged.connect(self.textChanged)
       
       p = self.textField.palette();
       p.setColor(QtGui.QPalette.Base, fieldColor); #background matching block color
@@ -83,7 +83,7 @@ class LabelWidget(QtGui.QWidget):
       
     self.updateDimensions()
   
-  def textChanged(self, string):
+  def textChanged(self):
 
     if(self.loading): return
 
@@ -394,6 +394,7 @@ class LabelMenu(ShadowLabel):
       self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
       self.lastSelectedItem = None
       self.isVariable = False
+      self.familyMap = {}
   
   def mouseReleaseEvent(self, event):
     from Blocks.RenderableBlock import RenderableBlock
@@ -406,14 +407,14 @@ class LabelMenu(ShadowLabel):
     event.ignore();  
     
 
-  def doStuff(self, sender, item):
+  def doStuff(self, sender, name):
     if(sender != self.lastSelectedItem):
       if(self.lastSelectedItem != None):
         self.lastSelectedItem.setChecked(False)      
       self.lastSelectedItem = sender
   
     sender.setChecked(True)
-    self.labelWidget.fireGenusChanged(item[1])    
+    self.labelWidget.fireGenusChanged(self.familyMap[name])    
     pass    
     
   def renameVariable(self, sender, item):
@@ -427,22 +428,23 @@ class LabelMenu(ShadowLabel):
   def newVariable(self, sender):
     pass      
     
-  def setMenu(self, siblings, isVariable):
-
+  def setMenu(self, familyMap, isVariable):
+    self.familyMap = familyMap
     self.isVariable = isVariable
     self.popupmenu = QtGui.QMenu();
     self.lastSelectedItem = None
     
-    for sibling in siblings:
-      entry = self.popupmenu.addAction(sibling[1])
+    for key  in familyMap:
+      text = familyMap[key]
+      entry = self.popupmenu.addAction(text)
       entry.setCheckable (True)
-      if(sibling[1] == self.text()):
+      if(text == self.text()):
         entry.setChecked(True)
         self.lastSelectedItem = entry
-      self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, item=sibling: self.doStuff(sender, item))    
+      self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, name=key: self.doStuff(sender, name))    
     
     if(isVariable):
-      if(len(siblings) > 0):
+      if(len(familyMap) > 0):
          self.popupmenu.addSeparator()
       entry = self.popupmenu.addAction('Rename variable')  
       self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry, item=self.lastSelectedItem: self.renameVariable(sender, item)) 

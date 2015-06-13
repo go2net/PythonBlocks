@@ -105,7 +105,8 @@ class MainWnd(QtGui.QMainWindow):
          #didLoad();
 
   def onSave(self):
-      #print(self.wc.getSaveString())
+      if(self.filename == None or self.filename == ''):
+        self.filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks")
       block_file = open(self.filename, "w")
       block_file.write(self.wc.getSaveString())
       block_file.close()

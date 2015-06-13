@@ -70,6 +70,7 @@ class RenderableBlock(QtGui.QWidget):
       self.plugTag = ConnectorTag(self.getBlock().getPlug());
       self.afterTag = ConnectorTag(self.getBlock().getAfterConnector());
       self.beforeTag = ConnectorTag(self.getBlock().getBeforeConnector());
+
       self.blockLabel = NameLabel(self.getBlock().getBlockLabel(), self.getBlock().getLabelPrefix(), self.getBlock().getLabelSuffix(), BlockLabel.Type.NAME_LABEL, self.getBlock().isLabelEditable, self.blockID);
       self.blockLabel.setParent(self)
 

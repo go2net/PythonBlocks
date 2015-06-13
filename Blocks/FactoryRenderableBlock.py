@@ -93,7 +93,3 @@ class FactoryRenderableBlock(RenderableBlock):
          #newE = SwingUtilities.convertMouseEvent(this, e, createdRB);
          self.createdRB.mouseDragged(event);
          self.createdRB_dragged = True;
-
-
-if __name__ == '__main__':
-    main()
