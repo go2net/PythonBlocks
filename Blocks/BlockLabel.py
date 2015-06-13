@@ -33,11 +33,12 @@ class BlockLabel():
       from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
       from Blocks.BlockGenus import BlockGenus
       
-      self.widget= LabelWidget(initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
+      self.widget= LabelWidget(blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
       self.zoom = 1.0
       self.initLabelText = initLabelText
       self.labelType = labelType
       self.blockID = blockID
+      self.hasComboPopup = hasComboPopup
       # Only editable if the isEditable parameter was true, the label is either a Block's name or
       # socket label, the block can edit labels, and the block is not in the factory.
       self.widget.setEditable(
@@ -77,6 +78,8 @@ class BlockLabel():
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
+      self.widget.fireMenuChanged = self.menuChanged
+      
 
   def labelChanged(self, label):
     from Blocks.RenderableBlock import RenderableBlock
@@ -115,6 +118,29 @@ class BlockLabel():
         pass
           #workspace.notifyListeners(new WorkspaceEvent(workspace, rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_RENAMED));
 
+  def menuChanged(self, old_name, new_name):
+    from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    block = Block.getBlock(self.blockID)
+    siblingsNames = block.getSiblingsList();
+    for sibling in siblingsNames:
+      if(sibling[1] == old_name):
+        sibling[1] = new_name
+
+    factoryBlock = FactoryRenderableBlock.factoryRBs[block.getGenusName()]
+    for rb in factoryBlock.child_list:
+      print(rb)
+      blockLabel = rb.blockLabel
+      blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
+      blockLabel.labelChanged(new_name)
+    
+    factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
+    factoryBlock.blockLabel.labelChanged(new_name)
+    
+    #print('menuChanged')
+    #self.widget.setMenu(self.hasComboPopup and block.hasSiblings(), siblingsNames, block.isVariable());
+   
+    pass
+    
   def getAbstractWidth(self):
     if(self.widget.hasMenu):
       return (self.widget.width()/self.zoom)-9;

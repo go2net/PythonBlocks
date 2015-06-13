@@ -286,7 +286,7 @@ class RenderableBlock(QtGui.QWidget):
       painter.end()
 
    def synchronizeLabelsAndSockets(self):
-      blockLabelChanged = self.getBlock().getBlockLabel() != None and not self.blockLabel.getText()== (self.getBlock().getBlockLabel())
+      blockLabelChanged = self.getBlock().getBlockLabel() != None and self.blockLabel.getText() != (self.getBlock().getBlockLabel())
       #pageLabelChanged = self.getBlock().getPageLabel() != None and not self.pageLabel.getText() == (self.getBlock().getPageLabel())
       socketLabelsChanged = False;
 
@@ -642,7 +642,6 @@ class RenderableBlock(QtGui.QWidget):
          # System.out.println("evaluating block :" + curBlock.getBlockLabel());
          curRenderableBlock = RenderableBlock.getRenderableBlock(curBlockID);
          if(curRenderableBlock == None) :
-            print("curRenderableBlock == None")
             return
          curRBSize = curRenderableBlock.getBlockSize();
 

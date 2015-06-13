@@ -9,16 +9,15 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 from PyQt4 import QtCore,QtGui
-from PyQt4.QtCore import SIGNAL
 class LabelWidget(QtGui.QWidget):
   DROP_DOWN_MENU_WIDTH = 7;
-  def __init__(self,initLabelText, prefix, suffix,  fieldColor, tooltipBackground):
+  def __init__(self, blockID,  initLabelText, prefix, suffix,  fieldColor, tooltipBackground):
       QtGui.QWidget.__init__(self)
-
+      self.loading = True
       self.prefix = prefix
       self.suffix = suffix            
       self.loading  = True;
-      
+      self.blockID = blockID
       if(initLabelText == None): initLabelText = "";
       self.tooltipBackground = tooltipBackground;
       self.labelBeforeEdit = initLabelText;
@@ -41,7 +40,7 @@ class LabelWidget(QtGui.QWidget):
       # set up textfield colors
       self.textField.setTextColor(QtCore.Qt.white); #white text
       
-      self.textField.connect(self.textField, SIGNAL('textChanged()'), self.textChanged)
+      #self.textField.textChanged.connect(self.textChanged)
       
       p = self.textField.palette();
       p.setColor(QtGui.QPalette.Base, fieldColor); #background matching block color
@@ -84,7 +83,7 @@ class LabelWidget(QtGui.QWidget):
       
     self.updateDimensions()
   
-  def textChanged(self):
+  def textChanged(self, string):
 
     if(self.loading): return
 
@@ -149,7 +148,10 @@ class LabelWidget(QtGui.QWidget):
   def fireGenusChanged(self, text):
     #print("abstract fireTextChanged")
     pass
-  
+ 
+  def fireMenuChanged(self, old_name, new_name):
+    #print("abstract fireMenuUpdated")
+    pass 
 
   def updateLabelText(self,text):
     #elf.loading = True
@@ -394,6 +396,12 @@ class LabelMenu(ShadowLabel):
       self.isVariable = False
   
   def mouseReleaseEvent(self, event):
+    from Blocks.RenderableBlock import RenderableBlock
+    from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    blockID = self.labelWidget.blockID
+    rb = RenderableBlock.getRenderableBlock(blockID)
+    if(isinstance(rb, FactoryRenderableBlock)): return
+    
     self.popupmenu.popup(event.globalPos())       
     event.ignore();  
     
@@ -405,20 +413,26 @@ class LabelMenu(ShadowLabel):
       self.lastSelectedItem = sender
   
     sender.setChecked(True)
-    self.labelWidget.fireGenusChanged(item[1])
+    self.labelWidget.fireGenusChanged(item[1])    
     pass    
     
   def renameVariable(self, sender, item):
-    print(self.text())
-    pass
+    old_name = self.text()
+    new_name, ok = QtGui.QInputDialog.getText(self, 'Variable','Change variable name from {0} to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
+    if(ok and new_name != self.text()):
+      self.popupmenu = None
+      #self.labelWidget.fireGenusChanged(new_name)  
+      self.labelWidget.fireMenuChanged(old_name, new_name)
       
   def newVariable(self, sender):
     pass      
     
   def setMenu(self, siblings, isVariable):
+
     self.isVariable = isVariable
     self.popupmenu = QtGui.QMenu();
-      
+    self.lastSelectedItem = None
+    
     for sibling in siblings:
       entry = self.popupmenu.addAction(sibling[1])
       entry.setCheckable (True)

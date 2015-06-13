@@ -8,7 +8,7 @@
 # Copyright:   (c) 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-import sys, os
+import sys
 #import Workspace
 from Blocks.WorkspaceController import WorkspaceController
 from Generators.PythonGen import PythonGen

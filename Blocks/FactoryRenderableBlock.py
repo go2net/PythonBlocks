@@ -13,18 +13,22 @@ from Blocks.BlockUtilities import BlockUtilities
 from Blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
-
+   factoryRBs = {}
    def __init__(self,workspaceWidget,blockID,back_color):
       RenderableBlock.__init__(self,workspaceWidget,blockID,False, back_color)
       self.setBlockLabelUneditable()
       self.createdRB = None
       self.createdRB_dragged = False
+      self.child_list = []
+      FactoryRenderableBlock.factoryRBs[self.getBlock().getGenusName()] = self
       pass
       #dragHandler = new JComponentDragHandler(this);
 
    def createNewInstance(self):
       #print(self.getBlockID())
-      return BlockUtilities.cloneBlock(Block.getBlock(self.getBlockID()));
+      rb = BlockUtilities.cloneBlock(Block.getBlock(self.getBlockID()))
+      self.child_list.append(rb)
+      return rb
 
 
    def mousePressEvent(self, event):

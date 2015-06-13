@@ -39,8 +39,8 @@ class BlockUtilities():
       # from its genus label.
       if(myblock.getInitialLabel() != (myblock.getBlockLabel())):
          # acquire prefix and suffix length from myblock label
-         prefixLength = myblock.getLabelPrefix().length();
-         suffixLength = myblock.getLabelSuffix().length();
+         prefixLength = len(myblock.getLabelPrefix());
+         suffixLength = len(myblock.getLabelSuffix());
          # we need to set the block label without the prefix and suffix attached because those
          # values are automatically concatenated to the string specified in setBlockLabel.  I know its
          # weird, but its the way block labels were designed.

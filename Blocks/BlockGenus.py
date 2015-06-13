@@ -469,11 +469,12 @@ class BlockGenus():
       # # # # # # # # # # # # # # # # # # /
       families = root.findall("BlockFamilies/BlockFamily")
       famList = []
+      BlockGenus.famMap = {}
       for i in range(0,len(families)):
         family=families[i]
-        genusName = ''
+        familyName = ''
         if("name" in family.attrib):
-           genusName = family.attrib["name"]
+           familyName = family.attrib["name"]
                
         children = family.getchildren()
         for j in range(0, len(children)):
@@ -482,14 +483,15 @@ class BlockGenus():
             name = member.text
             label = name
             if("label" in member.attrib):
-              label = member.attrib["label"]              
+              label = member.attrib["label"] 
             famList.append([name,label] );
-
+        
         if(len(famList) > 0):
 
-          if(genusName  != ''):
+          if(familyName  != ''):
+            BlockGenus.famMap[familyName] = famList[:]
             newFamList = famList[:]
-            BlockGenus.nameToGenus[genusName].familyList = newFamList
+            BlockGenus.nameToGenus[familyName].familyList = newFamList
           #else:
           #  for memName in famList:
           #    newFamList = famList[:]
