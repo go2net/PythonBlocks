@@ -2358,7 +2358,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="str_var" kind="variable" family='strvar' initlabel="abc" var-label="yes" editable-label="no" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="str_var" kind="variable" family='str_var' initlabel="abc" var-label="yes" editable-label="no" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.

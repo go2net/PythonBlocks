@@ -503,7 +503,10 @@ class BlockGenus():
           if(familyName  != ''):
             #BlockGenus.famMap[familyName] = famList[:]
             #newFamList = famList[:]
-            BlockGenus.nameToGenus[familyName].familyList = familyMap
+            if familyName in BlockGenus.familyBlocks:
+              for genus in BlockGenus.familyBlocks[familyName]:
+                genus.familyList = familyMap
+            #BlockGenus.nameToGenus[familyName].familyList = familyMap
           #else:
           #  for memName in famList:
           #    newFamList = famList[:]
@@ -522,6 +525,7 @@ class BlockGenus():
       return (len(self.familyList) > 0)
 
    def getSiblingsList(self):
+      return self.familyList
       if (self.family in BlockGenus.nameToGenus):
         return BlockGenus.nameToGenus[self.family]
       else:

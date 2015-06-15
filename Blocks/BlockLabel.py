@@ -61,7 +61,7 @@ class BlockLabel():
       
       famList = {}
       if (Block.getBlock(blockID).hasSiblings()) :
-        famList = Block.getBlock(blockID).getSiblingsList();
+        famList = Block.getBlock(blockID).getSiblingsList();      
 
       self.widget.setMenu(hasComboPopup and Block.getBlock(blockID).hasSiblings(), famList, Block.getBlock(blockID).isVariable());
       
@@ -132,7 +132,8 @@ class BlockLabel():
       factoryBlock.blockLabel.labelChanged(new_name)
     
     if(block.getGenus().family in BlockGenus.familyBlocks):
-      for genusName in  BlockGenus.familyBlocks[block.getGenus().family]:
+      for genus in  BlockGenus.familyBlocks[block.getGenus().family]:
+          genusName = genus.getGenusName()
           if genusName not in FactoryRenderableBlock.factoryRBs: continue
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
           for rb in factoryBlock.child_list:
@@ -143,6 +144,7 @@ class BlockLabel():
           
           factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
           if(factoryBlock.blockLabel.getText() == old_name):
+            print(factoryBlock)
             factoryBlock.blockLabel.labelChanged(new_name)
     
   def getAbstractWidth(self):

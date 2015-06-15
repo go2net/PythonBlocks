@@ -68,6 +68,7 @@ class LabelWidget(QtGui.QWidget):
     event.ignore();   
  
   def setMenu(self, hasSiblings, siblings, isVariable):
+
     self.isVariable = isVariable
     self.hasMenu = hasSiblings or self.isVariable
     
@@ -435,7 +436,7 @@ class LabelMenu(ShadowLabel):
     self.lastSelectedItem = None
     
     if(familyMap == None): return
-    
+
     for key  in familyMap:
       text = familyMap[key]
       entry = self.popupmenu.addAction(text)
