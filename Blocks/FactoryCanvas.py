@@ -10,9 +10,9 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtCore,QtGui
-from Blocks.Block import Block
-from Blocks.RenderableBlock import RenderableBlock
-from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+from blocks.Block import Block
+from blocks.RenderableBlock import RenderableBlock
+from blocks.FactoryRenderableBlock import FactoryRenderableBlock
 
 
 class FactoryCanvas(QtGui.QFrame):

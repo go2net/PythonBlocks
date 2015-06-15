@@ -10,7 +10,7 @@
 #-------------------------------------------------------------------------------
 import time,sched
 from PyQt4 import QtGui, QtCore
-from Blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.WorkspaceWidget import WorkspaceWidget
 
 class MiniMapEnlargerTimer():
    '''
@@ -181,8 +181,8 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       self.scrollToPoint(e.pos());
 
    def paintEvent(self,event):
-      from Blocks.RenderableBlock import RenderableBlock
-      from Blocks.PageDivider import PageDivider
+      from blocks.RenderableBlock import RenderableBlock
+      from blocks.PageDivider import PageDivider
       #from Comment import Comment
       '''
         * @modifies this.bounds && this.blockCanvas && this.blocks && this.comments

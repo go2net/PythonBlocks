@@ -9,7 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 from PyQt4 import QtGui,QtCore
-from Blocks.Bezier import Bezier
+from blocks.Bezier import Bezier
 import math
 debug = False
 

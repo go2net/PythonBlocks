@@ -11,8 +11,8 @@
 import re
 
 from PyQt4 import QtCore,QtGui
-from Blocks.BlockConnector import BlockConnector
-from Blocks.BlockShapeUtil import BlockShapeUtil
+from blocks.BlockConnector import BlockConnector
+from blocks.BlockShapeUtil import BlockShapeUtil
 
 class BlockConnectorShape():
 
@@ -350,7 +350,7 @@ class BlockConnectorShape():
       return socketPoint;
 
    def addCommandSocket(self, blockPath, commandSocketHeight):
-      from Blocks.BlockShape import BlockShape
+      from blocks.BlockShape import BlockShape
 
       # draw bar
       BlockShapeUtil.lineToRelative(blockPath, BlockConnectorShape.COMMAND_INPUT_BAR_WIDTH, 0);

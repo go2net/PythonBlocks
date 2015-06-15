@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 import os,sys
 from PyQt4 import QtCore,QtGui
-from Blocks.BlockConnector import BlockConnector
-from Blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.BlockConnector import BlockConnector
+from blocks.BlockConnectorShape import BlockConnectorShape
 
 class BlockGenus():
    EMPTY_STRING = ""
@@ -20,12 +20,13 @@ class BlockGenus():
    # only BlockGenus may add to this map
    nameToGenus = {}
    familyBlocks = {}
+   families = {}
    def __init__(self,genusName = None, newGenusName=None):
 
       self.properties = {}
       self.blockImageMap = {}      
 
-      self.familyList = {}
+      self.family = {}
       self.sockets = []
       self.stubList = []
       self.argumentDescriptions = []
@@ -48,7 +49,7 @@ class BlockGenus():
       self.labelPrefix = ""
       self.labelSuffix = ""
       self.genusName = ""
-      self.family = ''
+      self.familyName = ''
 
       self.plug = None
       self.before = None
@@ -348,7 +349,38 @@ class BlockGenus():
       '''
       * Loads the all the initial BlockGenuses and BlockGenus families of this language
       * @param root the Element carrying the specifications of the BlockGenuses
-      '''
+      '''     
+      
+      # # # # # # # # # # # # # # # # # # /
+      # / LOAD BLOCK FAMILY INFORMATION # /
+      # # # # # # # # # # # # # # # # # # /
+      families = root.findall("BlockFamilies/BlockFamily")
+
+      #BlockGenus.famMap = {}
+      for i in range(0,len(families)):
+        familyNode=families[i]
+        familyName = ''
+        if("name" in familyNode.attrib):
+           familyName = familyNode.attrib["name"]
+               
+        children = familyNode.getchildren()
+        
+        family = {}              
+        for j in range(0, len(children)):
+          member = children[j]
+          if (member.tag == ("FamilyMember")): # a family member entry
+            name = member.text
+            label = name
+            if("label" in member.attrib):
+              label = member.attrib["label"] 
+            family[name] = label
+        
+        if(familyName != ''):
+          if(familyName not in BlockGenus.families):
+            BlockGenus.families[familyName] = family
+          else:
+            print('Duplicated BlockFamily')
+      
       genusNodes=root.findall("BlockGenuses/BlockGenus"); # look for genus
     
       for genusNode in genusNodes: # find them
@@ -361,7 +393,8 @@ class BlockGenus():
          # first, parse out the attributes
          if 'name' in genusNode.attrib:
             newGenus.genusName = genusNode.attrib["name"]
-
+            BlockGenus.nameToGenus[newGenus.genusName] = newGenus
+             
          # assert that no other genus has this name
          # assert nameToGenus.get(newGenus.genusName) == null : "Block genus names must be unique.  A block genus already exists with this name: "+newGenus.genusName;
          if 'color' in genusNode.attrib:
@@ -374,13 +407,15 @@ class BlockGenus():
          if 'kind' in genusNode.attrib:
             newGenus.kind = genusNode.attrib["kind"]
 
-         if 'family' in genusNode.attrib:
-            newGenus.family = genusNode.attrib["family"]
+         if 'family_name' in genusNode.attrib:
+            newGenus.familyName = genusNode.attrib["family_name"]
+           
+            newGenus.family = BlockGenus.families[newGenus.familyName]
             
-            if(newGenus.family not in BlockGenus.familyBlocks):
-               BlockGenus.familyBlocks[newGenus.family] = []
+            if(newGenus.familyName not in BlockGenus.familyBlocks):
+               BlockGenus.familyBlocks[newGenus.familyName] = []
                
-            BlockGenus.familyBlocks[newGenus.family].append(newGenus)
+            BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
 
          if 'initlabel' in genusNode.attrib:
             newGenus.initLabel = genusNode.attrib["initlabel"]
@@ -468,52 +503,6 @@ class BlockGenus():
             newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.BOTTOM, "", False, False, -1);
 
 
-         # System.out.println("Added "+newGenus.toString());
-         BlockGenus.nameToGenus[newGenus.genusName] = newGenus
-
-
-      
-      # # # # # # # # # # # # # # # # # # /
-      # / LOAD BLOCK FAMILY INFORMATION # /
-      # # # # # # # # # # # # # # # # # # /
-      families = root.findall("BlockFamilies/BlockFamily")
-
-      #BlockGenus.famMap = {}
-      for i in range(0,len(families)):
-        family=families[i]
-        familyName = ''
-        if("name" in family.attrib):
-           familyName = family.attrib["name"]
-
-               
-        children = family.getchildren()
-        
-        familyMap = {}              
-        for j in range(0, len(children)):
-          member = children[j]
-          if (member.tag == ("FamilyMember")): # a family member entry
-            name = member.text
-            label = name
-            if("label" in member.attrib):
-              label = member.attrib["label"] 
-            familyMap[name] = label
-
-        if(len(familyMap) > 0):
-
-          if(familyName  != ''):
-            #BlockGenus.famMap[familyName] = famList[:]
-            #newFamList = famList[:]
-            if familyName in BlockGenus.familyBlocks:
-              for genus in BlockGenus.familyBlocks[familyName]:
-                genus.familyList = familyMap
-            #BlockGenus.nameToGenus[familyName].familyList = familyMap
-          #else:
-          #  for memName in famList:
-          #    newFamList = famList[:]
-          #    newFamList.remove(memName); # filter out current memName, so that only
-          #    # sibling names are included
-
-          #    BlockGenus.nameToGenus[memName].familyList = newFamList
 
    def hasSiblings(self):
       '''
@@ -522,15 +511,10 @@ class BlockGenus():
       * interferes with the drop down menu widget that blocks with siblings have.
       * @return true if this genus has siblings; False otherwise.
       '''
-      return (len(self.familyList) > 0)
+      return (len(self.family) > 0)
 
    def getSiblingsList(self):
-      return self.familyList
-      if (self.family in BlockGenus.nameToGenus):
-        return BlockGenus.nameToGenus[self.family]
-      else:
-        return None
-
+      return self.family
 
    def getInitSockets(self):
       '''

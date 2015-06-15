@@ -10,11 +10,11 @@
 #-------------------------------------------------------------------------------
 from PyQt4 import QtCore
 
-from Blocks.BlockShape import BlockShape
-from Blocks.BlockConnector import BlockConnector
-from Blocks.BlockShapeUtil import BlockShapeUtil
-from Blocks.BlockConnectorShape import BlockConnectorShape
-from Blocks.Block import Block
+from blocks.BlockShape import BlockShape
+from blocks.BlockConnector import BlockConnector
+from blocks.BlockShapeUtil import BlockShapeUtil
+from blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.Block import Block
 
 class InfixBlockShape(BlockShape):
 
@@ -27,8 +27,8 @@ class InfixBlockShape(BlockShape):
       * Overrided from BlockShape.
       * Takes into account the need to resize the dimensions of an infix block for various cases.
       '''
-      from Blocks.RenderableBlock import RenderableBlock
-      from Blocks.BlockShapeUtil import BlockShapeUtil
+      from blocks.RenderableBlock import RenderableBlock
+      from blocks.BlockShapeUtil import BlockShapeUtil
       # Reset the maximum X-coordinate so the infix block can resize if you remove blocks within it
       self.maxX = 0;
 
@@ -160,7 +160,7 @@ class InfixBlockShape(BlockShape):
         * specified painterPath
         * @param connectedBlockShape the BlockShape of the specified connectedBlock
        '''
-      from Blocks.RenderableBlock import RenderableBlock
+      from blocks.RenderableBlock import RenderableBlock
       # int lastBottomPathWidth;
 
 

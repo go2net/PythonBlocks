@@ -10,11 +10,11 @@
 #-------------------------------------------------------------------------------
 import math
 
-from Blocks.BlockConnectorShape import BlockConnectorShape
-from Blocks.Block import Block
+from blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.Block import Block
 from PyQt4 import QtGui,QtCore
-from Blocks.BlockShapeUtil import BlockShapeUtil
-from Blocks.BlockConnector import BlockConnector
+from blocks.BlockShapeUtil import BlockShapeUtil
+from blocks.BlockConnector import BlockConnector
 
 class BlockShape():
 

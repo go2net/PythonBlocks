@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtCore,QtGui
-from Blocks.Block import Block
-from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+from blocks.Block import Block
+from blocks.FactoryRenderableBlock import FactoryRenderableBlock
 
 import re
 

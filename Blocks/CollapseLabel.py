@@ -8,7 +8,7 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.BlockControlLabel import BlockControlLabel
+from blocks.BlockControlLabel import BlockControlLabel
 
 class CollapseLabel(BlockControlLabel):
    def __init__(self,blockID):

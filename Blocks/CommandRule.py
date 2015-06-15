@@ -8,8 +8,8 @@
 # Copyright:   (c) shijq 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.LinkRule import LinkRule
-from Blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.LinkRule import LinkRule
+from blocks.BlockConnectorShape import BlockConnectorShape
 
 class CommandRule(LinkRule):
    def __init__e(self):

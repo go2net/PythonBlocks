@@ -8,9 +8,9 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.RenderableBlock import RenderableBlock
-from Blocks.BlockUtilities import BlockUtilities
-from Blocks.Block import Block
+from blocks.RenderableBlock import RenderableBlock
+from blocks.BlockUtilities import BlockUtilities
+from blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
    factoryRBs = {}

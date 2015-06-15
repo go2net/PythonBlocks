@@ -2343,7 +2343,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="num_var" kind="variable" family='num_var' initlabel="item" var-label="yes"  editable-label="no" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="num_var" kind="variable" family_name='num_var' initlabel="item" var-label="yes"  editable-label="no" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.
@@ -2358,7 +2358,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="str_var" kind="variable" family='str_var' initlabel="abc" var-label="yes" editable-label="no" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="str_var" kind="variable" family_name='str_var' initlabel="abc" var-label="yes" editable-label="no" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.
@@ -2373,7 +2373,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 
-		<BlockGenus name="set_str_var" kind="command" family='str_var' initlabel="text" label-prefix='set' label-suffix='to' color="27 180 225">
+		<BlockGenus name="set_str_var" kind="command" family_name='str_var' initlabel="text" label-prefix='set' label-suffix='to' color="27 180 225">
 			<description>
 				<text>
 					Causes this agent to change its shape to the supplied shape.
@@ -2391,7 +2391,7 @@
 			</LangSpecProperties>
 		</BlockGenus>	
 
-		<BlockGenus name="set_num_var" kind="command" family='num_var' initlabel="item" label-prefix='set' label-suffix='to' color="27 180 225">
+		<BlockGenus name="set_num_var" kind="command" family_name='num_var' initlabel="item" label-prefix='set' label-suffix='to' color="27 180 225">
 			<description>
 				<text>
 					Causes this agent to change its shape to the supplied shape.

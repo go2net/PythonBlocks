@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 import sys
 #import Workspace
-from Blocks.WorkspaceController import WorkspaceController
-from Generators.PythonGen import PythonGen
+from blocks.WorkspaceController import WorkspaceController
+from generators.python import PythonGen
 
 from PyQt4 import QtGui,QtCore, uic
 

@@ -8,16 +8,16 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.BlockStub import BlockStub
-from Blocks.Block import Block
-from Blocks.RenderableBlock import RenderableBlock
+from blocks.BlockStub import BlockStub
+from blocks.Block import Block
+from blocks.RenderableBlock import RenderableBlock
 
 class BlockUtilities():
 
    instanceCounter = {}
 
    def isLabelValid(block, label):
-      from Blocks.WorkspaceController import WorkspaceController
+      from blocks.WorkspaceController import WorkspaceController
       if(block == None or label == None):
          return False;
       elif(block.labelMustBeUnique()):
@@ -45,7 +45,7 @@ class BlockUtilities():
          # values are automatically concatenated to the string specified in setBlockLabel.  I know its
          # weird, but its the way block labels were designed.
          if(prefixLength > 0 or suffixLength > 0):  # TODO we could do this outside of this method, even in constructor
-            label = myblock.getBlockLabel().substring(prefixLength, myblock.getBlockLabel().length()-suffixLength);
+            label = myblock.getBlockLabel()
 
 
       # check genus instance counter and if label unique - change label accordingly

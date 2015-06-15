@@ -11,19 +11,19 @@
 from PyQt4 import QtCore,QtGui
 import math
 
-from Blocks.Block import Block
-from Blocks.BlockShape import BlockShape
-from Blocks.InfixBlockShape import InfixBlockShape
-from Blocks.CollapseLabel import CollapseLabel
-from Blocks.ConnectorTag import ConnectorTag
-from Blocks.NameLabel import NameLabel
-from Blocks.BlockLabel import BlockLabel
-from Blocks.PageLabel import PageLabel
-from Blocks.SocketLabel import SocketLabel
-from Blocks.BlockConnectorShape import BlockConnectorShape
-from Blocks.GraphicsManager import GraphicsManager
-from Blocks.BlockShapeUtil import BlockShapeUtil
-from Blocks.BlockLinkChecker import BlockLinkChecker
+from blocks.Block import Block
+from blocks.BlockShape import BlockShape
+from blocks.InfixBlockShape import InfixBlockShape
+from blocks.CollapseLabel import CollapseLabel
+from blocks.ConnectorTag import ConnectorTag
+from blocks.NameLabel import NameLabel
+from blocks.BlockLabel import BlockLabel
+from blocks.PageLabel import PageLabel
+from blocks.SocketLabel import SocketLabel
+from blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.GraphicsManager import GraphicsManager
+from blocks.BlockShapeUtil import BlockShapeUtil
+from blocks.BlockLinkChecker import BlockLinkChecker
 
 
 
@@ -32,8 +32,8 @@ class RenderableBlock(QtGui.QWidget):
    ALL_RENDERABLE_BLOCKS = {}
 
    def __init__(self,workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
-      from Blocks.WorkspaceController import WorkspaceController
-      from Blocks.FactoryManager import FactoryManager
+      from blocks.WorkspaceController import WorkspaceController
+      from blocks.FactoryManager import FactoryManager
 
       QtGui.QWidget.__init__(self)
 
@@ -708,7 +708,7 @@ class RenderableBlock(QtGui.QWidget):
     * @param isConnected boolean flag to determine if a block connected or disconnected to the connectedSocket
    '''
    def updateSocketSpace(self,connectedSocket, connectedToBlockID, isConnected):
-      from Blocks.BlockConnector import BlockConnector
+      from blocks.BlockConnector import BlockConnector
       # System.out.println("updating socket space of :" + connectedSocket.getLabel() +" of rb: "+this);
       if(not isConnected):
          #remove the mapping
@@ -1104,7 +1104,7 @@ class RenderableBlock(QtGui.QWidget):
 
    def mouseDragged(self, event):
 
-      from Blocks.BlockLink import BlockLink
+      from blocks.BlockLink import BlockLink
       if event.buttons()&QtCore.Qt.LeftButton:
 
          #pp = SwingUtilities.convertPoint(this, e.getPoint(), Workspace.getInstance().getMiniMap());

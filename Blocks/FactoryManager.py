@@ -10,10 +10,10 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui
-from Blocks.Block import Block
+from blocks.Block import Block
 from functools import partial
-from Blocks.FactoryCanvas import FactoryCanvas
-from Blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.FactoryCanvas import FactoryCanvas
+from blocks.WorkspaceWidget import WorkspaceWidget
 class FactoryManager(WorkspaceWidget):
    # The string identifier of static drawers
    STATIC_NAME = "Factory"
@@ -292,7 +292,7 @@ class FactoryManager(WorkspaceWidget):
       #self.repaint();
 
    def blockDropped(self, block):
-      from Blocks.BlockUtilities import BlockUtilities
+      from blocks.BlockUtilities import BlockUtilities
       # remove the block from the land of the living
       BlockUtilities.deleteBlock(block);
       #selfcurrentColor = Color.BLACK;

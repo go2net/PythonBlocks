@@ -8,10 +8,10 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.BlockLabel import BlockLabel
-from Blocks.BlockConnector import BlockConnector
+from blocks.BlockLabel import BlockLabel
+from blocks.BlockConnector import BlockConnector
 from PyQt4 import QtGui
-from Blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.BlockConnectorShape import BlockConnectorShape
 
 class SocketLabel(BlockLabel):
 

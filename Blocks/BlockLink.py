@@ -8,7 +8,7 @@
 # Copyright:   (c) shijq 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.Block import Block
+from blocks.Block import Block
 class BlockLink():
 
    lastLink = None
@@ -72,9 +72,9 @@ class BlockLink():
       return self.lastPlugBlockID;
 
    def connect(self):
-      from Blocks.RenderableBlock import RenderableBlock
-      from Blocks.BlockLinkChecker import BlockLinkChecker
-      from Blocks.BlockConnectorShape import BlockConnectorShape
+      from blocks.RenderableBlock import RenderableBlock
+      from blocks.BlockLinkChecker import BlockLinkChecker
+      from blocks.BlockConnectorShape import BlockConnectorShape
       # Make sure to disconnect any connections that are going to be overwritten
       # by this new connection.  For example, if inserting a block between two
       # others, make sure to break that original link.*/

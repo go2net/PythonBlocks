@@ -398,8 +398,8 @@ class LabelMenu(ShadowLabel):
       self.familyMap = {}
   
   def mouseReleaseEvent(self, event):
-    from Blocks.RenderableBlock import RenderableBlock
-    from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    from blocks.RenderableBlock import RenderableBlock
+    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
     blockID = self.labelWidget.blockID
     rb = RenderableBlock.getRenderableBlock(blockID)
     if(isinstance(rb, FactoryRenderableBlock)): return

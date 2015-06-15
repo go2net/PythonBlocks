@@ -8,7 +8,7 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.Block import Block
+from blocks.Block import Block
 class BlockStub(Block):
   parentNameToParentBlock = {}
   parentNameToBlockStubs = {}

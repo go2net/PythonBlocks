@@ -8,7 +8,7 @@
 # Copyright:   (c) shijq 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.LinkRule import LinkRule
+from blocks.LinkRule import LinkRule
 
 class SocketRule(LinkRule):
    def __init__e(self):

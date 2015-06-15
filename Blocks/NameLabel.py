@@ -8,8 +8,8 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.BlockLabel import BlockLabel
-from Blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.BlockLabel import BlockLabel
+from blocks.BlockConnectorShape import BlockConnectorShape
 from PyQt4 import QtGui
 
 class NameLabel(BlockLabel):
@@ -20,7 +20,7 @@ class NameLabel(BlockLabel):
 
 
    def update(self):
-      from Blocks.RenderableBlock import RenderableBlock
+      from blocks.RenderableBlock import RenderableBlock
       rb = RenderableBlock.getRenderableBlock(self.blockID);
       if (rb != None):
          x = 0;

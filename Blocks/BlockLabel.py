@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui
-from Blocks.LabelWidget import LabelWidget
-from Blocks.Block import Block
+from blocks.LabelWidget import LabelWidget
+from blocks.Block import Block
 
 
 class BlockLabel():
@@ -29,8 +29,8 @@ class BlockLabel():
   blockFontLarge_Plain  = QtGui.QFont("Arial", 10, QtGui.QFont.Normal);
 
   def __init__(self,initLabelText, prefix, suffix, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
-      from Blocks.RenderableBlock import RenderableBlock
-      from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+      from blocks.RenderableBlock import RenderableBlock
+      from blocks.FactoryRenderableBlock import FactoryRenderableBlock
       
       self.widget= LabelWidget(blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
       self.zoom = 1.0
@@ -71,7 +71,7 @@ class BlockLabel():
       
 
   def labelChanged(self, label):
-    from Blocks.RenderableBlock import RenderableBlock
+    from blocks.RenderableBlock import RenderableBlock
 
     if(self.widget.hasMenu):
       oldBlock = Block.getBlock(self.blockID);
@@ -81,8 +81,8 @@ class BlockLabel():
       #Workspace.getInstance().notifyListeners(new WorkspaceEvent(rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_GENUS_CHANGED));
 
   def textChanged(self, text):
-    from Blocks.RenderableBlock import RenderableBlock
-    from Blocks.BlockStub import BlockStub
+    from blocks.RenderableBlock import RenderableBlock
+    from blocks.BlockStub import BlockStub
     
     if (self.labelType == BlockLabel.Type.NAME_LABEL or 
         self.labelType == BlockLabel.Type.PORT_LABEL) and  (Block.getBlock(self.blockID).isLabelEditable()):
@@ -111,8 +111,8 @@ class BlockLabel():
           #workspace.notifyListeners(new WorkspaceEvent(workspace, rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_RENAMED));
 
   def menuChanged(self, old_name, new_name):
-    from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
-    from Blocks.BlockGenus import BlockGenus
+    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    from blocks.BlockGenus import BlockGenus
     
     block = Block.getBlock(self.blockID)
     familyMap = block.getSiblingsList();
@@ -131,8 +131,8 @@ class BlockLabel():
     if(factoryBlock.blockLabel.getText() == old_name):
       factoryBlock.blockLabel.labelChanged(new_name)
     
-    if(block.getGenus().family in BlockGenus.familyBlocks):
-      for genus in  BlockGenus.familyBlocks[block.getGenus().family]:
+    if(block.getGenus().familyName in BlockGenus.familyBlocks):
+      for genus in  BlockGenus.familyBlocks[block.getGenus().familyName]:
           genusName = genus.getGenusName()
           if genusName not in FactoryRenderableBlock.factoryRBs: continue
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]

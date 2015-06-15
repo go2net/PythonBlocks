@@ -8,7 +8,7 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.BlockLabel import BlockLabel
+from blocks.BlockLabel import BlockLabel
 from PyQt4 import QtGui
 
 class PageLabel(BlockLabel):

@@ -9,7 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 from PyQt4 import QtGui, QtCore
-from Blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.WorkspaceWidget import WorkspaceWidget
 
 class TrashCan(QtGui.QWidget,WorkspaceWidget):
 
@@ -94,7 +94,7 @@ class TrashCan(QtGui.QWidget,WorkspaceWidget):
 
 
    def blockDropped(self, block):
-      from Blocks.BlockUtilities import BlockUtilities
+      from blocks.BlockUtilities import BlockUtilities
       # remove the block from the land of the living
       BlockUtilities.deleteBlock(block);
       #selfcurrentColor = Color.BLACK;

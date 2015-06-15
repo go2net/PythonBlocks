@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui,QtCore
-from Blocks.RenderableBlock import RenderableBlock
-from Blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.RenderableBlock import RenderableBlock
+from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Canvas(QtGui.QWidget,WorkspaceWidget):
    def __init__(self):
@@ -22,7 +22,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 class BlockCanvas(QtGui.QScrollArea):
 
    def __init__(self):
-      from Blocks.WorkspaceController import WorkspaceController
+      from blocks.WorkspaceController import WorkspaceController
       QtGui.QScrollArea.__init__(self)
 
       self.hValue = 0

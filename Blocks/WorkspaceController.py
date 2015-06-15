@@ -46,10 +46,10 @@ except ImportError:
 
 from PyQt4 import QtGui
 
-from Blocks.BlockGenus  import BlockGenus
-from Blocks.BlockConnectorShape import BlockConnectorShape
-from Blocks.BlockLinkChecker import BlockLinkChecker
-from Blocks.Workspace import Workspace
+from blocks.BlockGenus  import BlockGenus
+from blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.BlockLinkChecker import BlockLinkChecker
+from blocks.Workspace import Workspace
 
 class WorkspaceController():
 
@@ -212,8 +212,8 @@ class WorkspaceController():
       @param root Loads the language specified in the Element root
       '''
 
-      from Blocks.SocketRule import SocketRule
-      from Blocks.CommandRule import CommandRule
+      from blocks.SocketRule import SocketRule
+      from blocks.CommandRule import CommandRule
 
       # load connector shapes
       # MUST load shapes before genuses in order to initialize connectors within

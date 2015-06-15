@@ -10,12 +10,12 @@
 #-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui,QtCore
-from Blocks.PageDrawerLoadingUtils import PageDrawerLoadingUtils
-from Blocks.FactoryManager import FactoryManager
-from Blocks.TrashCan import TrashCan
-from Blocks.BlockCanvas import BlockCanvas
-from Blocks.MiniMap import MiniMap
-from Blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.PageDrawerLoadingUtils import PageDrawerLoadingUtils
+from blocks.FactoryManager import FactoryManager
+from blocks.TrashCan import TrashCan
+from blocks.BlockCanvas import BlockCanvas
+from blocks.MiniMap import MiniMap
+from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Workspace(QtGui.QFrame,WorkspaceWidget):
   #ws = Workspace()
@@ -149,9 +149,9 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       *
       * Want to get the Workspace ready to load another workspace
       '''
-      from Blocks.Block import Block
-      from Blocks.RenderableBlock import RenderableBlock
-      from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
+      from blocks.Block import Block
+      from blocks.RenderableBlock import RenderableBlock
+      from blocks.FactoryRenderableBlock import FactoryRenderableBlock
 
       print("reset")
       # we can't iterate and remove widgets at the same time so
@@ -270,7 +270,7 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
     * @param {boolean} ordered Sort the list if true.
     * @return {!Array.<!Blockly.Block>} The top-level block objects.
     '''
-    from Blocks.Block import Block
+    from blocks.Block import Block
     blocks = []
     # Copy the topBlocks_ list.
     all_blocks = self.blockCanvas.getBlocks()

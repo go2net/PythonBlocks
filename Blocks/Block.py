@@ -9,8 +9,8 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 import re
-from Blocks.BlockGenus import BlockGenus
-from Blocks.BlockConnector import BlockConnector
+from blocks.BlockGenus import BlockGenus
+from blocks.BlockConnector import BlockConnector
 
 class Block():
 
@@ -231,7 +231,7 @@ class Block():
       return self.getGenus().getLabelSuffix()
       
    def setBlockLabel(self, newLabel):
-      from Blocks.BlockStub import BlockStub
+      from blocks.BlockStub import BlockStub
       if (self.linkToStubs and self.hasStubs()):
           BlockStub.parentNameChanged(self.label, newLabel, self.blockID);
 
@@ -298,7 +298,7 @@ class Block():
       return None;
 
    def blockConnected(self,connectedSocket, connectedBlockID):
-      from Blocks.BlockStub import BlockStub
+      from blocks.BlockStub import BlockStub
       if (connectedSocket.isExpandable):
          if (connectedSocket.getExpandGroup().length() > 0):
              # Part of an expand group

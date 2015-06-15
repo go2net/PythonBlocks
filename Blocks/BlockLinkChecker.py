@@ -8,7 +8,7 @@
 # Copyright:   (c) shijq 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-from Blocks.Block import Block
+from blocks.Block import Block
 from PyQt4 import QtCore
 
 class BlockLinkChecker():
@@ -119,7 +119,7 @@ class BlockLinkChecker():
    * or null if no such matching exists.
    '''
    def getLink(rblock1, otherBlocks):
-      from Blocks.BlockLink import BlockLink
+      from blocks.BlockLink import BlockLink
 
       block1 = Block.getBlock(rblock1.getBlockID());
       closestSocket1 = None;

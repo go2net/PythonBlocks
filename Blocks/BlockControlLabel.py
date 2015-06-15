@@ -33,7 +33,7 @@ class BlockControlLabel(QtGui.QLabel):
 
 
    def update(self):
-      from Blocks.RenderableBlock import RenderableBlock
+      from blocks.RenderableBlock import RenderableBlock
       rb = RenderableBlock.getRenderableBlock(self.getBlockID());
 
       if (rb != None):
