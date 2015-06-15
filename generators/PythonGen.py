@@ -1,4 +1,4 @@
-from Blocks.Generator import Generator
+from blocks.Generator import Generator
 
 import re
 
@@ -35,15 +35,16 @@ class PythonGen(Generator):
   PASS = '  pass\n';
 
   def __init__(self, workspace):
-    from Generators.Python import Logic
+    from generators.python import logic
+    from generators.python import variables
     Generator.__init__(self,workspace)
     self.name_ = "Python"
     
-    self.functions["controls_if"] = Logic.controls_if
-    self.functions["if"] = Logic.ifBlock
-    self.functions["boolean"] = Logic.boolean
-    self.functions["print"] = Logic.print_
-    
+    self.functions["controls_if"] = logic.controls_if
+    self.functions["if"] = logic.ifBlock
+    self.functions["boolean"] = logic.boolean
+    self.functions["print"] = logic.print_
+    self.functions["set_str_var"] = variables.set_str_var
     self.definitions_ = {}
 
   def scrub_(self, block, code):

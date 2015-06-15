@@ -94,7 +94,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="boolean" kind="data" initlabel="true" color="255 0 255">
+		<BlockGenus name="boolean" family_name='boolean' kind="data" initlabel="true" color="255 0 255">
 			<description>
 				<text>
 					Reports the boolean true.

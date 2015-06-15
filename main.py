@@ -11,7 +11,7 @@
 import sys
 #import Workspace
 from blocks.WorkspaceController import WorkspaceController
-from generators.python import PythonGen
+from generators.PythonGen import PythonGen
 
 from PyQt4 import QtGui,QtCore, uic
 

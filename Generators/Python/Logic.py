@@ -1,4 +1,4 @@
-from Generators.PythonGen import PythonGen
+from generators.PythonGen import PythonGen
 
 def controls_if(pythonGen, block):
   # If/elseif/else condition.
