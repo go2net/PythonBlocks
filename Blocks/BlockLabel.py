@@ -112,7 +112,8 @@ class BlockLabel():
 
   def menuChanged(self, old_name, new_name):
     from Blocks.FactoryRenderableBlock import FactoryRenderableBlock
-
+    from Blocks.BlockGenus import BlockGenus
+    
     block = Block.getBlock(self.blockID)
     familyMap = block.getSiblingsList();
     for key in familyMap:
@@ -129,6 +130,20 @@ class BlockLabel():
     factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
     if(factoryBlock.blockLabel.getText() == old_name):
       factoryBlock.blockLabel.labelChanged(new_name)
+    
+    if(block.getGenus().family in BlockGenus.familyBlocks):
+      for genusName in  BlockGenus.familyBlocks[block.getGenus().family]:
+          if genusName not in FactoryRenderableBlock.factoryRBs: continue
+          factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
+          for rb in factoryBlock.child_list:
+            blockLabel = rb.blockLabel
+            blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+            if(blockLabel.getText() == old_name):
+              blockLabel.labelChanged(new_name)
+          
+          factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+          if(factoryBlock.blockLabel.getText() == old_name):
+            factoryBlock.blockLabel.labelChanged(new_name)
     
   def getAbstractWidth(self):
     if(self.widget.hasMenu):

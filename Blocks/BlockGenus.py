@@ -19,11 +19,11 @@ class BlockGenus():
    # mapping of genus names to BlockGenus objects
    # only BlockGenus may add to this map
    nameToGenus = {}
-
+   familyBlocks = {}
    def __init__(self,genusName = None, newGenusName=None):
 
       self.properties = {}
-      self.blockImageMap = {}
+      self.blockImageMap = {}      
 
       self.familyList = {}
       self.sockets = []
@@ -48,6 +48,7 @@ class BlockGenus():
       self.labelPrefix = ""
       self.labelSuffix = ""
       self.genusName = ""
+      self.family = ''
 
       self.plug = None
       self.before = None
@@ -373,6 +374,14 @@ class BlockGenus():
          if 'kind' in genusNode.attrib:
             newGenus.kind = genusNode.attrib["kind"]
 
+         if 'family' in genusNode.attrib:
+            newGenus.family = genusNode.attrib["family"]
+            
+            if(newGenus.family not in BlockGenus.familyBlocks):
+               BlockGenus.familyBlocks[newGenus.family] = []
+               
+            BlockGenus.familyBlocks[newGenus.family].append(newGenus)
+
          if 'initlabel' in genusNode.attrib:
             newGenus.initLabel = genusNode.attrib["initlabel"]
 
@@ -468,15 +477,18 @@ class BlockGenus():
       # / LOAD BLOCK FAMILY INFORMATION # /
       # # # # # # # # # # # # # # # # # # /
       families = root.findall("BlockFamilies/BlockFamily")
-      familyMap = {}
+
       #BlockGenus.famMap = {}
       for i in range(0,len(families)):
         family=families[i]
         familyName = ''
         if("name" in family.attrib):
            familyName = family.attrib["name"]
+
                
         children = family.getchildren()
+        
+        familyMap = {}              
         for j in range(0, len(children)):
           member = children[j]
           if (member.tag == ("FamilyMember")): # a family member entry
@@ -485,7 +497,7 @@ class BlockGenus():
             if("label" in member.attrib):
               label = member.attrib["label"] 
             familyMap[name] = label
-        
+
         if(len(familyMap) > 0):
 
           if(familyName  != ''):
@@ -500,8 +512,6 @@ class BlockGenus():
 
           #    BlockGenus.nameToGenus[memName].familyList = newFamList
 
-        familyMap= {}
-
    def hasSiblings(self):
       '''
       * Returns true if this genus has siblings; False otherwise.
@@ -512,7 +522,10 @@ class BlockGenus():
       return (len(self.familyList) > 0)
 
    def getSiblingsList(self):
-    return self.familyList
+      if (self.family in BlockGenus.nameToGenus):
+        return BlockGenus.nameToGenus[self.family]
+      else:
+        return None
 
 
    def getInitSockets(self):

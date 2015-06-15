@@ -434,6 +434,8 @@ class LabelMenu(ShadowLabel):
     self.popupmenu = QtGui.QMenu();
     self.lastSelectedItem = None
     
+    if(familyMap == None): return
+    
     for key  in familyMap:
       text = familyMap[key]
       entry = self.popupmenu.addAction(text)
