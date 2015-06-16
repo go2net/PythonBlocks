@@ -87,6 +87,10 @@ class PythonGen(Generator):
       nextBlock = Block.getBlock(nextBlockID)
       #nextBlock = block.nextConnection and block.nextConnection.targetBlock();
       nextCode = self.blockToCode(nextBlock);
+      
+      #nextCode = nextCode.ljust(len(code) - len(code.lstrip()))
+    #print(code)
+      nextCode = self.prefixLines(nextCode, self.INDENT);
     return commentCode + code + nextCode;
 
   def scrubNakedValue(self, line):

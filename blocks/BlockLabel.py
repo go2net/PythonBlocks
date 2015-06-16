@@ -144,7 +144,7 @@ class BlockLabel():
           
           factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
           if(factoryBlock.blockLabel.getText() == old_name):
-            print(factoryBlock)
+            #print(factoryBlock)
             factoryBlock.blockLabel.labelChanged(new_name)
     
   def getAbstractWidth(self):

@@ -274,10 +274,10 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
     blocks = []
     # Copy the topBlocks_ list.
     all_blocks = self.blockCanvas.getBlocks()
-    print(all_blocks)
+    #print(all_blocks)
     for rb in all_blocks:
       block = rb.getBlock()
-      print(block.before)
+      #print(block.before)
       
       #if block.before == None:
       #  blocks.append(block)
