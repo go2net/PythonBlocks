@@ -20,8 +20,6 @@ class Generator():
     if (block.disabled):
       # Skip past this block if it is disabled.
       return self.blockToCode(block.getNextBlock());
-    
-    #print(block.getGenusName())
 
     if ( block.getGenusName() not in self.functions):
       raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
@@ -34,6 +32,7 @@ class Generator():
     # The current prefered method of accessing the block is through the second
     # argument to func.call, which becomes the first parameter to the generator.
     code = func(self, block);
+
     if (isinstance(code, list)):
       # Value blocks return tuples of code and operator order.
       return [self.scrub_(block, code[0]), code[1]];
@@ -99,7 +98,6 @@ class Generator():
       # Disabled block.
       return '';
 
-    print (tuple)
     if (not isinstance(tuple, list)):
       # Value blocks must return code and order of operations info.
       # Statement blocks must only return code.
@@ -141,10 +139,8 @@ class Generator():
     targetBlock = block.getInputTargetBlock(name);
     if (targetBlock == None):
       return '';
-    print('***')  
+
     code = self.blockToCode(targetBlock);
-    print(code)
-    print('***')  
 
     #if (not isinstance(code, str)):
     #  # Value blocks must return code and order of operations info.

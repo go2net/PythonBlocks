@@ -37,17 +37,21 @@ class PythonGen(Generator):
   def __init__(self, workspace):
     from generators.python import logic
     from generators.python import variables
+    from generators.python import text
     Generator.__init__(self,workspace)
     self.name_ = "Python"
     
     self.functions["controls_if"] = logic.controls_if
     self.functions["if"] = logic.ifBlock
     self.functions["boolean"] = logic.boolean
-    self.functions["print"] = logic.print_
     self.functions["set_str_var"] = variables.set_str_var
+    self.functions["str_const"] = variables.str_const 
+    self.functions["str_var"] = variables.str_var 
+    self.functions["text_print"] = text.text_print   
     self.definitions_ = {}
 
   def scrub_(self, block, code):
+    
     '''
      * Common tasks for generating Python from blocks.
      * Handles comments for the specified block and any connected value blocks.
@@ -57,8 +61,10 @@ class PythonGen(Generator):
      * @return {string} Python code with comments and subsequent blocks added.
      * @private
     '''
-    return code
+    from blocks.Block import Block
     commentCode = '';
+    #return code
+    '''
     # Only collect comments for blocks that aren't inline.
     if (not block.outputConnection or not block.outputConnection.targetConnection):
       # Collect comment for this block.
@@ -75,9 +81,12 @@ class PythonGen(Generator):
             comment = Blockly.Python.allNestedComments(childBlock);
             if (comment):
               commentCode += Blockly.Python.prefixLines(comment, '# ');
-
-    nextBlock = block.nextConnection and block.nextConnection.targetBlock();
-    nextCode = Blockly.Python.blockToCode(nextBlock);
+    '''
+    nextBlockID = block.getAfterBlockID()
+    if(nextBlockID != None):
+      nextBlock = Block.getBlock(nextBlockID)
+      #nextBlock = block.nextConnection and block.nextConnection.targetBlock();
+      nextCode = self.blockToCode(nextBlock);
     return commentCode + code + nextCode;
 
   def scrubNakedValue(self, line):

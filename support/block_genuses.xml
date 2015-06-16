@@ -446,6 +446,20 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
+		<BlockGenus name="text_print" kind="command" initlabel="print" color="45 201 255">
+			<description>
+				<text>
+					Displays the text attached to this block in the bottom panel of Spaceland.  
+				</text>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-kind="socket" connector-type="string"></BlockConnector>
+			</BlockConnectors>
+			<LangSpecProperties>
+				<LangSpecProperty key="vm-cmd-name" value="set-status"></LangSpecProperty>
+			</LangSpecProperties>
+		</BlockGenus>
+				
 		<BlockGenus name="set-status" kind="command" initlabel="set status" color="45 201 255">
 			<description>
 				<text>

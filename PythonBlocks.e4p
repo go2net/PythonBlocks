@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
-<!-- eric project file for project Pythonblocks -->
-<!-- Saved: 2015-06-06, 01:07:15 -->
+<!-- eric project file for project PythonBlocks -->
+<!-- Saved: 2015-06-16, 17:59:27 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -62,6 +62,10 @@
     <Source>blocks/Generator.py</Source>
     <Source>generators/__init__.py</Source>
     <Source>generators/PythonGen.py</Source>
+    <Source>generators/python/logic.py</Source>
+    <Source>generators/python/variables.py</Source>
+    <Source>generators/python/__init__.py</Source>
+    <Source>generators/python/text.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
