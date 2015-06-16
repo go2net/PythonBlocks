@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
-<!-- eric project file for project PythonBlocks -->
+<!-- eric project file for project Pythonblocks -->
 <!-- Saved: 2015-06-06, 01:07:15 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
@@ -17,51 +17,51 @@
   <Sources>
     <Source>main.py</Source>
     <Source>__init__.py</Source>
-    <Source>Blocks/bevel_test.py</Source>
-    <Source>Blocks/bevel_types.py</Source>
-    <Source>Blocks/Bezier.py</Source>
-    <Source>Blocks/Block.py</Source>
-    <Source>Blocks/BlockCanvas.py</Source>
-    <Source>Blocks/BlockConnector.py</Source>
-    <Source>Blocks/BlockConnectorShape.py</Source>
-    <Source>Blocks/BlockControlLabel.py</Source>
-    <Source>Blocks/BlockGenus.py</Source>
-    <Source>Blocks/BlockLabel.py</Source>
-    <Source>Blocks/BlockLink.py</Source>
-    <Source>Blocks/BlockLinkChecker.py</Source>
-    <Source>Blocks/BlockShape.py</Source>
-    <Source>Blocks/BlockShapeUtil.py</Source>
-    <Source>Blocks/BlockStub.py</Source>
-    <Source>Blocks/BlockUtilities.py</Source>
-    <Source>Blocks/CollapseLabel.py</Source>
-    <Source>Blocks/CommandRule.py</Source>
-    <Source>Blocks/ConnectorTag.py</Source>
-    <Source>Blocks/FactoryCanvas.py</Source>
-    <Source>Blocks/FactoryManager.py</Source>
-    <Source>Blocks/FactoryRenderableBlock.py</Source>
-    <Source>Blocks/GraphicsManager.py</Source>
-    <Source>Blocks/InfixBlockShape.py</Source>
-    <Source>Blocks/LabelWidget.py</Source>
-    <Source>Blocks/LinkRule.py</Source>
-    <Source>Blocks/MiniMap.py</Source>
-    <Source>Blocks/module1.py</Source>
-    <Source>Blocks/NameLabel.py</Source>
-    <Source>Blocks/Page.py</Source>
-    <Source>Blocks/PageDivider.py</Source>
-    <Source>Blocks/PageDrawerLoadingUtils.py</Source>
-    <Source>Blocks/PageLabel.py</Source>
-    <Source>Blocks/RenderableBlock - Copy.py</Source>
-    <Source>Blocks/RenderableBlock.py</Source>
-    <Source>Blocks/SocketLabel.py</Source>
-    <Source>Blocks/SocketRule.py</Source>
-    <Source>Blocks/TrashCan.py</Source>
-    <Source>Blocks/Workspace.py</Source>
-    <Source>Blocks/WorkspaceController.py</Source>
-    <Source>Blocks/WorkspaceWidget.py</Source>
-    <Source>Blocks/__init__.py</Source>
-    <Source>Blocks/Generator.py</Source>
-    <Source>Generators/__init__.py</Source>
-    <Source>Generators/PythonGen.py</Source>
+    <Source>blocks/bevel_test.py</Source>
+    <Source>blocks/bevel_types.py</Source>
+    <Source>blocks/Bezier.py</Source>
+    <Source>blocks/Block.py</Source>
+    <Source>blocks/BlockCanvas.py</Source>
+    <Source>blocks/BlockConnector.py</Source>
+    <Source>blocks/BlockConnectorShape.py</Source>
+    <Source>blocks/BlockControlLabel.py</Source>
+    <Source>blocks/BlockGenus.py</Source>
+    <Source>blocks/BlockLabel.py</Source>
+    <Source>blocks/BlockLink.py</Source>
+    <Source>blocks/BlockLinkChecker.py</Source>
+    <Source>blocks/blockshape.py</Source>
+    <Source>blocks/blockshapeUtil.py</Source>
+    <Source>blocks/blockstub.py</Source>
+    <Source>blocks/BlockUtilities.py</Source>
+    <Source>blocks/CollapseLabel.py</Source>
+    <Source>blocks/CommandRule.py</Source>
+    <Source>blocks/ConnectorTag.py</Source>
+    <Source>blocks/FactoryCanvas.py</Source>
+    <Source>blocks/FactoryManager.py</Source>
+    <Source>blocks/FactoryRenderableBlock.py</Source>
+    <Source>blocks/GraphicsManager.py</Source>
+    <Source>blocks/Infixblockshape.py</Source>
+    <Source>blocks/LabelWidget.py</Source>
+    <Source>blocks/LinkRule.py</Source>
+    <Source>blocks/MiniMap.py</Source>
+    <Source>blocks/module1.py</Source>
+    <Source>blocks/NameLabel.py</Source>
+    <Source>blocks/Page.py</Source>
+    <Source>blocks/PageDivider.py</Source>
+    <Source>blocks/PageDrawerLoadingUtils.py</Source>
+    <Source>blocks/PageLabel.py</Source>
+    <Source>blocks/RenderableBlock - Copy.py</Source>
+    <Source>blocks/RenderableBlock.py</Source>
+    <Source>blocks/SocketLabel.py</Source>
+    <Source>blocks/SocketRule.py</Source>
+    <Source>blocks/TrashCan.py</Source>
+    <Source>blocks/Workspace.py</Source>
+    <Source>blocks/WorkspaceController.py</Source>
+    <Source>blocks/WorkspaceWidget.py</Source>
+    <Source>blocks/__init__.py</Source>
+    <Source>blocks/Generator.py</Source>
+    <Source>generators/__init__.py</Source>
+    <Source>generators/PythonGen.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
