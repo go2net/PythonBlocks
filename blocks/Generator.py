@@ -57,9 +57,9 @@ class Generator():
     code = [];
     #this.init(workspace);
     blocks = self.workspace.getTopBlocks(False);
+    print(blocks)
     for block in blocks:
       line = self.blockToCode(block);
-
       if (isinstance(line, list)):
         # Value blocks return tuples of code and operator order.
         # Top-level blocks don't care about operator order.
@@ -71,8 +71,8 @@ class Generator():
           # it wants to append a semicolon, or something.
           line = self.scrubNakedValue(line);
 
-        code.append(line);  
-       
+        code.append(line); 
+
     code = '\n'.join(map(str, code))  # Blank line between each section.
     
     code = self.finish(code);    
@@ -125,9 +125,8 @@ class Generator():
     return code;
     
   def prefixLines(self, text, prefix) :
-    return prefix + text.replace('/\n(.)/g', '\n' + prefix + '$1');
-
-
+    import re
+    return prefix + re.sub(r'\n(.)','\n' + prefix + r'\1', text)
 
   def statementToCode(self, block, name) :
     '''
@@ -149,5 +148,4 @@ class Generator():
 
     if (code != None) :
       code = self.prefixLines(code, self.INDENT);
-
     return code;

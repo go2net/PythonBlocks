@@ -90,7 +90,7 @@ class PythonGen(Generator):
       
       #nextCode = nextCode.ljust(len(code) - len(code.lstrip()))
     #print(code)
-      nextCode = self.prefixLines(nextCode, self.INDENT);
+    #nextCode = self.prefixLines(nextCode, self.INDENT);
     return commentCode + code + nextCode;
 
   def scrubNakedValue(self, line):
