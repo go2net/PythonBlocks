@@ -35,19 +35,28 @@ class PythonGen(Generator):
   PASS = '  pass\n';
 
   def __init__(self, workspace):
+    '''
     from generators.python import logic
     from generators.python import variables
     from generators.python import text
+    from generators.python import math
+    '''
     Generator.__init__(self,workspace)
     self.name_ = "Python"
     
+    '''
     self.functions["controls_if"] = logic.controls_if
     self.functions["if"] = logic.ifBlock
     self.functions["boolean"] = logic.boolean
+    
     self.functions["set_str_var"] = variables.set_str_var
-    self.functions["str_const"] = variables.str_const 
-    self.functions["str_var"] = variables.str_var 
+    self.functions["set_num_var"] = variables.set_num_var
+    
+    self.functions["text_const"] = text.text_const 
     self.functions["text_print"] = text.text_print   
+    
+    self.functions["math_const"] = math.math_const 
+    '''
     self.definitions_ = {}
 
   def scrub_(self, block, code):

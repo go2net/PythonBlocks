@@ -94,7 +94,7 @@
 				<BlockConnector con-block-id="106" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
 			</Sockets>
 		</Block>
-		<Block genus-name="str_const" id="106">
+		<Block genus-name="text_const" id="106">
 			<Label>Hello Kitty</Label>
 			<Location>
 				<X>194.0</X>
@@ -124,7 +124,7 @@
 				<BlockConnector con-block-id="108" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
 			</Sockets>
 		</Block>
-		<Block genus-name="str_const" id="108">
+		<Block genus-name="text_const" id="108">
 			<Label>电子科技大学</Label>
 			<Location>
 				<X>236.0</X>
@@ -134,7 +134,7 @@
 				<BlockConnector con-block-id="107" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
 			</Plug>
 		</Block>
-		<Block genus-name="str_const" id="98">
+		<Block genus-name="text_const" id="98">
 			<Label>大家好</Label>
 			<Location>
 				<X>236.0</X>

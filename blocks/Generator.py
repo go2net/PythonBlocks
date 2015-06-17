@@ -1,7 +1,9 @@
 #from Blocks.Workspace import Workspace
+import sys
 class Generator():
   def __init__(self, workspace):
     self.STATEMENT_PREFIX = None
+    self.INFINITE_LOOP_TRAP = None
     self.INDENT = '  ';
     self.workspace = workspace
     self.functions = {}
@@ -14,6 +16,7 @@ class Generator():
      *     For value blocks, an array containing the generated code and an
      *     operator order value.  Returns '' if block is null.
     '''
+        
     if (block == None):
       return ''
 
@@ -21,17 +24,32 @@ class Generator():
       # Skip past this block if it is disabled.
       return self.blockToCode(block.getNextBlock());
 
-    if ( block.getGenusName() not in self.functions):
+    genus = block.getGenus()
+    module = genus.getProperty('module_name')
+    function_name = genus.getProperty('function_name')
+  
+    if(module == '' or function_name == ''): 
       raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
           'for block type "' + block.getGenusName() + '".');
+          
+    exec('import '+module)
+    code = eval(module+'.'+function_name+'(self,block)')
+    
+    # Release module
+    if module in sys.modules:  
+      del(sys.modules[module]) 
+
+    #if ( block.getGenusName() not in self.functions):
+    #  raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
+    #      'for block type "' + block.getGenusName() + '".');
    
-    func = self.functions[block.getGenusName()]
+    #func = self.functions[block.getGenusName()]
  
     # First argument to func.call is the value of 'this' in the generator.
     # Prior to 24 September 2013 'this' was the only way to access the block.
     # The current prefered method of accessing the block is through the second
     # argument to func.call, which becomes the first parameter to the generator.
-    code = func(self, block);
+    #code = func(self, block);
 
     if (isinstance(code, list)):
       # Value blocks return tuples of code and operator order.
@@ -127,6 +145,15 @@ class Generator():
   def prefixLines(self, text, prefix) :
     import re
     return prefix + re.sub(r'\n(.)','\n' + prefix + r'\1', text)
+
+  def addLoopTrap(self, branch, id):
+    if (self.INFINITE_LOOP_TRAP) :
+      branch = self.INFINITE_LOOP_TRAP.replace('/%1/g', '\'' + id + '\'') + branch;
+
+    if (self.STATEMENT_PREFIX) :
+      branch += self.prefixLines(self.STATEMENT_PREFIX.replace('/%1/g',
+          '\'' + id + '\''), self.INDENT);
+    return branch;
 
   def statementToCode(self, block, name) :
     '''

@@ -64,7 +64,7 @@
 		
 		<!-- End of Stub Genuses -->
 	
-		<BlockGenus name="number" kind="data" initlabel="1" editable-label="yes" is-label-value="yes" color="255 0 255">
+		<BlockGenus name="math_number" kind="data" initlabel="1" editable-label="yes" is-label-value="yes" color="255 0 255">
 			<description>
 				<text>
 					Reports the number shown.
@@ -74,12 +74,12 @@
 				<BlockConnector connector-kind="plug" connector-type="number" position-type="mirror"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.math"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="math_number"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="str_const" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" label-prefix='“' label-suffix='”' color="255 0 255">
+		<BlockGenus name="text_const" kind="data" initlabel="abc" editable-label="yes" is-label-value="yes" label-prefix='“' label-suffix='”' color="255 0 255">
 			<description>
 				<text>
 					Reports the text shown.
@@ -89,8 +89,8 @@
 				<BlockConnector connector-kind="plug" connector-type="string" position-type="mirror"></BlockConnector>		
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.text"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="text_const"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 		
@@ -104,8 +104,8 @@
 				<BlockConnector connector-kind="plug" connector-type="boolean" position-type="mirror"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="true"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.logic"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="boolean"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>		
 	
@@ -294,7 +294,8 @@
 				<BlockConnector label="then" connector-kind="socket" connector-type="cmd"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="if"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.logic"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="ifBlock"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 		
@@ -325,7 +326,7 @@
 			</LangSpecProperties>
 		</BlockGenus>
 		
-		<BlockGenus name="repeat" kind="command" initlabel="repeat" color="255 80 0">
+		<BlockGenus name="repeater" kind="command" initlabel="repeat" color="255 80 0">
 			<description>
 				<text>
 					Repeats some commands <arg n="1"/> times.
@@ -343,7 +344,8 @@
 				<BlockConnector label="do" connector-kind="socket" connector-type="cmd"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="repeat"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.loops"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="controls_repeat"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 			
@@ -456,7 +458,8 @@
 				<BlockConnector connector-kind="socket" connector-type="string"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="set-status"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.text"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="text_print"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 				
@@ -543,8 +546,8 @@
 				<BlockConnector connector-kind="plug" connector-type="number" position-type="mirror"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="pi"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.math"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="math_const"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 		
@@ -558,8 +561,8 @@
 				<BlockConnector connector-kind="plug" connector-type="number" position-type="mirror"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="e"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.math"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="math_const"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 		
@@ -2367,8 +2370,8 @@
 				<BlockConnector connector-kind="plug" connector-type="number" position-type="mirror"></BlockConnector>		
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.variables"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="num_var"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 
@@ -2382,8 +2385,8 @@
 				<BlockConnector connector-kind="plug" connector-type="string" position-type="mirror"></BlockConnector>		
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="eval-num"></LangSpecProperty>
-				<LangSpecProperty key="is-monitorable" value="yes"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.variables"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="str_var"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>
 
@@ -2400,8 +2403,8 @@
 				<BlockConnector connector-kind="socket" connector-type="string"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="setshape"></LangSpecProperty>
-				<LangSpecProperty key="stack-type" value="breed"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.variables"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="set_str_var"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>	
 
@@ -2418,8 +2421,8 @@
 				<BlockConnector connector-kind="socket" connector-type="number"></BlockConnector>
 			</BlockConnectors>
 			<LangSpecProperties>
-				<LangSpecProperty key="vm-cmd-name" value="setshape"></LangSpecProperty>
-				<LangSpecProperty key="stack-type" value="breed"></LangSpecProperty>
+				<LangSpecProperty key="module_name" value="generators.python.variables"></LangSpecProperty>
+				<LangSpecProperty key="function_name" value="set_num_var"></LangSpecProperty>
 			</LangSpecProperties>
 		</BlockGenus>	
 				

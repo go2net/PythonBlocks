@@ -32,21 +32,10 @@ def ifBlock(pythonGen, block):
   #print("argument="+argument)  
   branch = pythonGen.statementToCode(block, 'THEN') or PythonGen.PASS;
   code = 'if ' + argument + ':\n' + branch;
-  #print (code)
-  
-  '''
-  for n in range(1, block.elseifCount+1):
-    argument = self.valueToCode(block, 'IF' + n,
-        PythonGen.ORDER_NONE) or 'False';
-    branch = self.statementToCode(block, 'DO' + n) or PythonGen.PASS;
-    code += 'elif ' + argument + ':\n' + branch;
 
-  if (block.elseCount_):
-    branch = self.statementToCode(block, 'ELSE') or PythonGen.PASS;
-    code += 'else:\n' + branch;
-  '''
   return code;
-  
+ 
+ 
 def boolean(pythonGen, block):
   code = 'True' if block.getBlockFullLabel()=='true' else 'False'
   return [code, pythonGen.ORDER_ATOMIC];

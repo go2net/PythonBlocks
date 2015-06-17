@@ -312,6 +312,11 @@ class BlockGenus():
             if(key != None and value != None):
                genus.properties[key] = value
 
+   def getProperty(self, property) :
+      if(property in self.properties):
+        return self.properties[property]
+      else:
+        return ''
 
 
    def loadStubs(stubs, genus):
