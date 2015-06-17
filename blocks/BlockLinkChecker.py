@@ -29,7 +29,7 @@ class BlockLinkChecker():
       if (not BlockLinkChecker.hasPlugEquivalent(b)):
          return None;
       if (b.hasPlug()):
-         return b.getPlug();
+         return b.getPlug(); 
       return b.getBeforeConnector();
 
    def getSocketEquivalents(b):

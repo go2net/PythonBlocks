@@ -69,8 +69,8 @@ class MainWnd(QtGui.QMainWindow):
     #try:
       gen = PythonGen(WorkspaceController.workspace)
       code = gen.workspaceToCode()
-      #print(code)  
-      #exec(code)
+      print(code)  
+      exec(code)
     #except:
     #  exc_type, exc_obj, exc_tb = sys.exc_info()
     #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -105,11 +105,12 @@ class MainWnd(QtGui.QMainWindow):
          #didLoad();
 
   def onSave(self):
-      if(self.filename == None or self.filename == ''):
-        self.filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks")
-      block_file = open(self.filename, "w")
-      block_file.write(self.wc.getSaveString())
-      block_file.close()
+    import codecs
+    if(self.filename == None or self.filename == ''):
+      self.filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks")
+    block_file = codecs.open(self.filename, "w",'utf-8')
+    block_file.write(self.wc.getSaveString())
+    block_file.close()
 
   def resetWorksapce(self):
       self.wc.resetWorkspace();

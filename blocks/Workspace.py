@@ -271,6 +271,7 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
     * @return {!Array.<!Blockly.Block>} The top-level block objects.
     '''
     from blocks.Block import Block
+    from blocks.BlockLinkChecker import BlockLinkChecker
     blocks = []
     # Copy the topBlocks_ list.
     all_blocks = self.blockCanvas.getBlocks()
@@ -280,9 +281,9 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       #print(block.before)
       
       #if block.before == None:
-      #  blocks.append(block)
-      
-      if(block.getBeforeBlockID() == Block.NULL):
+      #  blocks.append(block)      
+      plug = BlockLinkChecker.getPlugEquivalent(block)
+      if(plug == None or not plug.hasBlock()):
         blocks.append(block)
 
     if (ordered and len(blocks) > 1):
