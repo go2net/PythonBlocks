@@ -313,11 +313,9 @@ class ShadowLabel(QtGui.QLabel):
   #  self.labelWidget.suggestEditable(True);
     
   def enterEvent(self,event):
-    print('enterEvent')
     self.suggestEditable(True);
     
   def leaveEvent(self,event):
-    print('leaveEvent')
     self.suggestEditable(False);   
   
     

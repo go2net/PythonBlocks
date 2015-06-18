@@ -107,7 +107,7 @@ class BlockCanvas(QtGui.QScrollArea):
 
       self.canvas.resize(width,height)
       #self.parent().resizeEvent(None)
-      print("width:" + str(width) + " height:"+str(height))
+      #print("width:" + str(width) + " height:"+str(height))
 
       #self.resize(,
       #           )
@@ -226,8 +226,8 @@ class BlockCanvas(QtGui.QScrollArea):
       self.repaint();
 
    def mouseMoveEvent(self, event):
-      print(str(self)+":mouseMoveEvent")
-
+      #print(str(self)+":mouseMoveEvent")
+      pass
 
    def insertPage(self,page, position):
       from PageDivider import PageDivider

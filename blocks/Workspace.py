@@ -221,8 +221,8 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
 
 
   def mouseMoveEvent(self, event):
-      print(str(self)+":mouseMoveEvent")
-
+      #print(str(self)+":mouseMoveEvent")
+      pass
 
   def getWidgetAt(self,point):
       '''

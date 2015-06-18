@@ -26,7 +26,7 @@ def math_const(pythonGen, block):
    
   return  CONSTANTS[constant];
 
-def text_print(pythonGen, block):
+def num_print(pythonGen, block):
   # Print statement.
   argument0 = pythonGen.valueToCode(block, '',
       PythonGen.ORDER_NONE) or '0';

@@ -413,7 +413,8 @@ class Page(PageWidget,WorkspaceWidget):
    	# PageChangeEventManager.notifyListeners();
 
    def mouseMoveEvent(self, event):
-      print(str(self)+":mouseMoveEvent")
+      #print(str(self)+":mouseMoveEvent")
+      pass
 
    '''
    * Adds a collection of blocks to this widget internally and graphically.

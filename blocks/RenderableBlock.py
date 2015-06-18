@@ -1026,7 +1026,7 @@ class RenderableBlock(QtGui.QWidget):
 
 
    def mousePressEvent(self, event):
-      print ("mousePressEvent,id=%d"%(self.getBlockID()))
+      #print ("mousePressEvent,id=%d"%(self.getBlockID()))
       self.raise_()
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
          if (socket.hasBlock()):
@@ -1044,7 +1044,7 @@ class RenderableBlock(QtGui.QWidget):
       #QtGui.QFrame.mouseMoveEvent(self,event);
 
    def mouseReleaseEvent(self, event):
-      print("mouseReleaseEvent")
+      #print("mouseReleaseEvent")
       if event.button() == QtCore.Qt.LeftButton:
          if (not self.pickedUp):
             print("dropping without prior dragging?");
