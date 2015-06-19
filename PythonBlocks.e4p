@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-06-16, 17:59:27 -->
+<!-- Saved: 2015-06-18, 10:53:43 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -66,6 +66,7 @@
     <Source>generators/python/variables.py</Source>
     <Source>generators/python/__init__.py</Source>
     <Source>generators/python/text.py</Source>
+    <Source>generators/python/math.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>

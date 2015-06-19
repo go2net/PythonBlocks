@@ -75,7 +75,7 @@ class Generator():
     code = [];
     #this.init(workspace);
     blocks = self.workspace.getTopBlocks(False);
-    print(blocks)
+    #print(blocks)
     for block in blocks:
       line = self.blockToCode(block);
       if (isinstance(line, list)):

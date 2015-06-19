@@ -341,7 +341,6 @@ class WorkspaceController():
          '''
       #try:
          doc = Document()
-         root = doc.createElement('root')
          documentElement = doc.createElement("CODEBLOCKS");
          # schema reference
          #documentElement.setAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:schemaLocation", Constants.XML_CODEBLOCKS_NS+" "+Constants.XML_CODEBLOCKS_SCHEMA_URI);
