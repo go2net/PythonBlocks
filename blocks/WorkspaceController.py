@@ -305,6 +305,7 @@ class WorkspaceController():
       layout  = QtGui.QHBoxLayout()
       self.workspacePanel.setLayout(layout);
       layout.addWidget(self.workspace);
+      layout.setContentsMargins(0, 0, 0, 0)
 
       self.isWorkspacePanelInitialized = True;
 

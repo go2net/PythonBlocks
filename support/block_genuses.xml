@@ -54,7 +54,7 @@
 				</text>
 			</description>
 			<BlockConnectors>
-			    <BlockConnector connector-kind="plug" connector-type="poly" position-type="single"></BlockConnector>
+				<BlockConnector connector-kind="plug" connector-type="poly" position-type="single"></BlockConnector>
 				<BlockConnector label="ID" connector-kind="socket" connector-type="number" position-type="single"></BlockConnector>
 			</BlockConnectors>	
 			<LangSpecProperties>

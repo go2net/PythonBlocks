@@ -62,6 +62,7 @@ class FactoryManager(WorkspaceWidget):
       #self.scroll.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
 
       #self.parentWidget.resizeEvent = self.onResize
+
       pass
 
    def getparentWidget(self):

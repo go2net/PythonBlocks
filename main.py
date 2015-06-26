@@ -33,7 +33,7 @@ class MainWnd(QtGui.QMainWindow):
 
     #self.btnExit.clicked.connect(self.close)
     self.actionQuit.triggered.connect(self.close)
-
+    #self.frame.layout().setContentsMargins(0, 0, 0, 0)
     # Create a new WorkspaceController
     self.wc = WorkspaceController(self.frame)
     self.resetWorksapce()
@@ -42,12 +42,21 @@ class MainWnd(QtGui.QMainWindow):
 
   def InitBlockGenusListWidget(self):
     from blocks.BlockGenus import BlockGenus
+    
     for name in BlockGenus.nameToGenus:
       item = QtGui.QListWidgetItem()
       item.setText(name)
+      item.setData(QtCore.Qt.UserRole, BlockGenus.nameToGenus[name])
       self.lwBlockGenus.addItem(item)
     
+    self.lwBlockGenus.itemSelectionChanged.connect(self.onBlockGenusItemChanged)
 
+  def onBlockGenusItemChanged(self):
+    items = self.lwBlockGenus.selectedItems()
+    if(len(items) != 1): return
+    item = items[0]
+    print(item.data(QtCore.Qt.UserRole))
+    
   def closeEvent(self, event):
 
     reply = QtGui.QMessageBox.question(self, 'Message',

@@ -36,7 +36,7 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       layout  = QtGui.QHBoxLayout()
       self.setLayout(layout);
       self.layout().setContentsMargins(0, 0, 0, 0)
-
+      
       self.miniMap = MiniMap(self);
 
       splitter = QtGui.QSplitter(self)
