@@ -37,7 +37,16 @@ class MainWnd(QtGui.QMainWindow):
     # Create a new WorkspaceController
     self.wc = WorkspaceController(self.frame)
     self.resetWorksapce()
+    self.InitBlockGenusListWidget()
     self.show()
+
+  def InitBlockGenusListWidget(self):
+    from blocks.BlockGenus import BlockGenus
+    for name in BlockGenus.nameToGenus:
+      item = QtGui.QListWidgetItem()
+      item.setText(name)
+      self.lwBlockGenus.addItem(item)
+    
 
   def closeEvent(self, event):
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-06-18, 10:53:43 -->
+<!-- Saved: 2015-06-19, 20:15:04 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -29,9 +29,9 @@
     <Source>blocks/BlockLabel.py</Source>
     <Source>blocks/BlockLink.py</Source>
     <Source>blocks/BlockLinkChecker.py</Source>
-    <Source>blocks/blockshape.py</Source>
-    <Source>blocks/blockshapeUtil.py</Source>
-    <Source>blocks/blockstub.py</Source>
+    <Source>blocks/BlockShape.py</Source>
+    <Source>blocks/BlockShapeUtil.py</Source>
+    <Source>blocks/BlockStub.py</Source>
     <Source>blocks/BlockUtilities.py</Source>
     <Source>blocks/CollapseLabel.py</Source>
     <Source>blocks/CommandRule.py</Source>
@@ -39,8 +39,9 @@
     <Source>blocks/FactoryCanvas.py</Source>
     <Source>blocks/FactoryManager.py</Source>
     <Source>blocks/FactoryRenderableBlock.py</Source>
+    <Source>blocks/Generator.py</Source>
     <Source>blocks/GraphicsManager.py</Source>
-    <Source>blocks/Infixblockshape.py</Source>
+    <Source>blocks/InfixBlockShape.py</Source>
     <Source>blocks/LabelWidget.py</Source>
     <Source>blocks/LinkRule.py</Source>
     <Source>blocks/MiniMap.py</Source>
@@ -59,14 +60,14 @@
     <Source>blocks/WorkspaceController.py</Source>
     <Source>blocks/WorkspaceWidget.py</Source>
     <Source>blocks/__init__.py</Source>
-    <Source>blocks/Generator.py</Source>
     <Source>generators/__init__.py</Source>
-    <Source>generators/PythonGen.py</Source>
     <Source>generators/python/logic.py</Source>
-    <Source>generators/python/variables.py</Source>
     <Source>generators/python/__init__.py</Source>
+    <Source>generators/python/variables.py</Source>
+    <Source>generators/PythonGen.py</Source>
     <Source>generators/python/text.py</Source>
     <Source>generators/python/math.py</Source>
+    <Source>generators/python/loops.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
