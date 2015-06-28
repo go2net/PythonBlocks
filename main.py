@@ -52,9 +52,14 @@ class MainWnd(QtGui.QMainWindow):
     self.lwBlockGenus.itemSelectionChanged.connect(self.onBlockGenusItemChanged)
 
   def onBlockGenusItemChanged(self):
-    items = self.lwBlockGenus.selectedItems()
+    from BlockGenusTreeModel import BlockGenusTreeModel
+    items = self.lwBlockGenus.selectedItems()    
     if(len(items) != 1): return
     item = items[0]
+    
+    model = BlockGenusTreeModel(item)
+    self.tvBlockGenusView.setModel(model)
+    
     print(item.data(QtCore.Qt.UserRole))
     
   def closeEvent(self, event):

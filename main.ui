@@ -167,7 +167,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeView" name="treeView_2"/>
+      <widget class="QTreeView" name="tvBlockGenusView"/>
      </item>
     </layout>
    </widget>
