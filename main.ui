@@ -167,7 +167,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeView" name="tvBlockGenusView"/>
+      <widget class="QPropertyEditorWidget" name="tvBlockGenusView"/>
      </item>
     </layout>
    </widget>
@@ -299,6 +299,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QPropertyEditorWidget</class>
+   <extends>QTreeView</extends>
+   <header>components.propertyeditor.QPropertyEditorWidget</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

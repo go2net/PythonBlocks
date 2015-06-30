@@ -8,7 +8,7 @@
 # Copyright:   (c) 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-import sys
+import sys, os
 #import Workspace
 from blocks.WorkspaceController import WorkspaceController
 from generators.PythonGen import PythonGen
@@ -57,10 +57,10 @@ class MainWnd(QtGui.QMainWindow):
     if(len(items) != 1): return
     item = items[0]
     
-    model = BlockGenusTreeModel(item)
+    genus = item.data(QtCore.Qt.UserRole)
+    langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
+    model = BlockGenusTreeModel(genus, langDefLocation)
     self.tvBlockGenusView.setModel(model)
-    
-    print(item.data(QtCore.Qt.UserRole))
     
   def closeEvent(self, event):
 
