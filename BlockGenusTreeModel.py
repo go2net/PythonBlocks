@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from components.propertyeditor.QPropertyModel import  QPropertyModel
+from components.propertyeditor.Property import Property
+
 try:
   from lxml import etree
   #from lxml import ElementInclude
@@ -59,13 +62,13 @@ class TreeItem(object):
   def appendChild(self, item):
       self.childItems.append(item)
  
-class BlockGenusTreeModel(QtCore.QAbstractItemModel):
+class BlockGenusTreeModel(QPropertyModel):
   def __init__(self, genus, langDefLocation, parent=None):
     super(BlockGenusTreeModel, self).__init__(parent)
     self.langDefLocation = langDefLocation
     self.rootItem = TreeItem(("Property", "Value"))
-    self.setupModelData(genus, self.rootItem)
-        
+    self.setupModelData(genus, self.m_rootItem)
+  '''      
   def columnCount(self, parent):
       if parent.isValid():
           return parent.internalPointer().columnCount()
@@ -83,6 +86,7 @@ class BlockGenusTreeModel(QtCore.QAbstractItemModel):
 
       return parentItem.childCount()
  
+
   def index(self, row, column, parent):
     if not self.hasIndex(row, column, parent):
         return QtCore.QModelIndex()
@@ -103,7 +107,7 @@ class BlockGenusTreeModel(QtCore.QAbstractItemModel):
           return self.rootItem.data(section)
 
       return None 
- 
+  '''
   def setupModelData(self, genus, parent):
     parents = [parent]
     tree = etree.parse(self.langDefLocation)
@@ -122,30 +126,31 @@ class BlockGenusTreeModel(QtCore.QAbstractItemModel):
     #columnData = ['A','B']  
     #print(genusNode.attrib)
     #
-    parents[-1].appendChild(TreeItem(['Genus Name', genusNode.attrib["name"]], parents[-1]))
+    Property('Genus Name', genusNode.attrib["name"], parents[-1])
     
     if('kind' in genusNode.attrib):
-      parents[-1].appendChild(TreeItem(['Genus Kind', genusNode.attrib["kind"]], parents[-1]))
+      Property('Genus Kind', genusNode.attrib["kind"], parents[-1])
     else:
-      parents[-1].appendChild(TreeItem(['kind', ''], parents[-1]))  
+      Property('Genus Kind', '', parents[-1])
       
     if('initlabel' in genusNode.attrib):
-      parents[-1].appendChild(TreeItem(['Init Label', genusNode.attrib["initlabel"]], parents[-1]))
+      
+      Property('Init Label', genusNode.attrib["initlabel"], parents[-1])
     else:
-      parents[-1].appendChild(TreeItem(['Init Label', ''], parents[-1]))  
+      Property('Init Label', '', parents[-1]) 
     
     if('label-prefix' in genusNode.attrib):  
-      parents[-1].appendChild(TreeItem(['label-prefix', genusNode.attrib["label-prefix"]], parents[-1]))
+      Property('label-prefix', genusNode.attrib["label-prefix"], parents[-1])
     else:
-      parents[-1].appendChild(TreeItem(['label-prefix', ''], parents[-1]))  
+      Property('label-prefix', '', parents[-1])
       
     if('label-suffix' in genusNode.attrib):    
-      parents[-1].appendChild(TreeItem(['label-suffix', genusNode.attrib["label-suffix"]], parents[-1]))
+      Property('label-suffix', genusNode.attrib["label-suffix"], parents[-1])
     else:
-      parents[-1].appendChild(TreeItem(['label-suffix', ''], parents[-1]))  
+      Property('label-suffix', '', parents[-1])
     
     
-    
+  '''  
   def parent(self, index):
     if not index.isValid():
       return QtCore.QModelIndex()
@@ -155,7 +160,7 @@ class BlockGenusTreeModel(QtCore.QAbstractItemModel):
 
     if parentItem == self.rootItem:
         return QtCore.QModelIndex()
-            
+         
   def data(self, index, role):
       if not index.isValid():
           return None
@@ -171,4 +176,5 @@ class BlockGenusTreeModel(QtCore.QAbstractItemModel):
       if not index.isValid():
           return 0
 
-      return QtCore.Qt.ItemIsTristate |QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+      return QtCore.Qt.ItemIsTristate |QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable  
+  ''' 

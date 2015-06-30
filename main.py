@@ -53,6 +53,7 @@ class MainWnd(QtGui.QMainWindow):
 
   def onBlockGenusItemChanged(self):
     from BlockGenusTreeModel import BlockGenusTreeModel
+    from components.propertyeditor.QVariantDelegate import QVariantDelegate
     items = self.lwBlockGenus.selectedItems()    
     if(len(items) != 1): return
     item = items[0]
@@ -61,6 +62,7 @@ class MainWnd(QtGui.QMainWindow):
     langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
     model = BlockGenusTreeModel(genus, langDefLocation)
     self.tvBlockGenusView.setModel(model)
+    self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
     
   def closeEvent(self, event):
 

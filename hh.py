@@ -1,35 +1,36 @@
-
-from PyQt4 import QtGui
-#from components.propertyeditor.QPropertyModel import  QPropertyModel
-#from components.propertyeditor.QVariantDelegate import QVariantDelegate
-
+import sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-class QPropertyEditorWidget(QtGui.QTreeView):
-  def __inti__(self, parent):
-    super(QPropertyEditorWidget, self).__init__(parent)
+####################################################################
+def main():
+    app = QApplication(sys.argv)
+    w = MyWindow()
+    w.show()
+    sys.exit(app.exec_())
 
-    #self.m_model = QPropertyModel(self);		
-    #self.setModel(self.m_model);
-    #self.setItemDelegate(QVariantDelegate(self));
-    # create objects
-    list_data = [1,2,3,4]
-    lm = MyListModel(list_data, self)
-    de = MyDelegate(self)
-    self.setItemDelegate(de)
+####################################################################
+class MyWindow(QWidget):
+    def __init__(self, *args):
+        QWidget.__init__(self, *args)
 
-    # layout
-    #layout = QVBoxLayout()
-    #layout.addWidget(lv)
-    #self.setLayout(layout)
-    self.setModel(lm)
-        
+        # create objects
+        list_data = [1,2,3,4]
+        lm = MyListModel(list_data, self)
+        de = MyDelegate(self)
+        lv = QTreeView()
+
+        lv.setItemDelegate(de)
+
+        # layout
+        layout = QVBoxLayout()
+        layout.addWidget(lv)
+        self.setLayout(layout)
+        lv.setModel(lm)
 ####################################################################
 class MyDelegate(QItemDelegate):
     def __init__(self, parent=None, *args):
         QItemDelegate.__init__(self, parent, *args)
-        print('MyDelegate')
 
     def paint(self, painter, option, index):
         painter.save()
@@ -68,4 +69,7 @@ class MyListModel(QAbstractListModel):
             return self.listdata[index.row()]
         else:
             return None # QVariant()
-    
+
+####################################################################
+if __name__ == "__main__":
+    main()
