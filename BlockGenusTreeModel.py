@@ -33,7 +33,7 @@ except ImportError:
           print("Failed to import ElementTree from any known place")
 
 
-from PyQt4 import QtCore
+from PyQt4 import QtCore, QtGui
 
 class TreeItem(object):
   def __init__(self, data, parent=None):
@@ -148,6 +148,10 @@ class BlockGenusTreeModel(QPropertyModel):
       Property('label-suffix', genusNode.attrib["label-suffix"], parents[-1])
     else:
       Property('label-suffix', '', parents[-1])
+      
+    Property('combo','123' , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+    Property('combo',QtGui.QColor(0, 0, 255) , parents[-1], Property.COLOR_EDITOR)
+    
     
     
   '''  

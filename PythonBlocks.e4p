@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-06-30, 23:31:57 -->
+<!-- Saved: 2015-07-02, 01:11:26 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -75,6 +75,7 @@
     <Source>components/propertyeditor/QPropertyEditorWidget.py</Source>
     <Source>components/propertyeditor/Property.py</Source>
     <Source>hh.py</Source>
+    <Source>components/propertyeditor/ColorCombo.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>

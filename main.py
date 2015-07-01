@@ -8,6 +8,9 @@
 # Copyright:   (c) 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
+import sip
+sip.setapi('QVariant', 2)
+
 import sys, os
 #import Workspace
 from blocks.WorkspaceController import WorkspaceController
@@ -61,6 +64,7 @@ class MainWnd(QtGui.QMainWindow):
     genus = item.data(QtCore.Qt.UserRole)
     langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
     model = BlockGenusTreeModel(genus, langDefLocation)
+    self.tvBlockGenusView.init()
     self.tvBlockGenusView.setModel(model)
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
     

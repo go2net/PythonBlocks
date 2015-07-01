@@ -1,5 +1,8 @@
 from PyQt4 import QtGui, QtCore
 
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
 class QVariantDelegate(QtGui.QItemDelegate):
   def __inti__(self, parent):
     super(QVariantDelegate, self).__init__(parent)
@@ -10,14 +13,9 @@ class QVariantDelegate(QtGui.QItemDelegate):
   def createEditor(self, parent, option , index ):
     editor = None
     p = index.internalPointer()
-    obj_type = type(p)
     
-    if(obj_type == QtCore.QVariant.Color or
-       obj_type == QtCore.QVariant.Int or
-       #obj_type == QtCore.QVariant.Float or
-       obj_type == QtCore.QVariant.Double or
-       obj_type == QtCore.QVariant.UserType):
-      
+    obj_type = p.obj_type
+    if(obj_type != None):     
       editor = p.createEditor(parent, option);
       if (editor != None):
         if (editor.metaObject().indexOfSignal("editFinished()") != -1):
@@ -48,20 +46,23 @@ class QVariantDelegate(QtGui.QItemDelegate):
   
     
   def setModelData(self, editor, model, index) :
-    print('setModelData')
+    data = index.model().data(index, Qt.EditRole);	
+    obj_type = index.internalPointer().obj_type
+    if(obj_type != None):  
+        data = index.internalPointer().editorData(editor);
+        if (data != None):
+          model.setData(index, data , Qt.EditRole); 
+    else:
+      QItemDelegate.setModelData(editor, model, index);
+
     
   def setEditorData (self, editor, index):
 
     #self.m_finishedMapper.blockSignals(True);
     data = index.model().data(index, QtCore.Qt.EditRole);	
     
-    obj_type = type(data)
-        
-    if(obj_type == QtCore.QVariant.Color or
-       obj_type == QtCore.QVariant.Int or
-       #obj_type == QtCore.QVariant.Float or
-       obj_type == QtCore.QVariant.Double or
-       obj_type == QtCore.QVariant.UserType):
+    obj_type = index.internalPointer().obj_type
+    if(obj_type != None): 
          
       index.internalPointer().setEditorData(editor, data)
  
@@ -74,8 +75,19 @@ class QVariantDelegate(QtGui.QItemDelegate):
     return QtGui.QItemDelegate.updateEditorGeometry(self, editor, option, index);
 
     
-  #def sizeHint (self, option, index):
-  #  return 18
-    
-  #def paint(self, painter, option, index):    
-  #  print('paint')
+  def sizeHint (self, option, index):
+    size=QtGui.QItemDelegate.sizeHint(self, option, index);
+    #h=size.height();
+
+    size.setHeight(18);
+    return size;
+   
+
+  def paint(self,  painter,  option, index ):
+    if (index.column() == 1):
+      painter.save();
+      painter.setPen(QtGui.QColor(240, 240, 240) );
+      painter.drawRect(option.rect);
+      painter.restore();
+
+    QtGui.QItemDelegate.paint(self, painter, option, index);

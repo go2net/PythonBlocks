@@ -7,6 +7,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
     self.m_rootItem = Property("Root",0, self);   
   
   def index (self,  row, column, parent):
+
     parentItem = self.m_rootItem;
     if (parent.isValid()):
       parentItem = parent.internalPointer();	
@@ -28,8 +29,12 @@ class QPropertyModel(QtCore.QAbstractItemModel):
   def flags (self,  index ) :
     if (not index.isValid()):
       return QtCore.Qt.ItemIsEnabled;
+    
     item = index.internalPointer();
     
+    if (index.column() == 0):
+        return QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable 
+        
     # only allow change of value attribute
     if (item.isRoot()):
       return  QtCore.Qt.ItemIsEnabled;	
@@ -39,6 +44,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
       return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable |  QtCore.Qt.ItemIsEditable;
 
   def parent ( self,  index ) :
+
     if (not index.isValid()):
       return QtCore.QModelIndex()
 
@@ -65,6 +71,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
       return None
 
     item = index.internalPointer();
+
     if(role == QtCore.Qt.ToolTipRole or
        role == QtCore.Qt.DecorationRole or
        role == QtCore.Qt.DisplayRole or
