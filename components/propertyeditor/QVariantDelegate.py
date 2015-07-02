@@ -53,7 +53,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
         if (data != None):
           model.setData(index, data , Qt.EditRole); 
     else:
-      QItemDelegate.setModelData(editor, model, index);
+      QItemDelegate.setModelData(self, editor, model, index);
 
     
   def setEditorData (self, editor, index):
@@ -79,7 +79,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
     size=QtGui.QItemDelegate.sizeHint(self, option, index);
     #h=size.height();
 
-    size.setHeight(18);
+    size.setHeight(21);
     return size;
    
 

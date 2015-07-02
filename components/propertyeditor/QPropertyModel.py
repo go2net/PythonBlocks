@@ -1,5 +1,7 @@
 from PyQt4 import  QtCore, QtGui
 from components.propertyeditor.Property import Property
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 
 class QPropertyModel(QtCore.QAbstractItemModel):
   def __init__(self, parent):
@@ -81,7 +83,17 @@ class QPropertyModel(QtCore.QAbstractItemModel):
       if (index.column() == 1):
         return item.value(role);
     if(role == QtCore.Qt.BackgroundRole):
-      if (item.isRoot()): return QtCore.QApplication.palette("QTreeView").brush(QtGui.QPalette.Normal, QtGui.QPalette.Button).color();
+      if (item.isRoot()): 
+        return QtGui.QApplication.palette("QTreeView").brush(QtGui.QPalette.Normal, QtGui.QPalette.Button).color();
 
     return None
+
+  # edit methods
+  def setData (self,  index, value, role):
+    if (index.isValid() and role == Qt.EditRole):
+      item = index.internalPointer()
+      item.setValue(value)
+      #emit dataChanged(index, index);
+      return True;
+    return False;
 

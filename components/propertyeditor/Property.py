@@ -18,11 +18,14 @@ class Property(QtCore.QObject):
     return self.obj_value == None
     
   def value(self, role=None):
-
     if (self.obj_value):
       return self.obj_value
     else:
       return None;
+
+  def setValue(self, val):
+    if (self.obj_value != None):
+      self.obj_value = val
 
   def isReadOnly(self):
     return False
@@ -36,7 +39,7 @@ class Property(QtCore.QObject):
   def createEditor(self, parent, option):
     editor = None
     if(self.obj_type == None): return None
-    print(self.obj_type)
+
     if(self.obj_type == Property.COMBO_BOX_EDITOR):
       confiningChoices = self.obj_data
       
@@ -46,13 +49,12 @@ class Property(QtCore.QObject):
       return confineCombo
         
     if(self.obj_type == Property.COLOR_EDITOR):
-      editor = ColorCombo(parent);
+      editor = ColorCombo(self, parent);
       return editor
     
     return None
     
   def setEditorData(self, editor, val):
-    print('setEditorData')
     if(self.obj_type == None): return False
     
     if(self.obj_type == Property.COMBO_BOX_EDITOR):
@@ -68,6 +70,7 @@ class Property(QtCore.QObject):
 
   
   def editorData(self, editor):
+    print('editorData')
     if(self.obj_type == None): return False
     
     if(self.obj_type == Property.COMBO_BOX_EDITOR):

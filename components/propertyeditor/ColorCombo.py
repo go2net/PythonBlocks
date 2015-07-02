@@ -3,8 +3,9 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 class ColorCombo(QComboBox):
-  def __init__(self, parent):
+  def __init__(self, property, parent):
     super(ColorCombo, self).__init__(parent)
+    self.property = property
     colorNames = QColor.colorNames();
     self.m_init = QColor(0, 0, 255)
     index = 0
@@ -16,9 +17,8 @@ class ColorCombo(QComboBox):
     self.addItem("Custom", QVariant.UserType);
     #self.connect(self, QtCore.SIGNAL("currentIndexChanged(int)"), self, SLOT(self.currentChanged));
     self.currentIndexChanged[int].connect(self.IndexChanged)
-    
+    #self.setMinimumHeight(21)
   def color(self):
-    print(self.currentIndex())
     return self.itemData(self.currentIndex(), Qt.DecorationRole);
 
 
@@ -32,16 +32,20 @@ class ColorCombo(QComboBox):
 
 
   def IndexChanged(self,  index):
-    print(index)
-    if (self.itemData(index) == QVariant.UserType):
 
+    if (self.itemData(index) == QVariant.UserType):
       color = QColorDialog.getColor(self.m_init, self);		
       if (color.isValid()):
         if (self.findData(color, Qt.DecorationRole) == -1):
+          print(color.name())
           self.addItem(color.name());
           self.setItemData(self.count()-1, color, Qt.DecorationRole);
-        self.setColor(color)
+          
+        self.setCurrentIndex(self.count()-1);
+
       else:
         self.setCurrentIndex(self.findData(self.m_init));
-
+    
+    self.property.setValue(self.color())
+    self.parent().update()
   
