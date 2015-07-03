@@ -8,23 +8,28 @@ class Property(QtCore.QObject):
   
   def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
     super(Property, self).__init__(parent)
-    print(parent)
+    
     self.obj_type = obj_type
     self.obj_value = obj_value
     self.obj_data = obj_data
     self.setObjectName(name);
 
+  def row(self):
+    if self.parent:
+        return self.parent().children().index(self)
+    return 0
+
   def isRoot(self):
     return self.obj_value == None
     
   def value(self, role=None):
-    if (self.obj_value):
+    if (self.obj_type):
       return self.obj_value
     else:
       return None;
 
   def setValue(self, val):
-    if (self.obj_value != None):
+    if (self.obj_type != None):
       self.obj_value = val
 
   def isReadOnly(self):

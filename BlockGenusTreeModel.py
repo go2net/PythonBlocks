@@ -156,7 +156,18 @@ class BlockGenusTreeModel(QPropertyModel):
       Property('color',QtGui.QColor(255, 255, 255) , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
    
     
+    connectors_root = Property('Connectors','', parents[-1])    
+    all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
     
+    index = 0
+    for connector_node in all_connectors:
+      connector_root = Property(str(index),'', connectors_root)
+      if('connector-kind' in connector_node.attrib): 
+        Property('connector-kind',connector_node.attrib["connector-kind"] , connector_root, Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+      else:
+        Property('connector-kind','' , connector_root, Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+      
+      index += 1
   '''  
   def parent(self, index):
     if not index.isValid():

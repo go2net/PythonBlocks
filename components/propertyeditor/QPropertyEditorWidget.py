@@ -22,7 +22,7 @@ class QPropertyEditorWidget(QtGui.QTreeView):
     p = self.palette();
     p.setColor( QPalette.AlternateBase, QColor(226, 237, 253) );
     self.setPalette(p);   
-
+    self.setEditTriggers(QAbstractItemView.AllEditTriggers)
 
   def drawRow (self, painter,option, index) :
 
