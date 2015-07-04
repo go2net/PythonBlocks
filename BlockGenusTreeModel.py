@@ -159,15 +159,17 @@ class BlockGenusTreeModel(QPropertyModel):
     connectors_root = Property('Connectors','', parents[-1])    
     all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
     
-    index = 0
+    plug_index = 0
+    socket_index = 0
     for connector_node in all_connectors:
-      connector_root = Property(str(index),'', connectors_root)
-      if('connector-kind' in connector_node.attrib): 
-        Property('connector-kind',connector_node.attrib["connector-kind"] , connector_root, Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+      connector_kind = connector_node.attrib["connector-kind"]
+      if(connector_kind == 'socket'):
+        connector_root = Property('Socket #'+str(socket_index), connector_node.attrib["connector-type"],  connectors_root)
+        socket_index += 1
       else:
-        Property('connector-kind','' , connector_root, Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
-      
-      index += 1
+        connector_root = Property('Plug #'+str(plug_index), connector_node.attrib["connector-type"], connectors_root)
+        plug_index += 1
+
   '''  
   def parent(self, index):
     if not index.isValid():

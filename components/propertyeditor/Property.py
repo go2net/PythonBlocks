@@ -23,6 +23,8 @@ class Property(QtCore.QObject):
     return self.obj_value == None
     
   def value(self, role=None):
+    return self.obj_value
+
     if (self.obj_type):
       return self.obj_value
     else:
