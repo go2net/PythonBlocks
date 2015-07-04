@@ -1,10 +1,17 @@
 
 from PyQt4 import QtCore, QtGui
+
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
+
 from components.propertyeditor.ColorCombo import  ColorCombo
+from components.propertyeditor.AdvanceEditor import  AdvanceEditor
 
 class Property(QtCore.QObject):
-  COMBO_BOX_EDITOR = 1
-  COLOR_EDITOR = 2
+  ROOT_NODE = 0
+  ADVANCED_EDITOR = 1
+  COMBO_BOX_EDITOR = 2
+  COLOR_EDITOR = 3
   
   def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
     super(Property, self).__init__(parent)
@@ -45,8 +52,13 @@ class Property(QtCore.QObject):
 
   def createEditor(self, parent, option):
     editor = None
-    if(self.obj_type == None): return None
+    if(self.obj_type == None or self.obj_type == Property.ROOT_NODE): return None
 
+    if(self.obj_type == Property.ADVANCED_EDITOR):
+      advancedEditor = AdvanceEditor(self, parent)
+      QObject.connect(advancedEditor.button, SIGNAL('clicked()'),self.onAdvBtnClick);
+      return advancedEditor
+      
     if(self.obj_type == Property.COMBO_BOX_EDITOR):
       confiningChoices = self.obj_data
       
@@ -60,7 +72,11 @@ class Property(QtCore.QObject):
       return editor
     
     return None
-    
+   
+  
+  def onAdvBtnClick(self):
+    print('onAdvBtnClick')
+ 
   def setEditorData(self, editor, val):
     if(self.obj_type == None): return False
     
@@ -80,11 +96,14 @@ class Property(QtCore.QObject):
     print('editorData')
     if(self.obj_type == None): return False
     
+    if(self.obj_type == Property.ADVANCED_EDITOR):
+      return ''  
+    
     if(self.obj_type == Property.COMBO_BOX_EDITOR):
-      return editor.currentText();
+      return editor.currentText()
       
     if(self.obj_type == Property.COLOR_EDITOR):  
-      return editor.color();
+      return editor.color()
     else:
       return None
 

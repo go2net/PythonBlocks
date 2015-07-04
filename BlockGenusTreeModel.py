@@ -156,7 +156,8 @@ class BlockGenusTreeModel(QPropertyModel):
       Property('color',QtGui.QColor(255, 255, 255) , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
    
     
-    connectors_root = Property('Connectors','', parents[-1])    
+    connectors_root = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
+    connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
     all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
     
     plug_index = 0
@@ -169,6 +170,9 @@ class BlockGenusTreeModel(QPropertyModel):
       else:
         connector_root = Property('Plug #'+str(plug_index), connector_node.attrib["connector-type"], connectors_root)
         plug_index += 1
+
+  def onShowConnectorsInfo(self):
+    print('onShowConnectorsInfo')
 
   '''  
   def parent(self, index):

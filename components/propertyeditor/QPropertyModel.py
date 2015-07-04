@@ -41,9 +41,9 @@ class QPropertyModel(QtCore.QAbstractItemModel):
     if (item.isRoot()):
       return  QtCore.Qt.ItemIsEnabled;	
     elif (item.isReadOnly()):
-      return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsSelectable;	
+      return  QtCore.Qt.ItemIsDragEnabled 
     else:
-      return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable |  QtCore.Qt.ItemIsEditable;
+      return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
 
   def parent ( self,  index ) :
 
