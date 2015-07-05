@@ -2,7 +2,7 @@
 
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
-
+from ConnectorsInfo import ConnectorsInfo
 try:
   from lxml import etree
   #from lxml import ElementInclude
@@ -63,8 +63,9 @@ class TreeItem(object):
       self.childItems.append(item)
  
 class BlockGenusTreeModel(QPropertyModel):
-  def __init__(self, genus, langDefLocation, parent=None):
+  def __init__(self, mainWnd, genus, langDefLocation, parent=None):
     super(BlockGenusTreeModel, self).__init__(parent)
+    self.mainWnd = mainWnd
     self.langDefLocation = langDefLocation
     self.rootItem = TreeItem(("Property", "Value"))
     self.setupModelData(genus, self.m_rootItem)
@@ -172,6 +173,9 @@ class BlockGenusTreeModel(QPropertyModel):
         plug_index += 1
 
   def onShowConnectorsInfo(self):
+
+    dlg = ConnectorsInfo(self.mainWnd)
+    dlg.exec_()
     print('onShowConnectorsInfo')
 
   '''  

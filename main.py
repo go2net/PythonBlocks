@@ -63,7 +63,7 @@ class MainWnd(QtGui.QMainWindow):
     
     genus = item.data(QtCore.Qt.UserRole)
     langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
-    model = BlockGenusTreeModel(genus, langDefLocation)
+    model = BlockGenusTreeModel(self, genus, langDefLocation)
     self.tvBlockGenusView.init()
     self.tvBlockGenusView.setModel(model)
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
