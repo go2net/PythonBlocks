@@ -2,7 +2,7 @@
 
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
-from ConnectorsInfo import ConnectorsInfo
+from ConnectorsInfoWnd import ConnectorsInfoWnd
 try:
   from lxml import etree
   #from lxml import ElementInclude
@@ -158,12 +158,12 @@ class BlockGenusTreeModel(QPropertyModel):
    
     
     connectors_root = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
-    connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
-    all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
+
+    self.all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
     
     plug_index = 0
     socket_index = 0
-    for connector_node in all_connectors:
+    for connector_node in self.all_connectors:
       connector_kind = connector_node.attrib["connector-kind"]
       if(connector_kind == 'socket'):
         connector_root = Property('Socket #'+str(socket_index), connector_node.attrib["connector-type"],  connectors_root)
@@ -171,10 +171,12 @@ class BlockGenusTreeModel(QPropertyModel):
       else:
         connector_root = Property('Plug #'+str(plug_index), connector_node.attrib["connector-type"], connectors_root)
         plug_index += 1
-
+        
+    connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
+    
   def onShowConnectorsInfo(self):
 
-    dlg = ConnectorsInfo(self.mainWnd)
+    dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
     dlg.exec_()
     print('onShowConnectorsInfo')
 
