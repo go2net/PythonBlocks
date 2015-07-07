@@ -155,8 +155,7 @@ class BlockGenusTreeModel(QPropertyModel):
       Property('color',QtGui.QColor(int(color_strs[0]), int(color_strs[1]), int(color_strs[2])) , parents[-1], Property.COLOR_EDITOR)
     else:    
       Property('color',QtGui.QColor(255, 255, 255) , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
-   
-    
+       
     connectors_root = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
     self.all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
@@ -171,7 +170,16 @@ class BlockGenusTreeModel(QPropertyModel):
       else:
         connector_root = Property('Plug #'+str(plug_index), connector_node.attrib["connector-type"], connectors_root)
         plug_index += 1
-        
+    
+    all_lang_props = genusNode.findall('LangSpecProperties/LangSpecProperty')
+    lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+    for lang_prop_node in all_lang_props:
+      if('module_name' in lang_prop_node.attrib): 
+        Property('lang_prop_node','', int(color_strs[1]), int(color_strs[2])) , parents[-1], Property.COLOR_EDITOR)
+      else:    
+        Property('module_name','' , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+     
+    
     connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
     
   def onShowConnectorsInfo(self):
