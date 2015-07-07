@@ -93,7 +93,7 @@ class Property(QtCore.QObject):
 
   
   def editorData(self, editor):
-    print('editorData')
+
     if(self.obj_type == None): return False
     
     if(self.obj_type == Property.ADVANCED_EDITOR):

@@ -142,9 +142,7 @@ class MyDelegate(QItemDelegate):
       QItemDelegate.setEditorData(self, editor, index);
  
     if index.column() == 1:
-      print(editor)
       _ind = editor.findText(text)
-      print(_ind)
       editor.setCurrentIndex(_ind)
     
     if index.column() == 2:
