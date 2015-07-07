@@ -174,11 +174,11 @@ class BlockGenusTreeModel(QPropertyModel):
     all_lang_props = genusNode.findall('LangSpecProperties/LangSpecProperty')
     lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
     for lang_prop_node in all_lang_props:
-      if('module_name' in lang_prop_node.attrib): 
-        Property('lang_prop_node','', int(color_strs[1]), int(color_strs[2])) , parents[-1], Property.COLOR_EDITOR)
-      else:    
-        Property('module_name','' , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
-     
+      if 'key' in lang_prop_node.attrib: 
+        if 'value' in lang_prop_node.attrib: 
+          Property(lang_prop_node.attrib['key'],lang_prop_node.attrib['value'], lang_root)
+        else:    
+          Property(lang_prop_node.attrib['key'],'', lang_root)  
     
     connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
     

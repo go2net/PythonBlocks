@@ -67,6 +67,7 @@ class MainWnd(QtGui.QMainWindow):
     self.tvBlockGenusView.init()
     self.tvBlockGenusView.setModel(model)
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
+    self.tvBlockGenusView.expandAll()
     
   def closeEvent(self, event):
 
