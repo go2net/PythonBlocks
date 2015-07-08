@@ -8,22 +8,34 @@
 # Copyright:   (c) A21059 2015
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
+from PyQt4 import QtGui
 from blocks.RenderableBlock import RenderableBlock
 from blocks.BlockUtilities import BlockUtilities
 from blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
    factoryRBs = {}
-   def __init__(self,workspaceWidget,blockID,back_color):
-      RenderableBlock.__init__(self,workspaceWidget,blockID,False, back_color)
-      self.setBlockLabelUneditable()
-      self.createdRB = None
-      self.createdRB_dragged = False
-      self.child_list = []
-      FactoryRenderableBlock.factoryRBs[self.getBlock().getGenusName()] = self
+   def __init__(self):
+      RenderableBlock.__init__(self)
       pass
       #dragHandler = new JComponentDragHandler(this);
 
+   @classmethod
+   def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
+     obj = super(FactoryRenderableBlock, cls).from_block(workspaceWidget,block,False, back_color)
+     obj.setBlockLabelUneditable()
+     obj.createdRB = None
+     obj.createdRB_dragged = False
+     obj.child_list = []
+     FactoryRenderableBlock.factoryRBs[block.getGenusName()] = obj
+
+     return  obj
+     
+   @classmethod     
+   def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
+     return  FactoryRenderableBlock.from_block(workspaceWidget,Block.getBlock(blockID),False, back_color)
+     
+     
    def createNewInstance(self):
       #print(self.getBlockID())
       rb = BlockUtilities.cloneBlock(Block.getBlock(self.getBlockID()))

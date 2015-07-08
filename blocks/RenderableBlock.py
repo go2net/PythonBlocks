@@ -29,74 +29,84 @@ from blocks.BlockLinkChecker import BlockLinkChecker
 
 class RenderableBlock(QtGui.QWidget):
 
-   ALL_RENDERABLE_BLOCKS = {}
-
-   def __init__(self,workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
-      from blocks.WorkspaceController import WorkspaceController
-      from blocks.FactoryManager import FactoryManager
-
-      QtGui.QWidget.__init__(self)
-
-      #print (blockID)
-      #self.setAttribute(QtCore.Qt.WA_Hover);
-      self.workspace = WorkspaceController.workspace
-      self.workspaceWidget = workspaceWidget
-      self.back_color = back_color
-      self.isLoading= isLoading
-      self.blockID = blockID;
-
-      RenderableBlock.ALL_RENDERABLE_BLOCKS[self.blockID] = self
-
-      #self.setAttribute(74, True);
-      self.mouse_enter = False
-      self.pickedUp = False
-      self.linkedDefArgsBefore = False
-      self.commentLabelChanged = False
-      self.dragging = False
-      self.overTrash = False
-
-      self.blockLabel = None
-      self.blockWidget = None
-      self.comment = None
-      self.buffImg = None
-      self.collapseLabel = None
-      self.last_link = None
-      self.blockShape = None
+   ALL_RENDERABLE_BLOCKS = {}     
       
-      self.zoom = 1.0;
-      self.socketTags = []
-
-      # initialize tags, labels, and sockets:
-      self.plugTag = ConnectorTag(self.getBlock().getPlug());
-      self.afterTag = ConnectorTag(self.getBlock().getAfterConnector());
-      self.beforeTag = ConnectorTag(self.getBlock().getBeforeConnector());
-
-      self.blockLabel = NameLabel(self.getBlock().getBlockLabel(), self.getBlock().getLabelPrefix(), self.getBlock().getLabelSuffix(), BlockLabel.Type.NAME_LABEL, self.getBlock().isLabelEditable, self.blockID);
-      self.blockLabel.setParent(self)
-
-      #self.pageLabel = PageLabel(self.getBlock().getPageLabel(), BlockLabel.Type.PAGE_LABEL, False, self.blockID);
-
-      self.synchronizeSockets();
-
-      # initialize collapse label
-      if(self.getBlock().isProcedureDeclBlock() and (self.parent() == None or (not isinstance(self.parent(), FactoryManager)))):
-         self.collapseLabel = CollapseLabel(blockID);
-         self.collapseLabel.parent = self
-
-      if(self.getBlock().isInfix()):
-         self.blockShape = InfixBlockShape(self);
-      else:
-         self.blockShape = BlockShape(self);
-
-      if(not self.isLoading):
-         self.reformBlockShape()
-         self.updateBuffImg()
-      else:
-         self.blockArea = QtGui.QPainterPath ()
-
+   def __init__(self):
+      QtGui.QWidget.__init__(self)
 
    def __del__(self):
       pass
+
+   @classmethod
+   def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
+      from blocks.WorkspaceController import WorkspaceController
+      from blocks.FactoryManager import FactoryManager
+      
+      obj = cls()
+      
+      obj.workspace = WorkspaceController.workspace
+      obj.workspaceWidget = workspaceWidget
+      obj.back_color = back_color
+      obj.isLoading= isLoading
+      
+      obj.blockID = block.getBlockID();
+
+      if(obj.blockID != -1):
+        RenderableBlock.ALL_RENDERABLE_BLOCKS[obj.blockID] = obj
+
+      #self.setAttribute(74, True);
+      obj.mouse_enter = False
+      obj.pickedUp = False
+      obj.linkedDefArgsBefore = False
+      obj.commentLabelChanged = False
+      obj.dragging = False
+      obj.overTrash = False
+
+      obj.blockLabel = None
+      obj.blockWidget = None
+      obj.comment = None
+      obj.buffImg = None
+      obj.collapseLabel = None
+      obj.last_link = None
+      obj.blockShape = None
+      
+      obj.zoom = 1.0;
+      obj.socketTags = []
+
+      # initialize tags, labels, and sockets:
+      obj.plugTag = ConnectorTag(obj.getBlock().getPlug());
+      obj.afterTag = ConnectorTag(obj.getBlock().getAfterConnector());
+      obj.beforeTag = ConnectorTag(obj.getBlock().getBeforeConnector());
+
+      obj.blockLabel = NameLabel(block.getBlockLabel(), block.getLabelPrefix(), block.getLabelSuffix(), BlockLabel.Type.NAME_LABEL, block.isLabelEditable, obj.blockID);
+      obj.blockLabel.setParent(obj)
+
+      #self.pageLabel = PageLabel(self.getBlock().getPageLabel(), BlockLabel.Type.PAGE_LABEL, False, self.blockID);
+
+      obj.synchronizeSockets();
+
+      # initialize collapse label
+      if(block.isProcedureDeclBlock() and (obj.parent() == None or (not isinstance(obj.parent(), FactoryManager)))):
+         obj.collapseLabel = CollapseLabel(obj.blockID);
+         obj.collapseLabel.parent = obj
+
+      if(block.isInfix()):
+         obj.blockShape = InfixBlockShape(obj);
+      else:
+         obj.blockShape = BlockShape(obj);
+
+      if(not obj.isLoading):
+         obj.reformBlockShape()
+         obj.updateBuffImg()
+      else:
+         obj.blockArea = QtGui.QPainterPath ()      
+      return obj
+      
+   
+   @classmethod
+   def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
+      return RenderableBlock.from_block(workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
+
    '''
     * Sets all the labels of this block as uneditable block labels.
     * Useful for Factory blocks.
@@ -967,7 +977,7 @@ class RenderableBlock(QtGui.QWidget):
       isBlockStub = blockNode.tag == ("BlockStub");
 
       if (isBlock or isBlockStub):
-         rb = RenderableBlock(
+         rb = RenderableBlock.from_blockID(
             parent,
             Block.loadBlockFrom(blockNode).getBlockID());
 
