@@ -23,14 +23,24 @@ class Block():
    # A universal hashmap of all the Block instances
    ALL_BLOCKS= {}
 
-   def __init__(self, genusName, linkToStubs=True, id=-1,label=None):
-      if(id == -1):
-         id = Block.NEXT_ID
-         Block.NEXT_ID+=1
+   def __init__(self):
+      self.pageLabel = ""
+      self.hasFocus = False;
+      self.isBad = False;
+      self.disabled = False
+      self.sockets = []
+      self.argumentDescriptions = []
+      self.outputConnection = None
+  
+   def __del__(self):
+      pass
 
-      if(id >= Block.NEXT_ID):
-         Block.NEXT_ID = id+1
-
+   @classmethod
+   def createBlockFromID(cls, genusName, linkToStubs=True, id=-1,label=None):
+      obj = cls()
+      obj.linkToStubs = linkToStubs
+      obj.blockID = id
+      
       #print ("id=%d,NEXT_ID=%d"%(id,Block.NEXT_ID))
       if (label == None):
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
@@ -40,15 +50,7 @@ class Block():
         print("pre-existing block is: {0} with genus {1} and label {2}".format(id,dup.getGenusName(),dup.getBlockLabel()));
         raise Exception("Block id: {0} already exists!  BlockGenus {1}, label: {2}".format(id,genusName,label))
         #assert !ALL_BLOCKS.containsKey(id) : "Block id: "+id+" already exists!  BlockGenus "+genusName+" label: "+label;
-      self.linkToStubs = linkToStubs
-      self.blockID = id;
-      self.pageLabel = ""
-      self.hasFocus = False;
-      self.isBad = False;
-      self.disabled = False
-      self.sockets = []
-      self.argumentDescriptions = []
-      self.outputConnection = None
+
       
       # copy connectors from BlockGenus
       #try:
@@ -59,7 +61,7 @@ class Block():
       # copy the block connectors from block genus
       iter = genus.getInitSockets();
       for con in iter:
-         self.sockets.append(BlockConnector(
+         obj.sockets.append(BlockConnector(
             con.kind,
             con.positionType,
             con.label,
@@ -70,7 +72,7 @@ class Block():
 
 
       if(genus.getInitPlug() != None):
-         self.plug = BlockConnector(
+         obj.plug = BlockConnector(
             genus.getInitPlug().kind,
             genus.getInitPlug().positionType,
             genus.getInitPlug().label,
@@ -79,10 +81,10 @@ class Block():
             genus.getInitPlug().connBlockID,
             genus.getInitPlug().expandGroup);
       else:
-         self.plug = None
+         obj.plug = None
 
       if(genus.getInitBefore() != None):
-         self.before = BlockConnector(
+         obj.before = BlockConnector(
             genus.getInitBefore().kind,
             genus.getInitBefore().positionType,
             genus.getInitBefore().label,
@@ -91,10 +93,10 @@ class Block():
             genus.getInitBefore().connBlockID,
             genus.getInitBefore().expandGroup);
       else:
-         self.before = None
+         obj.before = None
 
       if(genus.getInitAfter() != None):
-         self.after = BlockConnector(
+         obj.after = BlockConnector(
             genus.getInitAfter().kind,
             genus.getInitAfter().positionType,
             genus.getInitAfter().label,
@@ -103,25 +105,27 @@ class Block():
             genus.getInitAfter().connBlockID,
             genus.getInitAfter().expandGroup);
       else:
-         self.after = None
+         obj.after = None
 
-      self.genusName = genusName;
+      obj.genusName = genusName;
 
-      self.label = label;
+      obj.label = label;
 
       #arguumentIter = genus.getInitialArgumentDescriptions()
       #for arg in arguumentIter:
       #	argumentDescriptions.add(arg.trim())
 
 
-      self.expandGroups = []
+      obj.expandGroups = []
 
       # add to ALL_BLOCKS
       # warning: publishing this block before constructor finishes has the
       # potential to cause some problems such as data races
       # other threads could access this block from getBlock()
       #print(self.blockID)
-      Block.ALL_BLOCKS[self.blockID] = self
+      
+      if(obj.blockID != None and obj.blockID != -1):
+        Block.ALL_BLOCKS[obj.blockID] = obj
 
       # add itself to stubs hashmap
       # however factory blocks will have entries in hashmap...
@@ -133,10 +137,16 @@ class Block():
       #  exc_type, exc_obj, exc_tb = sys.exc_info()
       #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
       #  print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
-
-   def __del__(self):
-      pass
-
+      
+      return obj
+      
+   
+   @classmethod
+   def createBlock(cls, genusName, linkToStubs, label=None):
+     id = Block.NEXT_ID
+     Block.NEXT_ID+=1
+     return Block.createBlockFromID(genusName, linkToStubs, id,label)
+         
    def getBlockID(self):
       '''
       * Returns the block ID of this

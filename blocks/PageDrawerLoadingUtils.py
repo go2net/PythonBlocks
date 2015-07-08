@@ -60,7 +60,7 @@ class PageDrawerLoadingUtils():
 
                      # don't link factory blocks to their stubs because they will
                      # forever remain inside the drawer and never be active
-                     newBlock = Block(genusName, False)
+                     newBlock = Block.createBlock(genusName, False)
                      drawerRBs.append(FactoryRenderableBlock.from_blockID(manager, newBlock.getBlockID(),False, QtGui.QColor(225,225,225,100)));
 
                manager.addStaticBlocks(drawerRBs, drawerName);

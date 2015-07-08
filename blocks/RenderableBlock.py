@@ -26,7 +26,6 @@ from blocks.BlockShapeUtil import BlockShapeUtil
 from blocks.BlockLinkChecker import BlockLinkChecker
 
 
-
 class RenderableBlock(QtGui.QWidget):
 
    ALL_RENDERABLE_BLOCKS = {}     
