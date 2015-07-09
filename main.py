@@ -69,6 +69,14 @@ class MainWnd(QtGui.QMainWindow):
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
     self.tvBlockGenusView.expandAll()
     
+  def showBlock(self, genusNode):
+    from blocks.Block import Block
+    if(genusNode == None): return
+    
+    block = Block.loadBlockFrom(genusNode)
+    print(block)
+    pass
+  
   def closeEvent(self, event):
 
     reply = QtGui.QMessageBox.question(self, 'Message',

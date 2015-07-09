@@ -124,6 +124,8 @@ class BlockGenusTreeModel(QPropertyModel):
  
     if(genusNode == None): return
     
+    self.mainWnd.showBlock(genusNode)
+    
     #columnData = ['A','B']  
     #print(genusNode.attrib)
     #

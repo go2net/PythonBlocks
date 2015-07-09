@@ -84,10 +84,11 @@ class BlockUtilities():
          parent = myblock.getParent();
          block = BlockStub(parent.getBlockID(), parent.getGenusName(), parent.getBlockLabel(), myblock.getGenusName());
       else:
-         block = Block(myblock.getGenusName(), True, -1, label);
+         block = Block.createBlock(myblock.getGenusName(), True, label);
 
       # TODO - djwendel - create a copy of the RB properties too, using an RB copy constructor.  Don't just use the genus.
       # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.getBlockID());
+
       renderable = RenderableBlock.from_blockID(None, block.getBlockID());
       #renderable.setZoomLevel(BlockUtilities.zoom);
       #renderable.redrawFromTop();

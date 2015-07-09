@@ -666,8 +666,8 @@ class Block():
             elif  (child.tag == ("LangSpecProperties")):
                blockLangProperties = {}
                propertyNodes = child.getchildren();
-               key = null;
-               value = null;
+               key = None;
+               value = None;
                for  propertyNode in propertyNodes:
                   if (propertyNode.tag == ("LangSpecProperty")):
                      nameMatcher = re.match(pattern,propertyNode.getAttribute("key"))
@@ -692,9 +692,9 @@ class Block():
          #create block or block stub instance
          if (not isStubBlock):
             if (label == None):
-               block = Block( genusName, True, id);
+               block = Block.createBlockFromID( genusName, True, id);
             else:
-               block = Block( genusName,True, id,label);
+               block = Block.createBlockFromID( genusName,True, id,label);
 
          else:
             #assert label != null : "Loading a block stub, but has a null label!";

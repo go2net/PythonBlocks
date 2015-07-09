@@ -37,7 +37,6 @@ class FactoryRenderableBlock(RenderableBlock):
      
      
    def createNewInstance(self):
-      #print(self.getBlockID())
       rb = BlockUtilities.cloneBlock(Block.getBlock(self.getBlockID()))
       self.child_list.append(rb)
       return rb
