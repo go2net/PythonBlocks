@@ -110,6 +110,7 @@ class BlockGenusTreeModel(QPropertyModel):
       return None 
   '''
   def setupModelData(self, genus, parent):
+    from blocks.BlockGenus import BlockGenus
     parents = [parent]
     tree = etree.parse(self.langDefLocation)
     root = tree.getroot()
@@ -122,9 +123,11 @@ class BlockGenusTreeModel(QPropertyModel):
         genusNode = node
         break
  
-    if(genusNode == None): return
+    if(node == None): return
     
-    self.mainWnd.showBlock(genusNode)
+    genus = BlockGenus.loadGenus(node)
+    
+    self.mainWnd.showBlock(genus)
     
     #columnData = ['A','B']  
     #print(genusNode.attrib)

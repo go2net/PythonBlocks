@@ -78,14 +78,13 @@ class MainWnd(QtGui.QMainWindow):
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
     self.tvBlockGenusView.expandAll()
     
-  def showBlock(self, genusNode):
-    from blocks.BlockGenus import BlockGenus
+  def showBlock(self, genus):
+    #from blocks.BlockGenus import BlockGenus
     from blocks.Block import Block
     from blocks.FactoryRenderableBlock import FactoryRenderableBlock
     
-    if(genusNode == None): return
+    if(genus == None): return
     
-    genus = BlockGenus.loadGenus(genusNode)
     block = Block.createBlockFromID(genus.getGenusName())
         
     child_list = self.wndPreview.findChildren(FactoryRenderableBlock)

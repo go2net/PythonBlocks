@@ -32,8 +32,6 @@ class BlockLabel():
       from blocks.RenderableBlock import RenderableBlock
       from blocks.FactoryRenderableBlock import FactoryRenderableBlock
       
-      print(blockID)
-      
       self.widget= LabelWidget(blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
       self.zoom = 1.0
       self.initLabelText = initLabelText

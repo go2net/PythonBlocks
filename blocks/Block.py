@@ -612,7 +612,6 @@ class Block():
       pattern = "(.*)"
       # Matcher nameMatcher;
       
-      print(node.tag)
       if (node.tag == ("BlockStub")):
          isStubBlock = True;
          blockNode = None;
