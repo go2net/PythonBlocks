@@ -511,6 +511,7 @@ class BlockGenus():
       if (not newGenus.isTerminator):
         newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.BOTTOM, "", False, False, -1);
 
+      return newGenus
 
    def hasSiblings(self):
       '''

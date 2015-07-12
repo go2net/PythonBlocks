@@ -43,7 +43,8 @@ class FactoryRenderableBlock(RenderableBlock):
 
 
    def mousePressEvent(self, event):
-
+      if(self.workspaceWidget == None): return
+      
       self.workspaceWidget.OnPressed(self.workspaceWidget.active_button)
 
       # create new renderable block and associated block

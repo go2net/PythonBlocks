@@ -52,7 +52,9 @@ class RenderableBlock(QtGui.QWidget):
 
       if(obj.blockID != -1):
         RenderableBlock.ALL_RENDERABLE_BLOCKS[obj.blockID] = obj
-
+      else:
+        RenderableBlock.tmpRB = obj
+        
       #self.setAttribute(74, True);
       obj.mouse_enter = False
       obj.pickedUp = False
@@ -73,9 +75,9 @@ class RenderableBlock(QtGui.QWidget):
       obj.socketTags = []
 
       # initialize tags, labels, and sockets:
-      obj.plugTag = ConnectorTag(obj.getBlock().getPlug());
-      obj.afterTag = ConnectorTag(obj.getBlock().getAfterConnector());
-      obj.beforeTag = ConnectorTag(obj.getBlock().getBeforeConnector());
+      obj.plugTag = ConnectorTag(block.getPlug());
+      obj.afterTag = ConnectorTag(block.getAfterConnector());
+      obj.beforeTag = ConnectorTag(block.getBeforeConnector());
 
       obj.blockLabel = NameLabel(block.getBlockLabel(), block.getLabelPrefix(), block.getLabelSuffix(), BlockLabel.Type.NAME_LABEL, block.isLabelEditable, obj.blockID);
       obj.blockLabel.setParent(obj)
@@ -505,7 +507,10 @@ class RenderableBlock(QtGui.QWidget):
       if(blockID in RenderableBlock.ALL_RENDERABLE_BLOCKS):
          return RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
       else:
-         print("Can not find block" + str(blockID))
+         if(blockID == -1):
+           return RenderableBlock.tmpRB
+         else:
+          print("Can not find block" + str(blockID))
 
    def getBlockWidget(self):
    	return self.blockWidget;

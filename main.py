@@ -27,10 +27,10 @@ class MainWnd(QtGui.QMainWindow):
 
     uic.loadUi('main.ui', self)
 
-    QtCore.QObject.connect(self.actionNew, QtCore.SIGNAL('triggered()'), self.onNew)
-    QtCore.QObject.connect(self.actionOpen, QtCore.SIGNAL('triggered()'), self.onOpen)
-    QtCore.QObject.connect(self.actionSave, QtCore.SIGNAL('triggered()'), self.onSave)
-    QtCore.QObject.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
+    self.connect(self.actionNew, QtCore.SIGNAL('triggered()'), self.onNew)
+    self.connect(self.actionOpen, QtCore.SIGNAL('triggered()'), self.onOpen)
+    self.connect(self.actionSave, QtCore.SIGNAL('triggered()'), self.onSave)
+    self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
 
     self.actionStop.setEnabled(False)
 
@@ -42,6 +42,15 @@ class MainWnd(QtGui.QMainWindow):
     self.resetWorksapce()
     self.InitBlockGenusListWidget()
     self.show()
+
+    layout  = QtGui.QHBoxLayout()
+    #layout.setAlignment(QtCore.Qt.AlignCenter)
+    #layout.setContentsMargins(0, 0, 0, 0)
+    self.wndPreview.setLayout(layout);
+    
+    #self.connect(self.blockPreviewWnd, QtCore.SIGNAL("resize()"), self.onResize);
+    
+    self.blockPreviewWnd.resizeEvent = self.onResize
 
   def InitBlockGenusListWidget(self):
     from blocks.BlockGenus import BlockGenus
@@ -70,12 +79,37 @@ class MainWnd(QtGui.QMainWindow):
     self.tvBlockGenusView.expandAll()
     
   def showBlock(self, genusNode):
+    from blocks.BlockGenus import BlockGenus
     from blocks.Block import Block
+    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    
     if(genusNode == None): return
     
-    block = Block.loadBlockFrom(genusNode)
-    print(block)
+    genus = BlockGenus.loadGenus(genusNode)
+    block = Block.createBlockFromID(genus.getGenusName())
+        
+    child_list = self.wndPreview.findChildren(FactoryRenderableBlock)
+    for i in reversed(range(len(child_list))): 
+        child_list[i].deleteLater()
+    
+    factoryRB = FactoryRenderableBlock.from_block(None, block)
+        
+    factoryRB.setParent(self.wndPreview)
+    factoryRB.show()  
+      
+    factoryRB.move((self.wndPreview.width() - factoryRB.width())/2, (self.wndPreview.height() - factoryRB.height())/2)
+ 
     pass
+  
+  def onResize(self, event):
+    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    
+    print('onResize')
+    child_list = self.wndPreview.findChildren(FactoryRenderableBlock)
+    if(len(child_list) != 1): return
+    factoryRB = child_list[0]
+    
+    factoryRB.move((self.wndPreview.width() - factoryRB.width())/2, (self.wndPreview.height() - factoryRB.height())/2)
   
   def closeEvent(self, event):
 

@@ -22,7 +22,8 @@ class Block():
 
    # A universal hashmap of all the Block instances
    ALL_BLOCKS= {}
-
+   tmpObj = None
+   
    def __init__(self):
       self.pageLabel = ""
       self.hasFocus = False;
@@ -138,6 +139,8 @@ class Block():
       #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
       #  print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
       
+      Block.tmpObj = obj
+      
       return obj
       
    
@@ -166,6 +169,9 @@ class Block():
       return Block.getBlock(blockID)
       
    def getBlock(blockID):
+     
+      if(blockID == -1): return Block.tmpObj 
+     
       if(blockID in Block.ALL_BLOCKS):
          return Block.ALL_BLOCKS[blockID]
       else:
@@ -606,6 +612,7 @@ class Block():
       pattern = "(.*)"
       # Matcher nameMatcher;
       
+      print(node.tag)
       if (node.tag == ("BlockStub")):
          isStubBlock = True;
          blockNode = None;
