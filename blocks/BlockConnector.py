@@ -132,13 +132,13 @@ class BlockConnector():
          #assert initKind != None : "BlockConnector was not specified a initial connection kind";
 
          if (positionType == ("single")):
-            con = BlockConnector(initKind, BlockConnector.PositionType.SINGLE, label, isLabelEditable, isExpandable, idConnected);
+            con = BlockConnector('', initKind, BlockConnector.PositionType.SINGLE, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("bottom")):
-             con = BlockConnector(initKind, BlockConnector.PositionType.BOTTOM, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector('',initKind, BlockConnector.PositionType.BOTTOM, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("mirror")):
-             con = BlockConnector(initKind, BlockConnector.PositionType.MIRROR, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector('',initKind, BlockConnector.PositionType.MIRROR, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("top")):
-             con = BlockConnector(initKind, BlockConnector.PositionType.TOP, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector('',initKind, BlockConnector.PositionType.TOP, label, isLabelEditable, isExpandable, idConnected);
 
          con.expandGroup = expandGroup;
          if (initKind != kind):
