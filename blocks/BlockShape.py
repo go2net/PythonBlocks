@@ -314,7 +314,7 @@ class BlockShape():
       if((self.block.getPlug() != None) and
    		(self.block.getPlug().getPositionType() == (BlockConnector.PositionType.MIRROR))):
          # add the plug to the gpRight
-         BlockShape.BCS.addDataPlug(self.gpRight, self.block.getPlug().getKind(), True, True);
+         BlockShape.BCS.addDataPlug(self.gpRight, self.block.getPlug().getType(), True, True);
 
 
       # ADD SOCKETS ////
@@ -335,7 +335,7 @@ class BlockShape():
             else:
                self.appendConnectorOffset(self.gpRight, self.topRightCorner, self.botRightCorner, curSocket, True);
                # it's a data socket
-               p = BlockShape.BCS.addDataSocket(self.gpRight, curSocket.getKind(), True);
+               p = BlockShape.BCS.addDataSocket(self.gpRight, curSocket.getType(), True);
                self.rb.updateSocketPoint(curSocket, p);
 
                spacerHeight = self.getSocketSpacerHeight(curSocket, BlockConnectorShape.DATA_PLUG_HEIGHT);
@@ -397,7 +397,7 @@ class BlockShape():
          self.appendConnectorOffset(self.gpLeft, self.botLeftCorner, self.topLeftCorner, self.block.getPlug(), False);
 
          # add the plug shape to the gpLeft
-         p = BlockShape.BCS.addDataPlug(self.gpLeft, self.block.getPlug().getKind(), True,False);
+         p = BlockShape.BCS.addDataPlug(self.gpLeft, self.block.getPlug().getType(), True,False);
          self.rb.updateSocketPoint(self.block.getPlug(), p);
 
          self.appendConnectorOffset(self.gpLeft, self.botLeftCorner, self.topLeftCorner, self.block.getPlug(), True);

@@ -132,58 +132,36 @@ class BlockGenusTreeModel(QPropertyModel):
     #columnData = ['A','B']  
     #print(genusNode.attrib)
     #
-    Property('Genus Name', genusNode.attrib["name"], parents[-1])
-    
-    if('kind' in genusNode.attrib):
-      Property('Genus Kind', genusNode.attrib["kind"], parents[-1])
-    else:
-      Property('Genus Kind', '', parents[-1])
-      
-    if('initlabel' in genusNode.attrib):
-      
-      Property('Init Label', genusNode.attrib["initlabel"], parents[-1])
-    else:
-      Property('Init Label', '', parents[-1]) 
-    
-    if('label-prefix' in genusNode.attrib):  
-      Property('label-prefix', genusNode.attrib["label-prefix"], parents[-1])
-    else:
-      Property('label-prefix', '', parents[-1])
-      
-    if('label-suffix' in genusNode.attrib):    
-      Property('label-suffix', genusNode.attrib["label-suffix"], parents[-1])
-    else:
-      Property('label-suffix', '', parents[-1])
-    
-    if('color' in genusNode.attrib): 
-      color_strs = genusNode.attrib["color"].split(' ')
-      Property('color',QtGui.QColor(int(color_strs[0]), int(color_strs[1]), int(color_strs[2])) , parents[-1], Property.COLOR_EDITOR)
-    else:    
-      Property('color',QtGui.QColor(255, 255, 255) , parents[-1], Property.COMBO_BOX_EDITOR, ['12', '34', '55'])
+    Property('Genus Name', genus.genusName, parents[-1])    
+    Property('Genus Kind', genus.kind, parents[-1])
+    Property('Init Label', genus.initLabel, parents[-1])
+    Property('Label Prefix', genus.labelPrefix, parents[-1])
+    Property('Label Suffix', genus.labelSuffix, parents[-1])    
+    Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
        
     connectors_root = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
-    self.all_connectors = genusNode.findall('BlockConnectors/BlockConnector')
+    self.all_connectors = genus.sockets
     
     plug_index = 0
     socket_index = 0
-    for connector_node in self.all_connectors:
-      connector_kind = connector_node.attrib["connector-kind"]
-      if(connector_kind == 'socket'):
-        connector_root = Property('Socket #'+str(socket_index), connector_node.attrib["connector-type"],  connectors_root)
+    
+    if genus.plug != None:
+      connector_root = Property('Plug #'+str(plug_index), '',  connectors_root)
+    
+    for connector in genus.sockets:
+      
+      connector_kind = connector.kind
+      if(connector_kind == 0):
+        connector_root = Property('Socket #'+str(socket_index), '',  connectors_root)
         socket_index += 1
       else:
-        connector_root = Property('Plug #'+str(plug_index), connector_node.attrib["connector-type"], connectors_root)
+        connector_root = Property('Plug #'+str(plug_index), '',  connectors_root)
         plug_index += 1
     
-    all_lang_props = genusNode.findall('LangSpecProperties/LangSpecProperty')
     lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
-    for lang_prop_node in all_lang_props:
-      if 'key' in lang_prop_node.attrib: 
-        if 'value' in lang_prop_node.attrib: 
-          Property(lang_prop_node.attrib['key'],lang_prop_node.attrib['value'], lang_root)
-        else:    
-          Property(lang_prop_node.attrib['key'],'', lang_root)  
+    for key in genus.properties:
+      Property(key,genus.properties[key], lang_root)
     
     connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
     

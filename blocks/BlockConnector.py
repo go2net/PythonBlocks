@@ -36,10 +36,11 @@ class BlockConnector():
 
    PositionType = enum("SINGLE", "MIRROR", "BOTTOM", "TOP")
 
-   def __init__(self, kind, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
+   def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
       if(positionType == ""):
          yieldy = 0
       self.kind = kind
+      self.type = type
       self.positionType = positionType
       self.label = label
       self.isLabelEditable = isLabelEditable
@@ -64,8 +65,11 @@ class BlockConnector():
    def getPositionType(self):
      return self.positionType
 
-   def getKind(self):
-     return self.kind;
+   def getKind_(self):
+     return self._kind;
+     
+   def getType(self):
+     return self.type;     
 
    def hasBlock(self):
       return self.connBlockID != -1

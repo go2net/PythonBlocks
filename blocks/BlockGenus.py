@@ -78,6 +78,7 @@ class BlockGenus():
       if(genusToCopy.plug != None):
          self.plug = BlockConnector(
             genusToCopy.plug.kind,
+            genusToCopy.plug.type,
             genusToCopy.plug.positionType,
             genusToCopy.plug.label,
             genusToCopy.plug.isLabelEditable,
@@ -88,6 +89,7 @@ class BlockGenus():
       if(genusToCopy.before != None):
          self.before = BlockConnector(
             genusToCopy.before.kind,
+            genusToCopy.before.type,
             genusToCopy.before.positionType,
             genusToCopy.before.label,
             genusToCopy.before.isLabelEditable,
@@ -98,6 +100,7 @@ class BlockGenus():
       if(genusToCopy.after != None):
          self.after = BlockConnector(
             genusToCopy.after.kind,
+            genusToCopy.after.type,
             genusToCopy.after.positionType,
             genusToCopy.after.label,
             genusToCopy.after.isLabelEditable,
@@ -204,6 +207,7 @@ class BlockGenus():
                position_type = BlockConnector.PositionType.SINGLE
 
             socket = BlockConnector(
+               connectorKind, 
                connectorType,
                position_type,
                label,
@@ -506,10 +510,10 @@ class BlockGenus():
 
       #  John's code to add command sockets... probably in the wrong place
       if (not newGenus.isStarter):
-        newGenus.before = BlockConnector(BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, -1);
+        newGenus.before = BlockConnector(BlockConnectorShape.getCommandShapeName(),'' , BlockConnector.PositionType.TOP, "", False, False, -1);
 
       if (not newGenus.isTerminator):
-        newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+        newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), '' , BlockConnector.PositionType.BOTTOM, "", False, False, -1);
 
       return newGenus
 

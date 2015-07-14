@@ -68,7 +68,7 @@ class InfixBlockShape(BlockShape):
 
             if(curSocket.getBlockID() == Block.NULL):
                # draw first socket - up left side
-               leftSocket = BlockShape.BCS.addDataSocketUp(self.gpBottom, curSocket.getKind(), True);
+               leftSocket = BlockShape.BCS.addDataSocketUp(self.gpBottom, curSocket.getType(), True);
                self.rb.updateSocketPoint(curSocket, leftSocket);
                # System.out.println("socket poitn: "+rb.getSocketPoint(curSocket));
 
@@ -81,7 +81,7 @@ class InfixBlockShape(BlockShape):
 
 
                #draw first socket - down right side
-               BlockShape.BCS.addDataSocket(self.gpBottom, curSocket.getKind(), False);
+               BlockShape.BCS.addDataSocket(self.gpBottom, curSocket.getType(), False);
                #rb.updateSocketPoint(curSocket, rightSocket);
             else: # there is a connected block
 

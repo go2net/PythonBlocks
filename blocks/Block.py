@@ -62,8 +62,9 @@ class Block():
       # copy the block connectors from block genus
       iter = genus.getInitSockets();
       for con in iter:
-         obj.sockets.append(BlockConnector(
+         obj.sockets.append(BlockConnector(         
             con.kind,
+            con.type,
             con.positionType,
             con.label,
             con.isLabelEditable,
@@ -75,6 +76,7 @@ class Block():
       if(genus.getInitPlug() != None):
          obj.plug = BlockConnector(
             genus.getInitPlug().kind,
+            genus.getInitPlug().type,
             genus.getInitPlug().positionType,
             genus.getInitPlug().label,
             genus.getInitPlug().isLabelEditable,
@@ -87,6 +89,7 @@ class Block():
       if(genus.getInitBefore() != None):
          obj.before = BlockConnector(
             genus.getInitBefore().kind,
+            genus.getInitBefore().type,
             genus.getInitBefore().positionType,
             genus.getInitBefore().label,
             genus.getInitBefore().isLabelEditable,
@@ -99,6 +102,7 @@ class Block():
       if(genus.getInitAfter() != None):
          obj.after = BlockConnector(
             genus.getInitAfter().kind,
+            genus.getInitAfter().type,
             genus.getInitAfter().positionType,
             genus.getInitAfter().label,
             genus.getInitAfter().isLabelEditable,
