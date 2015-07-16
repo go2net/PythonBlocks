@@ -16,11 +16,11 @@ class Generator():
      *     For value blocks, an array containing the generated code and an
      *     operator order value.  Returns '' if block is null.
     '''
-        
     if (block == None):
       return ''
 
     if (block.disabled):
+      print('block.disabled)')   
       # Skip past this block if it is disabled.
       return self.blockToCode(block.getNextBlock());
 
@@ -75,6 +75,7 @@ class Generator():
     code = [];
     #this.init(workspace);
     blocks = self.workspace.getTopBlocks(False);
+
     #print(blocks)
     for block in blocks:
       line = self.blockToCode(block);
@@ -112,6 +113,7 @@ class Generator():
       return ''
       
     tuple = self.blockToCode(targetBlock);
+
     if (tuple == ''):
       # Disabled block.
       return '';

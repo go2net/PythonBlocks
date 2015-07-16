@@ -72,6 +72,7 @@ class PythonGen(Generator):
     '''
     from blocks.Block import Block
     commentCode = '';
+    nextCode = ''
     #return code
     '''
     # Only collect comments for blocks that aren't inline.
@@ -92,7 +93,8 @@ class PythonGen(Generator):
               commentCode += Blockly.Python.prefixLines(comment, '# ');
     '''
     nextBlockID = block.getAfterBlockID()
-    if(nextBlockID != None):
+
+    if(nextBlockID != None and nextBlockID != -1):
       nextBlock = Block.getBlock(nextBlockID)
       #nextBlock = block.nextConnection and block.nextConnection.targetBlock();
       nextCode = self.blockToCode(nextBlock);
