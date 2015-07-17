@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-07-02, 01:11:26 -->
+<!-- Saved: 2015-07-17, 16:41:28 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -51,7 +51,6 @@
     <Source>blocks/PageDivider.py</Source>
     <Source>blocks/PageDrawerLoadingUtils.py</Source>
     <Source>blocks/PageLabel.py</Source>
-    <Source>blocks/RenderableBlock - Copy.py</Source>
     <Source>blocks/RenderableBlock.py</Source>
     <Source>blocks/SocketLabel.py</Source>
     <Source>blocks/SocketRule.py</Source>

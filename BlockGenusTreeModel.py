@@ -133,7 +133,7 @@ class BlockGenusTreeModel(QPropertyModel):
     #print(genusNode.attrib)
     #
     Property('Genus Name', genus.genusName, parents[-1])    
-    Property('Genus Kind', genus.kind, parents[-1])
+    Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
     Property('Init Label', genus.initLabel, parents[-1])
     Property('Label Prefix', genus.labelPrefix, parents[-1])
     Property('Label Suffix', genus.labelSuffix, parents[-1])    

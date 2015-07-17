@@ -80,8 +80,8 @@ class Property(QtCore.QObject):
   def setEditorData(self, editor, val):
     if(self.obj_type == None): return False
     
-    if(self.obj_type == Property.COMBO_BOX_EDITOR):
-      index = editor.findData(val)
+    if(self.obj_type == Property.COMBO_BOX_EDITOR):      
+      index = editor.findText(val)
       editor.setCurrentIndex(index)
       return True
       
