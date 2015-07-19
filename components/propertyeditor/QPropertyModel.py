@@ -82,6 +82,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         return item.objectName().replace('_', ' ');
       if (index.column() == 1):
         return item.value(role);
+      
     if(role == QtCore.Qt.BackgroundRole):
       if (item.isRoot()): 
         return QtGui.QApplication.palette("QTreeView").brush(QtGui.QPalette.Normal, QtGui.QPalette.Button).color();
@@ -89,11 +90,14 @@ class QPropertyModel(QtCore.QAbstractItemModel):
     return None
 
   # edit methods
-  def setData (self,  index, value, role):
+  def setData(self, index, value, role = QtCore.Qt.EditRole):
+
     if (index.isValid() and role == Qt.EditRole):
       item = index.internalPointer()
       item.setValue(value)
-      #emit dataChanged(index, index);
+      self.dataChanged.emit(index, index) 
+      print(value)
       return True;
+
     return False;
 

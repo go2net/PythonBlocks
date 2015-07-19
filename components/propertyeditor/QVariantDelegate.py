@@ -22,29 +22,23 @@ class QVariantDelegate(QtGui.QItemDelegate):
           self.connect(editor, QtCore.SIGNAL("editFinished()"), self.m_finishedMapper, QtCore.SLOT("map()"));
           self.m_finishedMapper.setMapping(editor, editor);
 
+        if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
+          self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
+
     else:
-      editor = QtGui.QItemDelegate.createEditor(self, parent, option, index);
+      editor = super(QVariantDelegate, self).createEditor(parent, option, index)
 
     #self.parseEditorHints(editor, p.editorHints());
     return editor;
-
-  def parseEditorHints(self, editor, editorHints):
-    return
-    if (editor and not editorHints.isEmpty()):
-      editor.blockSignals(True);
-      # Parse for property values
-      #QRegExp rx("(.*)(=\\s*)(.*)(;{1})");
-      #rx.setMinimal(true);
-      #int pos = 0;
-      #while ((pos = rx.indexIn(editorHints, pos)) != -1) 
-
-        # qDebug("Setting %s to %s", qPrintable(rx.cap(1)), qPrintable(rx.cap(3)));
-        #editor->setProperty(qPrintable(rx.cap(1).trimmed()), rx.cap(3).trimmed());				
-        #pos += rx.matchedLength();
-
-      #editor->blockSignals(false);
   
-    
+  
+  @QtCore.pyqtSlot()
+  def currentIndexChanged(self):
+    #self.commitData.emit(self.sender())
+    #self.closeEditor.emit(self.sender())
+    self.emit(SIGNAL("commitData(QWidget*)"), self.sender())
+    self.emit(SIGNAL("closeEditor(QWidget*)"), self.sender())
+        
   def setModelData(self, editor, model, index) :
     data = index.model().data(index, Qt.EditRole);	
     obj_type = index.internalPointer().obj_type
@@ -53,7 +47,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
         if (data != None):
           model.setData(index, data , Qt.EditRole); 
     else:
-      QItemDelegate.setModelData(self, editor, model, index);
+      super(QVariantDelegate, self).setModelData(editor, model, index)
 
     
   def setEditorData (self, editor, index):
@@ -67,9 +61,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
       index.internalPointer().setEditorData(editor, data)
  
     else:
-      QtGui.QItemDelegate.setEditorData(self, editor, index);
-
-    #self.m_finishedMapper.blockSignals(False);
+      super(QVariantDelegate, self).setEditorData(editor, index)
 
   def updateEditorGeometry(self, editor, option,  index ):
     return QtGui.QItemDelegate.updateEditorGeometry(self, editor, option, index);
@@ -82,12 +74,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
     size.setHeight(21);
     return size;
    
-
-  def paint(self,  painter,  option, index ):
-    if (index.column() == 1):
-      painter.save();
-      painter.setPen(QtGui.QColor(240, 240, 240) );
-      painter.drawRect(option.rect);
-      painter.restore();
-
-    QtGui.QItemDelegate.paint(self, painter, option, index);
+  def commitAndCloseEditor(self):
+    editor = self.sender()
+    self.commitData.emit(editor)
+    self.closeEditor.emit(editor) 

@@ -3,37 +3,6 @@
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from ConnectorsInfoWnd import ConnectorsInfoWnd
-try:
-  from lxml import etree
-  #from lxml import ElementInclude
-  print("running with lxml.etree")
-except ImportError:
-  try:
-    # Python 2.5
-    import xml.etree.cElementTree as etree
-    #from xml.etree import ElementInclude
-    print("running with cElementTree on Python 2.5+")
-  except ImportError:
-    try:
-      # Python 2.5
-      import xml.etree.ElementTree as etree
-      #from xml.etree import ElementInclude
-      print("running with ElementTree on Python 2.5+")
-    except ImportError:
-      try:
-        # normal cElementTree install
-        import cElementTree as etree        
-        print("running with cElementTree")
-      except ImportError:
-        try:
-          # normal ElementTree install
-          import elementtree.ElementTree as etree
-          print("running with ElementTree")
-        except ImportError:
-          print("Failed to import ElementTree from any known place")
-
-
-from PyQt4 import QtCore, QtGui
 
 class TreeItem(object):
   def __init__(self, data, parent=None):
@@ -110,23 +79,7 @@ class BlockGenusTreeModel(QPropertyModel):
       return None 
   '''
   def setupModelData(self, genus, parent):
-    from blocks.BlockGenus import BlockGenus
     parents = [parent]
-    tree = etree.parse(self.langDefLocation)
-    root = tree.getroot()
-    all_genus = root.findall('BlockGenus')
- 
-    genusNode = None
- 
-    for node in all_genus:
-      if(node.attrib["name"] == genus.getGenusName()):
-        genusNode = node
-        break
- 
-    if(node == None): return
-    
-    genus = BlockGenus.loadGenus(node)
-    
     self.mainWnd.showBlock(genus)
     
     #columnData = ['A','B']  
@@ -170,6 +123,9 @@ class BlockGenusTreeModel(QPropertyModel):
     dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
     dlg.exec_()
     print('onShowConnectorsInfo')
+
+  #def dataChanged ( topLeft, bottomRight ):
+  #  print('dataChanged')
 
   '''  
   def parent(self, index):

@@ -32,14 +32,8 @@ class Property(QtCore.QObject):
   def value(self, role=None):
     return self.obj_value
 
-    if (self.obj_type):
-      return self.obj_value
-    else:
-      return None;
-
   def setValue(self, val):
-    if (self.obj_type != None):
-      self.obj_value = val
+    self.obj_value = val
 
   def isReadOnly(self):
     return False

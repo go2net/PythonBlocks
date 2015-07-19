@@ -64,6 +64,12 @@ class MyListModel(QAbstractListModel):
     def rowCount(self, parent=QModelIndex()):
         return len(self.listdata)
 
+    def flags (self,  index ) :
+      return  Qt.ItemIsDragEnabled |  Qt.ItemIsEnabled |  Qt.ItemIsEditable;
+    
+    def setData(self, index, value, role = Qt.EditRole):
+      return True
+      
     def data(self, index, role):
         if index.isValid() and role == Qt.DisplayRole:
             return self.listdata[index.row()]
