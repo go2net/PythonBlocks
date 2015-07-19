@@ -9,7 +9,7 @@ class TreeItem(object):
       self.parentItem = parent
       self.itemData = data
       self.childItems = []
-      
+     
   def columnCount(self):
       return len(self.itemData)
       
@@ -32,12 +32,16 @@ class TreeItem(object):
       self.childItems.append(item)
  
 class BlockGenusTreeModel(QPropertyModel):
+  
   def __init__(self, mainWnd, genus, langDefLocation, parent=None):
     super(BlockGenusTreeModel, self).__init__(parent)
+    self.properties = {}
     self.mainWnd = mainWnd
     self.langDefLocation = langDefLocation
     self.rootItem = TreeItem(("Property", "Value"))
     self.setupModelData(genus, self.m_rootItem)
+
+    
   '''      
   def columnCount(self, parent):
       if parent.isValid():
@@ -85,14 +89,14 @@ class BlockGenusTreeModel(QPropertyModel):
     #columnData = ['A','B']  
     #print(genusNode.attrib)
     #
-    Property('Genus Name', genus.genusName, parents[-1])    
-    Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
-    Property('Init Label', genus.initLabel, parents[-1])
-    Property('Label Prefix', genus.labelPrefix, parents[-1])
-    Property('Label Suffix', genus.labelSuffix, parents[-1])    
-    Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
+    self.properties['genusName'] = Property('Genus Name', genus.genusName, parents[-1])    
+    self.properties['kind'] = Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
+    self.properties['initLabel'] = Property('Init Label', genus.initLabel, parents[-1])
+    self.properties['labelPrefix'] = Property('Label Prefix', genus.labelPrefix, parents[-1])
+    self.properties['labelSuffix'] = Property('Label Suffix', genus.labelSuffix, parents[-1])    
+    self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
        
-    connectors_root = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
+    self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
     self.all_connectors = genus.sockets
     
@@ -100,23 +104,23 @@ class BlockGenusTreeModel(QPropertyModel):
     socket_index = 0
     
     if genus.plug != None:
-      connector_root = Property('Plug #'+str(plug_index), '',  connectors_root)
+      Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
     
     for connector in genus.sockets:
       
       connector_kind = connector.kind
       if(connector_kind == 0):
-        connector_root = Property('Socket #'+str(socket_index), '',  connectors_root)
+        Property('Socket #'+str(socket_index), '',  self.properties['connectors'])
         socket_index += 1
       else:
-        connector_root = Property('Plug #'+str(plug_index), '',  connectors_root)
+        Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
         plug_index += 1
     
     lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
     for key in genus.properties:
       Property(key,genus.properties[key], lang_root)
     
-    connectors_root.onAdvBtnClick = self.onShowConnectorsInfo
+    self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
     
   def onShowConnectorsInfo(self):
 
