@@ -35,6 +35,7 @@ class BlockGenusTreeModel(QPropertyModel):
   
   def __init__(self, mainWnd, genus, langDefLocation, parent=None):
     super(BlockGenusTreeModel, self).__init__(parent)
+    self.genus = genus
     self.properties = {}
     self.mainWnd = mainWnd
     self.langDefLocation = langDefLocation
@@ -128,6 +129,29 @@ class BlockGenusTreeModel(QPropertyModel):
     dlg.exec_()
     print('onShowConnectorsInfo')
 
+  def setData(self, index, value, role):
+    ret = super(BlockGenusTreeModel, self).setData(index, value, role)
+    if(ret == True):
+      item = index.internalPointer()
+      property_name = item.objectName()
+      
+      if(property_name == 'Color'):
+        self.genus.color = value
+        
+      if(property_name == 'Genus Kind'):
+        self.genus.kind = value
+        
+      if(property_name == 'Init Label'):
+        self.genus.initLabel = value
+        
+      if(property_name == 'Label Prefix'):
+        self.genus.labelPrefix = value        
+        
+      if(property_name == 'Label Suffix'):
+        self.genus.labelSuffix = value
+        
+      self.mainWnd.showBlock(self.genus)
+    return ret
   #def dataChanged ( topLeft, bottomRight ):
   #  print('dataChanged')
 

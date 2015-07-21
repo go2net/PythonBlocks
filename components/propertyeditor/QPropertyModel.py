@@ -96,7 +96,6 @@ class QPropertyModel(QtCore.QAbstractItemModel):
       item = index.internalPointer()
       item.setValue(value)
       self.dataChanged.emit(index, index) 
-      print(value)
       return True;
 
     return False;
