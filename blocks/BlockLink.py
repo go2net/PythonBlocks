@@ -108,7 +108,7 @@ class BlockLink():
 
 
       # actually form the connection
-      print("socketBlockID=%d,plugBlockID=%d"%(self.socketBlockID,self.plugBlockID))
+
       self.plug.setConnectorBlockID(self.socketBlockID);
       self.socket.setConnectorBlockID(self.plugBlockID);
 

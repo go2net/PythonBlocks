@@ -150,7 +150,7 @@ class MainWnd(QtGui.QMainWindow):
 
   def loadFile(self):
     self.filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', ".blks(*.blks)")
-    print(self.filename)
+    #print(self.filename)
 
     try:
        QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
@@ -172,7 +172,9 @@ class MainWnd(QtGui.QMainWindow):
        #saveFilePath = savedFile.getAbsolutePath();
        #saveFileName = savedFile.getName();
        self.wc.resetWorkspace();
+       print('self.wc.resetWorkspace()')
        self.wc.loadProjectFromPath(filename);
+       print('self.wc.loadProjectFromPath(filename)')
        #didLoad();
 
   def onSave(self):

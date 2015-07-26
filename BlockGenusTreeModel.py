@@ -96,7 +96,8 @@ class BlockGenusTreeModel(QPropertyModel):
     self.properties['labelPrefix'] = Property('Label Prefix', genus.labelPrefix, parents[-1])
     self.properties['labelSuffix'] = Property('Label Suffix', genus.labelSuffix, parents[-1])    
     self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
-       
+    self.properties['isStarter'] = Property('Starter', genus.isStarter, parents[-1]) 
+    self.properties['isTerminator'] = Property('Terminator', genus.isTerminator, parents[-1]) 
     self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
     self.all_connectors = genus.sockets
@@ -149,6 +150,12 @@ class BlockGenusTreeModel(QPropertyModel):
         
       if(property_name == 'Label Suffix'):
         self.genus.labelSuffix = value
+        
+      if(property_name == 'Starter'):
+        self.genus.isStarter = value        
+        
+      if(property_name == 'Terminator'):
+        self.genus.isTerminator = value     
         
       self.mainWnd.showBlock(self.genus)
     return ret

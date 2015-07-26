@@ -24,7 +24,7 @@ class SocketRule(LinkRule):
          return False;
 
       # If they both have the same kind, then they can connect
-      if (socket1.getKind() == (socket2.getKind())):
+      if (socket1.type == (socket2.type)):
          return True;
 
       return False;

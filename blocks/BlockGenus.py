@@ -37,8 +37,13 @@ class BlockGenus():
 
       self._isLabelEditable = False
       self.isLabelValue = False
-      self.isStarter = False
-      self.isTerminator = False
+      
+      self._isStarter = False
+      self._isTerminator = False
+
+      self._isStarterInConfig = False
+      self._isTerminatorInConfig = False
+      
       self.__isInfix = False
       self.labelMustBeUnique = True
 
@@ -110,7 +115,76 @@ class BlockGenus():
 
       self.genusName = newGenusName
 
+   @property
+   def isStarter(self):
+      """I'm the 'x' property."""
+      return self._isStarter
 
+   @isStarter.setter
+   def isStarter(self, value):
+      if (self._kind == 'data' or
+          self._kind == 'variable' or
+          self._kind == 'function'):
+        self._isStarter = True
+      else:
+        self._isStarter = value
+        self._isStarterInConfig = value
+        
+      if (not self._isStarter):
+        self.before = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, -1);     
+      else:
+        self.before = None
+        
+   @isStarter.deleter
+   def isStarter(self):
+      del self._isStarter
+
+   @property
+   def isTerminator(self):
+      """I'm the 'x' property."""
+      return self._isTerminator
+
+   @isTerminator.setter
+   def isTerminator(self, value):
+      if (self._kind == 'data' or
+          self._kind == 'variable' or
+          self._kind == 'function'):
+        self._isTerminator = True
+      else:
+        self._isTerminator = value
+        self._isTerminatorInConfig = value
+        
+      if (not self._isTerminator):
+        self.after = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(),  BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+      else:
+        self.after = None
+        
+   @isTerminator.deleter
+   def isTerminator(self):
+      del self._isTerminator
+    
+   @property
+   def kind(self):
+      """I'm the 'x' property."""
+      return self._kind
+
+   @kind.setter
+   def kind(self, value):
+      self._kind = value
+      if (self._kind == 'data' or
+          self._kind == 'variable' or
+          self._kind == 'function'):
+        self.isStarter = True
+        self.isTerminator = True
+      else:
+        self.isStarter = self._isStarterInConfig
+        self.isTerminator = self._isTerminatorInConfig
+      
+   @kind.deleter
+   def kind(self):
+      del self._kind  
+  
+  
    def getGenusWithName(name):
       '''
       Returns the BlockGenus with the specified name; None if this name does not exist
@@ -124,8 +198,6 @@ class BlockGenus():
 
    def getInitPlug(self):
         return self.plug;
-
-
 
    def loadGenusDescription(descriptions, genus):
       for description in descriptions:
@@ -441,13 +513,17 @@ class BlockGenus():
 
       if 'label-unique' in genusNode.attrib:
         newGenus.labelMustBeUnique = True if genusNode.attrib["label-unique"] == ("yes") else False
-
+      
       if 'is-starter' in genusNode.attrib:
         newGenus.isStarter= True if genusNode.attrib["is-starter"] == ("yes") else False
-
+      else:
+        newGenus.isStarter = False        
+        
       if 'is-terminator' in genusNode.attrib:
         newGenus.isTerminator= True if genusNode.attrib["is-terminator"] == ("yes") else False
-
+      else:
+        newGenus.isTerminator = False
+        
       if 'is-label-value' in genusNode.attrib:
         newGenus.isLabelValue= True if genusNode.attrib["is-label-value"] == ("yes") else False
 
@@ -463,9 +539,9 @@ class BlockGenus():
       # if genus is a data genus (kind=data) or a variable block (and soon a declaration block)
       # it is both a starter and terminator
       # in other words, it should not have before and after connectors
-      if(newGenus.isDataBlock() or newGenus.isVariableDeclBlock() or newGenus.isFunctionBlock()):
-        newGenus.isStarter = True;
-        newGenus.isTerminator = True;
+      #if(newGenus.isDataBlock() or newGenus.isVariableDeclBlock() or newGenus.isFunctionBlock()):
+      #  newGenus.isStarter = True;
+      #  newGenus.isTerminator = True;
 
       # next, parse out the elements
       genusChildren=genusNode.getchildren()
@@ -507,13 +583,13 @@ class BlockGenus():
            BlockGenus.loadStubs(genusChild.getchildren(), newGenus);
 
 
-
       #  John's code to add command sockets... probably in the wrong place
-      if (not newGenus.isStarter):
-        newGenus.before = BlockConnector(BlockConnectorShape.getCommandShapeName(),'' , BlockConnector.PositionType.TOP, "", False, False, -1);
+      #if (not newGenus.isStarter):
+      #  newGenus.before = BlockConnector(BlockConnectorShape.getCommandShapeName(),'' , BlockConnector.PositionType.TOP, "", False, False, -1);
 
-      if (not newGenus.isTerminator):
-        newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), '' , BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+      #if (not newGenus.isTerminator):
+      #  newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), '' , BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+
 
       return newGenus
 

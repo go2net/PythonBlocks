@@ -92,7 +92,7 @@ class BlockConnectorShape():
       '''
       Gets the dimension of a given BlockConnector.  Mapping for the connector to a shape must already exist.
       '''
-      mappedValue = BlockConnectorShape.getConnenctionShapeMapping(blockConnector.getType())
+      mappedValue = BlockConnectorShape.getConnenctionShapeMapping(blockConnector.type)
 
       # if shaped not yet mapped
       # assert (mappedValue != -1) : "Block Connector is not mapped: "+blockConnector;
@@ -121,8 +121,7 @@ class BlockConnectorShape():
 
 
    def isCommandConnector(connector):
-      return (BlockConnectorShape.getConnenctionShapeMapping(connector.getType()) == BlockConnectorShape.COMMAND);
-
+      return (BlockConnectorShape.getConnenctionShapeMapping(connector.type) == BlockConnectorShape.COMMAND);
 
    def getCommandShapeName():
       return BlockConnectorShape.COMMAND_SHAPE_NAME;

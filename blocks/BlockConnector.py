@@ -39,16 +39,49 @@ class BlockConnector():
    def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
       if(positionType == ""):
          yieldy = 0
-      self.kind = kind
-      self.type = type
+         
+      self._kind = kind
+      self._type = type
+      
       self.positionType = positionType
       self.label = label
       self.isLabelEditable = isLabelEditable
       self.connBlockID = connBlockID
       self.isExpandable = isExpandable
+      
       self.initKind = kind
+      self.initType = type
+      
       self.expandGroup = "" if expandGroup == None else expandGroup
       self.hasDefArg = False
+  
+    
+   @property
+   def kind(self):
+      """I'm the 'x' property."""
+      return self._kind
+
+   @kind.setter
+   def kind(self, value):
+      self._kind = value
+
+   @kind.deleter
+   def kind(self):
+      del self._kind 
+
+   @property
+   def type(self):
+      """I'm the 'x' property."""
+      return self._type
+
+   @type.setter
+   def type(self, value):
+      self._type = value
+      
+   @type.deleter
+   def type(self):
+     del self._kind 
+
    '''
    * Sets this connector's default argument to the specified genus and initial label.
    * @param genusName the desired BLockGenus name of the default agrument
@@ -64,12 +97,6 @@ class BlockConnector():
    '''
    def getPositionType(self):
      return self.positionType
-
-   def getKind_(self):
-     return self._kind;
-     
-   def getType(self):
-     return self.type;     
 
    def hasBlock(self):
       return self.connBlockID != -1
@@ -110,7 +137,11 @@ class BlockConnector():
      if (node.tag == ("BlockConnector")):
          # load attributes
          if("init-type" in node.attrib):
-             initKind = node.attrib["init-type"]
+             initType = node.attrib["init-type"]
+         
+         if("init-kind" in node.attrib):
+             initKind = node.attrib["init-kind"]
+             
          if("connector-type" in node.attrib):
              kind = node.attrib["connector-type"]
          if("label" in node.attrib):
@@ -132,17 +163,17 @@ class BlockConnector():
          #assert initKind != None : "BlockConnector was not specified a initial connection kind";
 
          if (positionType == ("single")):
-            con = BlockConnector('', initKind, BlockConnector.PositionType.SINGLE, label, isLabelEditable, isExpandable, idConnected);
+            con = BlockConnector(initKind, initType, BlockConnector.PositionType.SINGLE, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("bottom")):
-             con = BlockConnector('',initKind, BlockConnector.PositionType.BOTTOM, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector(initKind, initType, BlockConnector.PositionType.BOTTOM, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("mirror")):
-             con = BlockConnector('',initKind, BlockConnector.PositionType.MIRROR, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector(initKind, initType, BlockConnector.PositionType.MIRROR, label, isLabelEditable, isExpandable, idConnected);
          elif (positionType == ("top")):
-             con = BlockConnector('',initKind, BlockConnector.PositionType.TOP, label, isLabelEditable, isExpandable, idConnected);
+             con = BlockConnector(initKind, initType,BlockConnector.PositionType.TOP, label, isLabelEditable, isExpandable, idConnected);
 
          con.expandGroup = expandGroup;
          if (initKind != kind):
-            con.setKind(kind);
+            con.kind = kind;
 
      #assert con != None : "BlockConnector was not loaded " + node;
 
@@ -153,8 +184,11 @@ class BlockConnector():
       from blocks.Block import Block
       connectorElement = document.createElement("BlockConnector");
       connectorElement.setAttribute("connector-kind", conKind);
-      connectorElement.setAttribute("connector-type", self.kind);
-      connectorElement.setAttribute("init-type", self.initKind);
+      connectorElement.setAttribute("connector-type", self.type);
+      
+      #connectorElement.setAttribute("init-kind", self.initKind);
+      connectorElement.setAttribute("init-type", self.initType);
+      
       connectorElement.setAttribute("label", self.label);
       if (len(self.expandGroup) > 0) :
          connectorElement.setAttribute("expand-group", expandGroup);

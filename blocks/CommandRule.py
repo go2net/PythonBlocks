@@ -17,8 +17,10 @@ class CommandRule(LinkRule):
 
 
    def canLink(self,block1, block2, socket1, socket2):
+      
       if (not BlockConnectorShape.isCommandConnector(socket1) or not BlockConnectorShape.isCommandConnector(socket2)):
          return False;
+
       # We want exactly one before connector
       if (socket1 == block1.getBeforeConnector()):
          return not socket1.hasBlock();

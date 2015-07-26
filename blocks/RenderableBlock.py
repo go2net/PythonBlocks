@@ -101,11 +101,13 @@ class RenderableBlock(QtGui.QWidget):
          obj.updateBuffImg()
       else:
          obj.blockArea = QtGui.QPainterPath ()      
+      
       return obj
       
    
    @classmethod
    def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
+      print(blockID)
       return RenderableBlock.from_block(workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
 
    '''
@@ -286,6 +288,7 @@ class RenderableBlock(QtGui.QWidget):
       if(not self.isLoading):
          # if buffImg is null, redraw block shape
          if (self.buffImg == None):
+            self.reformBlockShape()
             self.updateBuffImg(); #this method also moves connected blocks
 
          if (self.dragging):
@@ -294,7 +297,6 @@ class RenderableBlock(QtGui.QWidget):
       		#g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
          else:
             painter.drawImage(0,0,self.buffImg);
-
       painter.end()
 
    def synchronizeLabelsAndSockets(self):
@@ -873,7 +875,7 @@ class RenderableBlock(QtGui.QWidget):
 
    def drawHighlightSocket(self,link,hightlight):
       if(link != None):
-         peer_block = link.peer_block
+         #peer_block = link.peer_block
          peer_rb = RenderableBlock.getRenderableBlock(link.peer_block.getBlockID())
          if(peer_rb == self):
             print("peer_rb can not be self")
@@ -895,7 +897,7 @@ class RenderableBlock(QtGui.QWidget):
                BlockShape.BCS.addControlConnectorShape(path,BlockConnectorShape.CONTROL_PLUG_WIDTH / 2,True)
             else:
                path.moveTo(tag.aLoc.x(),tag.aLoc.y()-BlockConnectorShape.DATA_PLUG_HEIGHT / 2)
-               BlockShape.BCS.addDataConnection(path, link.peer_socket.getKind(), True,False);
+               BlockShape.BCS.addDataConnection(path, link.peer_socket.type, True,False);
 
             painter.drawPath(path);
             painter.end()
@@ -939,7 +941,7 @@ class RenderableBlock(QtGui.QWidget):
       if(rb.getBlock().getAfterBlockID() != Block.NULL):
          dim = self.calcStackDimensions(RenderableBlock.getRenderableBlock(rb.getBlock().getAfterBlockID()));
          return QtCore.QSize(max(rb.width() + rb.getMaxWidthOfSockets(rb.getBlockID()),dim.width()),
-   				rb.height() + dim.height());
+            rb.height() + dim.height());
       else:
          return QtCore.QSize(rb.width() + rb.getMaxWidthOfSockets(rb.blockID),	rb.height());
 
@@ -958,7 +960,7 @@ class RenderableBlock(QtGui.QWidget):
          if (socket.hasBlock()):
             #loop through all the afters of the connected block
             curBlockID = socket.getBlockID();
-				# TODO: this is a patch, but we need to fix the root of the problem!
+            # TODO: this is a patch, but we need to fix the root of the problem!
             if(RenderableBlock.getRenderableBlock(curBlockID) == None):
                print("does not exist yet, block: "+curBlockID);
                continue;
@@ -983,7 +985,8 @@ class RenderableBlock(QtGui.QWidget):
       if (isBlock or isBlockStub):
          rb = RenderableBlock.from_blockID(
             parent,
-            Block.loadBlockFrom(blockNode).getBlockID());
+            Block.loadBlockFrom(blockNode).getBlockID(), 
+            True);
 
          if (isBlockStub):
             # need to get actual block node
@@ -996,8 +999,8 @@ class RenderableBlock(QtGui.QWidget):
 
 
          if (rb.getBlock().labelMustBeUnique()):
-   			# TODO check the instance number of this block
-   			# and update instance checker
+          # TODO check the instance number of this block
+            # and update instance checker
             pass
 
          blockLoc = QtCore.QPoint(0, 0);
@@ -1008,16 +1011,14 @@ class RenderableBlock(QtGui.QWidget):
                # extract location information
                RenderableBlock.extractLocationInfo(child, blockLoc);
             elif (child.tag == ("Comment")):
-               rb.comment = Comment.loadComment(workspace,
-   						child.getChildNodes(), rb);
+               rb.comment = Comment.loadComment(workspace, child.getChildNodes(), rb);
                if (rb.comment != None):
-                  rb.comment.setParent(rb.getParentWidget()
-   							.getJComponent());
+                  rb.comment.setParent(rb.getParentWidget()	.getJComponent());
 
             elif (child.tag == ("Collapsed")):
                rb.setCollapsed(True);
 
-   		# set location from info
+         # set location from info
          #rb.setParent(parent)
          rb.move(blockLoc.x(), blockLoc.y());
          #rb.show()
@@ -1192,7 +1193,7 @@ class RenderableBlock(QtGui.QWidget):
          self.lastDragWidget = widget;
 
       link = self.getNearbyLink(); # look for nearby link opportunities
-      #print(link)
+
       if((link == None and self.last_link!= None) or
          (link != None and not link.equal(self.last_link))):
 

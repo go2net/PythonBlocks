@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-07-17, 16:41:28 -->
+<!-- Saved: 2015-07-26, 10:23:48 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -70,7 +70,6 @@
     <Source>BlockGenusTreeModel.py</Source>
     <Source>components/propertyeditor/QPropertyModel.py</Source>
     <Source>components/propertyeditor/QVariantDelegate.py</Source>
-    <Source>tt.py</Source>
     <Source>components/propertyeditor/QPropertyEditorWidget.py</Source>
     <Source>components/propertyeditor/Property.py</Source>
     <Source>hh.py</Source>

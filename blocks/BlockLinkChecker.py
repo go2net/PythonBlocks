@@ -130,6 +130,7 @@ class BlockLinkChecker():
 
       for rblock2 in otherBlocks:
          currentPlug = BlockLinkChecker.getPlugEquivalent(block1);
+
          block2 = Block.getBlock(rblock2.getBlockID());
          if (block1 == block2 or not rblock1.isVisible() or not rblock2.isVisible() or rblock1.isCollapsed() or rblock2.isCollapsed()):
             continue;
@@ -138,9 +139,11 @@ class BlockLinkChecker():
          currentSocketPoint = None;
          if (currentPlug != None):
             currentPlugPoint = BlockLinkChecker.getAbsoluteSocketPoint(rblock1, currentPlug);
+
             for currentSocket in BlockLinkChecker.getSocketEquivalents(block2):
                currentSocketPoint = BlockLinkChecker.getAbsoluteSocketPoint(rblock2, currentSocket);
                currentDistance = BlockLinkChecker.distance(currentPlugPoint,currentSocketPoint);
+
                if ((currentDistance < closestDistance) and BlockLinkChecker.checkRules(block1, block2, currentPlug, currentSocket)):
                   closestBlock2 = block2;
                   closestSocket1 = currentPlug;
@@ -160,8 +163,8 @@ class BlockLinkChecker():
                   closestSocket2 = currentPlug;
                   closestDistance = currentDistance;
 
-
       if (closestSocket1 == None):
          return None;
+
 
       return BlockLink.getBlockLink(block1, closestBlock2, closestSocket1, closestSocket2);

@@ -188,7 +188,7 @@ class BlockCanvas(QtGui.QScrollArea):
          blocksElement = document.createElement("Blocks");
          for rb in blocks:
             blocksElement.appendChild(rb.getSaveNode(document));
-
+         print(blocksElement)
          return blocksElement;
       else:
          return None
@@ -254,14 +254,16 @@ class BlockCanvas(QtGui.QScrollArea):
 
       for blockNode in blocks:
          rb = RenderableBlock.loadBlockNode(blockNode, self);
-         # save the loaded blocks to add later
-         loadedBlocks.append(rb);
-
-      for rb in loadedBlocks:
-         #print("width=%d,height=%d",rb.width(),rb.height())
          rb.setParent(self.canvas)
-         rb.show()
+         #rb.show()
+         # save the loaded blocks to add later
+         loadedBlocks.append(rb)
+         
+      #return loadedBlocks;
+      for rb in loadedBlocks:  
          rb.redrawFromTop()
+         rb.show()
+      #loadedBlocks[0].redrawFromTop()
 
       return loadedBlocks;
 
