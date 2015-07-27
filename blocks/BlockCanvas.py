@@ -249,6 +249,7 @@ class BlockCanvas(QtGui.QScrollArea):
       #PageChangeEventManager.notifyListeners();
 
    def loadBlocksFrom(self,blocksNode):
+      from blocks.WorkspaceController import WorkspaceController
       blocks = blocksNode.getchildren();
       loadedBlocks = []
 

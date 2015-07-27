@@ -263,7 +263,7 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
 
 
 
-  def getTopBlocks(self, ordered):
+  def getTopBlocks(self, ordered=False):
     '''
     * Finds the top-level blocks and returns them.  Blocks are optionally sorted
     * by position; top to bottom (with slight LTR or RTL bias).
@@ -299,3 +299,16 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       '''
     return blocks;
 
+  def getTopRBs(self, ordered=False):
+    from blocks.BlockLinkChecker import BlockLinkChecker
+    blocks = []
+    # Copy the topBlocks_ list.
+    all_blocks = self.blockCanvas.getBlocks()
+    #print(all_blocks)
+    for rb in all_blocks:
+      block = rb.getBlock()    
+      plug = BlockLinkChecker.getPlugEquivalent(block)
+      if(plug == None or not plug.hasBlock()):
+        blocks.append(rb)
+
+    return blocks;

@@ -9,8 +9,8 @@
 			<BeforeBlockId>96</BeforeBlockId>
 			<AfterBlockId>103</AfterBlockId>
 			<Sockets num-sockets="2">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="test" position-type="single"/>
-				<BlockConnector con-block-id="98" connector-kind="socket" connector-type="" init-kind="" init-type="" label="then" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="test" position-type="single"/>
+				<BlockConnector con-block-id="98" connector-kind="socket" connector-type="" init-kind="cmd" init-type="cmd" label="then" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="stomp" id="98">
@@ -20,7 +20,7 @@
 			</Location>
 			<BeforeBlockId>97</BeforeBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="height" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="height" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="setshape" id="99">
@@ -31,7 +31,7 @@
 			<BeforeBlockId>96</BeforeBlockId>
 			<AfterBlockId>100</AfterBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="yank" id="100">
@@ -42,7 +42,7 @@
 			<BeforeBlockId>99</BeforeBlockId>
 			<AfterBlockId>104</AfterBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="height" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="height" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="repeater" id="102">
@@ -52,8 +52,8 @@
 			</Location>
 			<BeforeBlockId>104</BeforeBlockId>
 			<Sockets num-sockets="2">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="times" position-type="single"/>
-				<BlockConnector con-block-id="105" connector-kind="socket" connector-type="" init-kind="" init-type="" label="do" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="times" position-type="single"/>
+				<BlockConnector con-block-id="105" connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="do" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="lt" id="103">
@@ -63,7 +63,7 @@
 			</Location>
 			<BeforeBlockId>97</BeforeBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="degs" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="degs" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="stomp" id="104">
@@ -74,7 +74,7 @@
 			<BeforeBlockId>100</BeforeBlockId>
 			<AfterBlockId>102</AfterBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="height" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="height" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="setbreed" id="105">
@@ -85,7 +85,7 @@
 			<BeforeBlockId>102</BeforeBlockId>
 			<AfterBlockId>107</AfterBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="setc" id="107">
@@ -96,7 +96,7 @@
 			<BeforeBlockId>105</BeforeBlockId>
 			<AfterBlockId>113</AfterBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="setxy" id="113">
@@ -107,8 +107,8 @@
 			<BeforeBlockId>107</BeforeBlockId>
 			<AfterBlockId>115</AfterBlockId>
 			<Sockets num-sockets="2">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="xcor" position-type="single"/>
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="ycor" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="xcor" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="ycor" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="set-score" id="115">
@@ -118,7 +118,7 @@
 			</Location>
 			<BeforeBlockId>113</BeforeBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="forever" id="95">
@@ -127,7 +127,7 @@
 				<Y>49.0</Y>
 			</Location>
 			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="96" connector-kind="socket" connector-type="" init-kind="" init-type="" label="" position-type="single"/>
+				<BlockConnector con-block-id="96" connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="" position-type="single"/>
 			</Sockets>
 		</Block>
 		<Block genus-name="if" id="96">
@@ -138,8 +138,8 @@
 			<BeforeBlockId>95</BeforeBlockId>
 			<AfterBlockId>97</AfterBlockId>
 			<Sockets num-sockets="2">
-				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="" label="test" position-type="single"/>
-				<BlockConnector con-block-id="99" connector-kind="socket" connector-type="" init-kind="" init-type="" label="then" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="test" position-type="single"/>
+				<BlockConnector con-block-id="99" connector-kind="socket" connector-type="" init-kind="" init-type="cmd" label="then" position-type="single"/>
 			</Sockets>
 		</Block>
 	</Blocks>
