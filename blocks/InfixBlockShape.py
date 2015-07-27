@@ -106,15 +106,16 @@ class InfixBlockShape(BlockShape):
 
                connectedBlockShape = RenderableBlock.getRenderableBlock(curSocket.getBlockID()).getBlockShape();
                #append left side of connected block
-
+               
+               connectedBlockShape.reformArea()
                BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getLeftSide(), False);
                yy = connectedBlockShape.getLeftSide().currentPosition()
                xx = self.gpBottom.currentPosition().x()
                # append right side of connected block (more complicated)
                if(connectedBlock.getNumSockets() == 0 or connectedBlock.isInfix()):
                   #  append top side of connected block
-                 	BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getTopSide(), False);
-                 	BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getRightSide(), False);
+                  BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getTopSide(), False);
+                  BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getRightSide(), False);
                else:
                   # iterate through the sockets of the connected block, checking if
                   # it has blocks connected to them

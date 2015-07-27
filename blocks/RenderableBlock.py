@@ -9,7 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 from PyQt4 import QtCore,QtGui
-import math
+import math, sys
 
 from blocks.Block import Block
 from blocks.BlockShape import BlockShape
@@ -107,7 +107,6 @@ class RenderableBlock(QtGui.QWidget):
    
    @classmethod
    def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
-      print(blockID)
       return RenderableBlock.from_block(workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
 
    '''
@@ -280,24 +279,29 @@ class RenderableBlock(QtGui.QWidget):
       return maxSocketWidth;
 
    def paintEvent(self,event):
-      painter = QtGui.QPainter();
-      #painter.setRenderHints(QtGui.QPainter.HighQualityAntialiasing)
-      painter.begin(self)
-      #painter.drawPath(self.blockArea);
-      #return
-      if(not self.isLoading):
-         # if buffImg is null, redraw block shape
-         if (self.buffImg == None):
-            self.reformBlockShape()
-            self.updateBuffImg(); #this method also moves connected blocks
+      try:
+        painter = QtGui.QPainter();
+        #painter.setRenderHints(QtGui.QPainter.HighQualityAntialiasing)
+        painter.begin(self)
+        #painter.drawPath(self.blockArea);
+        #return
+        if(not self.isLoading):
+           # if buffImg is null, redraw block shape
+           if (self.buffImg == None):
+              self.reformBlockShape()
+              self.updateBuffImg(); #this method also moves connected blocks
 
-         if (self.dragging):
-            #g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,DRAGGING_ALPHA));
-            painter.drawImage(self.blockArea.controlPointRect(),self.buffImg);
-      		#g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
-         else:
-            painter.drawImage(0,0,self.buffImg);
-      painter.end()
+           if (self.dragging):
+              #g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,DRAGGING_ALPHA));
+              painter.drawImage(self.blockArea.controlPointRect(),self.buffImg);
+            #g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1));
+           else:
+              painter.drawImage(0,0,self.buffImg);
+        painter.end()
+      except:
+         exc_type, exc_obj, exc_tb = sys.exc_info()
+         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+         print(exc_type, fname, exc_tb.tb_lineno,exc_obj)        
 
    def synchronizeLabelsAndSockets(self):
       blockLabelChanged = self.getBlock().getBlockLabel() != None and self.blockLabel.getText() != (self.getBlock().getBlockLabel())
@@ -955,6 +959,7 @@ class RenderableBlock(QtGui.QWidget):
 
    def redrawFromTop(self):
       self.isLoading = False;
+
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
 
          if (socket.hasBlock()):
@@ -972,9 +977,9 @@ class RenderableBlock(QtGui.QWidget):
          else:
             self.getConnectorTag(socket).setDimension(None);
 
-   	# reform shape with new socket dimension
+      # reform shape with new socket dimension
       self.reformBlockShape();
-   	# next time, redraw with new positions and moving children blocks
+      # next time, redraw with new positions and moving children blocks
       self.clearBufferedImage();
 
 

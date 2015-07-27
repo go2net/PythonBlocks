@@ -249,6 +249,7 @@ class BlockCanvas(QtGui.QScrollArea):
       #PageChangeEventManager.notifyListeners();
 
    def loadBlocksFrom(self,blocksNode):
+      import time
       from blocks.WorkspaceController import WorkspaceController
       blocks = blocksNode.getchildren();
       loadedBlocks = []
@@ -256,17 +257,33 @@ class BlockCanvas(QtGui.QScrollArea):
       for blockNode in blocks:
          rb = RenderableBlock.loadBlockNode(blockNode, self);
          rb.setParent(self.canvas)
-         #rb.show()
-         # save the loaded blocks to add later
          loadedBlocks.append(rb)
          
-      #return loadedBlocks;
       for rb in loadedBlocks:  
-         rb.redrawFromTop()
+         rb.reformBlockShape()
          rb.show()
-      #loadedBlocks[0].redrawFromTop()
+
+      for rb in self.getTopLevelBlocks():  
+         rb.redrawFromTop()
 
       return loadedBlocks;
+
+
+   def getTopLevelBlocks(self):
+      topBlocks = []
+      for renderable in self.getBlocks():
+          block = renderable.getBlock()
+          if (block.getPlug() == None or 
+              block.getPlugBlockID() == None or 
+              block.getPlugBlockID()  == -1):
+            if (block.getBeforeConnector() == None or 
+                block.getBeforeBlockID() == None or 
+                block.getBeforeBlockID() == -1):
+                  topBlocks.append(renderable);
+
+      return topBlocks;
+
+
 
    def loadSaveString(self,root):
 
