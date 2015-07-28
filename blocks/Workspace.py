@@ -198,7 +198,9 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
             #del(block)
          else:
             Block.NEXT_ID = max(Block.NEXT_ID,block.getBlockID())
-
+      
+      Block.MAX_RESERVED_ID = Block.NEXT_ID
+      
       for id in id_list:
          block = RenderableBlock.ALL_RENDERABLE_BLOCKS[id]
          block.setParent(None)

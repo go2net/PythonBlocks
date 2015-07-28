@@ -1,15 +1,5 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     03/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
 
-from PyQt4 import QtCore,QtGui
+from PyQt4 import QtGui
 from blocks.Block import Block
 from blocks.FactoryRenderableBlock import FactoryRenderableBlock
 
@@ -18,11 +8,11 @@ import re
 class PageDrawerLoadingUtils():
 
    def __init__(self):
-      passss
+      pass
 
    def loadBlockDrawerSets(root, manager):
 
-      pattern = "(.*)"
+      #pattern = "(.*)"
       drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
 
       for drawerSetNode in drawerSetNodes:
@@ -32,21 +22,21 @@ class PageDrawerLoadingUtils():
          for drawerNode in drawerNodes:
             if(drawerNode.tag == "BlockDrawer"):
                drawerName = None
-               buttonColor =  QtCore.Qt.blue
+               #buttonColor =  QtCore.Qt.blue
                #StringTokenizer col;
                if("name" in drawerNode.attrib):
                	drawerName = drawerNode.attrib["name"]
 
                # get drawer's color:
-               if("button-color" in drawerNode.attrib):
-                  col = drawerNode.attrib["button-color"].split();
-                  if(len(col) == 3):
-                     buttonColor = QtGui.QColor(int(col[0]), int(col[1]), int(col[2]));
-                  else:
-                     buttonColor = QtCore.Qt.BLACK;
+               #if("button-color" in drawerNode.attrib):
+                  #col = drawerNode.attrib["button-color"].split();
+                  #if(len(col) == 3):
+                  #   buttonColor = QtGui.QColor(int(col[0]), int(col[1]), int(col[2]));
+                  #else:
+                  #   buttonColor = QtCore.Qt.BLACK;
 
-
-               canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
+               manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
+               #canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
 
                #if(True): continue;
                # get block genuses in drawer and create blocks
@@ -76,15 +66,16 @@ class PageDrawerLoadingUtils():
       return "";
 
 
+   '''
    def getColorValue(node, nodeKey):
       color = PageDrawerLoadingUtils.getNodeValue(node, nodeKey);
       if(color != ""):
-         col = StringTokenizer(color);
+         #col = StringTokenizer(color);
          if(col.countTokens() == 3):
             return QtGui.QColor(Integer.parseInt(col.nextToken()), Integer.parseInt(col.nextToken()), Integer.parseInt(col.nextToken()));
 
       return None;
-
+    '''
 
 
    def getBooleanValue(node, nodeKey):
@@ -101,11 +92,12 @@ class PageDrawerLoadingUtils():
          return int(num)
       return 0;
 
-
+   
+   '''
    def loadPagesAndDrawers( root, manager):
       from Workspace import Workspace
       from WorkspaceController import WorkspaceController
-
+    '''
 
 
 

@@ -62,6 +62,7 @@
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -106,7 +107,9 @@
    </attribute>
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
+   <addaction name="separator"/>
    <addaction name="actionSave"/>
+   <addaction name="actionSaveAs"/>
    <addaction name="separator"/>
    <addaction name="actionStop"/>
    <addaction name="actionRun"/>
@@ -235,11 +238,6 @@
     <string>Main Toolbar</string>
    </property>
   </action>
-  <action name="action">
-   <property name="text">
-    <string>-</string>
-   </property>
-  </action>
   <action name="actionSave">
    <property name="icon">
     <iconset>
@@ -252,7 +250,7 @@
   <action name="actionNew">
    <property name="icon">
     <iconset>
-     <normaloff>resource/1430856726_file_add.png</normaloff>resource/1430856726_file_add.png</iconset>
+     <normaloff>resource/new.png</normaloff>resource/new.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
@@ -266,7 +264,7 @@
   <action name="actionRun">
    <property name="icon">
     <iconset>
-     <normaloff>resource/start-32 (2).png</normaloff>resource/start-32 (2).png</iconset>
+     <normaloff>resource/user_run.png</normaloff>resource/user_run.png</iconset>
    </property>
    <property name="text">
     <string>Run</string>
@@ -311,6 +309,15 @@
    </property>
    <property name="text">
     <string>Block Preview</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/SaveAs.png</normaloff>resource/SaveAs.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as</string>
    </property>
   </action>
  </widget>

@@ -1,15 +1,6 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     06/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 from PyQt4 import QtCore,QtGui
-import math, sys
+import math, os, sys
 
 from blocks.Block import Block
 from blocks.BlockShape import BlockShape
@@ -18,7 +9,6 @@ from blocks.CollapseLabel import CollapseLabel
 from blocks.ConnectorTag import ConnectorTag
 from blocks.NameLabel import NameLabel
 from blocks.BlockLabel import BlockLabel
-from blocks.PageLabel import PageLabel
 from blocks.SocketLabel import SocketLabel
 from blocks.BlockConnectorShape import BlockConnectorShape
 from blocks.GraphicsManager import GraphicsManager
@@ -40,6 +30,7 @@ class RenderableBlock(QtGui.QWidget):
    def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
       from blocks.WorkspaceController import WorkspaceController
       from blocks.FactoryManager import FactoryManager
+      from blocks.FactoryRenderableBlock import FactoryRenderableBlock
       
       obj = cls()
       
@@ -102,6 +93,9 @@ class RenderableBlock(QtGui.QWidget):
       else:
          obj.blockArea = QtGui.QPainterPath ()      
       
+      #if(isinstance(obj,FactoryRenderableBlock)):
+      #  Block.MAX_RESERVED_ID = max(Block.MAX_RESERVED_ID, obj.blockID)
+        
       return obj
       
    
@@ -126,7 +120,7 @@ class RenderableBlock(QtGui.QWidget):
    	return self.blockID
 
    '''
-	 * Shortcut to get block with current BlockID of this renderable block.
+   * Shortcut to get block with current BlockID of this renderable block.
    '''
    def getBlock(self):
       return Block.getBlock(self.blockID)
@@ -154,12 +148,12 @@ class RenderableBlock(QtGui.QWidget):
       #at.setToScale(zoom, zoom);
       self.blockArea = self.abstractBlockArea #.createTransformedArea(at);
       #if(True): return
-		#note: need to add twice the highlight stroke width so that the highlight does not get cut off
+      #note: need to add twice the highlight stroke width so that the highlight does not get cut off
       updatedDimensionRect = QtCore.QRectF(
-				self.x(),
-				self.y(),
-				self.blockArea.controlPointRect().width(),
-				self.blockArea.controlPointRect().height());
+        self.x(),
+        self.y(),
+        self.blockArea.controlPointRect().width(),
+        self.blockArea.controlPointRect().height());
 
       if (not self.contentsRect() == updatedDimensionRect):
          self.moveConnectedBlocks(); # bounds have changed, so move connected blocks
@@ -167,8 +161,8 @@ class RenderableBlock(QtGui.QWidget):
       self.setGeometry(updatedDimensionRect.toRect());
 
       #/////////////////////////////////////////
-		#//set position of block labels.
-		#//////////////////////////////////////////
+      #//set position of block labels.
+      #//////////////////////////////////////////
       #if(self.pageLabel != None and self.getBlock().hasPageLabel()):
       #   self.pageLabel.update()
 
@@ -232,8 +226,8 @@ class RenderableBlock(QtGui.QWidget):
 
       if(self.blockLabel != None):
          if(self.getBlock().hasPageLabel()):
-            width += Math.max(blockLabel.getAbstractWidth(), pageLabel.getAbstractWidth()) + maxSocketWidth;
-            width += getControlLabelsWidth();
+            width += math.max(self.blockLabel.getAbstractWidth(), self.pageLabel.getAbstractWidth()) + maxSocketWidth;
+            width += self.getControlLabelsWidth();
          else:
             width += self.blockLabel.getAbstractWidth() + maxSocketWidth;
             width += self.getControlLabelsWidth() + 4;
@@ -324,7 +318,7 @@ class RenderableBlock(QtGui.QWidget):
          if (tag != None):
             if(tag.getLabel() != None):
                if (tag.getLabel().getText() != socket.getLabel()):
-                  socketLabelsChanged = synchronizeSockets();
+                  socketLabelsChanged = self.synchronizeSockets();
                   break;
 
          if (not socket.isLabelEditable):
@@ -356,7 +350,7 @@ class RenderableBlock(QtGui.QWidget):
 
    def updateBuffImg(self, reform = True):
 
-   	# if label text has changed, then resync labels/sockets and reform shape
+      # if label text has changed, then resync labels/sockets and reform shape
       if(not self.synchronizeLabelsAndSockets() and reform):
          self.reformBlockShape(); # if updateLabels is true, we don't need to reform AGAIN
 
@@ -368,8 +362,8 @@ class RenderableBlock(QtGui.QWidget):
       #GraphicsManager.recycleGCCompatibleImage(self.buffImg);
 
       #image = GraphicsManager.getGCCompatibleImage(
-		#		self.blockArea.controlPointRect().width()+1,
-		#		self.blockArea.controlPointRect().height()+1,
+      #		self.blockArea.controlPointRect().width()+1,
+      #		self.blockArea.controlPointRect().height()+1,
       #      self.back_color);
 
       #painter = QtGui.QPainter(image);
@@ -377,7 +371,7 @@ class RenderableBlock(QtGui.QWidget):
       #painter.begin(self)
 
 
-   	# ADD BLOCK COLOR
+      # ADD BLOCK COLOR
       #blockColor = self.getBLockColor();
       #blockColor.setAlpha(180)
       #brush = QtGui.QBrush(blockColor);
@@ -438,7 +432,7 @@ class RenderableBlock(QtGui.QWidget):
                label = SocketLabel(socket, socket.getLabel(),BlockLabel.Type.PORT_LABEL,socket.isLabelEditable,self.blockID);
                argumentToolTip = self.getBlock().getArgumentDescription(i);
                if(argumentToolTip != None):
-                  label.setToolTipText(getBlock().getArgumentDescription(i).trim());
+                  label.setToolTipText(self.getBlock().getArgumentDescription(i).trim());
 
                tag.setLabel(label);
                label.setZoomLevel(self.getZoom());
@@ -451,10 +445,10 @@ class RenderableBlock(QtGui.QWidget):
             if( not SocketLabel.ignoreSocket(socket)):
                # ignored bottom sockets or sockets with label == ""
                if(label == None):
-                  label = SocketLabel(socket, socket.getLabel(),BlockLabel.Type.PORT_LABEL,socket.isLabelEditable(),blockID);
-                  argumentToolTip = getBlock().getArgumentDescription(i);
+                  label = SocketLabel(socket, socket.getLabel(),BlockLabel.Type.PORT_LABEL,socket.isLabelEditable(),self.blockID);
+                  argumentToolTip = self.getBlock().getArgumentDescription(i);
                   if(argumentToolTip != None):
-                     label.setToolTipText(getBlock().getArgumentDescription(i).trim());
+                     label.setToolTipText(self.getBlock().getArgumentDescription(i).trim());
 
                   tag.setLabel(label);
                   label.setText(socket.getLabel());
@@ -483,7 +477,7 @@ class RenderableBlock(QtGui.QWidget):
    def getControlLabelsWidth(self):
       x = 0;
       if (self.getComment() != None):
-         x += math.max(getComment().getCommentLabelWidth(), getCollapseLabelWidth());
+         x += math.max(self.getComment().getCommentLabelWidth(), self.getCollapseLabelWidth());
       else:
          x += self.getCollapseLabelWidth();
 
@@ -571,11 +565,11 @@ class RenderableBlock(QtGui.QWidget):
                   arg = RenderableBlock(self.parent(), id);
                   arg.setZoomLevel(self.zoom);
                   # getParentWidget().addBlock(arg);
-      				# arg.repaint();
-      				# this.getParent().add(arg);
-      				# set the location of the def arg at
+              # arg.repaint();
+              # this.getParent().add(arg);
+              # set the location of the def arg at
                   myLocation = self.pos();
-                  socketPt = elf.getSocketPixelPoint(socket);
+                  socketPt = self.getSocketPixelPoint(socket);
                   plugPt = arg.getSocketPixelPoint(arg.getBlock().getPlug());
                   arg.move((socketPt.x()+myLocation.x()-plugPt.x()), (socketPt.y()+myLocation.y()-plugPt.y()));
                   # update the socket space of at this socket
@@ -584,7 +578,7 @@ class RenderableBlock(QtGui.QWidget):
                      arg.getBlockHeight()));
                   # drop each block to this parent's widget/component
                   # getParentWidget().blockDropped(arg);
-                  parent().addBlock(arg);
+                  self.parent().addBlock(arg);
 
                   idList.append(id);
                   socketList.append(socket);
@@ -597,8 +591,8 @@ class RenderableBlock(QtGui.QWidget):
          for i in range(0,size):
             # Workspace.getInstance().notifyListeners(
             #    new WorkspaceEvent(this.getParentWidget(),
-   			#				argList.get(i).getBlockID(),
-   			#				WorkspaceEvent.BLOCK_ADDED, true));
+            #				argList.get(i).getBlockID(),
+            #				WorkspaceEvent.BLOCK_ADDED, true));
 
             # must call this method to update the dimensions of this
             # TODO ria in the future would be good to just link the default args
@@ -608,8 +602,8 @@ class RenderableBlock(QtGui.QWidget):
             self.blockConnected(socketList.get(i), idList.get(i));
             argList[i].repaint();
 
-   		#self.redrawFromTop();
-         self.linkedDefArgsBefore = True;
+      #self.redrawFromTop();
+      self.linkedDefArgsBefore = True;
 
 
    '''
@@ -736,12 +730,12 @@ class RenderableBlock(QtGui.QWidget):
 
       else:
          # Block connectedToBlock = Block.getBlock(connectedToBlockID);
-   		# if no before block, then no recursion
-   		# if command connector with position type bottom (just a control connector socket)
-   		#  and we have a before, then skip and recurse up
+      # if no before block, then no recursion
+      # if command connector with position type bottom (just a control connector socket)
+      #  and we have a before, then skip and recurse up
          if(self.getBlock().getBeforeBlockID() != Block.NULL
-   				and BlockConnectorShape.isCommandConnector(connectedSocket)
-   				and connectedSocket.getPositionType() == BlockConnector.PositionType.BOTTOM):
+          and BlockConnectorShape.isCommandConnector(connectedSocket)
+          and connectedSocket.getPositionType() == BlockConnector.PositionType.BOTTOM):
 
             # get before connector
             beforeID = self.getBlock().getBeforeBlockID();
@@ -753,8 +747,8 @@ class RenderableBlock(QtGui.QWidget):
    		# if empty before socket, then return
    		# if(getBlock().hasBeforeConnector() && getBlock().getBeforeBlockID() == Block.NULL) return;
 
-   		# add dimension to the mapping
-         self.getConnectorTag(connectedSocket).setDimension(self.calcDimensionOfSocket(connectedSocket));
+      # add dimension to the mapping
+      self.getConnectorTag(connectedSocket).setDimension(self.calcDimensionOfSocket(connectedSocket));
 
 
       # reform shape with new socket dimension
@@ -919,9 +913,9 @@ class RenderableBlock(QtGui.QWidget):
    def getSaveNode(self, document):
       # XXX seems strange that comment is kept here but saved in the block
       return self.getBlock().getSaveNode(document, self.descale(self.x()),
-   			self.descale(self.y()),
-   			self.comment.getSaveNode(document) if self.comment != None else None,
-   			self.isCollapsed());
+        self.descale(self.y()),
+        self.comment.getSaveNode(document) if self.comment != None else None,
+        self.isCollapsed());
 
    def blockConnected(self,connectedSocket, connectedBlockID):
       # notify block first so that we will only need to repaint this block once
@@ -1016,7 +1010,7 @@ class RenderableBlock(QtGui.QWidget):
                # extract location information
                RenderableBlock.extractLocationInfo(child, blockLoc);
             elif (child.tag == ("Comment")):
-               rb.comment = Comment.loadComment(workspace, child.getChildNodes(), rb);
+               #rb.comment = Comment.loadComment(workspace, child.getChildNodes(), rb);
                if (rb.comment != None):
                   rb.comment.setParent(rb.getParentWidget()	.getJComponent());
 
@@ -1071,7 +1065,7 @@ class RenderableBlock(QtGui.QWidget):
             return
 
          #dragHandler.mouseReleased(e);
-      	# if the block was dragged before...then
+        # if the block was dragged before...then
          if(self.dragging):
             link = self.getNearbyLink(); # look for nearby link opportunities
             widget = None;
@@ -1138,7 +1132,7 @@ class RenderableBlock(QtGui.QWidget):
          #print(self.pos())
          old_pos = self.parent().mapToGlobal(self.pos())
 
-         new_pos = self.parent().mapFromGlobal(event.globalPos())
+         # new_pos = self.parent().mapFromGlobal(event.globalPos())
 
          dx = event.globalPos().x()-old_pos.x()-self.pressedPos.x()
          dy = event.globalPos().y()-old_pos.y()-self.pressedPos.y()
@@ -1215,7 +1209,7 @@ class RenderableBlock(QtGui.QWidget):
       self.last_link = link
 
       if(link != None):
-         peer_block = self.last_link.peer_block
+         #peer_block = self.last_link.peer_block
          peer_rb = RenderableBlock.getRenderableBlock(self.last_link.peer_block.getBlockID())
          tag = peer_rb.getConnectorTag(link.peer_socket);
          self.last_peer_socket = tag
@@ -1245,7 +1239,7 @@ class RenderableBlock(QtGui.QWidget):
       old_pos = old_parent.mapToGlobal(self.pos())
 
       self.setParent(new_parent)
-      pp = self.parent()
+      #pp = self.parent()
       new_pos  = new_parent.mapFromGlobal(old_pos)
 
 
@@ -1269,7 +1263,7 @@ class RenderableBlock(QtGui.QWidget):
    def stopDragging(self, widget):
       if (not self.dragging):
          return
-   		#throw new RuntimeException("dropping without prior dragging?");
+      #throw new RuntimeException("dropping without prior dragging?");
       # notify children
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
          if (socket.hasBlock()):
@@ -1294,6 +1288,3 @@ class RenderableBlock(QtGui.QWidget):
       #self.comment.setConstrainComment(true);
       #self.comment.setLocation(renderable.comment.getLocation());
       #self.comment.getArrow().updateArrow();
-
-if __name__ == '__main__':
-    main()

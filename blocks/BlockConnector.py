@@ -37,8 +37,6 @@ class BlockConnector():
    PositionType = enum("SINGLE", "MIRROR", "BOTTOM", "TOP")
 
    def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
-      if(positionType == ""):
-         yieldy = 0
          
       self._kind = kind
       self._type = type
@@ -111,7 +109,7 @@ class BlockConnector():
       from Block import Block
       # checks if connector has a def arg or if connector already has a block
       if(self.hasDefArg and self.connBlockID == -1):
-         block = Block(arg.getGenusName(), arg.label);
+         block = Block(self.arg.getGenusName(), self.arg.label);
          connBlockID = block.getBlockID();
          return connBlockID;
 
@@ -121,10 +119,8 @@ class BlockConnector():
       self.connBlockID = id;
 
    def loadBlockConnector(node):
-     pattern = "(.*)"
-
+     from blocks.Block import Block
      con = None;
-
      initKind = None;
      kind = None;
      idConnected = -1
@@ -147,7 +143,7 @@ class BlockConnector():
          if("label" in node.attrib):
              label = node.attrib["label"]
          if("con-block-id" in node.attrib):
-             idConnected = int(node.attrib["con-block-id"])
+             idConnected = int(node.attrib["con-block-id"]) + Block.MAX_RESERVED_ID
 
          if("label-editable" in node.attrib):
              isLabelEditable = node.attrib["label-editable"] == ("true");
@@ -159,18 +155,19 @@ class BlockConnector():
          if("position-type" in node.attrib):
              positionType = node.attrib["position-type"]
 
-
          #assert initKind != None : "BlockConnector was not specified a initial connection kind";
 
          if (positionType == ("single")):
-            con = BlockConnector(initKind, initType, BlockConnector.PositionType.SINGLE, label, isLabelEditable, isExpandable, idConnected);
+            position = BlockConnector.PositionType.SINGLE
          elif (positionType == ("bottom")):
-             con = BlockConnector(initKind, initType, BlockConnector.PositionType.BOTTOM, label, isLabelEditable, isExpandable, idConnected);
+             position = BlockConnector.PositionType.BOTTOM
          elif (positionType == ("mirror")):
-             con = BlockConnector(initKind, initType, BlockConnector.PositionType.MIRROR, label, isLabelEditable, isExpandable, idConnected);
+             position = BlockConnector.PositionType.MIRROR
          elif (positionType == ("top")):
-             con = BlockConnector(initKind, initType,BlockConnector.PositionType.TOP, label, isLabelEditable, isExpandable, idConnected);
+             position = BlockConnector.PositionType.TOP
 
+         con = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
+         
          con.expandGroup = expandGroup;
          if (initKind != kind):
             con.kind = kind;
@@ -191,7 +188,7 @@ class BlockConnector():
       
       connectorElement.setAttribute("label", self.label);
       if (len(self.expandGroup) > 0) :
-         connectorElement.setAttribute("expand-group", expandGroup);
+         connectorElement.setAttribute("expand-group", self.expandGroup);
 
       if (self.isExpandable):
          connectorElement.setAttribute("is-expandable", "yes");
@@ -210,7 +207,7 @@ class BlockConnector():
 
 
       if (self.connBlockID != -1):
-         connectorElement.setAttribute("con-block-id", str(self.connBlockID));
+         connectorElement.setAttribute("con-block-id", str(self.connBlockID-Block.MAX_RESERVED_ID));
 
 
       return connectorElement;

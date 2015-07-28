@@ -1,18 +1,9 @@
-#-------------------------------------------------------------------------------
-# Name:        main.py
-# Purpose:
-#
-# Author:      Jack.Shi
-#
-# Created:     02/03/2015
-# Copyright:   (c) 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 import sip
 sip.setapi('QVariant', 2)
 
 import sys, os
-#import Workspace
+
 from blocks.WorkspaceController import WorkspaceController
 from generators.PythonGen import PythonGen
 
@@ -30,13 +21,13 @@ class MainWnd(QtGui.QMainWindow):
     self.connect(self.actionNew, QtCore.SIGNAL('triggered()'), self.onNew)
     self.connect(self.actionOpen, QtCore.SIGNAL('triggered()'), self.onOpen)
     self.connect(self.actionSave, QtCore.SIGNAL('triggered()'), self.onSave)
+    self.connect(self.actionSaveAs, QtCore.SIGNAL('triggered()'), self.onSaveAs)
     self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
 
     self.actionStop.setEnabled(False)
 
-    #self.btnExit.clicked.connect(self.close)
     self.actionQuit.triggered.connect(self.close)
-    #self.frame.layout().setContentsMargins(0, 0, 0, 0)
+
     # Create a new WorkspaceController
     self.wc = WorkspaceController(self.frame)
     self.resetWorksapce()
@@ -44,11 +35,7 @@ class MainWnd(QtGui.QMainWindow):
     self.show()
 
     layout  = QtGui.QHBoxLayout()
-    #layout.setAlignment(QtCore.Qt.AlignCenter)
-    #layout.setContentsMargins(0, 0, 0, 0)
     self.wndPreview.setLayout(layout);
-    
-    #self.connect(self.blockPreviewWnd, QtCore.SIGNAL("resize()"), self.onResize);
     
     self.blockPreviewWnd.resizeEvent = self.onResize
 
@@ -149,9 +136,12 @@ class MainWnd(QtGui.QMainWindow):
     #pass
 
   def loadFile(self):
-    self.filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', ".blks(*.blks)")
-    #print(self.filename)
-
+    filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', ".blks(*.blks)")
+    
+    if(filename == ''): return   # User cancel load
+    
+    self.filename = filename
+    
     try:
        QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
        self.loadBlockFile(self.filename);
@@ -169,19 +159,27 @@ class MainWnd(QtGui.QMainWindow):
 
   def loadBlockFile(self,filename):
     if (filename != None):
-       #saveFilePath = savedFile.getAbsolutePath();
-       #saveFileName = savedFile.getName();
        self.wc.resetWorkspace();
-       print('self.wc.resetWorkspace()')
        self.wc.loadProjectFromPath(filename);
-       print('self.wc.loadProjectFromPath(filename)')
-       #didLoad();
 
   def onSave(self):
     import codecs
-    if(self.filename == None or self.filename == ''):
-      self.filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks")
-    block_file = codecs.open(self.filename, "w",'utf-8')
+    filename = self.filename
+    if(filename == None or filename == ''):
+      filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks(*.blks)")
+      if(filename == ''): return   # User cancel load 
+      
+    block_file = codecs.open(filename, "w",'utf-8')
+    block_file.write(self.wc.getSaveString())
+    block_file.close()
+
+  def onSaveAs(self):
+    import codecs
+    filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks(*.blks)")
+    
+    if(filename == ''): return   # User cancel load 
+      
+    block_file = codecs.open(filename, "w",'utf-8')
     block_file.write(self.wc.getSaveString())
     block_file.close()
 

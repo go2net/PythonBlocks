@@ -1,13 +1,3 @@
-#-------------------------------------------------------------------------------
-# Name:        module2
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     25/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui,QtCore
 from blocks.RenderableBlock import RenderableBlock
@@ -22,14 +12,8 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 class BlockCanvas(QtGui.QScrollArea):
 
    def __init__(self):
-      from blocks.WorkspaceController import WorkspaceController
       QtGui.QScrollArea.__init__(self)
-
-      self.hValue = 0
-      self.vValue = 0
       self.canvas = Canvas();
-      #self.canvas.setStyleSheet("background-color: rgba(225, 225, 0,255);")
-      #self.setStyleSheet("background-color: rgba(225, 0, 225,255);")
       self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
       self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
       self.setWidgetResizable(False)
@@ -100,7 +84,6 @@ class BlockCanvas(QtGui.QScrollArea):
       #print(self.horizontalScrollBar().value())
       block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());
       block.show()
-      w = self.width()
 
       width = max(new_pos.x()+self.horizontalScrollBar().value()+50,self.canvas.width())
       height = max(new_pos.y()+self.verticalScrollBar().value()+50,self.canvas.height())
@@ -188,14 +171,13 @@ class BlockCanvas(QtGui.QScrollArea):
          blocksElement = document.createElement("Blocks");
          for rb in blocks:
             blocksElement.appendChild(rb.getSaveNode(document));
-         print(blocksElement)
          return blocksElement;
       else:
          return None
 
    def reformBlockCanvas(self):
       self.canvas.resize(self.canvasWidth,self.canvasHeight);
-   	#scrollPane.revalidate();
+      #scrollPane.revalidate();
       self.repaint();
 
 
@@ -215,14 +197,11 @@ class BlockCanvas(QtGui.QScrollArea):
          widthCounter = widthCounter + p.reformBounds(widthCounter);
 
       for d in self.dividers:
-         d.resize(
-   				5,
-   				d.getLeftPage().height());
-         d.move(   				d.getLeftPage().x()+d.getLeftPage().width()-3,
-   				0,)
+         d.resize(5, d.getLeftPage().height());
+         d.move(d.getLeftPage().x()+d.getLeftPage().width()-3,  0,)
 
       self.canvas.resize(widthCounter,(Page.DEFAULT_ABSTRACT_HEIGHT*Page.getZoomLevel()));
-   	#scrollPane.revalidate();
+      #scrollPane.revalidate();
       self.repaint();
 
    def mouseMoveEvent(self, event):
@@ -235,7 +214,7 @@ class BlockCanvas(QtGui.QScrollArea):
          raise Exception("Invariant Violated: May not add null Pages");
 
       elif(position<0 or position > len(self.pages)):
-         print(position+", "+pages.size());
+         #print(position+", "+pages.size());
          raise Exception("Invariant Violated: Specified position out of bounds");
 
       self.pages.insert(position, page);
@@ -249,8 +228,6 @@ class BlockCanvas(QtGui.QScrollArea):
       #PageChangeEventManager.notifyListeners();
 
    def loadBlocksFrom(self,blocksNode):
-      import time
-      from blocks.WorkspaceController import WorkspaceController
       blocks = blocksNode.getchildren();
       loadedBlocks = []
 
@@ -301,13 +278,14 @@ class BlockCanvas(QtGui.QScrollArea):
 
       blocksRoot = root.findall("Blocks");
       if(blocksRoot != None and len(blocksRoot) == 1):
-         blocks = self.loadBlocksFrom(blocksRoot[0]);
+         self.loadBlocksFrom(blocksRoot[0]);
+         #blocks = self.loadBlocksFrom(blocksRoot[0]);
       # load pages, page drawers, and their blocks from save file
       #PageDrawerManager.loadPagesAndDrawers(root);
       # PageDrawerLoadingUtils.loadPagesAndDrawers(root, WorkspaceController.workspace, WorkspaceController.workspace.factory);
-      screen = QtGui.QDesktopWidget().availableGeometry()
-      screenWidth = screen.width()
-      canvasWidth = self.width();
+      #screen = QtGui.QDesktopWidget().availableGeometry()
+      #screenWidth = screen.width()
+      #canvasWidth = self.width();
       #if(canvasWidth<screenWidth):
       #   p = self.pages[len(self.pages)-1];
       #   p.addPixelWidth(screenWidth-canvasWidth);

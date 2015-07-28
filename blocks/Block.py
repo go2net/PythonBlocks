@@ -1,22 +1,15 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     04/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 import re
 from blocks.BlockGenus import BlockGenus
 from blocks.BlockConnector import BlockConnector
+
 
 class Block():
 
    # The ID that is to be assigned to the next new block
    NEXT_ID = 1
-
+   MAX_RESERVED_ID = -1
+   
    # Defines a NULL id for a Block
    NULL = -1
 
@@ -41,6 +34,9 @@ class Block():
       obj = cls()
       obj.linkToStubs = linkToStubs
       obj.blockID = id
+      
+      if(id >= Block.NEXT_ID):
+        Block.NEXT_ID = id +1
       
       #print ("id=%d,NEXT_ID=%d"%(id,Block.NEXT_ID))
       if (label == None):
@@ -370,11 +366,11 @@ class Block():
       * Expand a socket group in this block. For now, all new sockets will
       * be added after the last socket in the group.
       '''
-      expandSockets = self.getExpandGroup(expandGroups, group);
+      expandSockets = self.getExpandGroup(self.expandGroups, group);
       #assert expandSockets != null;
 
       # Search for the socket to insert after.
-      index = len(sockets) - 1;
+      index = len(self.sockets) - 1;
       label = expandSockets[len(expandSockets) - 1].getLabel();
       while(index  >= 0):
          conn = self.sockets[index]
@@ -395,13 +391,13 @@ class Block():
       * Shrink a socket group (un-expand it).
       '''
       group = socket.getExpandGroup();
-      expandSockets = getExpandGroup(expandGroups, group);
+      expandSockets = self.getExpandGroup(self.expandGroups, group);
       #assert expandSockets != null;
 
       # Search for the first socket in the group, if not the expandable
       # one.
       label = expandSockets.get(0).getLabel();
-      index = getSocketIndex(socket);
+      index = self.getSocketIndex(self.socket);
       while(index  >= 0):
          con = self.sockets[index];
          if (con.getLabel() == label and con.getExpandGroup() == group):
@@ -414,7 +410,7 @@ class Block():
       self.removeSocket(index);
       total = len(expandSockets);
       for i in range(1,total):
-         con = sockets[index];
+         con = self.sockets[index];
          if (con.getLabel() == expandSockets[i].getLabel() and con.getExpandGroup() == group):
             self.removeSocket(index);
             i+=1;
@@ -428,16 +424,16 @@ class Block():
       total = len(self.sockets);
       first = -1;
       for i in range(0,total):
-         conn = sockets.get(i);
+         conn = self.sockets.get(i);
          if (conn == self.socket):
              if (first == -1):first = i;
-             else: return true;
+             else: return True;
          elif (conn.getPositionType().equals(socket.getPositionType()) and
                   conn.isExpandable() == socket.isExpandable() and
                   conn.initKind().equals(socket.initKind()) and
                   conn.getExpandGroup().equals(socket.getExpandGroup())):
              if (first == -1): first = i;
-             else: return true;
+             else: return True;
 
 
       # If the socket is the first and last of its kind, then we can NOT
@@ -449,6 +445,8 @@ class Block():
       * Informs this Block that a block has disconnected from the specified disconnectedSocket
       * @param disconnectedSocket
       '''
+      from blocks.BlockStub import BlockStub
+      
       if (disconnectedSocket.isExpandable and self.canRemoveSocket(disconnectedSocket)):
          if (disconnectedSocket.getExpandGroup().length() > 0):
             self.shrinkSocketGroup(disconnectedSocket);
@@ -492,7 +490,8 @@ class Block():
    def getSaveNode(self, document, x, y, commentNode, isCollapsed):
       blockElement = document.createElement("Block");
 
-      blockElement.setAttribute("id", str(self.blockID));
+      blockElement.setAttribute("id", str(self.blockID-Block.MAX_RESERVED_ID));
+
       blockElement.setAttribute("genus-name", self.getGenusName());
       if (self.hasFocus):
          blockElement.setAttribute("has-focus", "yes");
@@ -512,7 +511,7 @@ class Block():
 
       if (self.isBad):
          msgElement = document.createElement("CompilerErrorMsg");
-         msgElement.appendChild(document.createTextNode(badMsg));
+         msgElement.appendChild(document.createTextNode(self.badMsg));
          blockElement.appendChild(msgElement);
 
 
@@ -538,13 +537,13 @@ class Block():
 
       if (self.hasBeforeConnector() and self.getBeforeBlockID() != Block.NULL):
          blockIdElement = document.createElement("BeforeBlockId");
-         blockIdElement.appendChild(document.createTextNode(str(self.getBeforeBlockID())));
+         blockIdElement.appendChild(document.createTextNode(str(self.getBeforeBlockID() - Block.MAX_RESERVED_ID)));
          blockElement.appendChild(blockIdElement);
 
 
       if (self.hasAfterConnector() and self.getAfterBlockID() != Block.NULL):
          blockIdElement = document.createElement("AfterBlockId");
-         blockIdElement.appendChild(document.createTextNode(str(self.getAfterBlockID())));
+         blockIdElement.appendChild(document.createTextNode(str(self.getAfterBlockID() - Block.MAX_RESERVED_ID)));
          blockElement.appendChild(blockIdElement);
 
 
@@ -595,7 +594,8 @@ class Block():
       * @param node Node cantaining desired information
       * @return Block instance containing loaded information
       '''
-
+      from blocks.BlockStub import BlockStub
+      
       block = None;
       id = None;
       genusName = None;
@@ -634,7 +634,7 @@ class Block():
       if (node.tag == ("Block")):
          # load attributes
          if("id" in node.attrib):
-            id = int(node.attrib["id"]) #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
+            id = int(node.attrib["id"]) + Block.MAX_RESERVED_ID #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
             # BUG: id may conflict with the new Block
             # bug fix: HE Qichen 2012-2-24
 
@@ -657,9 +657,9 @@ class Block():
             elif (child.tag == ("CompilerErrorMsg")):
                  badMsg = child.text;
             elif  (child.tag == ("BeforeBlockId")):
-                 beforeID = int(child.text)
+                 beforeID = int(child.text) + Block.MAX_RESERVED_ID
             elif  (child.tag == ("AfterBlockId")):
-                 afterID = int(child.text)
+                 afterID = int(child.text) + Block.MAX_RESERVED_ID
             elif  (child.tag == ("Plug")):
                plugs = child.getchildren(); #there should only one child
 
@@ -708,7 +708,7 @@ class Block():
 
          else:
             #assert label != null : "Loading a block stub, but has a null label!";
-            block = BlockStub(workspace, id, genusName, label, stubParentName, stubParentGenus);
+            block = BlockStub(node.workspace, id, genusName, label, stubParentName, stubParentGenus);
 
 
          if (plug != None):

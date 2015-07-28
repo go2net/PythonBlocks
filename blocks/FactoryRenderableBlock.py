@@ -1,13 +1,4 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     06/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 from PyQt4 import QtGui
 from blocks.RenderableBlock import RenderableBlock
 from blocks.BlockUtilities import BlockUtilities

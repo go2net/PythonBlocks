@@ -1,148 +1,168 @@
 <?xml version="1.0" ?>
 <CODEBLOCKS>
 	<Blocks>
-		<Block genus-name="text_const" id="98">
+		<Block genus-name="set_str_var" id="2">
+			<Location>
+				<X>107.0</X>
+				<Y>112.0</Y>
+			</Location>
+			<BeforeBlockId>10</BeforeBlockId>
+			<AfterBlockId>4</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="3" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="text_print" id="4">
+			<Location>
+				<X>107.0</X>
+				<Y>142.0</Y>
+			</Location>
+			<BeforeBlockId>2</BeforeBlockId>
+			<AfterBlockId>12</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="5" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="str_var" id="5">
+			<Label>text</Label>
+			<Location>
+				<X>157.0</X>
+				<Y>145.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="4" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="if" id="8">
+			<Location>
+				<X>107.0</X>
+				<Y>202.0</Y>
+			</Location>
+			<BeforeBlockId>12</BeforeBlockId>
+			<AfterBlockId>18</AfterBlockId>
+			<Sockets num-sockets="2">
+				<BlockConnector con-block-id="9" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="6" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="text_print" id="6">
+			<Location>
+				<X>166.0</X>
+				<Y>234.0</Y>
+			</Location>
+			<BeforeBlockId>8</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="7" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="str_var" id="7">
+			<Label>text</Label>
+			<Location>
+				<X>216.0</X>
+				<Y>237.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="6" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="boolean" id="9">
+			<Location>
+				<X>169.0</X>
+				<Y>205.0</Y>
+			</Location>
+			<Plug>
+				<BlockConnector con-block-id="8" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
+			</Plug>
+		</Block>
+		<Block genus-name="set_str_var" id="12">
+			<Location>
+				<X>107.0</X>
+				<Y>172.0</Y>
+			</Location>
+			<BeforeBlockId>4</BeforeBlockId>
+			<AfterBlockId>8</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="13" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="if" id="0">
+			<Location>
+				<X>48.0</X>
+				<Y>50.0</Y>
+			</Location>
+			<Sockets num-sockets="2">
+				<BlockConnector con-block-id="16" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="10" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="text_print" id="10">
+			<Location>
+				<X>107.0</X>
+				<Y>82.0</Y>
+			</Location>
+			<BeforeBlockId>0</BeforeBlockId>
+			<AfterBlockId>2</AfterBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector con-block-id="11" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="text_const" id="11">
 			<Label>Hello World</Label>
 			<Location>
-				<X>156.0</X>
-				<Y>113.0</Y>
+				<X>157.0</X>
+				<Y>85.0</Y>
 			</Location>
 			<Plug>
-				<BlockConnector con-block-id="97" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+				<BlockConnector con-block-id="10" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
 			</Plug>
 		</Block>
-		<Block genus-name="set_str_var" id="99">
-			<Location>
-				<X>106.0</X>
-				<Y>140.0</Y>
-			</Location>
-			<BeforeBlockId>97</BeforeBlockId>
-			<AfterBlockId>107</AfterBlockId>
-			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="100" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
-			</Sockets>
-		</Block>
-		<Block genus-name="text_const" id="100">
+		<Block genus-name="text_const" id="3">
 			<Label>中文测试</Label>
 			<Location>
-				<X>198.0</X>
-				<Y>143.0</Y>
+				<X>199.0</X>
+				<Y>115.0</Y>
 			</Location>
 			<Plug>
-				<BlockConnector con-block-id="99" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+				<BlockConnector con-block-id="2" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
 			</Plug>
 		</Block>
-		<Block genus-name="text_const" id="104">
+		<Block genus-name="text_const" id="13">
 			<Label>中文变量测试</Label>
 			<Location>
-				<X>198.0</X>
-				<Y>203.0</Y>
+				<X>199.0</X>
+				<Y>175.0</Y>
 			</Location>
 			<Plug>
-				<BlockConnector con-block-id="103" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+				<BlockConnector con-block-id="12" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
 			</Plug>
 		</Block>
-		<Block genus-name="if" id="105">
+		<Block genus-name="boolean" id="16">
 			<Location>
-				<X>106.0</X>
-				<Y>230.0</Y>
-			</Location>
-			<BeforeBlockId>103</BeforeBlockId>
-			<Sockets num-sockets="2">
-				<BlockConnector con-block-id="106" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
-				<BlockConnector con-block-id="101" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
-			</Sockets>
-		</Block>
-		<Block genus-name="boolean" id="106">
-			<Location>
-				<X>168.0</X>
-				<Y>233.0</Y>
+				<X>110.0</X>
+				<Y>53.0</Y>
 			</Location>
 			<Plug>
-				<BlockConnector con-block-id="105" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
+				<BlockConnector con-block-id="0" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
 			</Plug>
 		</Block>
-		<Block genus-name="text_print" id="107">
+		<Block genus-name="text_print" id="18">
 			<Location>
-				<X>106.0</X>
-				<Y>170.0</Y>
+				<X>107.0</X>
+				<Y>274.0</Y>
 			</Location>
-			<BeforeBlockId>99</BeforeBlockId>
-			<AfterBlockId>103</AfterBlockId>
+			<BeforeBlockId>8</BeforeBlockId>
 			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="108" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
+				<BlockConnector con-block-id="19" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
 			</Sockets>
 		</Block>
-		<Block genus-name="str_var" id="108">
-			<Label>text</Label>
+		<Block genus-name="text_const" id="19">
 			<Location>
-				<X>156.0</X>
-				<Y>173.0</Y>
+				<X>157.0</X>
+				<Y>277.0</Y>
 			</Location>
 			<Plug>
-				<BlockConnector con-block-id="107" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
+				<BlockConnector con-block-id="18" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
 			</Plug>
-		</Block>
-		<Block genus-name="set_str_var" id="103">
-			<Location>
-				<X>106.0</X>
-				<Y>200.0</Y>
-			</Location>
-			<BeforeBlockId>107</BeforeBlockId>
-			<AfterBlockId>105</AfterBlockId>
-			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="104" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
-			</Sockets>
-		</Block>
-		<Block genus-name="text_print" id="101">
-			<Location>
-				<X>165.0</X>
-				<Y>262.0</Y>
-			</Location>
-			<BeforeBlockId>105</BeforeBlockId>
-			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="102" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
-			</Sockets>
-		</Block>
-		<Block genus-name="str_var" id="102">
-			<Label>text</Label>
-			<Location>
-				<X>215.0</X>
-				<Y>265.0</Y>
-			</Location>
-			<Plug>
-				<BlockConnector con-block-id="101" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
-			</Plug>
-		</Block>
-		<Block genus-name="if" id="95">
-			<Location>
-				<X>47.0</X>
-				<Y>78.0</Y>
-			</Location>
-			<Sockets num-sockets="2">
-				<BlockConnector con-block-id="96" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
-				<BlockConnector con-block-id="97" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
-			</Sockets>
-		</Block>
-		<Block genus-name="boolean" id="96">
-			<Location>
-				<X>109.0</X>
-				<Y>81.0</Y>
-			</Location>
-			<Plug>
-				<BlockConnector con-block-id="95" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
-			</Plug>
-		</Block>
-		<Block genus-name="text_print" id="97">
-			<Location>
-				<X>106.0</X>
-				<Y>110.0</Y>
-			</Location>
-			<BeforeBlockId>95</BeforeBlockId>
-			<AfterBlockId>99</AfterBlockId>
-			<Sockets num-sockets="1">
-				<BlockConnector con-block-id="98" connector-kind="socket" connector-type="string" init-type="string" label="" position-type="single"/>
-			</Sockets>
 		</Block>
 	</Blocks>
 </CODEBLOCKS>
