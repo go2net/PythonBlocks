@@ -272,7 +272,6 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
     * @param {boolean} ordered Sort the list if true.
     * @return {!Array.<!Blockly.Block>} The top-level block objects.
     '''
-    from blocks.Block import Block
     from blocks.BlockLinkChecker import BlockLinkChecker
     blocks = []
     # Copy the topBlocks_ list.
@@ -289,9 +288,10 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
         blocks.append(block)
 
     if (ordered and len(blocks) > 1):
-      offset = Math.sin(goog.math.toRadians(Blockly.Workspace.SCAN_ANGLE));
-      if (this.RTL):
-        offset *= -1;
+      #offset = math.sin(math.toRadians(Blockly.Workspace.SCAN_ANGLE));
+      if (self.RTL):
+        #offset *= -1;
+        pass
       '''
       blocks.sort(function(a, b) {
         var aXY = a.getRelativeToSurfaceXY();
@@ -314,3 +314,4 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
         blocks.append(rb)
 
     return blocks;
+

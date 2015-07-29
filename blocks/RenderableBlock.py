@@ -1058,6 +1058,7 @@ class RenderableBlock(QtGui.QWidget):
       #QtGui.QFrame.mouseMoveEvent(self,event);
 
    def mouseReleaseEvent(self, event):
+      self.window().onBlockClick(self)
       #print("mouseReleaseEvent")
       if event.button() == QtCore.Qt.LeftButton:
          if (not self.pickedUp):

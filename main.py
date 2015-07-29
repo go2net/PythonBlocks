@@ -64,6 +64,17 @@ class MainWnd(QtGui.QMainWindow):
     self.tvBlockGenusView.setModel(model)
     self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
     self.tvBlockGenusView.expandAll()
+
+  def onBlockClick(self, block):
+    from BlockPropTreeModel import BlockPropTreeModel
+    from components.propertyeditor.QVariantDelegate import QVariantDelegate
+
+    model = BlockPropTreeModel(self, block)
+    self.tvBlockPropView.init()
+    self.tvBlockPropView.setModel(model)
+    self.tvBlockPropView.setItemDelegate(QVariantDelegate(self.tvBlockPropView));
+    self.tvBlockPropView.expandAll()
+    pass
     
   def showBlock(self, genus):
     #from blocks.BlockGenus import BlockGenus

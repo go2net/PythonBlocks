@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-07-26, 10:23:48 -->
+<!-- Saved: 2015-07-29, 23:18:39 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -72,8 +72,8 @@
     <Source>components/propertyeditor/QVariantDelegate.py</Source>
     <Source>components/propertyeditor/QPropertyEditorWidget.py</Source>
     <Source>components/propertyeditor/Property.py</Source>
-    <Source>hh.py</Source>
     <Source>components/propertyeditor/ColorCombo.py</Source>
+    <Source>BlockPropTreeModel.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>

@@ -165,7 +165,7 @@
     <set>Qt::AllDockWidgetAreas</set>
    </property>
    <property name="windowTitle">
-    <string>Block Properities</string>
+    <string>Block Genus Properities</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -214,6 +214,27 @@
         <enum>QFrame::Sunken</enum>
        </property>
       </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="dockWidget">
+   <property name="windowTitle">
+    <string>Block Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QPropertyEditorWidget" name="tvBlockPropView"/>
      </item>
     </layout>
    </widget>
