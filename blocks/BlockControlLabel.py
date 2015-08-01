@@ -34,7 +34,7 @@ class BlockControlLabel(QtGui.QLabel):
 
    def update(self):
       from blocks.RenderableBlock import RenderableBlock
-      rb = RenderableBlock.getRenderableBlock(self.getBlockID());
+      rb = RenderableBlock.getRenderableBlock(self.blockID);
 
       if (rb != None):
          x = 0;

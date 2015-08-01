@@ -33,12 +33,11 @@ class Block():
    def createBlockFromID(cls, genusName, linkToStubs=True, id=-1,label=None):
       obj = cls()
       obj.linkToStubs = linkToStubs
-      obj.blockID = id
+      obj._blockID = id
       
       if(id >= Block.NEXT_ID):
         Block.NEXT_ID = id +1
-      
-      #print ("id=%d,NEXT_ID=%d"%(id,Block.NEXT_ID))
+
       if (label == None):
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
 
@@ -46,11 +45,8 @@ class Block():
         dup = Block.ALL_BLOCKS.get(id);
         print("pre-existing block is: {0} with genus {1} and label {2}".format(id,dup.getGenusName(),dup.getBlockLabel()));
         raise Exception("Block id: {0} already exists!  BlockGenus {1}, label: {2}".format(id,genusName,label))
-        #assert !ALL_BLOCKS.containsKey(id) : "Block id: "+id+" already exists!  BlockGenus "+genusName+" label: "+label;
-
       
       # copy connectors from BlockGenus
-      #try:
       genus = BlockGenus.getGenusWithName(genusName)
       if(genus == None):
           raise Exception("genusName: "+genusName+" does not exist.")
@@ -112,33 +108,11 @@ class Block():
 
       obj.label = label;
 
-      #arguumentIter = genus.getInitialArgumentDescriptions()
-      #for arg in arguumentIter:
-      #	argumentDescriptions.add(arg.trim())
-
-
       obj.expandGroups = []
-
-      # add to ALL_BLOCKS
-      # warning: publishing this block before constructor finishes has the
-      # potential to cause some problems such as data races
-      # other threads could access this block from getBlock()
-      #print(self.blockID)
-      
+     
       if(obj.blockID != None and obj.blockID != -1):
         Block.ALL_BLOCKS[obj.blockID] = obj
 
-      # add itself to stubs hashmap
-      # however factory blocks will have entries in hashmap...
-      #if(linkToStubs and self.hasStubs()):
-      #    BlockStub.putNewParentInStubMap(this.blockID)
-
-
-      #except:
-      #  exc_type, exc_obj, exc_tb = sys.exc_info()
-      #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-      #  print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
-      
       Block.tmpObj = obj
       
       return obj
@@ -149,20 +123,27 @@ class Block():
      id = Block.NEXT_ID
      Block.NEXT_ID+=1
      return Block.createBlockFromID(genusName, linkToStubs, id,label)
-         
-   def getBlockID(self):
-      '''
-      * Returns the block ID of this
-      * @return the block ID of this
-      '''
-      return self.blockID
+
+   @property
+   def blockID(self):
+      """I'm the 'x' property."""
+      return self._blockID
+
+   @blockID.setter
+   def blockID(self, value):
+      self._blockID = value
+
+   @blockID.deleter
+   def blockID(self):
+      del self._blockID 
+      
 
    def getInputTargetBlock(self, name):
     socket = self.getSocketByName(name.lower())
     if(socket == None):
       return None
       
-    blockID = socket.getBlockID()
+    blockID = socket.blockID
     if(blockID == -1):
       return None
     else:
@@ -186,8 +167,7 @@ class Block():
      return BlockGenus.getGenusWithName(self.genusName)
 
    def changeLabelTo(self,  label):
-      #self.genusName = genusName;
-      self.label = label #BlockGenus.getGenusWithName(genusName).getInitialLabel();
+      self.label = label 
 
    def hasPlug(self):
      return not (self.plug == None);
@@ -339,17 +319,17 @@ class Block():
    def getBeforeBlockID(self):
       if (self.before == None):
          return Block.NULL;
-      return self.before.getBlockID();
+      return self.before.blockID;
 
    def getAfterBlockID(self):
       if (self.after == None):
          return Block.NULL;
-      return self.after.getBlockID();
+      return self.after.blockID;
 
    def getPlugBlockID(self):
       if(self.plug == None):
          return Block.NULL;
-      return self.plug.getBlockID();
+      return self.plug.blockID;
 
 
    def getExpandGroup(groups, group):
@@ -473,7 +453,7 @@ class Block():
       if (self.getAfterBlockID() == otherBlockID):
          return self.after;
       for socket in self.getSockets():
-         if (socket.getBlockID() == otherBlockID):
+         if (socket.blockID == otherBlockID):
             return socket;
       return None;
 

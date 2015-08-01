@@ -21,10 +21,10 @@ class BlockStub(Block):
     # there's a chance that the parent for this has not been added to parentNameToBlockStubs mapping
     key = parentName + parentGenus;
     if(key in BlockStub.parentNameToBlockStubs):
-      BlockStub.parentNameToBlockStubs[parentName+parentGenus].append(self.getBlockID());
+      BlockStub.parentNameToBlockStubs[parentName+parentGenus].append(self.blockID);
     else:
       stubs = []
-      stubs.append(self.getBlockID());
+      stubs.append(self.blockID);
       BlockStub.parentNameToBlockStubs[key] = stubs
 
 

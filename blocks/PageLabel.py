@@ -19,7 +19,7 @@ class PageLabel(BlockLabel):
       x = 5;
       y = 5;
 
-      rb = RenderableBlock.getRenderableBlock(getBlockID());
+      rb = RenderableBlock.getRenderableBlock(blockID);
       if (rb != None): x += descale(rb.getControlLabelsWidth());
 
       self.setPixelLocation( rescale(x), rescale(y));

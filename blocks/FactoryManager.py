@@ -162,9 +162,9 @@ class FactoryManager(WorkspaceWidget):
          if (canvas.getName() == drawer):
             #canvas.addBlocks(blocks)
             for block in blocks:
-               if(block == None or Block.NULL == block.getBlockID()): continue
+               if(block == None or Block.NULL == block.blockID): continue
                canvas.addBlock(block)
-                  #Workspace.getInstance().notifyListeners(new WorkspaceEvent(this, block.getBlockID(), WorkspaceEvent.BLOCK_ADDED));
+                  #Workspace.getInstance().notifyListeners(new WorkspaceEvent(this, block.blockID, WorkspaceEvent.BLOCK_ADDED));
 
 
             canvas.layoutBlocks()

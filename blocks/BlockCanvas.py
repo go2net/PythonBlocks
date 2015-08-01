@@ -17,23 +17,51 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 
         return blocks        
 
-    def eventFilter(self, source, event):   
-        if event.type() == QtCore.QEvent.MouseMove:      
+    def initNewRB(self, rb):
+        self.focusBlock = rb
+        
+
+
+    def getUnderRB(self, globalPos):
+        for rb in self.getBlocks():
+            pos = rb.mapFromGlobal( globalPos);
+            if rb.blockArea.contains(pos): 
+                return rb
+        return None
+        
+    def eventFilter(self, source, event):
+
+        if event.type() == QtCore.QEvent.MouseMove:         
             globalPos = event.globalPos()
-            #print(globalPos)
-            if(self.focusBlock != None):
+            if (self.focusBlock != None and 
+                self.focusBlock.pickedUp and 
+                event.buttons() == QtCore.Qt.LeftButton):
+                self.focusBlock.mouseDragged(event)   
+            
+            elif(self.focusBlock != None and not self.focusBlock.pickedUp):
                 pos = self.focusBlock.mapFromGlobal( globalPos);
                 if not self.focusBlock.blockArea.contains(pos):
                     self.focusBlock.onMouseLeave()
-                        
-            #if event.buttons() == QtCore.Qt.NoButton:                    
-            for rb in self.getBlocks():
-                pos = rb.mapFromGlobal( globalPos);
-                if rb.blockArea.contains(pos):
-                    rb.onMouseEnter()
-                    self.focusBlock = rb
-                    break  
-
+                    self.focusBlock = None
+            else:        
+                rb = self.getUnderRB(globalPos)        
+                if(rb != None):
+                    if self.focusBlock != rb:                          
+                        self.focusBlock = rb
+                        rb.onMouseEnter()    
+     
+                    if rb.pickedUp and event.buttons() == QtCore.Qt.LeftButton:   
+                        rb.mouseDragged(event)
+                    
+        elif event.type() ==  QtCore.QEvent.MouseButtonPress:
+            rb = self.getUnderRB( event.globalPos())      
+            if(rb != None):
+                rb.onMousePress(event) 
+        elif event.type() == QtCore.QEvent.MouseButtonRelease:
+            rb = self.getUnderRB( event.globalPos())      
+            if(rb != None):
+                rb.onMouseRelease(event) 
+            
         return QtGui.QMainWindow.eventFilter(self, source, event)
 
 
@@ -41,10 +69,11 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         globalPos = event.globalPos()
 
         #print(globalPos)
-        if(self.focusBlock != None):
+        if(self.focusBlock != None and not self.focusBlock.pickedUp):
             pos = self.focusBlock.mapFromGlobal( globalPos);
             if not self.focusBlock.blockArea.contains(pos):
                 self.focusBlock.onMouseLeave()
+                self.focusBlock = None
 
 
 class BlockCanvas(QtGui.QScrollArea):
@@ -94,18 +123,16 @@ class BlockCanvas(QtGui.QScrollArea):
       #print(allPageBlocks)
       return allPageBlocks;
 
-   def reset(self):
- 
+   def reset(self): 
       for block in self.getBlocks():
          block.setParent(None)
 
    def blockDropped(self,block):
-
       oldParent = block.parentWidget();
       old_pos = oldParent.mapToGlobal(block.pos())
 
       block.setParent(self.canvas)
-
+      block.initFinished = True
       new_pos  = self.mapFromGlobal(old_pos)
 
       block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());

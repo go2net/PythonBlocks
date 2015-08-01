@@ -12,7 +12,6 @@ class PageDrawerLoadingUtils():
 
    def loadBlockDrawerSets(root, manager):
 
-      #pattern = "(.*)"
       drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
 
       for drawerSetNode in drawerSetNodes:
@@ -22,36 +21,19 @@ class PageDrawerLoadingUtils():
          for drawerNode in drawerNodes:
             if(drawerNode.tag == "BlockDrawer"):
                drawerName = None
-               #buttonColor =  QtCore.Qt.blue
-               #StringTokenizer col;
                if("name" in drawerNode.attrib):
                	drawerName = drawerNode.attrib["name"]
 
-               # get drawer's color:
-               #if("button-color" in drawerNode.attrib):
-                  #col = drawerNode.attrib["button-color"].split();
-                  #if(len(col) == 3):
-                  #   buttonColor = QtGui.QColor(int(col[0]), int(col[1]), int(col[2]));
-                  #else:
-                  #   buttonColor = QtCore.Qt.BLACK;
-
                manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
-               #canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
 
-               #if(True): continue;
-               # get block genuses in drawer and create blocks
                drawerBlocks = drawerNode.getchildren()
                blockNode = None
                drawerRBs = []
                for blockNode in drawerBlocks:
                   if(blockNode.tag == "BlockGenusMember"):
                      genusName = blockNode.text
-                     #assert BlockGenus.getGenusWithName(genusName) != null : "Unknown BlockGenus: "+genusName;
-
-                     # don't link factory blocks to their stubs because they will
-                     # forever remain inside the drawer and never be active
                      newBlock = Block.createBlock(genusName, False)
-                     drawerRBs.append(FactoryRenderableBlock.from_blockID(manager, newBlock.getBlockID(),False, QtGui.QColor(225,225,225,100)));
+                     drawerRBs.append(FactoryRenderableBlock.from_blockID(manager, newBlock.blockID,False, QtGui.QColor(225,225,225,100)));
 
                manager.addStaticBlocks(drawerRBs, drawerName);
 
@@ -64,18 +46,6 @@ class PageDrawerLoadingUtils():
          if (nameMatcher != None):
             return nameMatcher.group(1);
       return "";
-
-
-   '''
-   def getColorValue(node, nodeKey):
-      color = PageDrawerLoadingUtils.getNodeValue(node, nodeKey);
-      if(color != ""):
-         #col = StringTokenizer(color);
-         if(col.countTokens() == 3):
-            return QtGui.QColor(Integer.parseInt(col.nextToken()), Integer.parseInt(col.nextToken()), Integer.parseInt(col.nextToken()));
-
-      return None;
-    '''
 
 
    def getBooleanValue(node, nodeKey):
@@ -91,15 +61,6 @@ class PageDrawerLoadingUtils():
       if(num!= ""):
          return int(num)
       return 0;
-
-   
-   '''
-   def loadPagesAndDrawers( root, manager):
-      from Workspace import Workspace
-      from WorkspaceController import WorkspaceController
-    '''
-
-
 
 
 

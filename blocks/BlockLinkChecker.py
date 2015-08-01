@@ -61,8 +61,8 @@ class BlockLinkChecker():
    def getBlockLink(block1, block2, socket1, socket2):
       # If these arguments are the same as the last call to getBlockLink, return the old object instead of creating a new one
       if (not
-         ((block1.getBlockID() == lastPlugID  and block2.getBlockID() == lastSocketID and socket1 == lastPlug and socket2 == lastSocket) or
-   		 (block2.getBlockID() == lastPlugID  and block1.getBlockID() == lastSocketID and socket2 == lastPlug and socket1 == lastSocket))):
+         ((block1.blockID == lastPlugID  and block2.blockID == lastSocketID and socket1 == lastPlug and socket2 == lastSocket) or
+   		 (block2.blockID == lastPlugID  and block1.blockID == lastSocketID and socket2 == lastPlug and socket1 == lastSocket))):
          lastLink = BlockLink(block1, block2, socket1, socket2);
 
       return lastLink;
@@ -121,7 +121,7 @@ class BlockLinkChecker():
    def getLink(rblock1, otherBlocks):
       from blocks.BlockLink import BlockLink
 
-      block1 = Block.getBlock(rblock1.getBlockID());
+      block1 = Block.getBlock(rblock1.blockID);
       closestSocket1 = None;
       closestSocket2 = None;
       closestBlock2 = None;
@@ -131,7 +131,7 @@ class BlockLinkChecker():
       for rblock2 in otherBlocks:
          currentPlug = BlockLinkChecker.getPlugEquivalent(block1);
 
-         block2 = Block.getBlock(rblock2.getBlockID());
+         block2 = Block.getBlock(rblock2.blockID);
          if (block1 == block2 or not rblock1.isVisible() or not rblock2.isVisible() or rblock1.isCollapsed() or rblock2.isCollapsed()):
             continue;
 

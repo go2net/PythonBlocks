@@ -36,7 +36,7 @@ class BlockShape():
 
       if (rb != None):
          self.rb = rb
-         self.blockID = rb.getBlockID()
+         self.blockID = rb.blockID
          self.block = Block.getBlock(self.blockID)
       else:
          print("Cannot create shape of null RenderableBlock.");

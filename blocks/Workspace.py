@@ -1,13 +1,3 @@
-#-------------------------------------------------------------------------------
-# Name:        module1
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     03/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
 
 from PyQt4 import QtGui,QtCore
 from blocks.PageDrawerLoadingUtils import PageDrawerLoadingUtils
@@ -17,12 +7,12 @@ from blocks.BlockCanvas import BlockCanvas
 from blocks.MiniMap import MiniMap
 from blocks.WorkspaceWidget import WorkspaceWidget
 
-class Workspace(QtGui.QFrame,WorkspaceWidget):
+class Workspace(QtGui.QWidget,WorkspaceWidget):
   #ws = Workspace()
   everyPageHasDrawer = False
   def __init__(self):
-      #super(QtGui.QWidget, self).__init__()
-      QtGui.QFrame.__init__(self)
+      super(QtGui.QWidget, self).__init__()
+      #QtGui.QFrame.__init__(self)
 
       self.setStyleSheet("background-color: rgba(0, 0, 0,0);")
 

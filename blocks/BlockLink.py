@@ -33,13 +33,13 @@ class BlockLink():
       elif (isPlug1):
          self.plug = socket1;
          self.socket = socket2;
-         self.plugBlockID = block1.getBlockID();
-         self.socketBlockID = block2.getBlockID();
+         self.plugBlockID = block1.blockID;
+         self.socketBlockID = block2.blockID;
       else:
       	self.plug = socket2;
       	self.socket = socket1;
-      	self.plugBlockID = block2.getBlockID();
-      	self.socketBlockID = block1.getBlockID();
+      	self.plugBlockID = block2.blockID;
+      	self.socketBlockID = block1.blockID;
 
       BlockLink.lastPlugID = self.plugBlockID;
       BlockLink.lastSocketID = self.socketBlockID;
@@ -82,13 +82,13 @@ class BlockLink():
          # save the ID of the block previously attached to (in) this
       	# socket.  This is used by insertion rules to re-link the replaced
       	# block to the newly-inserted block.
-         self.lastPlugBlockID = self.socket.getBlockID();
+         self.lastPlugBlockID = self.socket.blockID;
 
          # break the link between the socket block and the block in that socket
          plugBlock = Block.getBlock(self.lastPlugBlockID);
          plugBlockPlug = BlockLinkChecker.getPlugEquivalent(plugBlock);
          if (plugBlockPlug != None and plugBlockPlug.hasBlock()):
-            socketBlock = Block.getBlock(plugBlockPlug.getBlockID());
+            socketBlock = Block.getBlock(plugBlockPlug.blockID);
             link = BlockLink.getBlockLink(plugBlock, socketBlock, plugBlockPlug, self.socket);
             link.disconnect();
       		# don't tell the block about the disconnect like we would normally do, because
@@ -96,7 +96,7 @@ class BlockLink():
       		# since the inserted block will be filling whatever socket was vacated by this
       		# broken link.
       		#NOTIFY WORKSPACE LISTENERS OF DISCONNECTION (not sure if this is great because the connection is immediately replaced)
-      		#Workspace.getInstance().notifyListeners(new WorkspaceEvent(RenderableBlock.getRenderableBlock(socketBlock.getBlockID()).getParentWidget(), link, WorkspaceEvent.BLOCKS_DISCONNECTED));
+      		#Workspace.getInstance().notifyListeners(new WorkspaceEvent(RenderableBlock.getRenderableBlock(socketBlock.blockID).getParentWidget(), link, WorkspaceEvent.BLOCKS_DISCONNECTED));
 
       if (self.plug.hasBlock()):
       	# in the case of insertion, breaking the link above will mean that
@@ -148,8 +148,8 @@ class BlockLink():
    def getBlockLink(block1, block2, socket1, socket2):
       # If these arguments are the same as the last call to getBlockLink, return the old object instead of creating a new one
       #if not(
-      #   (block1.getBlockID() == (BlockLink.lastPlugID) and block2.getBlockID() == (BlockLink.lastSocketID) and socket1 == (BlockLink.lastPlug) and socket2 == (BlockLink.lastSocket)) or
-      #   (block2.getBlockID() == (BlockLink.lastPlugID) and block1.getBlockID() == (BlockLink.lastSocketID) and socket2 == (BlockLink.lastPlug) and socket1 == (BlockLink.lastSocket))):
+      #   (block1.blockID == (BlockLink.lastPlugID) and block2.blockID == (BlockLink.lastSocketID) and socket1 == (BlockLink.lastPlug) and socket2 == (BlockLink.lastSocket)) or
+      #   (block2.blockID == (BlockLink.lastPlugID) and block1.blockID == (BlockLink.lastSocketID) and socket2 == (BlockLink.lastPlug) and socket1 == (BlockLink.lastSocket))):
       BlockLink.lastLink = BlockLink(block1, block2, socket1, socket2);
 
       return BlockLink.lastLink;

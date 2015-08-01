@@ -38,9 +38,9 @@ class RenderableBlock(QtGui.QWidget):
       obj.back_color = back_color
       obj.isLoading= isLoading
       
-      obj.blockID = block.getBlockID();
+      obj._blockID = block.blockID;
 
-      if(obj.blockID != -1):
+      if(obj._blockID != -1):
         RenderableBlock.ALL_RENDERABLE_BLOCKS[obj.blockID] = obj
       else:
         RenderableBlock.tmpRB = obj
@@ -102,16 +102,21 @@ class RenderableBlock(QtGui.QWidget):
    def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
       return RenderableBlock.from_block(workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
 
-   '''
-    * Sets all the labels of this block as uneditable block labels.
-    * Useful for Factory blocks.
-   '''
+   @property
+   def blockID(self):
+      """I'm the 'x' property."""
+      return self._blockID
+
+   @blockID.setter
+   def blockID(self, value):
+      self._blockID = value
+
+   @blockID.deleter
+   def blockID(self):
+      del self._blockID 
+
    def setBlockLabelUneditable(self):
       pass
-
-
-   def getBlockID(self):
-   	return self.blockID
 
    def getBlock(self):
       return Block.getBlock(self.blockID)
@@ -329,13 +334,13 @@ class RenderableBlock(QtGui.QWidget):
       '''
       if(BlockLinkChecker.hasPlugEquivalent(getBlock())):
          plug = BlockLinkChecker.getPlugEquivalent(getBlock());
-         plugBlock = Block.getBlock(plug.getBlockID());
+         plugBlock = Block.getBlock(plug.blockID);
          if(plugBlock != None):
             if (plugBlock.getConnectorTo(blockID) == None):
                pass
                #throw new RuntimeException("one-sided connection from "+getBlock().getBlockLabel()+" to "+Block.getBlock(blockID).getBlockLabel());
 
-            RenderableBlock.getRenderableBlock(plug.getBlockID()).updateSocketSpace(plugBlock.getConnectorTo(blockID), blockID, true);
+            RenderableBlock.getRenderableBlock(plug.blockID).updateSocketSpace(plugBlock.getConnectorTo(blockID), blockID, true);
       '''
       return False;
 
@@ -582,7 +587,7 @@ class RenderableBlock(QtGui.QWidget):
          for i in range(0,size):
             # Workspace.getInstance().notifyListeners(
             #    new WorkspaceEvent(this.getParentWidget(),
-            #				argList.get(i).getBlockID(),
+            #				argList.get(i).blockID,
             #				WorkspaceEvent.BLOCK_ADDED, true));
 
             # must call this method to update the dimensions of this
@@ -642,7 +647,7 @@ class RenderableBlock(QtGui.QWidget):
    '''
    def calcDimensionOfSocket(self,socket):
       finalDimension = QtCore.QSize(0,0);
-      curBlockID = socket.getBlockID();
+      curBlockID = socket.blockID;
       while(curBlockID != Block.NULL):
          curBlock = Block.getBlock(curBlockID);
          # System.out.println("evaluating block :" + curBlock.getBlockLabel());
@@ -730,8 +735,8 @@ class RenderableBlock(QtGui.QWidget):
 
             # get before connector
             beforeID = self.getBlock().getBeforeBlockID();
-            beforeSocket = Block.getBlock(beforeID).getConnectorTo(self.getBlockID());
-            RenderableBlock.getRenderableBlock(beforeID).updateSocketSpace(beforeSocket, self.getBlockID(), True);
+            beforeSocket = Block.getBlock(beforeID).getConnectorTo(self.blockID);
+            RenderableBlock.getRenderableBlock(beforeID).updateSocketSpace(beforeSocket, self.blockID, True);
             return;
 
 
@@ -750,10 +755,10 @@ class RenderableBlock(QtGui.QWidget):
       # after everything on this block has been updated, recurse upward if possible
       plugEquiv = BlockLinkChecker.getPlugEquivalent(self.getBlock());
       if (plugEquiv != None and plugEquiv.hasBlock()):
-         plugID = plugEquiv.getBlockID();
-         socketEquiv = Block.getBlock(plugID).getConnectorTo(self.getBlockID());
+         plugID = plugEquiv.blockID;
+         socketEquiv = Block.getBlock(plugID).getConnectorTo(self.blockID);
          # update the socket space of a connected before/parent block
-         RenderableBlock.getRenderableBlock(plugID).updateSocketSpace(socketEquiv, self.getBlockID(), True);
+         RenderableBlock.getRenderableBlock(plugID).updateSocketSpace(socketEquiv, self.blockID, True);
 
 
    '''
@@ -774,16 +779,16 @@ class RenderableBlock(QtGui.QWidget):
       for socket in BlockLinkChecker.getSocketEquivalents(b):
          socketLocation = self.getSocketPixelPoint(socket);
          if (socket.hasBlock()) :
-            rb = RenderableBlock.getRenderableBlock(socket.getBlockID());
+            rb = RenderableBlock.getRenderableBlock(socket.blockID);
 
             # TODO: djwendel - this is a patch, but the root of the problem
             # needs to be found and fixed!!
             if (rb == None):
-               print("Block doesn't exist yet: "+str(socket.getBlockID()));
+               print("Block doesn't exist yet: "+str(socket.blockID));
                continue;
 
 
-            plugLocation = rb.getSocketPixelPoint(BlockLinkChecker.getPlugEquivalent(Block.getBlock(socket.getBlockID())));
+            plugLocation = rb.getSocketPixelPoint(BlockLinkChecker.getPlugEquivalent(Block.getBlock(socket.blockID)));
             otherScreenOffset = self.parent().mapFrom(rb.parent(), rb.pos());
             otherScreenOffset = QtCore.QPoint(otherScreenOffset.x()-rb.x(), otherScreenOffset.y()-rb.y());
 
@@ -835,7 +840,7 @@ class RenderableBlock(QtGui.QWidget):
    def drawHighlightSocket(self,link,hightlight):
       if(link != None):
          #peer_block = link.peer_block
-         peer_rb = RenderableBlock.getRenderableBlock(link.peer_block.getBlockID())
+         peer_rb = RenderableBlock.getRenderableBlock(link.peer_block.blockID)
          if(peer_rb == self):
             print("peer_rb can not be self")
             return
@@ -898,7 +903,7 @@ class RenderableBlock(QtGui.QWidget):
    def calcStackDimensions(self,rb):
       if(rb.getBlock().getAfterBlockID() != Block.NULL):
          dim = self.calcStackDimensions(RenderableBlock.getRenderableBlock(rb.getBlock().getAfterBlockID()));
-         return QtCore.QSize(max(rb.width() + rb.getMaxWidthOfSockets(rb.getBlockID()),dim.width()),
+         return QtCore.QSize(max(rb.width() + rb.getMaxWidthOfSockets(rb.blockID),dim.width()),
             rb.height() + dim.height());
       else:
          return QtCore.QSize(rb.width() + rb.getMaxWidthOfSockets(rb.blockID),	rb.height());
@@ -918,7 +923,7 @@ class RenderableBlock(QtGui.QWidget):
 
          if (socket.hasBlock()):
             #loop through all the afters of the connected block
-            curBlockID = socket.getBlockID();
+            curBlockID = socket.blockID;
             # TODO: this is a patch, but we need to fix the root of the problem!
             if(RenderableBlock.getRenderableBlock(curBlockID) == None):
                print("does not exist yet, block: "+curBlockID);
@@ -944,7 +949,7 @@ class RenderableBlock(QtGui.QWidget):
       if (isBlock or isBlockStub):
          rb = RenderableBlock.from_blockID(
             parent,
-            Block.loadBlockFrom(blockNode).getBlockID(), 
+            Block.loadBlockFrom(blockNode).blockID, 
             True);
 
          if (isBlockStub):
@@ -998,29 +1003,31 @@ class RenderableBlock(QtGui.QWidget):
             loc.setX(float(coor.text))
          elif (coor.tag == ("Y")):
             loc.setY(float(coor.text))
-
-
+   
    def mousePressEvent(self, event):
-      #print ("mousePressEvent,id=%d"%(self.getBlockID()))
-      self.raise_()
+      if(not self.initFinished):
+        self.onMousePress(event)    
+
+   def onMousePress(self, event):
+      #self.raise_()
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
          if (socket.hasBlock()):
-            RenderableBlock.getRenderableBlock(socket.getBlockID()).raise_()
+            RenderableBlock.getRenderableBlock(socket.blockID).raise_()
       self.pickedUp = True; # mark this block as currently being picked up
       self.pressedPos = self.mapFromGlobal(event.globalPos())
       self.last_peer_socket = None
-      #QtGui.QFrame.mousePressEvent(self,event);
-      #print ("mousePressEvent1111,id=%d"%(self.getBlockID()))
 
    def mouseMoveEvent(self, event):
-      #print("mouseMoveEvent")
-      #if (self.pickedUp):
-      self.mouseDragged(event)
-      #QtGui.QFrame.mouseMoveEvent(self,event);
-
+      if(not self.initFinished):
+        self.mouseDragged(event)
+   
    def mouseReleaseEvent(self, event):
+      if(not self.initFinished):
+        self.onMouseRelease(event)       
+
+ 
+   def onMouseRelease(self, event):
       self.window().onBlockClick(self)
-      #print("mouseReleaseEvent")
       if event.button() == QtCore.Qt.LeftButton:
          if (not self.pickedUp):
             print("dropping without prior dragging?");
@@ -1063,30 +1070,12 @@ class RenderableBlock(QtGui.QWidget):
       from blocks.BlockLink import BlockLink
       if event.buttons()&QtCore.Qt.LeftButton:
 
-         #pp = SwingUtilities.convertPoint(this, e.getPoint(), Workspace.getInstance().getMiniMap());
-         #if(Workspace.getInstance().getMiniMap().contains(pp)):
-         #   Workspace.getInstance().getMiniMap().blockDragged(this, e.getPoint());
-         #   lastDragWidget=Workspace.getInstance().getMiniMap();
-         #   return;
-
-
-         # drag this block if appropriate (checks bounds first)
-         #print(self.pos())
          old_pos = self.parent().mapToGlobal(self.pos())
-
-         # new_pos = self.parent().mapFromGlobal(event.globalPos())
 
          dx = event.globalPos().x()-old_pos.x()-self.pressedPos.x()
          dy = event.globalPos().y()-old_pos.y()-self.pressedPos.y()
 
          self.move(self.x()+dx,self.y()+dy);
-
-         #dragHandler.mouseDragged(e);
-
-         # Find the widget under the mouse
-         #dragHandler.myLoc.move(getX()+dragHandler.mPressedX, getY()+dragHandler.mPressedY);
-         #p = SwingUtilities.convertPoint(this.getParent(), dragHandler.myLoc, Workspace.getInstance());
-
          widget = self.workspace.getWidgetAt(event.globalPos());
 
          # if this is the first call to mouseDragged
@@ -1095,15 +1084,12 @@ class RenderableBlock(QtGui.QWidget):
             plug = BlockLinkChecker.getPlugEquivalent(block);
 
             if (plug != None and plug.hasBlock()):
-               parent = Block.getBlock(plug.getBlockID());
+               parent = Block.getBlock(plug.blockID);
                socket = parent.getConnectorTo(self.blockID);
                link = BlockLink.getBlockLink(block, parent, plug, socket);
                link.disconnect();
                # socket is removed internally from block's socket list if socket is expandable
-               RenderableBlock.getRenderableBlock(parent.getBlockID()).blockDisconnected(socket);
-
-               # NOTIFY WORKSPACE LISTENERS OF DISCONNECTION
-               #Workspace.getInstance().notifyListeners(WorkspaceEvent(widget, link, WorkspaceEvent.BLOCKS_DISCONNECTED));
+               RenderableBlock.getRenderableBlock(parent.blockID).blockDisconnected(socket);
             self.startDragging(widget);
 
 
@@ -1152,7 +1138,7 @@ class RenderableBlock(QtGui.QWidget):
 
       if(link != None):
          #peer_block = self.last_link.peer_block
-         peer_rb = RenderableBlock.getRenderableBlock(self.last_link.peer_block.getBlockID())
+         peer_rb = RenderableBlock.getRenderableBlock(self.last_link.peer_block.blockID)
          tag = peer_rb.getConnectorTag(link.peer_socket);
          self.last_peer_socket = tag
 
@@ -1162,7 +1148,7 @@ class RenderableBlock(QtGui.QWidget):
       # Propagate the drag event to anything plugged into this block
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
          if (socket.hasBlock()):
-            RenderableBlock.getRenderableBlock(socket.getBlockID()).drag(widget, dx,dy,False);
+            RenderableBlock.getRenderableBlock(socket.blockID).drag(widget, dx,dy,False);
 
 
    def startDragging(self, widget):
@@ -1196,7 +1182,7 @@ class RenderableBlock(QtGui.QWidget):
       #renderable.setHighlightParent(Workspace.getInstance());
       for socket in BlockLinkChecker.getSocketEquivalents(Block.getBlock(self.blockID)):
       	if (socket.hasBlock()):
-      		RenderableBlock.getRenderableBlock(socket.getBlockID()).startDragging(widget);
+      		RenderableBlock.getRenderableBlock(socket.blockID).startDragging(widget);
 
    '''
     * This method is called when this RenderableBlock is plugged into another RenderableBlock that has finished dragging.
@@ -1210,7 +1196,7 @@ class RenderableBlock(QtGui.QWidget):
       # notify children
       for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
          if (socket.hasBlock()):
-            RenderableBlock.getRenderableBlock(socket.getBlockID()).stopDragging(widget);
+            RenderableBlock.getRenderableBlock(socket.blockID).stopDragging(widget);
 
       # drop this block on its widget (if w is null it'll throw an exception)
     

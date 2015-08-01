@@ -179,7 +179,7 @@ class Page(PageWidget,WorkspaceWidget):
    def getTopLevelBlocks(self):
       topBlocks = []
       for renderable in self.getBlocks():
-         block = Block.getBlock(renderable.getBlockID());
+         block = Block.getBlock(renderable.blockID);
          if(block.getPlug() == None or block.getPlugBlockID() == None or block.getPlugBlockID() ==Block.NULL):
             if(block.getBeforeConnector() == None or block.getBeforeBlockID() == None or block.getBeforeBlockID() == Block.NULL):
                topBlocks.append(renderable);
@@ -195,9 +195,9 @@ class Page(PageWidget,WorkspaceWidget):
             rb.setHighlightParent(this.getRBParent());
    			#System.out.println("loading rb to canvas: "+rb+" at: "+rb.getBounds());
    			#add internallly
-            Workspace.getInstance().notifyListeners(WorkspaceEvent(this, rb.getBlockID(), WorkspaceEvent.BLOCK_ADDED));
+            Workspace.getInstance().notifyListeners(WorkspaceEvent(this, rb.blockID, WorkspaceEvent.BLOCK_ADDED));
             if (importingPage):
-               Block.getBlock(rb.getBlockID()).setFocus(false);
+               Block.getBlock(rb.blockID).setFocus(false);
                rb.resetHighlight();
                rb.clearBufferedImage();
 
@@ -363,8 +363,8 @@ class Page(PageWidget,WorkspaceWidget):
       #block.setHighlightParent(this.getRBParent());
 
       # if block has page labels enabled, in other words, if it can, then set page label to this
-      #if(Block.getBlock(block.getBlockID()).isPageLabelSetByPage()):
-      #   Block.getBlock(block.getBlockID()).setPageLabel(this.getPageName());
+      #if(Block.getBlock(block.blockID).isPageLabelSetByPage()):
+      #   Block.getBlock(block.blockID).setPageLabel(this.getPageName());
 
       # notify block to link default args if it has any
       block.linkDefArgs();
@@ -372,8 +372,8 @@ class Page(PageWidget,WorkspaceWidget):
       # fire to workspace that block was added to canvas if oldParent != this
       if(oldParent != self):
          pass
-         #Workspace.getInstance().notifyListeners(WorkspaceEvent(oldParent, block.getBlockID(), WorkspaceEvent.BLOCK_MOVED));
-         #Workspace.getInstance().notifyListeners(WorkspaceEvent(this, block.getBlockID(), WorkspaceEvent.BLOCK_ADDED, true));
+         #Workspace.getInstance().notifyListeners(WorkspaceEvent(oldParent, block.blockID, WorkspaceEvent.BLOCK_MOVED));
+         #Workspace.getInstance().notifyListeners(WorkspaceEvent(this, block.blockID, WorkspaceEvent.BLOCK_ADDED, true));
 
 
       # if the block is off the edge, shift everything or grow as needed to fully show it

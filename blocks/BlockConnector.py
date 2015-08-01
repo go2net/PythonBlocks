@@ -80,6 +80,20 @@ class BlockConnector():
    def type(self):
      del self._kind 
 
+   @property
+   def blockID(self):
+      """I'm the 'x' property."""
+      return self.connBlockID
+
+   @blockID.setter
+   def blockID(self, value):
+      self.connBlockID = value
+
+   @blockID.deleter
+   def blockID(self):
+      del self._blockID 
+
+
    '''
    * Sets this connector's default argument to the specified genus and initial label.
    * @param genusName the desired BLockGenus name of the default agrument
@@ -99,9 +113,6 @@ class BlockConnector():
    def hasBlock(self):
       return self.connBlockID != -1
 
-   def getBlockID(self):
-      return self.connBlockID;
-
    def getLabel(self):
       return self.label;
 
@@ -110,7 +121,7 @@ class BlockConnector():
       # checks if connector has a def arg or if connector already has a block
       if(self.hasDefArg and self.connBlockID == -1):
          block = Block(self.arg.getGenusName(), self.arg.label);
-         connBlockID = block.getBlockID();
+         connBlockID = block.blockID;
          return connBlockID;
 
       return -1

@@ -92,14 +92,14 @@ class BlockLabel():
       plug = Block.getBlock(self.blockID).getPlug();
       # Check if we're connected to a block. If we are and the the block we're connected to
       # has stubs, update them.
-      if (plug != None and plug.getBlockID() != Block.NULL):
-        if (Block.getBlock(plug.getBlockID()) != None):
-          if(Block.getBlock(plug.getBlockID()).isProcedureDeclBlock() and
-            Block.getBlock(plug.getBlockID()).hasStubs()):
+      if (plug != None and plug.blockID != Block.NULL):
+        if (Block.getBlock(plug.blockID) != None):
+          if(Block.getBlock(plug.blockID).isProcedureDeclBlock() and
+            Block.getBlock(plug.blockID).hasStubs()):
             # Blocks already store their socket names when saved so it is not necessary
             # nor desired to call the connectors changed event again.
-            if (Block.getRenderableBlock(plug.getBlockID()).isLoading()):
-              BlockStub.parentConnectorsChanged(self.workspace, plug.getBlockID());
+            if (Block.getRenderableBlock(plug.blockID).isLoading()):
+              BlockStub.parentConnectorsChanged(self.workspace, plug.blockID);
 
       rb = RenderableBlock.getRenderableBlock(self.blockID);
 

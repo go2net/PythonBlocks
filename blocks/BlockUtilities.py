@@ -1,13 +1,4 @@
-#-------------------------------------------------------------------------------
-# Name:        module2
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     25/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 from blocks.BlockStub import BlockStub
 from blocks.Block import Block
 from blocks.RenderableBlock import RenderableBlock
@@ -63,7 +54,7 @@ class BlockUtilities():
 
       labelWithIndex = label;  # labelWithIndex will have the instance value
 
-		# initialize value that will be appended to the end of the label
+      # initialize value that will be appended to the end of the label
       if(mygenusname in BlockUtilities.instanceCounter):
          value = BlockUtilities.instanceCounter[mygenusname];
       else:
@@ -82,14 +73,15 @@ class BlockUtilities():
 
       if(isinstance(myblock,BlockStub)):
          parent = myblock.getParent();
-         block = BlockStub(parent.getBlockID(), parent.getGenusName(), parent.getBlockLabel(), myblock.getGenusName());
+         block = BlockStub(parent.blockID, parent.getGenusName(), parent.getBlockLabel(), myblock.getGenusName());
       else:
          block = Block.createBlock(myblock.getGenusName(), True, label);
 
       # TODO - djwendel - create a copy of the RB properties too, using an RB copy constructor.  Don't just use the genus.
-      # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.getBlockID());
+      # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.blockID);
 
-      renderable = RenderableBlock.from_blockID(None, block.getBlockID());
+      renderable = RenderableBlock.from_blockID(None, block.blockID);
+      renderable.initFinished = False
       #renderable.setZoomLevel(BlockUtilities.zoom);
       #renderable.redrawFromTop();
       #renderable.repaint();
@@ -108,8 +100,4 @@ class BlockUtilities():
       #   parent.validate();
 
       block.setParent(None);
-      #WorkspaceController.workspace.notifyListeners(WorkspaceEvent(widget, block.getBlockID(), WorkspaceEvent.BLOCK_REMOVED));
-
-
-if __name__ == '__main__':
-    main()
+      #WorkspaceController.workspace.notifyListeners(WorkspaceEvent(widget, block.blockID, WorkspaceEvent.BLOCK_REMOVED));

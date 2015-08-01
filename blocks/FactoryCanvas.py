@@ -104,10 +104,10 @@ class FactoryCanvas(QtGui.QFrame):
 
    def addBlock(self,block):
       # make sure block isn't a null instance
-      if(block == None or Block.NULL == block.getBlockID()): return
+      if(block == None or Block.NULL == block.blockID): return
       self.addToBlockLayer(block)
 
-      #print("Add block -- "+Block.ALL_BLOCKS[block.getBlockID()].getGenusName())
+      #print("Add block -- "+Block.ALL_BLOCKS[block.blockID].getGenusName())
       #block.setHighlightParent(self)
       #block.addComponentListener(self)
 
@@ -116,7 +116,7 @@ class FactoryCanvas(QtGui.QFrame):
       index = 0
       y = 0
       for block in blocks:
-         #print("Add block -- "+Block.ALL_BLOCKS[block.getBlockID()].getGenusName())
+         #print("Add block -- "+Block.ALL_BLOCKS[block.blockID].getGenusName())
          block.parent = self.fillPanel
          self.layout.addWidget(block)
          #block.move(5,y + 10)
@@ -130,10 +130,10 @@ class FactoryCanvas(QtGui.QFrame):
          #self.canvas.addBlock(block)
       #self.setMinimumSize(200,400);
       # make sure block isn't a null instance
-      #if(block == None or Block.NULL == block.getBlockID()): return
+      #if(block == None or Block.NULL == block.blockID): return
       #self.addToBlockLayer(block)
 
-      #print("Add block -- "+Block.ALL_BLOCKS[block.getBlockID()].getGenusName())
+      #print("Add block -- "+Block.ALL_BLOCKS[block.blockID].getGenusName())
       #block.setHighlightParent(self)
       #block.addComponentListener(self)
 

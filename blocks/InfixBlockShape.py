@@ -1,13 +1,4 @@
-#-------------------------------------------------------------------------------
-# Name:        module2
-# Purpose:
-#
-# Author:      A21059
-#
-# Created:     10/03/2015
-# Copyright:   (c) A21059 2015
-# Licence:     <your licence>
-#-------------------------------------------------------------------------------
+
 from PyQt4 import QtCore
 
 from blocks.BlockShape import BlockShape
@@ -66,7 +57,7 @@ class InfixBlockShape(BlockShape):
             #//begin drawing socket
             #//////////////////////
 
-            if(curSocket.getBlockID() == Block.NULL):
+            if(curSocket.blockID == Block.NULL):
                # draw first socket - up left side
                leftSocket = BlockShape.BCS.addDataSocketUp(self.gpBottom, curSocket.type, True);
                self.rb.updateSocketPoint(curSocket, leftSocket);
@@ -85,8 +76,8 @@ class InfixBlockShape(BlockShape):
                #rb.updateSocketPoint(curSocket, rightSocket);
             else: # there is a connected block
 
-               connectedBlock = Block.getBlock(curSocket.getBlockID());
-               connectedRBlock = RenderableBlock.getRenderableBlock(curSocket.getBlockID());
+               connectedBlock = Block.getBlock(curSocket.blockID);
+               connectedRBlock = RenderableBlock.getRenderableBlock(curSocket.blockID);
                if(connectedBlock == None or connectedRBlock== None) : continue
 
                # calculate and update the new socket point
@@ -102,15 +93,15 @@ class InfixBlockShape(BlockShape):
                newY = connectedBlockSocketPoint.y() + abs(connectedRBlock.getBlockHeight()/connectedRBlock.getZoom() - currentPoint.y());
                self.rb.updateSocketPoint(curSocket, QtCore.QPoint(newX, newY));
 
-               xx = self.gpBottom.currentPosition().x()
+               self.gpBottom.currentPosition().x()
 
-               connectedBlockShape = RenderableBlock.getRenderableBlock(curSocket.getBlockID()).getBlockShape();
+               connectedBlockShape = RenderableBlock.getRenderableBlock(curSocket.blockID).getBlockShape();
                #append left side of connected block
                
                connectedBlockShape.reformArea()
                BlockShapeUtil.appendPath(self.gpBottom, connectedBlockShape.getLeftSide(), False);
-               yy = connectedBlockShape.getLeftSide().currentPosition()
-               xx = self.gpBottom.currentPosition().x()
+               connectedBlockShape.getLeftSide().currentPosition()
+               self.gpBottom.currentPosition().x()
                # append right side of connected block (more complicated)
                if(connectedBlock.getNumSockets() == 0 or connectedBlock.isInfix()):
                   #  append top side of connected block
@@ -174,7 +165,7 @@ class InfixBlockShape(BlockShape):
          # Makes it so path movements created by previous blocks don't affect
          # the subsequent blocks.
          painterPath.lineTo(startX, painterPath.currentPosition().y());
-         if(socket.getBlockID() == Block.NULL):
+         if(socket.blockID == Block.NULL):
             # just draw an empty socket placeholder
             # if its the first socket, draw a top side
             painterPath.lineTo(
@@ -188,8 +179,8 @@ class InfixBlockShape(BlockShape):
          else:
             # a block is connected to this socket, check if that block has sockets
             # OR if the block is an infix block - if it is infix, then just wrap around the infix block
-            block = Block.getBlock(socket.getBlockID());
-            shape = RenderableBlock.getRenderableBlock(socket.getBlockID()).getBlockShape();
+            block = Block.getBlock(socket.blockID);
+            shape = RenderableBlock.getRenderableBlock(socket.blockID).getBlockShape();
             if(block.getNumSockets() == 0 or block.isInfix()):
                # append this block's top and right side
                # TODO instead of just appending the right side...draw line to
@@ -220,7 +211,7 @@ class InfixBlockShape(BlockShape):
       bottomSocketWidth = 0;
       for socket in self.block.getSockets():
          if (socket.getPositionType() == BlockConnector.PositionType.BOTTOM):
-            if(socket.getBlockID() == Block.NULL):
+            if(socket.blockID == Block.NULL):
                # 3 socket spacers = left of socket, between connectors, right of socket
                bottomSocketWidth += BlockShape.BOTTOM_SOCKET_SIDE_SPACER ;
             else: # a block is connected to socket
@@ -229,7 +220,7 @@ class InfixBlockShape(BlockShape):
                   bottomSocketWidth += self.rb.getSocketSpaceDimension(socket).width();
                   bottomSocketWidth -= BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH;
                   # if it's a mirror plug, subtract for the other side, too.
-                  if (Block.getBlock(socket.getBlockID()).getPlug().getPositionType() == BlockConnector.PositionType.MIRROR):
+                  if (Block.getBlock(socket.blockID).getPlug().getPositionType() == BlockConnector.PositionType.MIRROR):
                      bottomSocketWidth -= BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH;
 
 
