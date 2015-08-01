@@ -166,7 +166,7 @@ class FactoryCanvas(QtGui.QFrame):
 
    def getCanvasHeight(self):
       return self.fillPanel.height()
-
+      
    def getCanvasWidth(self):
       return self.fillPanel.width()
 

@@ -13,7 +13,6 @@ class MainWnd(QtGui.QMainWindow):
 
   def __init__(self):
     super(MainWnd, self).__init__()
-
     self.filename = None
 
     uic.loadUi('main.ui', self)
@@ -196,16 +195,9 @@ class MainWnd(QtGui.QMainWindow):
 
   def resetWorksapce(self):
     self.wc.resetWorkspace();
-    #self.wc.resetLanguage();
-    #self.wc.setLangResourceBundle(ResourceBundle.getBundle("com/ardublock/block/ardublock"));
-    #self.wc.setStyleList(list);
-    #self.wc.setLangDefDtd(this.getClass().getResourceAsStream(LANG_DTD_PATH));
-    #self.wc.setLangDefStream(this.getClass().getResourceAsStream(ARDUBLOCK_LANG_PATH));
     self.wc.setLangDefFilePath("support\\lang_def.xml")
     self.wc.loadFreshWorkspace();
     self.wc.initWorkspacePanel()
-
-    #loadDefaultArdublockProgram();
 
     self.saveFilePath = None;
     self.saveFileName = "untitled";

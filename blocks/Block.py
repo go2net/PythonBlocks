@@ -175,7 +175,6 @@ class Block():
       if(blockID in Block.ALL_BLOCKS):
          return Block.ALL_BLOCKS[blockID]
       else:
-         #print( Block.ALL_BLOCKS )
          #print("Not found")
          return None
 

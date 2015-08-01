@@ -42,10 +42,11 @@ class FactoryRenderableBlock(RenderableBlock):
       self.createdRB = self.createNewInstance();
       # add this new rb to parent component of this
       #self.getParent().add(createdRB,0);
-      self.createdRB.setParent(self.parent())
+      #self.createdRB.setParent(self.parent())
       # set the parent widget of createdRB to parent widget of this
       # createdRB not really "added" to widget (not necessary to since it will be removed)
       #self.createdRB.setParentWidget(this.getParentWidget());
+      print(self.parentWidget())
       self.createdRB.setParent(self.parentWidget())
       #self.createdRB.setWorkspaceWidget(self.getWorkspaceWidget())
       # set the location of new rb from this

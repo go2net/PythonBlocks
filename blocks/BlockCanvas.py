@@ -4,16 +4,56 @@ from blocks.RenderableBlock import RenderableBlock
 from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Canvas(QtGui.QWidget,WorkspaceWidget):
-   def __init__(self):
-      QtGui.QWidget.__init__(self)
-      pass
+    def __init__(self):
+        QtGui.QWidget.__init__(self)
+        self.focusBlock = None
+        self.setMouseTracking(True);
+        pass
+    
+    def getBlocks(self):
+        blocks = []
+        for component in self.findChildren(RenderableBlock) :
+            blocks.append(component)
+
+        return blocks        
+
+    def eventFilter(self, source, event):   
+        if event.type() == QtCore.QEvent.MouseMove:      
+            globalPos = event.globalPos()
+            #print(globalPos)
+            if(self.focusBlock != None):
+                pos = self.focusBlock.mapFromGlobal( globalPos);
+                if not self.focusBlock.blockArea.contains(pos):
+                    self.focusBlock.onMouseLeave()
+                        
+            #if event.buttons() == QtCore.Qt.NoButton:                    
+            for rb in self.getBlocks():
+                pos = rb.mapFromGlobal( globalPos);
+                if rb.blockArea.contains(pos):
+                    rb.onMouseEnter()
+                    self.focusBlock = rb
+                    break  
+
+        return QtGui.QMainWindow.eventFilter(self, source, event)
+
+
+    def mouseMoveEvent(self, event):
+        globalPos = event.globalPos()
+
+        #print(globalPos)
+        if(self.focusBlock != None):
+            pos = self.focusBlock.mapFromGlobal( globalPos);
+            if not self.focusBlock.blockArea.contains(pos):
+                self.focusBlock.onMouseLeave()
 
 
 class BlockCanvas(QtGui.QScrollArea):
 
    def __init__(self):
       QtGui.QScrollArea.__init__(self)
+      
       self.canvas = Canvas();
+      
       self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
       self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
       self.setWidgetResizable(False)
@@ -27,8 +67,6 @@ class BlockCanvas(QtGui.QScrollArea):
       self.pages = []
       self.dividers = []
       self.block_list = {}
-
-      #self.blocks = []
 
       screen = QtGui.QDesktopWidget().availableGeometry()
       self.canvas.resize(screen.width(),screen.height());
@@ -61,27 +99,15 @@ class BlockCanvas(QtGui.QScrollArea):
       for block in self.getBlocks():
          block.setParent(None)
 
-      pass
-      #this.pageJComponent.removeAll();
-      #Page.zoom = 1.0;
-
-
-   #def getBlocks(self):
-   #   blocks = self.findChildren(RenderableBlock)
-   #   return blocks;
-
    def blockDropped(self,block):
-      #print("blockcanvas blockDropped")
-      # add to view at the correct location
+
       oldParent = block.parentWidget();
       old_pos = oldParent.mapToGlobal(block.pos())
 
       block.setParent(self.canvas)
-      #self.blocks.append(block)
 
       new_pos  = self.mapFromGlobal(old_pos)
 
-      #print(self.horizontalScrollBar().value())
       block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());
       block.show()
 
@@ -89,28 +115,10 @@ class BlockCanvas(QtGui.QScrollArea):
       height = max(new_pos.y()+self.verticalScrollBar().value()+50,self.canvas.height())
 
       self.canvas.resize(width,height)
-      #self.parent().resizeEvent(None)
-      #print("width:" + str(width) + " height:"+str(height))
-
-      #self.resize(,
-      #           )
-
-      #block.setLocation(SwingUtilities.convertPoint(oldParent,
-      #       block.getLocation(), this.pageJComponent));
-      #self.addBlock(block);
-      #this.pageJComponent.setComponentZOrder(block, 0);
-      #this.pageJComponent.revalidate();
-
-   '''
-   def blockDropped(self, block):
-      # add to view at the correct location
-      oldParent = block.parent();
-      #block.setLocation(SwingUtilities.convertPoint(oldParent,
-      #		block.getLocation(), this.pageJComponent));
-      self.addBlock(block);
-      #this.pageJComponent.setComponentZOrder(block, 0);
-      #this.pageJComponent.revalidate();
-   '''
+      
+      block.setMouseTracking(True);
+      block.installEventFilter(self.canvas); 
+ 
    def addBlock(self,block):
       # update parent widget if dropped block
       oldParent = block.parent();
@@ -121,32 +129,12 @@ class BlockCanvas(QtGui.QScrollArea):
                block.getComment().getParent().remove(block.getComment());
 
          block.setParent(self);
-         #if (block.hasComment()):
-         #   block.getComment().setParent(block.parent().getJComponent());
 
-
-      #self.getRBParent().addToBlockLayer(block);
-      #block.setHighlightParent(this.getRBParent());
-
-      # if block has page labels enabled, in other words, if it can, then set page label to this
-      #if(Block.getBlock(block.getBlockID()).isPageLabelSetByPage()):
-      #   Block.getBlock(block.getBlockID()).setPageLabel(this.getPageName());
-
-      # notify block to link default args if it has any
       block.linkDefArgs();
 
       # fire to workspace that block was added to canvas if oldParent != this
       if(oldParent != self):
          pass
-         #Workspace.getInstance().notifyListeners(WorkspaceEvent(oldParent, block.getBlockID(), WorkspaceEvent.BLOCK_MOVED));
-         #Workspace.getInstance().notifyListeners(WorkspaceEvent(this, block.getBlockID(), WorkspaceEvent.BLOCK_ADDED, true));
-
-
-      # if the block is off the edge, shift everything or grow as needed to fully show it
-      #self.reformBlockPosition(block);
-
-   	#self.pageJComponent.setComponentZOrder(block, 0);
-   	# this.pageJComponent.revalidate();
 
    def hasPageAt(self, position):
       return (position >= 0 and position < len(self.pages));
@@ -203,9 +191,9 @@ class BlockCanvas(QtGui.QScrollArea):
       self.canvas.resize(widthCounter,(Page.DEFAULT_ABSTRACT_HEIGHT*Page.getZoomLevel()));
       #scrollPane.revalidate();
       self.repaint();
-
+      
    def mouseMoveEvent(self, event):
-      #print(str(self)+":mouseMoveEvent")
+      print(str(self)+":mouseMoveEvent")
       pass
 
    def insertPage(self,page, position):
@@ -214,18 +202,15 @@ class BlockCanvas(QtGui.QScrollArea):
          raise Exception("Invariant Violated: May not add null Pages");
 
       elif(position<0 or position > len(self.pages)):
-         #print(position+", "+pages.size());
          raise Exception("Invariant Violated: Specified position out of bounds");
 
       self.pages.insert(position, page);
       self.layout.addWidget(page)
-      #page.parent = self.canvas
-      #self.canvas.add(page, 0);
+
       pd = PageDivider(page);
       self.dividers.append(pd);
       self.layout.addWidget(pd)
-      #canvas.add(pd,0);
-      #PageChangeEventManager.notifyListeners();
+
 
    def loadBlocksFrom(self,blocksNode):
       blocks = blocksNode.getchildren();
@@ -234,6 +219,8 @@ class BlockCanvas(QtGui.QScrollArea):
       for blockNode in blocks:
          rb = RenderableBlock.loadBlockNode(blockNode, self);
          rb.setParent(self.canvas)
+         self.blockDropped(rb)
+         
          loadedBlocks.append(rb)
          
       for rb in loadedBlocks:  
@@ -243,8 +230,7 @@ class BlockCanvas(QtGui.QScrollArea):
       for rb in self.getTopLevelBlocks():  
          rb.redrawFromTop()
 
-      return loadedBlocks;
-
+      return loadedBlocks
 
    def getTopLevelBlocks(self):
       topBlocks = []
@@ -258,48 +244,18 @@ class BlockCanvas(QtGui.QScrollArea):
                 block.getBeforeBlockID() == -1):
                   topBlocks.append(renderable);
 
-      return topBlocks;
-
-
+      return topBlocks
 
    def loadSaveString(self,root):
-
-      '''
-      * Loads all the RenderableBlocks and their associated Blocks that
-      * reside within the block canvas.  All blocks will have their nessary
-      * data populated including connection information, stubs, etc.
-      * Note: This method should only be called if this language only uses the
-      * BlockCanvas to work with blocks and no pages. Otherwise, workspace live blocks
-      * are loaded from Pages.
-      * @param root the Document Element containing the desired information
-      '''
-      #from PageDrawerManager import PageDrawerManager
-      # Extract canvas blocks and load
-
       blocksRoot = root.findall("Blocks");
       if(blocksRoot != None and len(blocksRoot) == 1):
          self.loadBlocksFrom(blocksRoot[0]);
-         #blocks = self.loadBlocksFrom(blocksRoot[0]);
-      # load pages, page drawers, and their blocks from save file
-      #PageDrawerManager.loadPagesAndDrawers(root);
-      # PageDrawerLoadingUtils.loadPagesAndDrawers(root, WorkspaceController.workspace, WorkspaceController.workspace.factory);
-      #screen = QtGui.QDesktopWidget().availableGeometry()
-      #screenWidth = screen.width()
-      #canvasWidth = self.width();
-      #if(canvasWidth<screenWidth):
-      #   p = self.pages[len(self.pages)-1];
-      #   p.addPixelWidth(screenWidth-canvasWidth);
-      #   #PageChangeEventManager.notifyListeners();
-
 
    def blockEntered(self,block):
       pass
-      #if (mouseIsInPage == false):
-      #   mouseIsInPage = true;
-      #   this.pageJComponent.repaint();
+
    def blockExited(self,block):
       pass
 
    def contains(self,point):
-      return self.rect().contains(point)
-     
+      return self.rect().contains(point)     

@@ -18,7 +18,7 @@ from blocks.BlockLinkChecker import BlockLinkChecker
 
 class RenderableBlock(QtGui.QWidget):
 
-   ALL_RENDERABLE_BLOCKS = {}     
+   ALL_RENDERABLE_BLOCKS = {} 
       
    def __init__(self):
       QtGui.QWidget.__init__(self)
@@ -30,7 +30,6 @@ class RenderableBlock(QtGui.QWidget):
    def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
       from blocks.WorkspaceController import WorkspaceController
       from blocks.FactoryManager import FactoryManager
-      from blocks.FactoryRenderableBlock import FactoryRenderableBlock
       
       obj = cls()
       
@@ -109,19 +108,11 @@ class RenderableBlock(QtGui.QWidget):
    '''
    def setBlockLabelUneditable(self):
       pass
-      #if(self.blockLabel != None):
-      #   self.blockLabel.setEditable(False)
 
-   '''
-    * Returns the Long id of this
-    * @return the Long id of this
-   '''
+
    def getBlockID(self):
    	return self.blockID
 
-   '''
-   * Shortcut to get block with current BlockID of this renderable block.
-   '''
    def getBlock(self):
       return Block.getBlock(self.blockID)
 
@@ -487,7 +478,6 @@ class RenderableBlock(QtGui.QWidget):
    def getConnectorTag(self,socket):
       if (socket == None):
          return
-         pass
          #throw new RuntimeException("Socket may not be null");
       if(socket == (self.plugTag.getSocket())): return self.plugTag;
       if(socket == (self.afterTag.getSocket())): return self.afterTag;
@@ -542,7 +532,8 @@ class RenderableBlock(QtGui.QWidget):
    def updateSocketPoint(self,socket,  point):
       tag = self.getConnectorTag(socket);
       # TODO: what if tag does not exist?  should we throw exception or add new tag?
-      tag.setAbstractLocation(point);
+      if(tag != None):
+        tag.setAbstractLocation(point);
 
 
    def linkDefArgs(self):
@@ -820,56 +811,26 @@ class RenderableBlock(QtGui.QWidget):
    def hoverLeaveEvent(self, event):
      print('outside')
 
-   def enterEvent(self,event):
-      #print("enterEvent")
-      #return
+   def onMouseEnter(self):
       self.mouse_enter = True
       painter = QtGui.QPainter();
+      
       painter.begin(self.buffImg)
       pen = QtGui.QPen()
       pen.setColor(QtGui.QColor(255,170,0,255))
       pen.setWidth(3)
       painter.setPen(pen);
-      #painter.fillPath(self.blockArea,brush)
       painter.drawPath(self.blockArea);
       painter.end()
+      
       self.repaint()
 
       #QtGui.QFrame.enterEvent(self,event);
 
-   def leaveEvent(self,event):
-      #print("leaveEvent")
-
-      '''
-      if (self.pickedUp):
-
-         mouseReleaseEvent = QtGui.QMouseEvent(
-            QtCore.QEvent.MouseButtonRelease,
-            self.cursor().pos(),
-            QtCore.Qt.LeftButton,
-            QtCore.Qt.LeftButton,
-            QtCore.Qt.NoModifier,
-         )
-
-         QtCore.QCoreApplication.postEvent(self, mouseReleaseEvent)
-
-
-         mousePressEvent = QtGui.QMouseEvent(
-            QtCore.QEvent.MouseButtonPress,
-            self.cursor().pos(),
-            QtCore.Qt.LeftButton,
-            QtCore.Qt.LeftButton,
-            QtCore.Qt.NoModifier,
-         )
-
-         QtCore.QCoreApplication.postEvent(self, mousePressEvent)
-      '''
-      #return
+   def onMouseLeave(self):
       self.mouse_enter = False
-
       self.updateBuffImg(False)
       self.repaint()
-      #QtGui.QFrame.leaveEvent(self,event);
 
    def drawHighlightSocket(self,link,hightlight):
       if(link != None):
@@ -911,7 +872,6 @@ class RenderableBlock(QtGui.QWidget):
 
 
    def getSaveNode(self, document):
-      # XXX seems strange that comment is kept here but saved in the block
       return self.getBlock().getSaveNode(document, self.descale(self.x()),
         self.descale(self.y()),
         self.comment.getSaveNode(document) if self.comment != None else None,
@@ -1025,7 +985,8 @@ class RenderableBlock(QtGui.QWidget):
          if (rb.comment != None):
             rb.comment.getArrow().updateArrow();
 
-
+        
+        
          return rb;
 
       return None;
@@ -1068,31 +1029,11 @@ class RenderableBlock(QtGui.QWidget):
          #dragHandler.mouseReleased(e);
         # if the block was dragged before...then
          if(self.dragging):
+            widget = self.workspace.getWidgetAt(event.globalPos());
+            self.stopDragging(widget);
+            
             link = self.getNearbyLink(); # look for nearby link opportunities
-            widget = None;
-
-            # if a suitable link wasn't found, just drop the block
-            if (link == None):
-               widget = self.lastDragWidget;
-               self.stopDragging(widget);
-
-            # otherwise, if a link WAS found...
-            else:
-
-               # Make sure that no matter who's connecting to whom, the block
-               # that's being dragged gets dropped on the parent widget of the
-               # block that's already on the canvas.
-               #
-               if (self.blockID == link.getSocketBlockID()):
-                  # dragged block is the socket block, so take plug's parent.
-                  widget = RenderableBlock.getRenderableBlock(link.getPlugBlockID()).parent();
-
-               else:
-                  # dragged block is the plug block, so take the socket block's parent.
-                  widget = RenderableBlock.getRenderableBlock(link.getSocketBlockID()).parent();
-
-               # drop the block and connect its link
-               self.stopDragging(widget);
+            if (link != None):
                link.connect();
                #Workspace.getInstance().notifyListeners(WorkspaceEvent(widget, link, WorkspaceEvent.BLOCKS_CONNECTED));
                RenderableBlock.getRenderableBlock(link.getSocketBlockID()).moveConnectedBlocks();
@@ -1202,10 +1143,10 @@ class RenderableBlock(QtGui.QWidget):
             # erase last link highlight
             pass
 
-         if(link != None):
-            self.drawHighlightSocket(link,True)
-            # hightlight current link
-            pass
+      if(link != None):
+        self.drawHighlightSocket(link,True)
+        # hightlight current link
+        pass
 
       self.last_link = link
 
@@ -1262,6 +1203,7 @@ class RenderableBlock(QtGui.QWidget):
     * @param widget the WorkspaceWidget where this RenderableBlock is being dropped.
    '''
    def stopDragging(self, widget):
+
       if (not self.dragging):
          return
       #throw new RuntimeException("dropping without prior dragging?");
@@ -1271,8 +1213,9 @@ class RenderableBlock(QtGui.QWidget):
             RenderableBlock.getRenderableBlock(socket.getBlockID()).stopDragging(widget);
 
       # drop this block on its widget (if w is null it'll throw an exception)
+    
       if(widget != None):
-         #print(self.parent())
+
          widget.blockDropped(self);
          #print(self.parent())
       # stop rendering as transparent

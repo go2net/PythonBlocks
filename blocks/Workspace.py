@@ -31,6 +31,7 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
 
       self.factory = FactoryManager(self,True, True)
       self.blockCanvas = BlockCanvas()
+      
       #self.addWidget(self.blockCanvas, True, True);
 
       layout  = QtGui.QHBoxLayout()
@@ -55,7 +56,12 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       self.addWidget(self.miniMap, True, False);
       self.addWidget(self.blockCanvas, True, False);
       self.miniMap.raise_()
-
+      self.setMouseTracking(True)
+      
+  def mouseMoveEvent(self, event):
+    print(str(self)+":mouseMoveEvent")
+    pass
+    
   def createTrashCan(self):
       #add trashcan and prepare trashcan images
       tc = QtGui.QIcon ("support/images/trash.png")
@@ -190,17 +196,18 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
       self.blockCanvas.reset();
 
       id_list = []
+      Block.NEXT_ID = 0
+
       for blockID in RenderableBlock.ALL_RENDERABLE_BLOCKS:
          block = RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
          if(not isinstance(block,FactoryRenderableBlock)):
             id_list.append(blockID)
-            #del RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
-            #del(block)
          else:
-            Block.NEXT_ID = max(Block.NEXT_ID,block.getBlockID())
+            Block.NEXT_ID = max(Block.NEXT_ID,blockID)
       
+      Block.NEXT_ID += 1
       Block.MAX_RESERVED_ID = Block.NEXT_ID
-      
+
       for id in id_list:
          block = RenderableBlock.ALL_RENDERABLE_BLOCKS[id]
          block.setParent(None)
@@ -220,11 +227,6 @@ class Workspace(QtGui.QFrame,WorkspaceWidget):
 
   def getMiniMap(self):
       return self.miniMap;
-
-
-  def mouseMoveEvent(self, event):
-      #print(str(self)+":mouseMoveEvent")
-      pass
 
   def getWidgetAt(self,point):
       '''
