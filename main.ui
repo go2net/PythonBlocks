@@ -25,22 +25,36 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QFrame" name="frame">
-      <property name="enabled">
-       <bool>true</bool>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>2</number>
       </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Block Editor</string>
+       </attribute>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="frame" native="true"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="">
+       <attribute name="title">
+        <string>Block Genus Management</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -110,7 +124,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionNew"/>
    <addaction name="actionOpen"/>
@@ -390,8 +404,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>405</x>
-     <y>49</y>
+     <x>141</x>
+     <y>54</y>
     </hint>
    </hints>
   </connection>
@@ -438,8 +452,8 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>700</x>
-     <y>502</y>
+     <x>811</x>
+     <y>446</y>
     </hint>
    </hints>
   </connection>
@@ -482,8 +496,8 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>700</x>
-     <y>502</y>
+     <x>811</x>
+     <y>446</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
