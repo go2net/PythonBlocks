@@ -23,6 +23,8 @@ class MainWnd(QtGui.QMainWindow):
     self.connect(self.actionSaveAs, QtCore.SIGNAL('triggered()'), self.onSaveAs)
     self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
 
+    self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
+
     self.actionStop.setEnabled(False)
 
     self.actionQuit.triggered.connect(self.close)
@@ -37,6 +39,24 @@ class MainWnd(QtGui.QMainWindow):
     self.wndPreview.setLayout(layout);
     
     self.blockPreviewWnd.resizeEvent = self.onResize
+  
+  def currentChanged(self, pag_index):
+     if(pag_index == 0):
+        self.blockGenusWnd.hide()
+        self.blockPropWnd.hide()
+        self.blockPreviewWnd.hide()
+        self.dockWidget.hide()
+     if(pag_index == 1):
+        self.blockGenusWnd.hide()
+        self.blockPropWnd.hide()
+        self.blockPreviewWnd.hide()
+        self.dockWidget.show()        
+     if(pag_index == 2):
+        self.blockGenusWnd.show()
+        self.blockPropWnd.show()
+        self.blockPreviewWnd.show()
+        self.dockWidget.hide()      
+
 
   def InitBlockGenusListWidget(self):
     from blocks.BlockGenus import BlockGenus
