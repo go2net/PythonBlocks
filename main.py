@@ -23,14 +23,23 @@ class MainWnd(QtGui.QMainWindow):
     self.connect(self.actionSaveAs, QtCore.SIGNAL('triggered()'), self.onSaveAs)
     self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
 
-    self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
+    #self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
 
     self.actionStop.setEnabled(False)
+
+    self.viewGroup = QtGui.QActionGroup(self)
+    self.viewGroup.addAction(self.actionTestBench)
+    self.viewGroup.addAction(self.actionBlockEditor)
+    self.viewGroup.addAction(self.actionBlockGenusConfiguration)
+    self.actionBlockEditor.setChecked(True)
+
+    self.connect(self.viewGroup,QtCore.SIGNAL("triggered(QAction*)"),self.onActionTriggered)
+           
 
     self.actionQuit.triggered.connect(self.close)
 
     # Create a new WorkspaceController
-    self.wc = WorkspaceController(self.frame)
+    self.wc = WorkspaceController(self.pgBlockEditor)
     self.resetWorksapce()
     self.InitBlockGenusListWidget()
     self.show()
@@ -56,8 +65,26 @@ class MainWnd(QtGui.QMainWindow):
         self.blockPropWnd.show()
         self.blockPreviewWnd.show()
         self.dockWidget.hide()      
-
-
+    
+  def onActionTriggered(self, action):
+    if action == self.actionTestBench:
+        self.stackedWidget.setCurrentIndex(0)
+        self.blockGenusWnd.hide()
+        self.blockPropWnd.hide()
+        self.blockPreviewWnd.hide()
+        self.dockWidget.hide()        
+    if action == self.actionBlockEditor:
+        self.stackedWidget.setCurrentIndex(1)
+        self.blockGenusWnd.hide()
+        self.blockPropWnd.hide()
+        self.blockPreviewWnd.hide()
+        self.dockWidget.show()           
+    if action == self.actionBlockGenusConfiguration:
+        self.stackedWidget.setCurrentIndex(2)        
+        self.blockGenusWnd.show()
+        self.blockPropWnd.show()
+        self.blockPreviewWnd.show()
+        self.dockWidget.hide()           
   def InitBlockGenusListWidget(self):
     from blocks.BlockGenus import BlockGenus
     

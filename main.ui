@@ -25,36 +25,10 @@
      <number>0</number>
     </property>
     <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>2</number>
-      </property>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Block Editor</string>
-       </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="margin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QWidget" name="frame" native="true"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="">
-       <attribute name="title">
-        <string>Block Genus Management</string>
-       </attribute>
-      </widget>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="pgHome"/>
+      <widget class="QWidget" name="pgBlockEditor"/>
+      <widget class="QWidget" name="pgBlockGenusConfig"/>
      </widget>
     </item>
    </layout>
@@ -88,6 +62,10 @@
     <addaction name="actionBlockGenusTree"/>
     <addaction name="actionBlockProperities"/>
     <addaction name="actionBlockPreview"/>
+    <addaction name="separator"/>
+    <addaction name="actionTestBench"/>
+    <addaction name="actionBlockEditor"/>
+    <addaction name="actionBlockGenusConfiguration"/>
    </widget>
    <widget class="QMenu" name="menuStart">
     <property name="title">
@@ -271,6 +249,20 @@
    <addaction name="actionStop"/>
    <addaction name="actionRun"/>
   </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionTestBench"/>
+   <addaction name="actionBlockEditor"/>
+   <addaction name="actionBlockGenusConfiguration"/>
+  </widget>
   <action name="actionOpen">
    <property name="icon">
     <iconset>
@@ -381,6 +373,42 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionBlockGenusConfiguration">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/gnome_system_config.png</normaloff>resource/gnome_system_config.png</iconset>
+   </property>
+   <property name="text">
+    <string>Block Genus Configuration</string>
+   </property>
+  </action>
+  <action name="actionBlockEditor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/117-puzzle.png</normaloff>resource/117-puzzle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Block Editor</string>
+   </property>
+  </action>
+  <action name="actionTestBench">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/79-Home.png</normaloff>resource/79-Home.png</iconset>
+   </property>
+   <property name="text">
+    <string>Test Bench</string>
    </property>
   </action>
  </widget>
