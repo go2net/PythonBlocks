@@ -27,7 +27,9 @@ class FactoryRenderableBlock(RenderableBlock):
      
      
    def createNewInstance(self):
-      rb = BlockUtilities.cloneBlock(self.getBlock())
+      from blocks.WorkspaceController import WorkspaceController
+      canvas = WorkspaceController.workspace.getActiveCanvas()
+      rb = BlockUtilities.cloneBlock(self.getBlock(), canvas)
       return rb
 
 

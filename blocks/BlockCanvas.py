@@ -125,7 +125,22 @@ class BlockCanvas(QtGui.QScrollArea):
          return self.block_list[genusName]
       else:
          return []
+    
+    def getMaxReservedID(self):
+        from blocks.Block import Block
+        from blocks.RenderableBlock import RenderableBlock
+        from blocks.FactoryRenderableBlock import FactoryRenderableBlock        
+        self.NEXT_ID = 0
+        for blockID in RenderableBlock.ALL_RENDERABLE_BLOCKS:
+            block = RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
+            if(isinstance(block,FactoryRenderableBlock)):
+                self.NEXT_ID = max(self.NEXT_ID,blockID)
 
+        self.NEXT_ID += 1
+        self.MAX_RESERVED_ID = self.NEXT_ID
+        
+        return self.MAX_RESERVED_ID
+    
     def getPages(self):
       return self.pages
 

@@ -565,7 +565,7 @@ class Block():
 
 
 
-   def loadBlockFrom(node):
+   def loadBlockFrom(node, canvas):
       '''
       * Loads Block information from the specified node and return a Block
       * instance with the loaded information
@@ -613,7 +613,7 @@ class Block():
       if (node.tag == ("Block")):
          # load attributes
          if("id" in node.attrib):
-            id = int(node.attrib["id"]) + Block.MAX_RESERVED_ID #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
+            id = int(node.attrib["id"]) + canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
             # BUG: id may conflict with the new Block
             # bug fix: HE Qichen 2012-2-24
 

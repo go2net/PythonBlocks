@@ -909,7 +909,7 @@ class RenderableBlock(QtGui.QWidget):
 
 
    def getNearbyLink(self):
-      return BlockLinkChecker.getLink(self, self.workspace.blockCanvas.getBlocks());
+      return BlockLinkChecker.getLink(self, self.workspace.getActiveCanvas().getBlocks());
 
 
    def getLocationOnScreen(self):
@@ -941,14 +941,14 @@ class RenderableBlock(QtGui.QWidget):
       self.clearBufferedImage();
 
 
-   def loadBlockNode(blockNode, parent):
+   def loadBlockNode(blockNode, canvas):
       isBlock = blockNode.tag == ("Block");
       isBlockStub = blockNode.tag == ("BlockStub");
 
       if (isBlock or isBlockStub):
          rb = RenderableBlock.from_blockID(
-            parent,
-            Block.loadBlockFrom(blockNode).blockID, 
+            canvas,
+            Block.loadBlockFrom(blockNode, canvas).blockID, 
             True);
 
          if (isBlockStub):
@@ -1061,7 +1061,7 @@ class RenderableBlock(QtGui.QWidget):
       #   add(popup);
       #   popup.show(this, e.getX(), e.getY());
 
-      self.workspace.getMiniMap().repaint();
+      self.workspace.getActiveCanvas().miniMap.repaint();
       #QtGui.QFrame.mouseReleaseEvent(self,event);
 
    def mouseDragged(self, event):
@@ -1095,7 +1095,7 @@ class RenderableBlock(QtGui.QWidget):
          # drag this block and all attached to it
          self.drag(widget, dx,dy,True);
 
-         self.workspace.getMiniMap().repaint();
+         self.workspace.getActiveCanvas().miniMap.repaint();
 
    def drag(self, widget, dx,dy,isTopLevelBlock):
 
@@ -1158,7 +1158,7 @@ class RenderableBlock(QtGui.QWidget):
       #   renderable.comment.setConstrainComment(False);
 
       old_parent = self.parent()
-      new_parent = self.workspace.blockCanvas.canvas
+      new_parent = self.workspace.getActiveCanvas()
 
       #print(old_parent)
       #print(new_parent)

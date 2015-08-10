@@ -73,6 +73,10 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
   def getRenderableBlocksFromGenus(self,genusName):
       return self.blockCanvas.getBlocksByName(genusName);
 
+  def getActiveCanvas(self):
+      assert(isinstance(self.blockTab.currentWidget(), BlockCanvas))
+      return self.blockTab.currentWidget()
+
   def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
       '''
       * Loads the workspace with the following content:

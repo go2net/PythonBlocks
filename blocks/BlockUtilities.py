@@ -7,13 +7,12 @@ class BlockUtilities():
 
    instanceCounter = {}
 
-   def isLabelValid(block, label):
-      from blocks.WorkspaceController import WorkspaceController
+   def isLabelValid(block, label, canvas):
       if(block == None or label == None):
          return False;
       elif(block.labelMustBeUnique()):
          # search through the current block instances active in the workspace
-         for rb in WorkspaceController.workspace.getRenderableBlocksFromGenus(block.getGenusName()):
+         for rb in canvas.getBlocksByName(block.getGenusName()):
             if(label == (rb.getBlock().getBlockLabel())):
                return False;
 
@@ -22,7 +21,7 @@ class BlockUtilities():
       return True;
 
 
-   def cloneBlock(myblock):
+   def cloneBlock(myblock, canvas):
       mygenusname = myblock.getGenusName();
       label = myblock.getBlockLabel();
 
@@ -61,7 +60,7 @@ class BlockUtilities():
          value = 0;
       # begin check for validation of label
       # iterate until label is valid
-      while(not BlockUtilities.isLabelValid(myblock, labelWithIndex)):
+      while(not BlockUtilities.isLabelValid(myblock, labelWithIndex, canvas)):
          value +=1;
          labelWithIndex = labelWithIndex + value;
 

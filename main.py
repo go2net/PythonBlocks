@@ -281,7 +281,7 @@ class MainWnd(QtGui.QMainWindow):
 
     def loadBlockFile(self,filename):
         if (filename != None):
-           self.wc.resetWorkspace();
+           #self.wc.resetWorkspace();
            self.wc.loadProjectFromPath(filename);
 
     def onSave(self):
