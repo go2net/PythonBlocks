@@ -61,6 +61,5 @@ class NameLabel(BlockLabel):
 
          self.setPixelLocation(x, y);
 
-
 if __name__ == '__main__':
     main()

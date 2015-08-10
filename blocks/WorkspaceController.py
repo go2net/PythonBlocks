@@ -99,7 +99,7 @@ class WorkspaceController():
          # set the dirty flag for the language definition file
          # to true now that a new file has been set
          self.langDefDirty = True;
-
+         return self.langDefRoot
       except:
          exc_type, exc_obj, exc_tb = sys.exc_info()
          fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -122,7 +122,7 @@ class WorkspaceController():
       if(self.langDefDirty):
          self.loadBlockLanguage(self.langDefRoot)
 
-      self.workspace.loadWorkspaceFrom(None, self.langDefRoot)
+      self.workspace.loadWorkspaceFrom(None, self.langDefRoot, "Untitled")
 
       self.workspaceLoaded = True
 
@@ -366,7 +366,7 @@ class WorkspaceController():
       # also load drawers, or any custom drawers from file.  if no custom drawers
       # are present in root, then the default set of drawers is loaded from
       # langDefRoot
-      WorkspaceController.workspace.loadWorkspaceFrom(projectRoot, self.langDefRoot);
+      WorkspaceController.workspace.loadWorkspaceFrom(projectRoot, self.langDefRoot, path);
       self.workspaceLoaded = True;
 
 

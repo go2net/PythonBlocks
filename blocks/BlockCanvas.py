@@ -2,6 +2,8 @@
 from PyQt4 import QtGui,QtCore
 from blocks.RenderableBlock import RenderableBlock
 from blocks.WorkspaceWidget import WorkspaceWidget
+from blocks.TrashCan import TrashCan
+from blocks.MiniMap import MiniMap
 
 class Canvas(QtGui.QWidget,WorkspaceWidget):
     def __init__(self):
@@ -78,7 +80,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 
 class BlockCanvas(QtGui.QScrollArea):
 
-   def __init__(self):
+    def __init__(self):
       QtGui.QScrollArea.__init__(self)
       
       self.canvas = Canvas();
@@ -100,16 +102,34 @@ class BlockCanvas(QtGui.QScrollArea):
       screen = QtGui.QDesktopWidget().availableGeometry()
       self.canvas.resize(screen.width(),screen.height());
 
-   def getBlocksByName(self,genusName):
+      self.createTrashCan()
+      self.miniMap = MiniMap(self);
+      
+    def createTrashCan(self):
+        #add trashcan and prepare trashcan images
+        tc = QtGui.QIcon ("support/images/trash.png")
+        openedtc = QtGui.QIcon("support/images/trash_open.png");
+        sizes = tc.availableSizes();
+        maximum = sizes[0].width();
+        for i in range(1,len(sizes)):
+            maximum = QtGui.qMax(maximum, sizes[i].width());
+        self.trash = TrashCan(self,
+            tc.pixmap(QtCore.QSize(maximum, maximum)),
+            openedtc.pixmap(QtCore.QSize(maximum, maximum))
+            );
+        self.trash.lower()
+        #self.trash.setParent(self.blockCanvas)
+
+    def getBlocksByName(self,genusName):
       if(genusName in self.block_list):
          return self.block_list[genusName]
       else:
          return []
 
-   def getPages(self):
+    def getPages(self):
       return self.pages
 
-   def getBlocks(self):
+    def getBlocks(self):
       blocks = []
       for component in self.findChildren(RenderableBlock) :
          blocks.append(component)
@@ -123,11 +143,11 @@ class BlockCanvas(QtGui.QScrollArea):
       #print(allPageBlocks)
       return allPageBlocks;
 
-   def reset(self): 
+    def reset(self): 
       for block in self.getBlocks():
          block.setParent(None)
 
-   def blockDropped(self,block):
+    def blockDropped(self,block):
       oldParent = block.parentWidget();
       old_pos = oldParent.mapToGlobal(block.pos())
 
@@ -146,7 +166,7 @@ class BlockCanvas(QtGui.QScrollArea):
       block.setMouseTracking(True);
       block.installEventFilter(self.canvas); 
  
-   def addBlock(self,block):
+    def addBlock(self,block):
       # update parent widget if dropped block
       oldParent = block.parent();
       if(oldParent != self):
@@ -163,23 +183,23 @@ class BlockCanvas(QtGui.QScrollArea):
       if(oldParent != self):
          pass
 
-   def hasPageAt(self, position):
+    def hasPageAt(self, position):
       return (position >= 0 and position < len(self.pages));
 
-   def numOfPages(self):
+    def numOfPages(self):
      return len(self.pages);
 
-   def appendPage(self, page):
+    def appendPage(self, page):
       self.insertPage(page,len(self.pages));
       self.pages.append(page);
 
-   def setWidth(self, width):
+    def setWidth(self, width):
       self.canvasWidth = width;
 
-   def setHeight(self, height):
+    def setHeight(self, height):
       self.canvasHeight = height;
 
-   def getSaveNode(self, document):
+    def getSaveNode(self, document):
 
       blocks = self.getBlocks();
       if (len(blocks) > 0):
@@ -190,7 +210,7 @@ class BlockCanvas(QtGui.QScrollArea):
       else:
          return None
 
-   def reformBlockCanvas(self):
+    def reformBlockCanvas(self):
       self.canvas.resize(self.canvasWidth,self.canvasHeight);
       #scrollPane.revalidate();
       self.repaint();
@@ -219,11 +239,11 @@ class BlockCanvas(QtGui.QScrollArea):
       #scrollPane.revalidate();
       self.repaint();
       
-   def mouseMoveEvent(self, event):
+    def mouseMoveEvent(self, event):
       print(str(self)+":mouseMoveEvent")
       pass
 
-   def insertPage(self,page, position):
+    def insertPage(self,page, position):
       from PageDivider import PageDivider
       if(page == None):
          raise Exception("Invariant Violated: May not add null Pages");
@@ -239,7 +259,7 @@ class BlockCanvas(QtGui.QScrollArea):
       self.layout.addWidget(pd)
 
 
-   def loadBlocksFrom(self,blocksNode):
+    def loadBlocksFrom(self,blocksNode):
       blocks = blocksNode.getchildren();
       loadedBlocks = []
 
@@ -259,7 +279,7 @@ class BlockCanvas(QtGui.QScrollArea):
 
       return loadedBlocks
 
-   def getTopLevelBlocks(self):
+    def getTopLevelBlocks(self):
       topBlocks = []
       for renderable in self.getBlocks():
           block = renderable.getBlock()
@@ -273,16 +293,20 @@ class BlockCanvas(QtGui.QScrollArea):
 
       return topBlocks
 
-   def loadSaveString(self,root):
+    def loadSaveString(self,root):
       blocksRoot = root.findall("Blocks");
       if(blocksRoot != None and len(blocksRoot) == 1):
          self.loadBlocksFrom(blocksRoot[0]);
 
-   def blockEntered(self,block):
+    def blockEntered(self,block):
       pass
 
-   def blockExited(self,block):
+    def blockExited(self,block):
       pass
 
-   def contains(self,point):
+    def contains(self,point):
       return self.rect().contains(point)     
+  
+    def resizeEvent(self, event):
+        self.trash.rePosition()
+        self.miniMap.repositionMiniMap();

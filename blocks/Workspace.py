@@ -20,7 +20,9 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
 
       self.factory = FactoryManager(self,True, True)
-      self.blockCanvas = BlockCanvas()
+      self.blockTab = QtGui.QTabWidget()      
+      self.blockTab.setTabsClosable (True)
+      #self.blockCanvas = BlockCanvas()
       
       #self.addWidget(self.blockCanvas, True, True);
 
@@ -28,13 +30,13 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       self.setLayout(layout);
       self.layout().setContentsMargins(0, 0, 0, 0)
       
-      self.miniMap = MiniMap(self);
+      #self.miniMap = MiniMap(self);
 
       splitter = QtGui.QSplitter(self)
       splitter.setContentsMargins(0, 0, 0, 0)
 
       splitter.addWidget(self.factory.getNavigator())
-      splitter.addWidget(self.blockCanvas)
+      splitter.addWidget(self.blockTab)
 
       splitter.setStretchFactor (1, 1 )
       layout.addWidget(splitter);
@@ -43,9 +45,9 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       self.addWidget(self.factory, True, False);
       self.addWidget(self.trash, True, False);
-      self.addWidget(self.miniMap, True, False);
-      self.addWidget(self.blockCanvas, True, False);
-      self.miniMap.raise_()
+      #self.addWidget(self.miniMap, True, False);
+      #self.addWidget(self.blockCanvas, True, False);
+      #self.miniMap.raise_()
       self.setMouseTracking(True)
       
   def mouseMoveEvent(self, event):
@@ -71,7 +73,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
   def getRenderableBlocksFromGenus(self,genusName):
       return self.blockCanvas.getBlocksByName(genusName);
 
-  def loadWorkspaceFrom(self, newRoot, originalLangRoot):
+  def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
       '''
       * Loads the workspace with the following content:
       * - RenderableBlocks and their associated Block instances that reside
@@ -83,9 +85,12 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       * @param originalLangRoot the original language/workspace specification content
       * @requires originalLangRoot != null
        '''
+      blockCanvas = BlockCanvas() 
+      self.blockTab.addTab(blockCanvas, fileName)
+       
       if(newRoot != None):
          # load pages, page drawers, and their blocks from save file
-         self.blockCanvas.loadSaveString(newRoot);
+         blockCanvas.loadSaveString(newRoot);
          # load the block drawers specified in the file (may contain
          # custom drawers) and/or the lang def file if the contents specify
          #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
@@ -93,7 +98,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
          #self.loadWorkspaceSettings(newRoot);
       else:
          # load from original language/workspace root specification
-         self.blockCanvas.loadSaveString(originalLangRoot);
+         blockCanvas.loadSaveString(originalLangRoot);
          # load block drawers and their content
          PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
          #loadWorkspaceSettings(originalLangRoot);
@@ -183,7 +188,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
             parent.repaint();
       '''
 
-      self.blockCanvas.reset();
+      #self.blockCanvas.reset();
 
       id_list = []
       Block.NEXT_ID = 0
@@ -246,8 +251,8 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       return self.blockCanvas.getSaveNode(document);
 
   def resizeEvent(self, event):
-      self.trash.rePosition()
-      self.miniMap.repositionMiniMap();
+      #self.trash.rePosition()
+      #self.miniMap.repositionMiniMap();
 
       self.factory.onResize(event)
 

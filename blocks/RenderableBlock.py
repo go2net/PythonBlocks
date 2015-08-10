@@ -133,11 +133,10 @@ class RenderableBlock(QtGui.QWidget):
       return False;
 
    def reformBlockShape(self):
-     
-      if(self.blockShape == None): return
-     
-      self.abstractBlockArea = self.blockShape.reformArea();
 
+      if(self.blockShape == None): return
+
+      self.abstractBlockArea = self.blockShape.reformArea();
 
       # TODO for zooming, create an AffineTransform to scale the block shape
       #at = AffineTransform();

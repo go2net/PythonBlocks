@@ -11,12 +11,11 @@ class PageDrawerLoadingUtils():
       pass
 
    def loadBlockDrawerSets(root, manager):
-
+ 
       drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
 
       for drawerSetNode in drawerSetNodes:
          drawerNodes=drawerSetNode.getchildren()
-
          # retreive drawer information of this bar
          for drawerNode in drawerNodes:
             if(drawerNode.tag == "BlockDrawer"):

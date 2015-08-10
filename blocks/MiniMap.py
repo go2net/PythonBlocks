@@ -87,10 +87,10 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
    DEFAULT_HEIGHT = 75;
 
 
-   def __init__(self,workspace):
-      QtGui.QWidget.__init__(self,workspace)
-
-      self.workspace = workspace;
+   def __init__(self,blockCanvas):
+      QtGui.QWidget.__init__(self,blockCanvas)
+      print(blockCanvas)
+      self.blockCanvas = blockCanvas;
 
       self.setAttribute(QtCore.Qt.WA_Hover);
       #**this.width*/
@@ -159,7 +159,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       p.drawRect(blockRect);
 
    def getCanvas(self):
-      return self.blockCanvas.canvas;
+      return self.blockCanvas;
 
    def rescaleToWorld(self, p):
      point = QtCore.QPoint(p.x() / self.transformX, p.y() / self.transformY);
@@ -204,17 +204,17 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
          p.drawRect(i, i, self.width() - 1 - 2 * i, self.height() - 1 - 2 * i);
 
       # Aspect-Ratio Logic
-      self.blockCanvas = self.workspace.blockCanvas;
+      #self.blockCanvas = self.workspace;
       self.transformX = self.MAPWIDTH / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
       self.transformY = self.MAPHEIGHT / self.getCanvas().height();
 
       p.translate(5, 5);
 
-      for page in self.blockCanvas.getPages():
+      #for page in self.blockCanvas.getPages():
          #pageColor = page.getPageColor();
-         pageRect = self.rescaleRect(page.frameGeometry());
+         #pageRect = self.rescaleRect(page.frameGeometry());
          #p.setPen(QtGui.QColor(pageColor.red(), pageColor.green(), pageColor.blue(), 200));
-         p.fillRect(pageRect,page.getPageColor());
+         #p.fillRect(pageRect,page.getPageColor());
          #p.setPen(QtGui.QColor.WHITE);
          #g.clipRect(pageRect.x, pageRect.y, pageRect.width, pageRect.height);
          #p.drawString(page.getPageName(), pageRect.x + 1, pageRect.height - 3);
@@ -264,7 +264,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       #   #g.setPen(QtGui.QColor(0xCC,0xCC,0xCC));
       #   p.setPen(component.getBLockColor());
       #   self.drawBoundingBox(p, component);
-
+      print(self.blockCanvas)
       for component in self.blockCanvas.getBlocks():
          if (isinstance(component,RenderableBlock) and component != None and component.isVisible()):
             #print(component)
@@ -282,6 +282,3 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
              self.rescaleY(self.blockCanvas.height()));
 
       p.end()
-
-   def mousePressEvent(self, event):
-     self.workspace.factory.ResetButtons()
