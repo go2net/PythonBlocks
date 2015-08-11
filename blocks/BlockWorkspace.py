@@ -78,11 +78,11 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
                 self.focusBlock = None
 
 
-class BlockCanvas(QtGui.QScrollArea):
+class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
     def __init__(self):
       QtGui.QScrollArea.__init__(self)
-      
+ 
       self.canvas = Canvas();
       
       self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -91,8 +91,8 @@ class BlockCanvas(QtGui.QScrollArea):
       self.setWidget(self.canvas)
 
       #Scroll Area Layer add
-      self.layout = QtGui.QHBoxLayout(self)
-      self.canvas.setLayout(self.layout)
+      #self.layout = QtGui.QHBoxLayout(self)
+      #self.canvas.setLayout(self.layout)
 
       self.setStyleSheet("background-color: rgba(225, 225, 225,0);")
       self.pages = []
@@ -125,21 +125,6 @@ class BlockCanvas(QtGui.QScrollArea):
          return self.block_list[genusName]
       else:
          return []
-    
-    def getMaxReservedID(self):
-        from blocks.Block import Block
-        from blocks.RenderableBlock import RenderableBlock
-        from blocks.FactoryRenderableBlock import FactoryRenderableBlock        
-        self.NEXT_ID = 0
-        for blockID in RenderableBlock.ALL_RENDERABLE_BLOCKS:
-            block = RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
-            if(isinstance(block,FactoryRenderableBlock)):
-                self.NEXT_ID = max(self.NEXT_ID,blockID)
-
-        self.NEXT_ID += 1
-        self.MAX_RESERVED_ID = self.NEXT_ID
-        
-        return self.MAX_RESERVED_ID
     
     def getPages(self):
       return self.pages

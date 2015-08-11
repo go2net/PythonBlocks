@@ -11,14 +11,14 @@
 from blocks.Block import Block
 class BlockLink():
 
-   lastLink = None
-   lastPlugID = None
-   lastSocketID = None
-   lastPlug = None
-   lastSocket = None
-   lastPlugBlockID = None
+    lastLink = None
+    lastPlugID = None
+    lastSocketID = None
+    lastPlug = None
+    lastSocket = None
+    lastPlugBlockID = None
 
-   def __init__(self,block1, block2, socket1, socket2):
+    def __init__(self,block1, block2, socket1, socket2):
       self.clickSound = None
       self.peer_socket = socket2
       self.peer_block = block2
@@ -47,7 +47,7 @@ class BlockLink():
       BlockLink.lastSocket = self.socket;
       BlockLink.lastPlugBlockID = Block.NULL;
 
-   def equal(self,link):
+    def equal(self,link):
       if(link == None): return False
 
       return (self.socket == link.socket and
@@ -56,22 +56,22 @@ class BlockLink():
              self.peer_block == link.peer_block)
 
 
-   def getPlug(self):
-   	return self.plug;
+    def getPlug(self):
+        return self.plug;
 
-   def getSocket(self):
-   	return self.socket;
+    def getSocket(self):
+        return self.socket;
 
-   def getPlugBlockID(self):
-      return self.plugBlockID;
+    def getPlugBlockID(self):
+        return self.plugBlockID;
 
-   def getSocketBlockID(self):
-      return self.socketBlockID;
+    def getSocketBlockID(self):
+        return self.socketBlockID;
 
-   def getLastBlockID(self):
-      return self.lastPlugBlockID;
+    def getLastBlockID(self):
+        return self.lastPlugBlockID;
 
-   def connect(self):
+    def connect(self):
       from blocks.RenderableBlock import RenderableBlock
       from blocks.BlockLinkChecker import BlockLinkChecker
       from blocks.BlockConnectorShape import BlockConnectorShape
@@ -80,8 +80,8 @@ class BlockLink():
       # others, make sure to break that original link.*/
       if (self.socket.hasBlock()):
          # save the ID of the block previously attached to (in) this
-      	# socket.  This is used by insertion rules to re-link the replaced
-      	# block to the newly-inserted block.
+         # socket.  This is used by insertion rules to re-link the replaced
+         # block to the newly-inserted block.
          self.lastPlugBlockID = self.socket.blockID;
 
          # break the link between the socket block and the block in that socket
@@ -91,20 +91,20 @@ class BlockLink():
             socketBlock = Block.getBlock(plugBlockPlug.blockID);
             link = BlockLink.getBlockLink(plugBlock, socketBlock, plugBlockPlug, self.socket);
             link.disconnect();
-      		# don't tell the block about the disconnect like we would normally do, because
-      		# we don't actually want it to have a chance to remove any expandable sockets
-      		# since the inserted block will be filling whatever socket was vacated by this
-      		# broken link.
-      		#NOTIFY WORKSPACE LISTENERS OF DISCONNECTION (not sure if this is great because the connection is immediately replaced)
-      		#Workspace.getInstance().notifyListeners(new WorkspaceEvent(RenderableBlock.getRenderableBlock(socketBlock.blockID).getParentWidget(), link, WorkspaceEvent.BLOCKS_DISCONNECTED));
+            # don't tell the block about the disconnect like we would normally do, because
+            # we don't actually want it to have a chance to remove any expandable sockets
+            # since the inserted block will be filling whatever socket was vacated by this
+            # broken link.
+            #NOTIFY WORKSPACE LISTENERS OF DISCONNECTION (not sure if this is great because the connection is immediately replaced)
+            #Workspace.getInstance().notifyListeners(new WorkspaceEvent(RenderableBlock.getRenderableBlock(socketBlock.blockID).getParentWidget(), link, WorkspaceEvent.BLOCKS_DISCONNECTED));
 
       if (self.plug.hasBlock()):
-      	# in the case of insertion, breaking the link above will mean that
-      	# the plug shouldn't be connected by the time we reach here.  This
-      	# exception will only be thrown if the plug is connected even
-      	# after any insertion-esq links were broken above
-         #throw new RuntimeException("trying to link a plug that's already connected somewhere.");
-         return
+        # in the case of insertion, breaking the link above will mean that
+        # the plug shouldn't be connected by the time we reach here.  This
+        # exception will only be thrown if the plug is connected even
+        # after any insertion-esq links were broken above
+        #throw new RuntimeException("trying to link a plug that's already connected somewhere.");
+        return
 
 
       # actually form the connection
@@ -117,9 +117,9 @@ class BlockLink():
       socketRB.blockConnected(self.socket, self.plugBlockID);
 
       if (self.getLastBlockID() != None and
-			self.getLastBlockID() != Block.NULL and
-			BlockConnectorShape.isCommandConnector(self.getPlug()) and
-			BlockConnectorShape.isCommandConnector(self.getSocket())):
+            self.getLastBlockID() != Block.NULL and
+            BlockConnectorShape.isCommandConnector(self.getPlug()) and
+            BlockConnectorShape.isCommandConnector(self.getSocket())):
          top = Block.getBlock(self.getPlugBlockID());
          while (top.hasAfterConnector() and top.getAfterConnector().hasBlock()):
             top = Block.getBlock(top.getAfterBlockID());
@@ -135,17 +135,18 @@ class BlockLink():
 
       if(self.clickSound != None):
          # System.out.println("playing click sound");
-         clickSound.play();
+         pass
+         #clickSound.play();
 
 
 
-   def disconnect(self):
+    def disconnect(self):
       self.plug.setConnectorBlockID(Block.NULL);
       self.socket.setConnectorBlockID(Block.NULL);
 
 
 
-   def getBlockLink(block1, block2, socket1, socket2):
+    def getBlockLink(block1, block2, socket1, socket2):
       # If these arguments are the same as the last call to getBlockLink, return the old object instead of creating a new one
       #if not(
       #   (block1.blockID == (BlockLink.lastPlugID) and block2.blockID == (BlockLink.lastSocketID) and socket1 == (BlockLink.lastPlug) and socket2 == (BlockLink.lastSocket)) or

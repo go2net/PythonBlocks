@@ -2,8 +2,8 @@
 import re
 from blocks.BlockGenus import BlockGenus
 from blocks.BlockConnector import BlockConnector
-
-
+import uuid
+       
 class Block():
 
    # The ID that is to be assigned to the next new block
@@ -17,7 +17,8 @@ class Block():
    ALL_BLOCKS= {}
    tmpObj = None
    
-   def __init__(self):
+   def __init__(self, canvas):
+      self.canvas = canvas
       self.pageLabel = ""
       self.hasFocus = False;
       self.isBad = False;
@@ -30,21 +31,18 @@ class Block():
       pass
 
    @classmethod
-   def createBlockFromID(cls, genusName, linkToStubs=True, id=-1,label=None):
-      obj = cls()
+   def createBlockFromID(cls, canvas, genusName, linkToStubs=True, id=-1,label=None):
+      obj = cls(canvas)
       obj.linkToStubs = linkToStubs
       obj._blockID = id
-      
-      if(id >= Block.NEXT_ID):
-        Block.NEXT_ID = id +1
 
       if (label == None):
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
 
-      if (id in Block.ALL_BLOCKS):
-        dup = Block.ALL_BLOCKS.get(id);
-        print("pre-existing block is: {0} with genus {1} and label {2}".format(id,dup.getGenusName(),dup.getBlockLabel()));
-        raise Exception("Block id: {0} already exists!  BlockGenus {1}, label: {2}".format(id,genusName,label))
+      #if (id in Block.ALL_BLOCKS):
+      #  dup = Block.ALL_BLOCKS.get(id);
+      #  print("pre-existing block is: {0} with genus {1} and label {2}".format(id,dup.getGenusName(),dup.getBlockLabel()));
+      #  raise Exception("Block id: {0} already exists!  BlockGenus {1}, label: {2}".format(id,genusName,label))
       
       # copy connectors from BlockGenus
       genus = BlockGenus.getGenusWithName(genusName)
@@ -119,10 +117,9 @@ class Block():
       
    
    @classmethod
-   def createBlock(cls, genusName, linkToStubs, label=None):
-     id = Block.NEXT_ID
-     Block.NEXT_ID+=1
-     return Block.createBlockFromID(genusName, linkToStubs, id,label)
+   def createBlock(cls, canvas,  genusName, linkToStubs, label=None):
+     id = Block.generateId()
+     return Block.createBlockFromID(canvas, genusName, linkToStubs, id,label)
 
    @property
    def blockID(self):
@@ -135,9 +132,11 @@ class Block():
 
    @blockID.deleter
    def blockID(self):
-      del self._blockID 
+      del self._blockID       
       
-
+   def generateId():
+       return str(uuid.uuid1())
+       
    def getInputTargetBlock(self, name):
     socket = self.getSocketByName(name.lower())
     if(socket == None):
@@ -152,7 +151,7 @@ class Block():
    def getBlock(blockID):
      
       if(blockID == -1): return Block.tmpObj 
-     
+
       if(blockID in Block.ALL_BLOCKS):
          return Block.ALL_BLOCKS[blockID]
       else:
@@ -469,7 +468,7 @@ class Block():
    def getSaveNode(self, document, x, y, commentNode, isCollapsed):
       blockElement = document.createElement("Block");
 
-      blockElement.setAttribute("id", str(self.blockID-Block.MAX_RESERVED_ID));
+      blockElement.setAttribute("id", str(self.blockID));
 
       blockElement.setAttribute("genus-name", self.getGenusName());
       if (self.hasFocus):
@@ -516,13 +515,13 @@ class Block():
 
       if (self.hasBeforeConnector() and self.getBeforeBlockID() != Block.NULL):
          blockIdElement = document.createElement("BeforeBlockId");
-         blockIdElement.appendChild(document.createTextNode(str(self.getBeforeBlockID() - Block.MAX_RESERVED_ID)));
+         blockIdElement.appendChild(document.createTextNode(self.getBeforeBlockID() ));
          blockElement.appendChild(blockIdElement);
 
 
       if (self.hasAfterConnector() and self.getAfterBlockID() != Block.NULL):
          blockIdElement = document.createElement("AfterBlockId");
-         blockIdElement.appendChild(document.createTextNode(str(self.getAfterBlockID() - Block.MAX_RESERVED_ID)));
+         blockIdElement.appendChild(document.createTextNode(self.getAfterBlockID()));
          blockElement.appendChild(blockIdElement);
 
 
@@ -613,7 +612,7 @@ class Block():
       if (node.tag == ("Block")):
          # load attributes
          if("id" in node.attrib):
-            id = int(node.attrib["id"]) + canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
+            id = node.attrib["id"]  #+ canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
             # BUG: id may conflict with the new Block
             # bug fix: HE Qichen 2012-2-24
 
@@ -636,9 +635,9 @@ class Block():
             elif (child.tag == ("CompilerErrorMsg")):
                  badMsg = child.text;
             elif  (child.tag == ("BeforeBlockId")):
-                 beforeID = int(child.text) + Block.MAX_RESERVED_ID
+                 beforeID = child.text
             elif  (child.tag == ("AfterBlockId")):
-                 afterID = int(child.text) + Block.MAX_RESERVED_ID
+                 afterID = child.text
             elif  (child.tag == ("Plug")):
                plugs = child.getchildren(); #there should only one child
 
@@ -681,9 +680,9 @@ class Block():
          #create block or block stub instance
          if (not isStubBlock):
             if (label == None):
-               block = Block.createBlockFromID( genusName, True, id);
+               block = Block.createBlockFromID(canvas, genusName, True, id);
             else:
-               block = Block.createBlockFromID( genusName,True, id,label);
+               block = Block.createBlockFromID(canvas,  genusName,True, id,label);
 
          else:
             #assert label != null : "Loading a block stub, but has a null label!";

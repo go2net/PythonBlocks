@@ -3,8 +3,7 @@ from PyQt4 import QtGui,QtCore
 from blocks.PageDrawerLoadingUtils import PageDrawerLoadingUtils
 from blocks.FactoryManager import FactoryManager
 from blocks.TrashCan import TrashCan
-from blocks.BlockCanvas import BlockCanvas
-from blocks.MiniMap import MiniMap
+from blocks.BlockWorkspace import BlockWorkspace
 from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Workspace(QtGui.QWidget,WorkspaceWidget):
@@ -18,19 +17,13 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       self.workspaceWidgets = []
 
-
       self.factory = FactoryManager(self,True, True)
       self.blockTab = QtGui.QTabWidget()      
       self.blockTab.setTabsClosable (True)
-      #self.blockCanvas = BlockCanvas()
-      
-      #self.addWidget(self.blockCanvas, True, True);
 
       layout  = QtGui.QHBoxLayout()
       self.setLayout(layout);
       self.layout().setContentsMargins(0, 0, 0, 0)
-      
-      #self.miniMap = MiniMap(self);
 
       splitter = QtGui.QSplitter(self)
       splitter.setContentsMargins(0, 0, 0, 0)
@@ -45,9 +38,6 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       self.addWidget(self.factory, True, False);
       self.addWidget(self.trash, True, False);
-      #self.addWidget(self.miniMap, True, False);
-      #self.addWidget(self.blockCanvas, True, False);
-      #self.miniMap.raise_()
       self.setMouseTracking(True)
       
   def mouseMoveEvent(self, event):
@@ -74,7 +64,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       return self.blockCanvas.getBlocksByName(genusName);
 
   def getActiveCanvas(self):
-      assert(isinstance(self.blockTab.currentWidget(), BlockCanvas))
+      assert(isinstance(self.blockTab.currentWidget(), BlockWorkspace))
       return self.blockTab.currentWidget()
 
   def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
@@ -89,12 +79,13 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       * @param originalLangRoot the original language/workspace specification content
       * @requires originalLangRoot != null
        '''
-      blockCanvas = BlockCanvas() 
-      self.blockTab.addTab(blockCanvas, fileName)
-       
+      blockWorkspace = BlockWorkspace() 
+      self.blockTab.addTab(blockWorkspace, fileName)
+      self.blockTab.setCurrentWidget(blockWorkspace) 
+      
       if(newRoot != None):
          # load pages, page drawers, and their blocks from save file
-         blockCanvas.loadSaveString(newRoot);
+         blockWorkspace.loadSaveString(newRoot);
          # load the block drawers specified in the file (may contain
          # custom drawers) and/or the lang def file if the contents specify
          #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
@@ -102,7 +93,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
          #self.loadWorkspaceSettings(newRoot);
       else:
          # load from original language/workspace root specification
-         blockCanvas.loadSaveString(originalLangRoot);
+         blockWorkspace.loadSaveString(originalLangRoot);
          # load block drawers and their content
          PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
          #loadWorkspaceSettings(originalLangRoot);
@@ -201,11 +192,6 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
          block = RenderableBlock.ALL_RENDERABLE_BLOCKS[blockID]
          if(not isinstance(block,FactoryRenderableBlock)):
             id_list.append(blockID)
-         else:
-            Block.NEXT_ID = max(Block.NEXT_ID,blockID)
-      
-      Block.NEXT_ID += 1
-      Block.MAX_RESERVED_ID = Block.NEXT_ID
 
       for id in id_list:
          block = RenderableBlock.ALL_RENDERABLE_BLOCKS[id]
@@ -252,7 +238,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       return None; # hopefully we never get here
 
   def getSaveNode(self,document):
-      return self.blockCanvas.getSaveNode(document);
+      return self.getActiveCanvas().getSaveNode(document);
 
   def resizeEvent(self, event):
       #self.trash.rePosition()

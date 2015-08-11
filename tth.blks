@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<CODEBLOCKS>
+	<Blocks>
+		<Block genus-name="if" id="125ad570-403a-11e5-ab7c-f0def1dc27fb">
+			<Location>
+				<X>76.0</X>
+				<Y>66.0</Y>
+			</Location>
+			<Sockets num-sockets="2">
+				<BlockConnector connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector con-block-id="145431b4-403a-11e5-a2e3-f0def1dc27fb" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+		<Block genus-name="bk" id="145431b4-403a-11e5-a2e3-f0def1dc27fb">
+			<Location>
+				<X>135.0</X>
+				<Y>98.0</Y>
+			</Location>
+			<BeforeBlockId>125ad570-403a-11e5-ab7c-f0def1dc27fb</BeforeBlockId>
+			<Sockets num-sockets="1">
+				<BlockConnector connector-kind="socket" connector-type="number" init-type="number" label="steps" position-type="single"/>
+			</Sockets>
+		</Block>
+	</Blocks>
+</CODEBLOCKS>

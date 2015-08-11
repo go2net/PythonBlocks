@@ -74,7 +74,7 @@ class BlockUtilities():
          parent = myblock.getParent();
          block = BlockStub(parent.blockID, parent.getGenusName(), parent.getBlockLabel(), myblock.getGenusName());
       else:
-         block = Block.createBlock(myblock.getGenusName(), True, label);
+         block = Block.createBlock(canvas, myblock.getGenusName(), True, label);
 
       # TODO - djwendel - create a copy of the RB properties too, using an RB copy constructor.  Don't just use the genus.
       # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.blockID);

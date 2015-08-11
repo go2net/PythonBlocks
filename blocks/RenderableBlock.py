@@ -925,6 +925,7 @@ class RenderableBlock(QtGui.QWidget):
             curBlockID = socket.blockID;
             # TODO: this is a patch, but we need to fix the root of the problem!
             if(RenderableBlock.getRenderableBlock(curBlockID) == None):
+               print(curBlockID) 
                print("does not exist yet, block: "+curBlockID);
                continue;
 

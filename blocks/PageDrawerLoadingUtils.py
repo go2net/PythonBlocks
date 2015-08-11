@@ -23,7 +23,7 @@ class PageDrawerLoadingUtils():
                if("name" in drawerNode.attrib):
                	drawerName = drawerNode.attrib["name"]
 
-               manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
+               canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
 
                drawerBlocks = drawerNode.getchildren()
                blockNode = None
@@ -31,7 +31,7 @@ class PageDrawerLoadingUtils():
                for blockNode in drawerBlocks:
                   if(blockNode.tag == "BlockGenusMember"):
                      genusName = blockNode.text
-                     newBlock = Block.createBlock(genusName, False)
+                     newBlock = Block.createBlock(canvas, genusName, False)
                      drawerRBs.append(FactoryRenderableBlock.from_blockID(manager, newBlock.blockID,False, QtGui.QColor(225,225,225,100)));
 
                manager.addStaticBlocks(drawerRBs, drawerName);

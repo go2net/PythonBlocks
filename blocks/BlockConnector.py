@@ -14,29 +14,29 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 class BlockConnector():
-   TRIANGLE_1 = 1
-   TRIANGLE_2 = 2
-   TRIANGLE_3 = 3
+    TRIANGLE_1 = 1
+    TRIANGLE_2 = 2
+    TRIANGLE_3 = 3
 
-   CIRCLE_1 = 4
-   CIRCLE_2 = 5
-   CIRCLE_3 = 6
+    CIRCLE_1 = 4
+    CIRCLE_2 = 5
+    CIRCLE_3 = 6
 
-   SQUARE_1 = 7
-   SQUARE_2 = 8
-   SQUARE_3 = 9
+    SQUARE_1 = 7
+    SQUARE_2 = 8
+    SQUARE_3 = 9
 
-   POLYMORPHIC_1 = 10
-   POLYMORPHIC_2 = 11
-   POLYMORPHIC_3 = 12
+    POLYMORPHIC_1 = 10
+    POLYMORPHIC_2 = 11
+    POLYMORPHIC_3 = 12
 
-   PROC_PARAM = 13
+    PROC_PARAM = 13
 
-   COMMAND = 14
+    COMMAND = 14
 
-   PositionType = enum("SINGLE", "MIRROR", "BOTTOM", "TOP")
+    PositionType = enum("SINGLE", "MIRROR", "BOTTOM", "TOP")
 
-   def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
+    def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
          
       self._kind = kind
       self._type = type
@@ -54,69 +54,69 @@ class BlockConnector():
       self.hasDefArg = False
   
     
-   @property
-   def kind(self):
+    @property
+    def kind(self):
       """I'm the 'x' property."""
       return self._kind
 
-   @kind.setter
-   def kind(self, value):
+    @kind.setter
+    def kind(self, value):
       self._kind = value
 
-   @kind.deleter
-   def kind(self):
+    @kind.deleter
+    def kind(self):
       del self._kind 
 
-   @property
-   def type(self):
+    @property
+    def type(self):
       """I'm the 'x' property."""
       return self._type
 
-   @type.setter
-   def type(self, value):
+    @type.setter
+    def type(self, value):
       self._type = value
       
-   @type.deleter
-   def type(self):
+    @type.deleter
+    def type(self):
      del self._kind 
 
-   @property
-   def blockID(self):
+    @property
+    def blockID(self):
       """I'm the 'x' property."""
       return self.connBlockID
 
-   @blockID.setter
-   def blockID(self, value):
+    @blockID.setter
+    def blockID(self, value):
       self.connBlockID = value
 
-   @blockID.deleter
-   def blockID(self):
+    @blockID.deleter
+    def blockID(self):
       del self._blockID 
 
 
-   '''
-   * Sets this connector's default argument to the specified genus and initial label.
-   * @param genusName the desired BLockGenus name of the default agrument
-   * @param label the initial label of the default argument
-   '''
-   def setDefaultArgument(self,genusName, label):
+    '''
+    * Sets this connector's default argument to the specified genus and initial label.
+    * @param genusName the desired BLockGenus name of the default agrument
+    * @param label the initial label of the default argument
+    '''
+    def setDefaultArgument(self,genusName, label):
       self.hasDefArg = True
       #elf.arg = DefArgument(genusName, label)
 
-   '''
-   * Returns the PositionType of this
-   * @return the PositionType of this
-   '''
-   def getPositionType(self):
+    '''
+    * Returns the PositionType of this
+    * @return the PositionType of this
+    '''
+    def getPositionType(self):
      return self.positionType
 
-   def hasBlock(self):
+    def hasBlock(self):
       return self.connBlockID != -1
 
-   def getLabel(self):
+    def getLabel(self):
       return self.label;
 
-   def linkDefArgument(self):
+    def linkDefArgument(self):
       from Block import Block
       # checks if connector has a def arg or if connector already has a block
       if(self.hasDefArg and self.connBlockID == -1):
@@ -126,11 +126,10 @@ class BlockConnector():
 
       return -1
 
-   def setConnectorBlockID(self, id):
+    def setConnectorBlockID(self, id):
       self.connBlockID = id;
 
-   def loadBlockConnector(node):
-     from blocks.Block import Block
+    def loadBlockConnector(node):
      con = None;
      initKind = None;
      kind = None;
@@ -154,7 +153,7 @@ class BlockConnector():
          if("label" in node.attrib):
              label = node.attrib["label"]
          if("con-block-id" in node.attrib):
-             idConnected = int(node.attrib["con-block-id"]) + Block.MAX_RESERVED_ID
+             idConnected = node.attrib["con-block-id"] # + Block.MAX_RESERVED_ID
 
          if("label-editable" in node.attrib):
              isLabelEditable = node.attrib["label-editable"] == ("true");
@@ -188,8 +187,7 @@ class BlockConnector():
      return con;
 
 
-   def getSaveNode(self, document, conKind):
-      from blocks.Block import Block
+    def getSaveNode(self, document, conKind):
       connectorElement = document.createElement("BlockConnector");
       connectorElement.setAttribute("connector-kind", conKind);
       connectorElement.setAttribute("connector-type", self.type);
@@ -218,7 +216,7 @@ class BlockConnector():
 
 
       if (self.connBlockID != -1):
-         connectorElement.setAttribute("con-block-id", str(self.connBlockID-Block.MAX_RESERVED_ID));
+         connectorElement.setAttribute("con-block-id", str(self.connBlockID));
 
 
       return connectorElement;

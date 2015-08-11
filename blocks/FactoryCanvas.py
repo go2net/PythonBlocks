@@ -12,10 +12,9 @@
 from PyQt4 import QtCore,QtGui
 from blocks.Block import Block
 from blocks.RenderableBlock import RenderableBlock
-from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+from blocks.WorkspaceWidget import WorkspaceWidget
 
-
-class FactoryCanvas(QtGui.QFrame):
+class FactoryCanvas(QtGui.QFrame, WorkspaceWidget):
 
    BORDER_WIDTH = 10
 
@@ -62,11 +61,8 @@ class FactoryCanvas(QtGui.QFrame):
       #self.scrollPanel.move(0,25)
 
       self.parent = parent
-      width =parent.width()
-      height =parent.height()
 
       # The highlight of this canvas
-      highlight = None
       # The color of this canvas
       self.color = color
 
@@ -112,8 +108,6 @@ class FactoryCanvas(QtGui.QFrame):
       #block.addComponentListener(self)
 
    def addBlocks(self,blocks):
-
-      index = 0
       y = 0
       for block in blocks:
          #print("Add block -- "+Block.ALL_BLOCKS[block.blockID].getGenusName())
@@ -121,9 +115,6 @@ class FactoryCanvas(QtGui.QFrame):
          self.layout.addWidget(block)
          #block.move(5,y + 10)
          y += (block.height() + 10)
-
-      width  = self.width()
-      height = self.height()
 
       self.scrollPanel.resize(self.width(),self.height()-self.getCaptionHeight())
       self.fillPanel.resize(self.width(),y)
