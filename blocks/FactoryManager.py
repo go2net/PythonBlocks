@@ -319,3 +319,7 @@ class FactoryManager(WorkspaceWidget):
      #self.navigator.setCanvas(self.staticCanvases, STATIC_NAME);
      #self.navigator.setCanvas(self.dynamicCanvases, DYNAMIC_NAME);
      #self.navigator.setCanvas(self.subsetCanvases, SUBSETS_NAME);
+
+   def getWidgetAt(self,point):
+        from blocks.Workspace import Workspace
+        return Workspace.ws.getWidgetAt(point)

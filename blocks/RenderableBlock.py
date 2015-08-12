@@ -20,21 +20,22 @@ class RenderableBlock(QtGui.QWidget):
 
    ALL_RENDERABLE_BLOCKS = {} 
       
-   def __init__(self):
+   def __init__(self, _workspaceWidget):       
       QtGui.QWidget.__init__(self)
-
+      self._workspaceWidget = _workspaceWidget
+      self.initFinished = False
+      
    def __del__(self):
       pass
 
    @classmethod
-   def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
+   def from_block(cls, _workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
       from blocks.WorkspaceController import WorkspaceController
       from blocks.FactoryManager import FactoryManager
       
-      obj = cls()
+      obj = RenderableBlock(_workspaceWidget)
       
       obj.workspace = WorkspaceController.workspace
-      obj.workspaceWidget = workspaceWidget
       obj.back_color = back_color
       obj.isLoading= isLoading
       
@@ -99,8 +100,8 @@ class RenderableBlock(QtGui.QWidget):
       
    
    @classmethod
-   def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
-      return RenderableBlock.from_block(workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
+   def from_blockID(cls, _workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)): 
+      return RenderableBlock.from_block(_workspaceWidget, Block.getBlock(blockID), isLoading,back_color)
 
    @property
    def blockID(self):
@@ -115,17 +116,20 @@ class RenderableBlock(QtGui.QWidget):
    def blockID(self):
       del self._blockID 
 
+   @property
+   def workspaceWidget(self):
+      """I'm the 'x' property."""
+      return self._workspaceWidget
+
+   @workspaceWidget.setter
+   def workspaceWidget(self, value):
+      self._workspaceWidget = value
+
    def setBlockLabelUneditable(self):
       pass
 
    def getBlock(self):
       return Block.getBlock(self.blockID)
-
-   def getWorkspaceWidget(self):
-   	return self.workspaceWidget;
-
-   def setWorkspaceWidget(self,workspaceWidget):
-   	self.workspaceWidget = workspaceWidget;
 
    def hasComment(self):
       if (self.comment != None):
@@ -1023,8 +1027,7 @@ class RenderableBlock(QtGui.QWidget):
    
    def mouseReleaseEvent(self, event):
       if(not self.initFinished):
-        self.onMouseRelease(event)       
-
+        self.onMouseRelease(event) 
  
    def onMouseRelease(self, event):
       self.window().onBlockClick(self)
@@ -1036,7 +1039,7 @@ class RenderableBlock(QtGui.QWidget):
          #dragHandler.mouseReleased(e);
         # if the block was dragged before...then
          if(self.dragging):
-            widget = self.workspace.getWidgetAt(event.globalPos());
+            widget = self.workspaceWidget.getWidgetAt(event.globalPos());
             self.stopDragging(widget);
             
             link = self.getNearbyLink(); # look for nearby link opportunities
@@ -1076,7 +1079,7 @@ class RenderableBlock(QtGui.QWidget):
          dy = event.globalPos().y()-old_pos.y()-self.pressedPos.y()
 
          self.move(self.x()+dx,self.y()+dy);
-         widget = self.workspace.getWidgetAt(event.globalPos());
+         widget = self.workspaceWidget.getWidgetAt(event.globalPos());
 
          # if this is the first call to mouseDragged
          if(not self.dragging):
@@ -1184,12 +1187,12 @@ class RenderableBlock(QtGui.QWidget):
       	if (socket.hasBlock()):
       		RenderableBlock.getRenderableBlock(socket.blockID).startDragging(widget);
 
-   '''
-    * This method is called when this RenderableBlock is plugged into another RenderableBlock that has finished dragging.
-    * @param widget the WorkspaceWidget where this RenderableBlock is being dropped.
-   '''
-   def stopDragging(self, widget):
 
+   def stopDragging(self, widget):
+      '''
+      * This method is called when this RenderableBlock is plugged into another RenderableBlock that has finished dragging.
+      * @param widget the WorkspaceWidget where this RenderableBlock is being dropped.
+      '''
       if (not self.dragging):
          return
       #throw new RuntimeException("dropping without prior dragging?");
@@ -1201,7 +1204,6 @@ class RenderableBlock(QtGui.QWidget):
       # drop this block on its widget (if w is null it'll throw an exception)
     
       if(widget != None):
-
          widget.blockDropped(self);
          #print(self.parent())
       # stop rendering as transparent

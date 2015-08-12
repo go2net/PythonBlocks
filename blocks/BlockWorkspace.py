@@ -20,9 +20,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         return blocks        
 
     def initNewRB(self, rb):
-        self.focusBlock = rb
-        
-
+        self.focusBlock = rb      
 
     def getUnderRB(self, globalPos):
         for rb in self.getBlocks():
@@ -38,6 +36,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
             if (self.focusBlock != None and 
                 self.focusBlock.pickedUp and 
                 event.buttons() == QtCore.Qt.LeftButton):
+                #print('mouseDragged')
                 self.focusBlock.mouseDragged(event)   
             
             elif(self.focusBlock != None and not self.focusBlock.pickedUp):
@@ -53,15 +52,18 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
                         rb.onMouseEnter()    
      
                     if rb.pickedUp and event.buttons() == QtCore.Qt.LeftButton:   
+                        #print('mouseDragged')
                         rb.mouseDragged(event)
                     
         elif event.type() ==  QtCore.QEvent.MouseButtonPress:
             rb = self.getUnderRB( event.globalPos())      
             if(rb != None):
+                #print('onMousePress')
                 rb.onMousePress(event) 
         elif event.type() == QtCore.QEvent.MouseButtonRelease:
             rb = self.getUnderRB( event.globalPos())      
             if(rb != None):
+                #print('onMouseRelease')
                 rb.onMouseRelease(event) 
             
         return QtGui.QMainWindow.eventFilter(self, source, event)
@@ -76,34 +78,68 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
             if not self.focusBlock.blockArea.contains(pos):
                 self.focusBlock.onMouseLeave()
                 self.focusBlock = None
-
+   
+    def contains(self,pos):
+        return self.rect().contains(pos)
 
 class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
     def __init__(self):
-      QtGui.QScrollArea.__init__(self)
- 
-      self.canvas = Canvas();
-      
-      self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-      self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-      self.setWidgetResizable(False)
-      self.setWidget(self.canvas)
+        from blocks.Workspace import Workspace
+        QtGui.QScrollArea.__init__(self)
+        
+        self.workspaceWidgets = []
+        
+        self.ws = Workspace.ws
+        self.canvas = Canvas();
 
-      #Scroll Area Layer add
-      #self.layout = QtGui.QHBoxLayout(self)
-      #self.canvas.setLayout(self.layout)
+        self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.setWidgetResizable(False)
+        self.setWidget(self.canvas)
 
-      self.setStyleSheet("background-color: rgba(225, 225, 225,0);")
-      self.pages = []
-      self.dividers = []
-      self.block_list = {}
+        #Scroll Area Layer add
+        #self.layout = QtGui.QHBoxLayout(self)
+        #self.canvas.setLayout(self.layout)
 
-      screen = QtGui.QDesktopWidget().availableGeometry()
-      self.canvas.resize(screen.width(),screen.height());
+        self.setStyleSheet("background-color: rgba(225, 225, 225,0);")
+        self.pages = []
+        self.dividers = []
+        self.block_list = {}
 
-      self.createTrashCan()
-      self.miniMap = MiniMap(self);
+        screen = QtGui.QDesktopWidget().availableGeometry()
+        self.canvas.resize(screen.width(),screen.height());
+        
+        self.createTrashCan()
+        self.miniMap = MiniMap(self);
+        self.workspaceWidgets.append(self.miniMap)        
+        self.workspaceWidgets.append(self.trash)
+        self.workspaceWidgets.append(self)
+        
+    def getWidgetAt(self,point):
+      '''
+      * Returns the WorkspaceWidget currently at the specified point
+      * @param point the <code>Point2D</code> to get the widget at, given
+      *   in Workspace (i.e. window) coordinates
+      * @return the WorkspaceWidget currently at the specified point
+      '''
+      # TODO: HUGE HACK, get rid of this. bascally, the facotry has priority
+      #topWidget = QtGui.QApplication.topLevelAt(self.factory.canvas.mapFromGlobal(point));
+
+      #return topWidget
+      pos = self.ws.factory.canvas.mapFromGlobal(point)
+      if(self.ws.factory.canvas.isVisible() and self.ws.factory.canvas.rect().contains(pos)):
+         return self.ws.factory
+
+      for widget in self.workspaceWidgets:
+         #print(widget)
+         pos = widget.mapFromGlobal(point)
+         if (widget.isVisible() and widget.contains(pos)):
+            #print(widget)
+            return widget; # because these are sorted by draw depth, the first hit is on top
+
+      return None; # hopefully we never get here
+
       
     def createTrashCan(self):
         #add trashcan and prepare trashcan images
@@ -120,6 +156,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.trash.lower()
         #self.trash.setParent(self.blockCanvas)
 
+        
     def getBlocksByName(self,genusName):
       if(genusName in self.block_list):
          return self.block_list[genusName]
@@ -148,23 +185,24 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
          block.setParent(None)
 
     def blockDropped(self,block):
-      oldParent = block.parentWidget();
-      old_pos = oldParent.mapToGlobal(block.pos())
+        print('blockDropped')
+        oldParent = block.parentWidget();
+        old_pos = oldParent.mapToGlobal(block.pos())
 
-      block.setParent(self.canvas)
-      block.initFinished = True
-      new_pos  = self.mapFromGlobal(old_pos)
+        block.setParent(self.canvas)
+        block.initFinished = True
+        new_pos  = self.mapFromGlobal(old_pos)
 
-      block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());
-      block.show()
+        block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());
+        block.show()
 
-      width = max(new_pos.x()+self.horizontalScrollBar().value()+50,self.canvas.width())
-      height = max(new_pos.y()+self.verticalScrollBar().value()+50,self.canvas.height())
+        width = max(new_pos.x()+self.horizontalScrollBar().value()+50,self.canvas.width())
+        height = max(new_pos.y()+self.verticalScrollBar().value()+50,self.canvas.height())
 
-      self.canvas.resize(width,height)
-      
-      block.setMouseTracking(True);
-      block.installEventFilter(self.canvas); 
+        self.canvas.resize(width,height)
+
+        block.setMouseTracking(True);
+        block.installEventFilter(self.canvas); 
  
     def addBlock(self,block):
       # update parent widget if dropped block

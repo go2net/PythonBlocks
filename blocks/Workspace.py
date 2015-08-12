@@ -7,10 +7,11 @@ from blocks.BlockWorkspace import BlockWorkspace
 from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Workspace(QtGui.QWidget,WorkspaceWidget):
-  #ws = Workspace()
+  ws = None
   everyPageHasDrawer = False
   def __init__(self):
       super(QtGui.QWidget, self).__init__()
+      Workspace.ws = self
       #QtGui.QFrame.__init__(self)
 
       self.setStyleSheet("background-color: rgba(0, 0, 0,0);")

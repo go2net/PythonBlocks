@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-08-10, 00:07:43 -->
+<!-- Saved: 2015-08-13, 00:58:48 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -21,7 +21,6 @@
     <Source>blocks/bevel_types.py</Source>
     <Source>blocks/Bezier.py</Source>
     <Source>blocks/Block.py</Source>
-    <Source>blocks/BlockCanvas.py</Source>
     <Source>blocks/BlockConnector.py</Source>
     <Source>blocks/BlockConnectorShape.py</Source>
     <Source>blocks/BlockControlLabel.py</Source>
@@ -77,6 +76,7 @@
     <Source>qq.py</Source>
     <Source>FactoryTreeView.py</Source>
     <Source>ttt.py</Source>
+    <Source>blocks/BlockWorkspace.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
