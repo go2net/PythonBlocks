@@ -32,7 +32,7 @@ class PageDrawerLoadingUtils():
                   if(blockNode.tag == "BlockGenusMember"):
                      genusName = blockNode.text
                      newBlock = Block.createBlock(canvas, genusName, False)
-                     drawerRBs.append(FactoryRenderableBlock.from_blockID(manager, newBlock.blockID,False, QtGui.QColor(225,225,225,100)));
+                     drawerRBs.append(FactoryRenderableBlock.from_block(canvas, newBlock,False, QtGui.QColor(225,225,225,100)));
 
                manager.addStaticBlocks(drawerRBs, drawerName);
 

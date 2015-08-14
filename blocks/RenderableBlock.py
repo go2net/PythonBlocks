@@ -33,7 +33,7 @@ class RenderableBlock(QtGui.QWidget):
       from blocks.WorkspaceController import WorkspaceController
       from blocks.FactoryManager import FactoryManager
       
-      obj = RenderableBlock(_workspaceWidget)
+      obj = cls(_workspaceWidget)
       
       obj.workspace = WorkspaceController.workspace
       obj.back_color = back_color

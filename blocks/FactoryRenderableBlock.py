@@ -15,8 +15,8 @@ from blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
    factoryRBs = {}
-   def __init__(self):
-      RenderableBlock.__init__(self)
+   def __init__(self,workspaceWidget ):
+      RenderableBlock.__init__(self, workspaceWidget)
       pass
       #dragHandler = new JComponentDragHandler(this);
 
@@ -28,7 +28,6 @@ class FactoryRenderableBlock(RenderableBlock):
      obj.createdRB_dragged = False
      obj.child_list = []
      FactoryRenderableBlock.factoryRBs[block.getGenusName()] = obj
-     print(obj)
      return  obj
      
    @classmethod     
@@ -37,16 +36,16 @@ class FactoryRenderableBlock(RenderableBlock):
      
      
    def createNewInstance(self):
-      rb = BlockUtilities.cloneBlock(Block.getBlock(self.getBlockID()))
+      rb = BlockUtilities.cloneBlock(Block.getBlock(self.blockID), self.workspaceWidget)
       self.child_list.append(rb)
       return rb
 
 
    def mousePressEvent(self, event):
-
+      from blocks.Workspace import Workspace
       if(self.workspaceWidget == None): return
       
-      self.workspaceWidget.OnPressed(self.workspaceWidget.active_button)
+      Workspace.ws.factory.OnPressed(Workspace.ws.factory.active_button)
 
       # create new renderable block and associated block
       self.createdRB = self.createNewInstance();
