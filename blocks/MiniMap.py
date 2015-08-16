@@ -89,7 +89,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
    def __init__(self,blockCanvas):
       QtGui.QWidget.__init__(self,blockCanvas)
-      print(blockCanvas)
+      #print(blockCanvas)
       self.blockCanvas = blockCanvas;
 
       self.setAttribute(QtCore.Qt.WA_Hover);
@@ -264,7 +264,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       #   #g.setPen(QtGui.QColor(0xCC,0xCC,0xCC));
       #   p.setPen(component.getBLockColor());
       #   self.drawBoundingBox(p, component);
-      print(self.blockCanvas)
+      #print(self.blockCanvas)
       for component in self.blockCanvas.getBlocks():
          if (isinstance(component,RenderableBlock) and component != None and component.isVisible()):
             #print(component)

@@ -79,7 +79,7 @@ class BlockUtilities():
       # TODO - djwendel - create a copy of the RB properties too, using an RB copy constructor.  Don't just use the genus.
       # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.blockID);
 
-      renderable = RenderableBlock.from_blockID(None, block.blockID);
+      renderable = RenderableBlock.from_blockID(canvas, block.blockID);
       renderable.initFinished = False
       #renderable.setZoomLevel(BlockUtilities.zoom);
       #renderable.redrawFromTop();

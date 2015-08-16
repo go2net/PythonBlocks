@@ -6,8 +6,9 @@ from blocks.TrashCan import TrashCan
 from blocks.MiniMap import MiniMap
 
 class Canvas(QtGui.QWidget,WorkspaceWidget):
-    def __init__(self):
+    def __init__(self, blockWorkspace):
         QtGui.QWidget.__init__(self)
+        self.blockWorkspace = blockWorkspace
         self.focusBlock = None
         self.setMouseTracking(True);
         pass
@@ -33,6 +34,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 
         if event.type() == QtCore.QEvent.MouseMove:         
             globalPos = event.globalPos()
+            #print(globalPos)
             if (self.focusBlock != None and 
                 self.focusBlock.pickedUp and 
                 event.buttons() == QtCore.Qt.LeftButton):
@@ -44,10 +46,10 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
                 if not self.focusBlock.blockArea.contains(pos):
                     self.focusBlock.onMouseLeave()
                     self.focusBlock = None
-            else:        
-                rb = self.getUnderRB(globalPos)        
+            else: 
+                rb = self.getUnderRB(globalPos)  
                 if(rb != None):
-                    if self.focusBlock != rb:                          
+                    if self.focusBlock != rb: 
                         self.focusBlock = rb
                         rb.onMouseEnter()    
      
@@ -71,8 +73,6 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 
     def mouseMoveEvent(self, event):
         globalPos = event.globalPos()
-
-        #print(globalPos)
         if(self.focusBlock != None and not self.focusBlock.pickedUp):
             pos = self.focusBlock.mapFromGlobal( globalPos);
             if not self.focusBlock.blockArea.contains(pos):
@@ -81,6 +81,9 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
    
     def contains(self,pos):
         return self.rect().contains(pos)
+
+    def blockDropped(self,block):
+        self.blockWorkspace.blockDropped(block)
 
 class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
@@ -91,7 +94,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.workspaceWidgets = []
         
         self.ws = Workspace.ws
-        self.canvas = Canvas();
+        self.canvas = Canvas(self);
 
         self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -114,7 +117,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.miniMap = MiniMap(self);
         self.workspaceWidgets.append(self.miniMap)        
         self.workspaceWidgets.append(self.trash)
-        self.workspaceWidgets.append(self)
+        self.workspaceWidgets.append(self.canvas)
         
     def getWidgetAt(self,point):
       '''
@@ -127,8 +130,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
       #topWidget = QtGui.QApplication.topLevelAt(self.factory.canvas.mapFromGlobal(point));
 
       #return topWidget
-      pos = self.ws.factory.canvas.mapFromGlobal(point)
-      if(self.ws.factory.canvas.isVisible() and self.ws.factory.canvas.rect().contains(pos)):
+      pos = self.ws.factory.getNavigator().mapFromGlobal(point)
+
+      if(self.ws.factory.getNavigator().rect().contains(pos)):
          return self.ws.factory
 
       for widget in self.workspaceWidgets:
@@ -185,7 +189,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
          block.setParent(None)
 
     def blockDropped(self,block):
-        print('blockDropped')
+        #print('blockDropped')
         oldParent = block.parentWidget();
         old_pos = oldParent.mapToGlobal(block.pos())
 
