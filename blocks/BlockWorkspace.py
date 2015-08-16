@@ -60,13 +60,11 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         elif event.type() ==  QtCore.QEvent.MouseButtonPress:
             rb = self.getUnderRB( event.globalPos())      
             if(rb != None):
-                #print('onMousePress')
                 rb.onMousePress(event) 
         elif event.type() == QtCore.QEvent.MouseButtonRelease:
-            rb = self.getUnderRB( event.globalPos())      
-            if(rb != None):
-                #print('onMouseRelease')
-                rb.onMouseRelease(event) 
+            #rb = self.getUnderRB( event.globalPos())      
+            if(self.focusBlock != None):
+                self.focusBlock.onMouseRelease(event) 
             
         return QtGui.QMainWindow.eventFilter(self, source, event)
 
@@ -286,68 +284,68 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
       pass
 
     def insertPage(self,page, position):
-      from PageDivider import PageDivider
-      if(page == None):
-         raise Exception("Invariant Violated: May not add null Pages");
+        from PageDivider import PageDivider
+        if(page == None):
+            raise Exception("Invariant Violated: May not add null Pages");
 
-      elif(position<0 or position > len(self.pages)):
-         raise Exception("Invariant Violated: Specified position out of bounds");
+        elif(position<0 or position > len(self.pages)):
+            raise Exception("Invariant Violated: Specified position out of bounds");
 
-      self.pages.insert(position, page);
-      self.layout.addWidget(page)
+        self.pages.insert(position, page);
+        self.layout.addWidget(page)
 
-      pd = PageDivider(page);
-      self.dividers.append(pd);
-      self.layout.addWidget(pd)
+        pd = PageDivider(page);
+        self.dividers.append(pd);
+        self.layout.addWidget(pd)
 
 
     def loadBlocksFrom(self,blocksNode):
-      blocks = blocksNode.getchildren();
-      loadedBlocks = []
+        blocks = blocksNode.getchildren();
+        loadedBlocks = []
 
-      for blockNode in blocks:
-         rb = RenderableBlock.loadBlockNode(blockNode, self);
-         rb.setParent(self.canvas)
-         self.blockDropped(rb)
+        for blockNode in blocks:
+            rb = RenderableBlock.loadBlockNode(blockNode, self);
+            rb.setParent(self.canvas)
+            self.blockDropped(rb)
          
-         loadedBlocks.append(rb)
+            loadedBlocks.append(rb)
          
-      for rb in loadedBlocks:  
-         rb.reformBlockShape()
-         rb.show()
+        for rb in loadedBlocks:  
+            rb.reformBlockShape()
+            rb.show()
 
-      for rb in self.getTopLevelBlocks():  
-         rb.redrawFromTop()
+        for rb in self.getTopLevelBlocks():  
+            rb.redrawFromTop()
 
-      return loadedBlocks
+        return loadedBlocks
 
     def getTopLevelBlocks(self):
-      topBlocks = []
-      for renderable in self.getBlocks():
+        topBlocks = []
+        for renderable in self.getBlocks():
           block = renderable.getBlock()
           if (block.getPlug() == None or 
               block.getPlugBlockID() == None or 
-              block.getPlugBlockID()  == -1):
+                block.getPlugBlockID()  == -1):
             if (block.getBeforeConnector() == None or 
                 block.getBeforeBlockID() == None or 
                 block.getBeforeBlockID() == -1):
-                  topBlocks.append(renderable);
+                topBlocks.append(renderable);
 
-      return topBlocks
+        return topBlocks
 
     def loadSaveString(self,root):
-      blocksRoot = root.findall("Blocks");
-      if(blocksRoot != None and len(blocksRoot) == 1):
-         self.loadBlocksFrom(blocksRoot[0]);
+        blocksRoot = root.findall("Blocks");
+        if(blocksRoot != None and len(blocksRoot) == 1):
+            self.loadBlocksFrom(blocksRoot[0]);
 
     def blockEntered(self,block):
-      pass
+        pass
 
     def blockExited(self,block):
-      pass
+        pass
 
     def contains(self,point):
-      return self.rect().contains(point)     
+        return self.rect().contains(point)     
   
     def resizeEvent(self, event):
         self.trash.rePosition()

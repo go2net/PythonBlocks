@@ -1033,7 +1033,7 @@ class RenderableBlock(QtGui.QWidget):
         self.window().onBlockClick(self)
         if event.button() == QtCore.Qt.LeftButton:
             if (not self.pickedUp):
-                print("dropping without prior dragging?");
+                raise Exception("dropping without prior dragging?");
                 return
 
             #dragHandler.mouseReleased(e);

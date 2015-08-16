@@ -263,7 +263,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
     from blocks.BlockLinkChecker import BlockLinkChecker
     blocks = []
     # Copy the topBlocks_ list.
-    all_blocks = self.blockCanvas.getBlocks()
+    all_blocks = self.getActiveCanvas().getBlocks()
     #print(all_blocks)
     for rb in all_blocks:
       block = rb.getBlock()
