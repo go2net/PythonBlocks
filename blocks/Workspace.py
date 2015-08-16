@@ -7,45 +7,55 @@ from blocks.BlockWorkspace import BlockWorkspace
 from blocks.WorkspaceWidget import WorkspaceWidget
 
 class Workspace(QtGui.QWidget,WorkspaceWidget):
-  ws = None
-  everyPageHasDrawer = False
-  def __init__(self):
-      super(QtGui.QWidget, self).__init__()
-      Workspace.ws = self
-      #QtGui.QFrame.__init__(self)
+    ws = None
+    everyPageHasDrawer = False
+    def __init__(self):
+        super(QtGui.QWidget, self).__init__()
+        Workspace.ws = self
+        #QtGui.QFrame.__init__(self)
 
-      self.setStyleSheet("background-color: rgba(0, 0, 0,0);")
+        self.setStyleSheet("background-color: rgba(0, 0, 0,0);")
 
-      self.workspaceWidgets = []
+        self.workspaceWidgets = []
 
-      self.factory = FactoryManager(self,True, True)
-      self.blockTab = QtGui.QTabWidget()      
-      self.blockTab.setTabsClosable (True)
+        self.factory = FactoryManager(self,True, True)
+        self.blockTab = QtGui.QTabWidget()      
+        self.blockTab.setTabsClosable (True)
+        self.connect(self.blockTab, QtCore.SIGNAL('tabCloseRequested(int)'), self.onCloseBlockCanvas)      
 
-      layout  = QtGui.QHBoxLayout()
-      self.setLayout(layout);
-      self.layout().setContentsMargins(0, 0, 0, 0)
+        layout  = QtGui.QHBoxLayout()
+        self.setLayout(layout);
+        self.layout().setContentsMargins(0, 0, 0, 0)
 
-      splitter = QtGui.QSplitter(self)
-      splitter.setContentsMargins(0, 0, 0, 0)
+        splitter = QtGui.QSplitter(self)
+        splitter.setContentsMargins(0, 0, 0, 0)
 
-      splitter.addWidget(self.factory.getNavigator())
-      splitter.addWidget(self.blockTab)
+        splitter.addWidget(self.factory.getNavigator())
+        splitter.addWidget(self.blockTab)
 
-      splitter.setStretchFactor (1, 1 )
-      layout.addWidget(splitter);
+        splitter.setStretchFactor (1, 1 )
+        layout.addWidget(splitter);
 
-      self.createTrashCan()
+        self.createTrashCan()
 
-      self.addWidget(self.factory, True, False);
-      self.addWidget(self.trash, True, False);
-      self.setMouseTracking(True)
-      
-  def mouseMoveEvent(self, event):
-    print(str(self)+":mouseMoveEvent")
-    pass
+        self.addWidget(self.factory, True, False);
+        self.addWidget(self.trash, True, False);
+        self.setMouseTracking(True)
+    def onCloseBlockCanvas(self,  index):
+        if (index == -1) :
+            return
+
+        #tabItem = self.blockTab.widget(index)
+        
+        # Removes the tab at position index from this stack of widgets.
+        # The page widget itself is not deleted.
+        self.blockTab.removeTab(index); 
+  
+    def mouseMoveEvent(self, event):
+        print(str(self)+":mouseMoveEvent")
+        pass
     
-  def createTrashCan(self):
+    def createTrashCan(self):
       #add trashcan and prepare trashcan images
       tc = QtGui.QIcon ("support/images/trash.png")
       openedtc = QtGui.QIcon("support/images/trash_open.png");
@@ -61,14 +71,14 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       #self.trash.setParent(self.blockCanvas)
 
 
-  def getRenderableBlocksFromGenus(self,genusName):
+    def getRenderableBlocksFromGenus(self,genusName):
       return self.blockCanvas.getBlocksByName(genusName);
 
-  def getActiveCanvas(self):
+    def getActiveCanvas(self):
       assert(isinstance(self.blockTab.currentWidget(), BlockWorkspace))
       return self.blockTab.currentWidget()
 
-  def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
+    def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
       '''
       * Loads the workspace with the following content:
       * - RenderableBlocks and their associated Block instances that reside
@@ -101,7 +111,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
          pass
 
 
-  def addWidget(self,widget, addGraphically, floatOverCanvas):
+    def addWidget(self,widget, addGraphically, floatOverCanvas):
       '''
       * Adds the specified widget to this Workspace
       * @param widget the desired widget to add
@@ -131,7 +141,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       #if(not success):
       #   print("not able to add: "+widget);
 
-  def reset(self):
+    def reset(self):
       '''
       * Clears the Workspace of:
       * - all the live blocks in the BlockCanvas.
@@ -211,10 +221,10 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       #revalidate();
 
-  def getMiniMap(self):
+    def getMiniMap(self):
       return self.miniMap;
 
-  def getWidgetAt(self,point):
+    def getWidgetAt(self,point):
       '''
       * Returns the WorkspaceWidget currently at the specified point
       * @param point the <code>Point2D</code> to get the widget at, given
@@ -238,68 +248,68 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       return None; # hopefully we never get here
 
-  def getSaveNode(self,document):
+    def getSaveNode(self,document):
       return self.getActiveCanvas().getSaveNode(document);
 
-  def resizeEvent(self, event):
+    def resizeEvent(self, event):
       #self.trash.rePosition()
       #self.miniMap.repositionMiniMap();
 
       self.factory.onResize(event)
 
       
-  def mousePressEvent(self, event):
+    def mousePressEvent(self, event):
      self.factory.ResetButtons()
 
 
 
-  def getTopBlocks(self, ordered=False):
-    '''
-    * Finds the top-level blocks and returns them.  Blocks are optionally sorted
-    * by position; top to bottom (with slight LTR or RTL bias).
-    * @param {boolean} ordered Sort the list if true.
-    * @return {!Array.<!Blockly.Block>} The top-level block objects.
-    '''
-    from blocks.BlockLinkChecker import BlockLinkChecker
-    blocks = []
-    # Copy the topBlocks_ list.
-    all_blocks = self.getActiveCanvas().getBlocks()
-    #print(all_blocks)
-    for rb in all_blocks:
-      block = rb.getBlock()
-      #print(block.before)
-      
-      #if block.before == None:
-      #  blocks.append(block)      
-      plug = BlockLinkChecker.getPlugEquivalent(block)
-      if(plug == None or not plug.hasBlock()):
-        blocks.append(block)
+    def getTopBlocks(self, ordered=False):
+        '''
+        * Finds the top-level blocks and returns them.  Blocks are optionally sorted
+        * by position; top to bottom (with slight LTR or RTL bias).
+        * @param {boolean} ordered Sort the list if true.
+        * @return {!Array.<!Blockly.Block>} The top-level block objects.
+        '''
+        from blocks.BlockLinkChecker import BlockLinkChecker
+        blocks = []
+        # Copy the topBlocks_ list.
+        all_blocks = self.getActiveCanvas().getBlocks()
+        #print(all_blocks)
+        for rb in all_blocks:
+          block = rb.getBlock()
+          #print(block.before)
+          
+          #if block.before == None:
+          #  blocks.append(block)      
+          plug = BlockLinkChecker.getPlugEquivalent(block)
+          if(plug == None or not plug.hasBlock()):
+            blocks.append(block)
 
-    if (ordered and len(blocks) > 1):
-      #offset = math.sin(math.toRadians(Blockly.Workspace.SCAN_ANGLE));
-      if (self.RTL):
-        #offset *= -1;
-        pass
-      '''
-      blocks.sort(function(a, b) {
-        var aXY = a.getRelativeToSurfaceXY();
-        var bXY = b.getRelativeToSurfaceXY();
-        return (aXY.y + offset * aXY.x) - (bXY.y + offset * bXY.x);
-      });
-      '''
-    return blocks;
+        if (ordered and len(blocks) > 1):
+          #offset = math.sin(math.toRadians(Blockly.Workspace.SCAN_ANGLE));
+          if (self.RTL):
+            #offset *= -1;
+            pass
+          '''
+          blocks.sort(function(a, b) {
+            var aXY = a.getRelativeToSurfaceXY();
+            var bXY = b.getRelativeToSurfaceXY();
+            return (aXY.y + offset * aXY.x) - (bXY.y + offset * bXY.x);
+          });
+          '''
+        return blocks;
 
-  def getTopRBs(self, ordered=False):
-    from blocks.BlockLinkChecker import BlockLinkChecker
-    blocks = []
-    # Copy the topBlocks_ list.
-    all_blocks = self.blockCanvas.getBlocks()
-    #print(all_blocks)
-    for rb in all_blocks:
-      block = rb.getBlock()    
-      plug = BlockLinkChecker.getPlugEquivalent(block)
-      if(plug == None or not plug.hasBlock()):
-        blocks.append(rb)
+    def getTopRBs(self, ordered=False):
+        from blocks.BlockLinkChecker import BlockLinkChecker
+        blocks = []
+        # Copy the topBlocks_ list.
+        all_blocks = self.blockCanvas.getBlocks()
+        #print(all_blocks)
+        for rb in all_blocks:
+          block = rb.getBlock()    
+          plug = BlockLinkChecker.getPlugEquivalent(block)
+          if(plug == None or not plug.hasBlock()):
+            blocks.append(rb)
 
-    return blocks;
+        return blocks;
 
