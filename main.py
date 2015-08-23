@@ -48,12 +48,14 @@ class MainWnd(QtGui.QMainWindow):
         
         self.resetWorksapce()
         self.InitBlockGenusListWidget()
+        self.setActiveWidget(self.pgBlockEditor)
+
         self.show()
 
         layout  = QtGui.QHBoxLayout()
         self.wndPreview.setLayout(layout);
 
-        self.blockPreviewWnd.resizeEvent = self.onResize
+        #self.blockPreviewWnd.resizeEvent = self.onResize
 
     def __createDockWindow(self, name):
         """
@@ -113,42 +115,34 @@ class MainWnd(QtGui.QMainWindow):
         self.__setupDockWindow(self.blocksFactory, Qt.LeftDockWidgetArea,
                                self.factoryWidget, self.tr("Blocks Factory"))            
   
-    def currentChanged(self, pag_index):
-        if(pag_index == 0):
+    def setActiveWidget(self, widget):
+        print(widget)
+        self.stackedWidget.setCurrentWidget(widget)
+        if widget == self.pgHome:
             self.blockGenusWnd.hide()
             self.blockPropWnd.hide()
-            self.blockPreviewWnd.hide()
-            self.dockWidget.hide()
-        if(pag_index == 1):
+            #self.blockPreviewWnd.hide()
+            #self.dockWidget.hide()        
+        if widget == self.pgBlockEditor:
             self.blockGenusWnd.hide()
-            self.blockPropWnd.hide()
-            self.blockPreviewWnd.hide()
-            self.dockWidget.show()        
-        if(pag_index == 2):
-            self.blockGenusWnd.show()
             self.blockPropWnd.show()
-            self.blockPreviewWnd.show()
-            self.dockWidget.hide()      
+            #self.blockPreviewWnd.hide()
+            #self.dockWidget.show()           
+        if widget == self.pgBlockGenusConfig:  
+            self.blockGenusWnd.show()
+            self.blockPropWnd.hide()
+            #self.blockPreviewWnd.show()
+            #self.dockWidget.hide()     
 
     def onActionTriggered(self, action):
         if action == self.actionTestBench:
-            self.stackedWidget.setCurrentIndex(0)
-            self.blockGenusWnd.hide()
-            self.blockPropWnd.hide()
-            self.blockPreviewWnd.hide()
-            self.dockWidget.hide()        
+            widget = self.pgHome
         if action == self.actionBlockEditor:
-            self.stackedWidget.setCurrentIndex(1)
-            self.blockGenusWnd.hide()
-            self.blockPropWnd.hide()
-            self.blockPreviewWnd.hide()
-            self.dockWidget.show()           
-        if action == self.actionBlockGenusConfiguration:
-            self.stackedWidget.setCurrentIndex(2)        
-            self.blockGenusWnd.show()
-            self.blockPropWnd.show()
-            self.blockPreviewWnd.show()
-            self.dockWidget.hide()           
+            widget = self.pgBlockEditor    
+        if action == self.actionBlockGenusConfiguration:  
+            widget = self.pgBlockGenusConfig
+            
+        self.setActiveWidget(widget)
             
     def InitBlockGenusListWidget(self):
         from blocks.BlockGenus import BlockGenus
@@ -194,7 +188,9 @@ class MainWnd(QtGui.QMainWindow):
     
         if(genus == None): return
     
-        block = Block.createBlockFromID(genus.getGenusName())
+        
+    
+        block = Block.createBlockFromID(None, genus.getGenusName())
             
         child_list = self.wndPreview.findChildren(FactoryRenderableBlock)
         for i in reversed(range(len(child_list))): 

@@ -241,8 +241,12 @@ class Block():
       return len(self.sockets);
 
    def getSocketAt(self, index):
-      #assert index < sockets.size() : "Index "+index+" is greater than the num of sockets: "+sockets.size()+" of "+this;
-      return self.sockets[index];
+        if(index<len(self.sockets)):
+           return self.sockets[index];
+        else:
+          return None
+        #assert index < sockets.size() : "Index "+index+" is greater than the num of sockets: "+sockets.size()+" of "+this;
+      
 
    def getInitBlockImageMap(self):
       return self.getGenus().getInitBlockImageMap();
