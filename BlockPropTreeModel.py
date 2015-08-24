@@ -42,7 +42,7 @@ class BlockPropTreeModel(QPropertyModel):
     self.rootItem = TreeItem(("Property", "Value"))
     self.setupModelData(rb, self.m_rootItem)
 
-  def setupModelData(self, genus, parent):
+  def setupModelData(self, rb, parent):
     parents = [parent]
     
     #columnData = ['A','B']  
@@ -76,10 +76,22 @@ class BlockPropTreeModel(QPropertyModel):
     #    Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
     #    plug_index += 1
     
-    #lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
-    #for key in genus.properties:
-    #  Property(key,genus.properties[key], lang_root)
+    lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+    for key in self.block.properties:
+      Property(key,self.block.properties[key], lang_root)
     
+    if( 'module_name' not in self.block.properties):
+      if( 'module_name' in self.block.getGenus().properties):
+        Property('module',self.block.getGenus().properties['module_name'], lang_root)
+      else:
+        Property('module','', lang_root)
+      
+    if( 'function_name' not in self.block.properties):
+      if( 'function_name' in self.block.getGenus().properties):
+        Property('function',self.block.getGenus().properties['function_name'], lang_root)
+      else:
+        Property('function','', lang_root)
+      
     #self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
     
   def onShowConnectorsInfo(self):

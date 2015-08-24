@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<CODEBLOCKS>
+	<Blocks>
+		<Block genus-name="if" id="132f7c6e-4a33-11e5-b968-0a003ea05290">
+			<Location>
+				<X>160.0</X>
+				<Y>111.0</Y>
+			</Location>
+			<Sockets num-sockets="2">
+				<BlockConnector connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
+				<BlockConnector connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
+			</Sockets>
+		</Block>
+	</Blocks>
+</CODEBLOCKS>

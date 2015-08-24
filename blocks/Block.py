@@ -25,6 +25,7 @@ class Block():
       self.disabled = False
       self.sockets = []
       self.argumentDescriptions = []
+      self.properties = {}
       self.outputConnection = None
   
    def __del__(self):
@@ -551,19 +552,19 @@ class Block():
       # save block properties that are not specified within genus
       # i.e. properties that were created/specified during runtime
 
-      '''
-      if (not properties.isEmpty()):
+      if (len(self.properties) > 0):
          propertiesElement = document.createElement("LangSpecProperties");
-         for (Entry<String, String> property : properties.entrySet()):
+         for key, value in self.properties.iteritems():
+           
             propertyElement = document.createElement("LangSpecProperty");
-            propertyElement.setAttribute("key", property.getKey());
-            propertyElement.setAttribute("value", property.getValue());
+            propertyElement.setAttribute("key", key);
+            propertyElement.setAttribute("value", value);
 
             propertiesElement.appendChild(propertyElement);
 
          blockElement.appendChild(propertiesElement);
 
-      '''
+
       return blockElement;
 
 
