@@ -16,8 +16,8 @@ from blocks.BlockConnectorShape import BlockConnectorShape
 class SocketLabel(BlockLabel):
 
 
-   def __init__(self, socket, initLabelText, labelType, isEditable, blockID):
-      BlockLabel.__init__(self, initLabelText, '', '', labelType, isEditable, blockID, False, QtGui.QColor(190, 250, 125));
+   def __init__(self, parent, socket, initLabelText, labelType, isEditable, blockID):
+      BlockLabel.__init__(self,parent,  initLabelText, '', '', labelType, isEditable, blockID, False, QtGui.QColor(190, 250, 125));
       self.socket = socket;
 
    '''

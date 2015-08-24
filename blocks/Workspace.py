@@ -313,3 +313,13 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
         return blocks;
 
+
+    def getUnderRB(self, globalPos):
+        canvas = self.getActiveCanvas().canvas;
+        for rb in canvas.getBlocks():
+            pos = rb.mapFromGlobal( globalPos);
+            if rb.blockArea.contains(pos): 
+                return rb
+        return None       
+ 
+        

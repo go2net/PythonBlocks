@@ -70,8 +70,7 @@ class RenderableBlock(QtGui.QWidget):
         obj.afterTag = ConnectorTag(block.getAfterConnector());
         obj.beforeTag = ConnectorTag(block.getBeforeConnector());
 
-        obj.blockLabel = NameLabel(block.getBlockLabel(), block.getLabelPrefix(), block.getLabelSuffix(), BlockLabel.Type.NAME_LABEL, block.isLabelEditable, obj.blockID);
-        obj.blockLabel.setParent(obj)
+        obj.blockLabel = NameLabel(obj, block.getBlockLabel(), block.getLabelPrefix(), block.getLabelSuffix(), BlockLabel.Type.NAME_LABEL, block.isLabelEditable, obj.blockID);
 
         #self.pageLabel = PageLabel(self.getBlock().getPageLabel(), BlockLabel.Type.PAGE_LABEL, False, self.blockID);
 
@@ -429,7 +428,7 @@ class RenderableBlock(QtGui.QWidget):
                 if( SocketLabel.ignoreSocket(socket) ):
                     tag.setLabel(None); #ignored sockets have no label
                 else:
-                    label = SocketLabel(socket, socket.getLabel(),BlockLabel.Type.PORT_LABEL,socket.isLabelEditable,self.blockID);
+                    label = SocketLabel(self, socket, socket.getLabel(),BlockLabel.Type.PORT_LABEL,socket.isLabelEditable,self.blockID);
                     argumentToolTip = self.getBlock().getArgumentDescription(i);
                     if(argumentToolTip != None):
                         label.setToolTipText(self.getBlock().getArgumentDescription(i).trim());
@@ -437,7 +436,7 @@ class RenderableBlock(QtGui.QWidget):
                     tag.setLabel(label);
                     label.setZoomLevel(self.getZoom());
                     label.setText(socket.getLabel());
-                    label.setParent(self)
+                    #label.setParent(self)
                     #self.add(label.getJComponent());
                     changed = True;
             else:
@@ -1009,10 +1008,13 @@ class RenderableBlock(QtGui.QWidget):
                 loc.setY(float(coor.text))
     
     def mousePressEvent(self, event):
-        if(not self.initFinished):
-          self.onMousePress(event)     
+        rb = self.getUnderRB(event.globalPos()) 
+        rb.onMousePress(event)
+        #if(not self.initFinished):
+        #  self.onMousePress(event)     
 
     def onMousePress(self, event):
+        #rb = self.getUnderRB(event.globalPos())
         #self.raise_()
         for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
             if (socket.hasBlock()):
@@ -1021,13 +1023,32 @@ class RenderableBlock(QtGui.QWidget):
         self.pressedPos = self.mapFromGlobal(event.globalPos())
         self.last_peer_socket = None
 
-    def mouseMoveEvent(self, event):
-        if(not self.initFinished):
-          self.mouseDragged(event)
-    
+    def mouseMoveEvent(self, event): 
+        
+        if(self.focusedBlock != None and self.focusedBlock.pickedUp):
+            self.focusedBlock.mouseDragged(event)
+        else:
+            rb = self.getUnderRB(event.globalPos())
+            if(rb != self.focusedBlock):
+                if(self.focusedBlock != None):
+                    self.focusedBlock.onMouseLeave()
+                
+                if(rb != None):
+                    rb.onMouseEnter()
+                
+                self.focusedBlock = rb           
+
+            if(rb != None):
+                rb.mouseDragged(event)
+            
     def mouseReleaseEvent(self, event):
-        if(not self.initFinished):
-          self.onMouseRelease(event) 
+        #if(not self.initFinished):
+        #  self.onMouseRelease(event) 
+        rb = self.getUnderRB(event.globalPos())
+        
+        if(rb != None):
+            rb.onMouseRelease(event) 
+        
  
     def onMouseRelease(self, event):
         self.window().onBlockClick(self)
@@ -1223,3 +1244,14 @@ class RenderableBlock(QtGui.QWidget):
         #self.comment.setConstrainComment(true);
         #self.comment.setLocation(renderable.comment.getLocation());
         #self.comment.getArrow().updateArrow();
+
+    def getUnderRB(self, globalPos):
+        return self.workspace.getUnderRB(globalPos)
+        
+    @property
+    def focusedBlock(self):
+        return self.workspaceWidget.focusedBlock
+
+    @focusedBlock.setter
+    def focusedBlock(self, value):
+        self.workspaceWidget.focusedBlock = value

@@ -28,11 +28,12 @@ class BlockLabel():
   blockFontMedium_Plain = QtGui.QFont("Arial",  8, QtGui.QFont.Normal);
   blockFontLarge_Plain  = QtGui.QFont("Arial", 10, QtGui.QFont.Normal);
 
-  def __init__(self,initLabelText, prefix, suffix, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
+  def __init__(self,parent, initLabelText, prefix, suffix, labelType, isEditable, blockID, hasComboPopup, tooltipBackground):
       from blocks.RenderableBlock import RenderableBlock
       from blocks.FactoryRenderableBlock import FactoryRenderableBlock
       
-      self.widget= LabelWidget(blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
+      self.widget= LabelWidget(parent, blockID, initLabelText, prefix, suffix, Block.getBlock(blockID).getColor().darker(), tooltipBackground)
+      self.parent = parent
       self.zoom = 1.0
       self.initLabelText = initLabelText
       self.labelType = labelType

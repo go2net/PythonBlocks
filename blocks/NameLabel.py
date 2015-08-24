@@ -14,12 +14,12 @@ from PyQt4 import QtGui
 
 class NameLabel(BlockLabel):
 
-   def __init__(self, initLabelText, prefix, suffix, labelType, isEditable, blockID):
-      BlockLabel.__init__(self,initLabelText,prefix, suffix, labelType, isEditable, blockID, True, QtGui.QColor(255,255,225))
-      self.blockID = blockID;
+    def __init__(self, parent, initLabelText, prefix, suffix, labelType, isEditable, blockID):
+        BlockLabel.__init__(self,parent, initLabelText,prefix, suffix, labelType, isEditable, blockID, True, QtGui.QColor(255,255,225))
+        self.blockID = blockID;
 
 
-   def update(self):
+    def update(self):
       from blocks.RenderableBlock import RenderableBlock
       rb = RenderableBlock.getRenderableBlock(self.blockID);
       if (rb != None):
@@ -60,6 +60,3 @@ class NameLabel(BlockLabel):
          y=self.rescale(y);
 
          self.setPixelLocation(x, y);
-
-if __name__ == '__main__':
-    main()

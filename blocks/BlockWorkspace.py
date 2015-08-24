@@ -70,13 +70,23 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
 
 
     def mouseMoveEvent(self, event):
+        rb = None
+        
         globalPos = event.globalPos()
-        if(self.focusBlock != None and not self.focusBlock.pickedUp):
-            pos = self.focusBlock.mapFromGlobal( globalPos);
-            if not self.focusBlock.blockArea.contains(pos):
-                self.focusBlock.onMouseLeave()
-                self.focusBlock = None
-   
+        rb = self.getUnderRB(globalPos)   
+        
+        if(rb == self.focusBlock): return        
+        
+        if(rb != None):
+            rb.onMouseEnter()  
+         
+        if( self.focusBlock != None and not self.focusBlock.pickedUp):               
+            self.focusBlock.onMouseLeave()
+            self.focusBlock = None
+            
+        self.focusBlock = rb
+ 
+                
     def contains(self,pos):
         return self.rect().contains(pos)
 
@@ -93,6 +103,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         
         self.ws = Workspace.ws
         self.canvas = Canvas(self);
+        self._focusedBlock = None
 
         self.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -117,6 +128,15 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.workspaceWidgets.append(self.trash)
         self.workspaceWidgets.append(self.canvas)
         
+    @property
+    def focusedBlock(self):
+        return self._focusedBlock
+
+    @focusedBlock.setter
+    def focusedBlock(self, value):
+        self._focusedBlock = value
+        
+    
     def getWidgetAt(self,point):
       '''
       * Returns the WorkspaceWidget currently at the specified point
@@ -204,7 +224,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.canvas.resize(width,height)
 
         block.setMouseTracking(True);
-        block.installEventFilter(self.canvas); 
+        #block.installEventFilter(self.canvas); 
  
     def addBlock(self,block):
       # update parent widget if dropped block
@@ -280,8 +300,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
       self.repaint();
       
     def mouseMoveEvent(self, event):
-      print(str(self)+":mouseMoveEvent")
-      pass
+        #print(str(self)+":mouseMoveEvent")
+        #self.canvas.mouseMoveEvent(event)
+        pass
 
     def insertPage(self,page, position):
         from PageDivider import PageDivider
