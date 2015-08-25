@@ -5,52 +5,52 @@ from components.propertyeditor.Property import Property
 from ConnectorsInfoWnd import ConnectorsInfoWnd
 
 class TreeItem(object):
-  def __init__(self, data, parent=None):
-      self.parentItem = parent
-      self.itemData = data
-      self.childItems = []
+    def __init__(self, data, parent=None):
+        self.parentItem = parent
+        self.itemData = data
+        self.childItems = []
      
-  def columnCount(self):
-      return len(self.itemData)
+    def columnCount(self):
+        return len(self.itemData)
       
-  def childCount(self):
-      return len(self.childItems)
+    def childCount(self):
+        return len(self.childItems)
       
-  def child(self, row):
-      return self.childItems[row]
+    def child(self, row):
+        return self.childItems[row]
       
-  def data(self, column):
-      try:
+    def data(self, column):
+        try:
           return self.itemData[column]
-      except IndexError:
+        except IndexError:
           return None
           
-  def parent(self):
-    return self.parentItem
+    def parent(self):
+        return self.parentItem
         
-  def appendChild(self, item):
-      self.childItems.append(item)
+    def appendChild(self, item):
+        self.childItems.append(item)
  
 class BlockGenusTreeModel(QPropertyModel):
   
-  def __init__(self, mainWnd, genus, langDefLocation, parent=None):
-    super(BlockGenusTreeModel, self).__init__(parent)
-    self.genus = genus
-    self.properties = {}
-    self.mainWnd = mainWnd
-    self.langDefLocation = langDefLocation
-    self.rootItem = TreeItem(("Property", "Value"))
-    self.setupModelData(genus, self.m_rootItem)
+    def __init__(self, mainWnd, genus, langDefLocation, parent=None):
+        super(BlockGenusTreeModel, self).__init__(parent)
+        self.genus = genus
+        self.properties = {}
+        self.mainWnd = mainWnd
+        self.langDefLocation = langDefLocation
+        self.rootItem = TreeItem(("Property", "Value"))
+        self.setupModelData(genus, self.m_rootItem)
 
     
-  '''      
-  def columnCount(self, parent):
+    '''      
+    def columnCount(self, parent):
       if parent.isValid():
           return parent.internalPointer().columnCount()
       else:
           return self.rootItem.columnCount()    
  
-  def rowCount(self, parent):
+    def rowCount(self, parent):
       if parent.column() > 0:
           return 0
 
@@ -62,131 +62,131 @@ class BlockGenusTreeModel(QPropertyModel):
       return parentItem.childCount()
  
 
-  def index(self, row, column, parent):
-    if not self.hasIndex(row, column, parent):
-        return QtCore.QModelIndex()
+    def index(self, row, column, parent):
+        if not self.hasIndex(row, column, parent):
+            return QtCore.QModelIndex()
 
-    if not parent.isValid():
-        parentItem = self.rootItem
-    else:
-        parentItem = parent.internalPointer()
+        if not parent.isValid():
+            parentItem = self.rootItem
+        else:
+            parentItem = parent.internalPointer()
 
-    childItem = parentItem.child(row)
-    if childItem:
-        return self.createIndex(row, column, childItem)
-    else:
-        return QtCore.QModelIndex()
- 
-  def headerData(self, section, orientation, role):
-      if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
+        childItem = parentItem.child(row)
+        if childItem:
+            return self.createIndex(row, column, childItem)
+        else:
+            return QtCore.QModelIndex()
+     
+    def headerData(self, section, orientation, role):
+        if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
           return self.rootItem.data(section)
 
-      return None 
-  '''
-  def setupModelData(self, genus, parent):
-    parents = [parent]
-    self.mainWnd.showBlock(genus)
-    
-    #columnData = ['A','B']  
-    #print(genusNode.attrib)
-    #
-    self.properties['genusName'] = Property('Genus Name', genus.genusName, parents[-1])    
-    self.properties['kind'] = Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
-    self.properties['initLabel'] = Property('Init Label', genus.initLabel, parents[-1])
-    self.properties['labelPrefix'] = Property('Label Prefix', genus.labelPrefix, parents[-1])
-    self.properties['labelSuffix'] = Property('Label Suffix', genus.labelSuffix, parents[-1])    
-    self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
-    self.properties['isStarter'] = Property('Starter', genus.isStarter, parents[-1]) 
-    self.properties['isTerminator'] = Property('Terminator', genus.isTerminator, parents[-1]) 
-    self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
+        return None 
+    '''
+    def setupModelData(self, genus, parent):
+        parents = [parent]
+        self.mainWnd.showBlock(genus)
+        
+        #columnData = ['A','B']  
+        #print(genusNode.attrib)
+        #
+        self.properties['genusName'] = Property('Genus Name', genus.genusName, parents[-1])    
+        self.properties['kind'] = Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
+        self.properties['initLabel'] = Property('Init Label', genus.initLabel, parents[-1])
+        self.properties['labelPrefix'] = Property('Label Prefix', genus.labelPrefix, parents[-1])
+        self.properties['labelSuffix'] = Property('Label Suffix', genus.labelSuffix, parents[-1])    
+        self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
+        self.properties['isStarter'] = Property('Starter', genus.isStarter, parents[-1]) 
+        self.properties['isTerminator'] = Property('Terminator', genus.isTerminator, parents[-1]) 
+        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
-    self.all_connectors = genus.sockets
+        self.all_connectors = genus.sockets
+        
+        plug_index = 0
+        socket_index = 0
+        
+        if genus.plug != None:
+            Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
+        
+        for connector in genus.sockets:
+          
+            connector_kind = connector.kind
+            if(connector_kind == 0):
+                Property('Socket #'+str(socket_index), '',  self.properties['connectors'])
+                socket_index += 1
+            else:
+                Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
+                plug_index += 1
+        
+            lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+            for key in genus.properties:
+                Property(key,genus.properties[key], lang_root)
+            
+            self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
     
-    plug_index = 0
-    socket_index = 0
-    
-    if genus.plug != None:
-      Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
-    
-    for connector in genus.sockets:
-      
-      connector_kind = connector.kind
-      if(connector_kind == 0):
-        Property('Socket #'+str(socket_index), '',  self.properties['connectors'])
-        socket_index += 1
-      else:
-        Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
-        plug_index += 1
-    
-    lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
-    for key in genus.properties:
-      Property(key,genus.properties[key], lang_root)
-    
-    self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
-    
-  def onShowConnectorsInfo(self):
+    def onShowConnectorsInfo(self):
 
-    dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
-    dlg.exec_()
-    print('onShowConnectorsInfo')
+        dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
+        dlg.exec_()
+        print('onShowConnectorsInfo')
 
-  def setData(self, index, value, role):
-    ret = super(BlockGenusTreeModel, self).setData(index, value, role)
-    if(ret == True):
-      item = index.internalPointer()
-      property_name = item.objectName()
-      
-      if(property_name == 'Color'):
-        self.genus.color = value
-        
-      if(property_name == 'Genus Kind'):
-        self.genus.kind = value
-        
-      if(property_name == 'Init Label'):
-        self.genus.initLabel = value
-        
-      if(property_name == 'Label Prefix'):
-        self.genus.labelPrefix = value        
-        
-      if(property_name == 'Label Suffix'):
-        self.genus.labelSuffix = value
-        
-      if(property_name == 'Starter'):
-        self.genus.isStarter = value        
-        
-      if(property_name == 'Terminator'):
-        self.genus.isTerminator = value     
-        
-      self.mainWnd.showBlock(self.genus)
-    return ret
-  #def dataChanged ( topLeft, bottomRight ):
-  #  print('dataChanged')
+    def setData(self, index, value, role):
+        ret = super(BlockGenusTreeModel, self).setData(index, value, role)
+        if(ret == True):
+            item = index.internalPointer()
+            property_name = item.objectName()
+              
+            if(property_name == 'Color'):
+                self.genus.color = value
 
-  '''  
-  def parent(self, index):
-    if not index.isValid():
-      return QtCore.QModelIndex()
+            if(property_name == 'Genus Kind'):
+                self.genus.kind = value
 
-    childItem = index.internalPointer()
-    parentItem = childItem.parent()
+            if(property_name == 'Init Label'):
+                self.genus.initLabel = value
 
-    if parentItem == self.rootItem:
-        return QtCore.QModelIndex()
+            if(property_name == 'Label Prefix'):
+                self.genus.labelPrefix = value        
+
+            if(property_name == 'Label Suffix'):
+                self.genus.labelSuffix = value
+
+            if(property_name == 'Starter'):
+                self.genus.isStarter = value        
+
+            if(property_name == 'Terminator'):
+                self.genus.isTerminator = value     
+
+            self.mainWnd.showBlock(self.genus)
+        return ret
+        #def dataChanged ( topLeft, bottomRight ):
+        #  print('dataChanged')
+
+    '''  
+    def parent(self, index):
+        if not index.isValid():
+          return QtCore.QModelIndex()
+
+        childItem = index.internalPointer()
+        parentItem = childItem.parent()
+
+        if parentItem == self.rootItem:
+            return QtCore.QModelIndex()
          
-  def data(self, index, role):
-      if not index.isValid():
-          return None
+    def data(self, index, role):
+        if not index.isValid():
+            return None
 
-      if role != QtCore.Qt.DisplayRole:
-          return None
+        if role != QtCore.Qt.DisplayRole:
+            return None
 
-      item = index.internalPointer()
+        item = index.internalPointer()
 
-      return item.data(index.column())
+        return item.data(index.column())
       
-  def flags(self, index):
-      if not index.isValid():
-          return 0
+    def flags(self, index):
+        if not index.isValid():
+            return 0
 
-      return QtCore.Qt.ItemIsTristate |QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable  
-  ''' 
+        return QtCore.Qt.ItemIsTristate |QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable  
+    ''' 
