@@ -80,7 +80,7 @@ class BlockUtilities():
       # RenderableBlock renderable = new RenderableBlock(this.getParentWidget(), block.blockID);
 
       renderable = RenderableBlock.from_blockID(canvas, block.blockID);
-      renderable.initFinished = False
+      #renderable.initFinished = False
       #renderable.setZoomLevel(BlockUtilities.zoom);
       #renderable.redrawFromTop();
       #renderable.repaint();

@@ -42,18 +42,18 @@ class BlockLabel():
       # Only editable if the isEditable parameter was true, the label is either a Block's name or
       # socket label, the block can edit labels, and the block is not in the factory.
       self.widget.setEditable(
-      		isEditable and
-      		(labelType == BlockLabel.Type.NAME_LABEL or labelType == BlockLabel.Type.PORT_LABEL) and
-      		Block.getBlock(blockID).isLabelEditable() and
-      		not isinstance(RenderableBlock.getRenderableBlock(blockID),FactoryRenderableBlock));
+            isEditable and
+            (labelType == BlockLabel.Type.NAME_LABEL or labelType == BlockLabel.Type.PORT_LABEL) and
+            Block.getBlock(blockID).isLabelEditable() and
+            not isinstance(RenderableBlock.getRenderableBlock(blockID),FactoryRenderableBlock));
       if(labelType == None or labelType == (BlockLabel.Type.NAME_LABEL)):
          self.widget.setFont(BlockLabel.blockFontLarge_Bold);
       elif(labelType == (BlockLabel.Type.PAGE_LABEL)):
          self.widget.setFont(BlockLabel.blockFontMedium_Bold);
       elif(labelType ==(BlockLabel.Type.PORT_LABEL)):
-      	self.widget.setFont(BlockLabel.blockFontMedium_Bold);
+        self.widget.setFont(BlockLabel.blockFontMedium_Bold);
       elif(labelType == (BlockLabel.Type.DATA_LABEL)):
-      	self.widget.setFont(BlockLabel.blockFontMedium_Bold);
+        self.widget.setFont(BlockLabel.blockFontMedium_Bold);
       
       # set initial text
       self.widget.updateLabelText(initLabelText);

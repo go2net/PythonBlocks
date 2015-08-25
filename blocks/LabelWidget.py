@@ -61,9 +61,13 @@ class LabelWidget(QtGui.QWidget):
     def mousePressEvent(self, event):
         self.isPressed = True
         event.ignore();  
-    
+        # propagate mouse move event to parent
+        # propagate mouse move event to parent
+        #self.parent().mousePressEvent(event)
+        
     def mouseMoveEvent(self, event):
         # propagate mouse move event to parent
+        #pass
         self.parent().mouseMoveEvent(event)
     
     def mouseReleaseEvent(self, event):
@@ -80,7 +84,9 @@ class LabelWidget(QtGui.QWidget):
             self.textField.selectAll()
             
         event.ignore();   
- 
+        # propagate mouse move event to parent
+        #self.parent().mouseReleaseEvent(event)
+        
     def setMenu(self, hasSiblings, siblings, isVariable):
 
         self.isVariable = isVariable
@@ -307,7 +313,14 @@ class BlockLabelTextField(QtGui.QTextEdit):
     def mouseMoveEvent(self, event):
         # propagate mouse move event to parent
         self.parent().mouseMoveEvent(event)
-
+        
+    def mousePressEvent(self, event):
+        # propagate mouse press event to parent
+        self.parent().mousePressEvent(event)
+        
+    def mouseReleaseEvent(self, event):
+        # propagate mouse release event to parent
+        self.parent().mouseReleaseEvent(event) 
 
 class ShadowLabel(QtGui.QLabel):
 
@@ -338,7 +351,15 @@ class ShadowLabel(QtGui.QLabel):
     def mouseMoveEvent(self, event):
         # propagate mouse move event to parent
         self.parent().mouseMoveEvent(event)
-    
+        
+    def mousePressEvent(self, event):
+        # propagate mouse release event to parent
+        self.parent().mousePressEvent(event) 
+        
+    def mouseReleaseEvent(self, event):
+        # propagate mouse release event to parent
+        self.parent().mouseReleaseEvent(event) 
+        
     def suggestEditable(self, suggest):
         '''
          * Toggles the visual suggestion that this label may be editable depending on the specified
@@ -424,11 +445,18 @@ class LabelMenu(ShadowLabel):
         
         self.popupmenu.popup(event.globalPos())       
         event.ignore();  
-    
+        # propagate mouse move event to parent
+        self.parent().mouseReleaseEvent(event)
+        
     def mouseMoveEvent(self, event):
         # propagate mouse move event to parent
-        self.parent().mouseMoveEvent(event)        
-      
+        self.parent().mouseMoveEvent(event)  
+        
+    def mousePressEvent(self, event):
+        # propagate mouse press event to parent
+        self.parent().mousePressEvent(event)       
+       
+        
     def doStuff(self, sender, name):
         if(sender != self.lastSelectedItem):
           if(self.lastSelectedItem != None):

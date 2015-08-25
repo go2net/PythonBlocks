@@ -23,7 +23,7 @@ class RenderableBlock(QtGui.QWidget):
     def __init__(self, _workspaceWidget):         
         QtGui.QWidget.__init__(self)
         self._workspaceWidget = _workspaceWidget
-        self.initFinished = False
+        self.setMouseTracking(True);
         
     def __del__(self):
         pass
@@ -1008,17 +1008,20 @@ class RenderableBlock(QtGui.QWidget):
                 loc.setY(float(coor.text))
     
     def mousePressEvent(self, event):
-        rb = self.getUnderRB(event.globalPos()) 
-        rb.onMousePress(event)
-        #if(not self.initFinished):
-        #  self.onMousePress(event)     
-
+        if self.blockArea.contains(event.globalPos()):
+            rb = self
+        else:
+            rb = self.getUnderRB(event.globalPos())
+    
+        if(rb != None): 
+            rb.onMousePress(event)         
+  
     def onMousePress(self, event):
-        #rb = self.getUnderRB(event.globalPos())
-        #self.raise_()
         for socket in BlockLinkChecker.getSocketEquivalents(self.getBlock()):
             if (socket.hasBlock()):
                 RenderableBlock.getRenderableBlock(socket.blockID).raise_()
+
+        self.raise_()
         self.pickedUp = True; # mark this block as currently being picked up
         self.pressedPos = self.mapFromGlobal(event.globalPos())
         self.last_peer_socket = None
@@ -1027,30 +1030,30 @@ class RenderableBlock(QtGui.QWidget):
         
         if(self.focusedBlock != None and self.focusedBlock.pickedUp):
             self.focusedBlock.mouseDragged(event)
+            return            
+
+        if self.blockArea.contains(event.globalPos()):
+            rb = self
         else:
             rb = self.getUnderRB(event.globalPos())
-            if(rb != self.focusedBlock):
-                if(self.focusedBlock != None):
-                    self.focusedBlock.onMouseLeave()
-                
-                if(rb != None):
-                    rb.onMouseEnter()
-                
-                self.focusedBlock = rb           
 
-            if(rb != None):
-                rb.mouseDragged(event)
+        if(rb != None):
+            rb.onMouseEnter() 
+
+        if(rb != self.focusedBlock):
+            if(self.focusedBlock != None):
+                self.focusedBlock.onMouseLeave() 
+                
+            self.focusedBlock = rb          
+
             
     def mouseReleaseEvent(self, event):
-        #if(not self.initFinished):
-        #  self.onMouseRelease(event) 
-        rb = self.getUnderRB(event.globalPos())
         
-        if(rb != None):
-            rb.onMouseRelease(event) 
-        
+        if(self.focusedBlock != None and self.focusedBlock.pickedUp):
+            self.focusedBlock.onMouseRelease(event) 
+            return         
  
-    def onMouseRelease(self, event):
+    def onMouseRelease(self, event):       
         self.window().onBlockClick(self)
         if event.button() == QtCore.Qt.LeftButton:
             if (not self.pickedUp):
@@ -1077,7 +1080,7 @@ class RenderableBlock(QtGui.QWidget):
                 #if(isinstance(widget, MiniMap)):
                 #    Workspace.getInstance().getMiniMap().animateAutoCenter(this);
 
-        self.pickedUp = False;
+        self.pickedUp = False
 
         #if(e.isPopupTrigger() or SwingUtilities.isRightMouseButton(e) or e.isControlDown()):
         #    # add context menu at right click location to provide functionality
@@ -1124,8 +1127,8 @@ class RenderableBlock(QtGui.QWidget):
 
     def drag(self, widget, dx,dy,isTopLevelBlock):
 
-        if (not self.pickedUp):
-            return
+        #if (not self.pickedUp):
+        #    return
         
         #throw new RuntimeException("dragging without prior pickup");
         # mark this as being dragged
@@ -1177,8 +1180,6 @@ class RenderableBlock(QtGui.QWidget):
 
 
     def startDragging(self, widget, event):
-
-        self.pickedUp = True;
         self.lastDragWidget = widget;
         #if(renderable.hasComment()):
         #    renderable.comment.setConstrainComment(False);
