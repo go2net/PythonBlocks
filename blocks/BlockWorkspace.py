@@ -17,8 +17,9 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         blocks = []
         for component in self.findChildren(RenderableBlock) :
             blocks.append(component)
-
-        return blocks        
+        
+        # reversed this list to make top most at begining
+        return reversed(blocks)        
 
     def initNewRB(self, rb):
         self.focusBlock = rb      
@@ -87,27 +88,15 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         
     
     def getWidgetAt(self,point):
-      '''
-      * Returns the WorkspaceWidget currently at the specified point
-      * @param point the <code>Point2D</code> to get the widget at, given
-      *   in Workspace (i.e. window) coordinates
-      * @return the WorkspaceWidget currently at the specified point
-      '''
-      # TODO: HUGE HACK, get rid of this. bascally, the facotry has priority
-      #topWidget = QtGui.QApplication.topLevelAt(self.factory.canvas.mapFromGlobal(point));
-
-      #return topWidget
       pos = self.ws.factory.getNavigator().mapFromGlobal(point)
 
       if(self.ws.factory.getNavigator().rect().contains(pos)):
          return self.ws.factory
 
       for widget in self.workspaceWidgets:
-         #print(widget)
          pos = widget.mapFromGlobal(point)
          if (widget.isVisible() and widget.contains(pos)):
-            #print(widget)
-            return widget; # because these are sorted by draw depth, the first hit is on top
+            return widget
 
       return None; # hopefully we never get here
 
@@ -129,13 +118,13 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
         
     def getBlocksByName(self,genusName):
-      if(genusName in self.block_list):
-         return self.block_list[genusName]
-      else:
-         return []
+        if(genusName in self.block_list):
+            return self.block_list[genusName]
+        else:
+            return []
     
     def getPages(self):
-      return self.pages
+        return self.pages
 
     def getBlocks(self):
       blocks = []
@@ -144,16 +133,10 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
       return blocks
 
-      allPageBlocks = []
-      for p in self.pages:
-         allPageBlocks += p.getBlocks();
-
-      #print(allPageBlocks)
-      return allPageBlocks;
 
     def reset(self): 
-      for block in self.getBlocks():
-         block.setParent(None)
+        for block in self.getBlocks():
+            block.setParent(None)
 
     def blockDropped(self,block):
         #print('blockDropped')
@@ -292,14 +275,15 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
     def getTopLevelBlocks(self):
         topBlocks = []
         for renderable in self.getBlocks():
-          block = renderable.getBlock()
-          if (block.getPlug() == None or 
-              block.getPlugBlockID() == None or 
+            block = renderable.getBlock()
+            if (block.getPlug() == None or 
+                block.getPlugBlockID() == None or 
                 block.getPlugBlockID()  == -1):
-            if (block.getBeforeConnector() == None or 
-                block.getBeforeBlockID() == None or 
-                block.getBeforeBlockID() == -1):
-                topBlocks.append(renderable);
+            
+                if (block.getBeforeConnector() == None or 
+                    block.getBeforeBlockID() == None or 
+                    block.getBeforeBlockID() == -1):
+                    topBlocks.append(renderable);
 
         return topBlocks
 

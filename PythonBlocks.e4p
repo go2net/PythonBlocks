@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-08-13, 00:58:48 -->
+<!-- Saved: 2015-08-25, 23:10:00 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -77,6 +77,8 @@
     <Source>FactoryTreeView.py</Source>
     <Source>ttt.py</Source>
     <Source>blocks/BlockWorkspace.py</Source>
+    <Source>checkbox.py</Source>
+    <Source>components/propertyeditor/AdvanceEditor.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>

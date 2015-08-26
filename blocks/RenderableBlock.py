@@ -1247,7 +1247,7 @@ class RenderableBlock(QtGui.QWidget):
         #self.comment.getArrow().updateArrow();
 
     def getUnderRB(self, globalPos):
-        return self.workspace.getUnderRB(globalPos)
+        return self.workspaceWidget.canvas.getUnderRB(globalPos)
         
     @property
     def focusedBlock(self):

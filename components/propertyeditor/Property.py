@@ -54,7 +54,7 @@ class Property(QtCore.QObject):
 
         if(self.obj_type == Property.ADVANCED_EDITOR):
             advancedEditor = AdvanceEditor(self, parent)
-            QObject.connect(advancedEditor.button, SIGNAL('clicked()'),self.onAdvBtnClick);
+            advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             return advancedEditor
             
         if(self.obj_type == Property.CHECKBOX_EDITOR):
@@ -79,7 +79,7 @@ class Property(QtCore.QObject):
         return None
    
   
-    def onAdvBtnClick(self):
+    def onAdvBtnClick(self, editor):
         print('onAdvBtnClick')
  
     def setEditorData(self, editor, val):
@@ -90,7 +90,7 @@ class Property(QtCore.QObject):
             editor.setCurrentIndex(index)
             return True
             
-        if(self.obj_type == Property.ADVANCED_EDITOR):      
+        if(self.obj_type == Property.ADVANCED_EDITOR): 
             editor.text = val
             return True       
             

@@ -2,7 +2,6 @@
 from PyQt4 import QtGui,QtCore
 from blocks.PageDrawerLoadingUtils import PageDrawerLoadingUtils
 from blocks.FactoryManager import FactoryManager
-from blocks.TrashCan import TrashCan
 from blocks.BlockWorkspace import BlockWorkspace
 from blocks.WorkspaceWidget import WorkspaceWidget
 
@@ -36,110 +35,77 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
         splitter.setStretchFactor (1, 1 )
         layout.addWidget(splitter);
 
-        self.createTrashCan()
 
         self.addWidget(self.factory, True, False);
-        self.addWidget(self.trash, True, False);
         self.setMouseTracking(True)
+        
     def onCloseBlockCanvas(self,  index):
         if (index == -1) :
             return
-
-        #tabItem = self.blockTab.widget(index)
-        
-        # Removes the tab at position index from this stack of widgets.
-        # The page widget itself is not deleted.
         self.blockTab.removeTab(index); 
   
     def mouseMoveEvent(self, event):
         print(str(self)+":mouseMoveEvent")
         pass
     
-    def createTrashCan(self):
-      #add trashcan and prepare trashcan images
-      tc = QtGui.QIcon ("support/images/trash.png")
-      openedtc = QtGui.QIcon("support/images/trash_open.png");
-      sizes = tc.availableSizes();
-      maximum = sizes[0].width();
-      for i in range(1,len(sizes)):
-         maximum = QtGui.qMax(maximum, sizes[i].width());
-      self.trash = TrashCan(self,
-         tc.pixmap(QtCore.QSize(maximum, maximum)),
-         openedtc.pixmap(QtCore.QSize(maximum, maximum))
-         );
-      self.trash.lower()
-      #self.trash.setParent(self.blockCanvas)
-
-
     def getRenderableBlocksFromGenus(self,genusName):
-      return self.blockCanvas.getBlocksByName(genusName);
+        return self.blockCanvas.getBlocksByName(genusName);
 
     def getActiveCanvas(self):
-      assert(isinstance(self.blockTab.currentWidget(), BlockWorkspace))
-      return self.blockTab.currentWidget()
+        assert(isinstance(self.blockTab.currentWidget(), BlockWorkspace))
+        return self.blockTab.currentWidget()
 
     def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
-      '''
-      * Loads the workspace with the following content:
-      * - RenderableBlocks and their associated Block instances that reside
-      *   within the BlockCanvas
-      * @param newRoot the XML Element containing the new desired content.  Some of the
-      * content in newRoot may override the content in originalLangRoot.  (For now,
-      * pages are automatically overwritten.  In the future, will allow drawers
-      * to be optionally overriden or new drawers to be inserted.)
-      * @param originalLangRoot the original language/workspace specification content
-      * @requires originalLangRoot != null
-       '''
-      blockWorkspace = BlockWorkspace() 
-      self.blockTab.addTab(blockWorkspace, fileName)
-      self.blockTab.setCurrentWidget(blockWorkspace) 
-      
-      if(newRoot != None):
-         # load pages, page drawers, and their blocks from save file
-         blockWorkspace.loadSaveString(newRoot);
-         # load the block drawers specified in the file (may contain
-         # custom drawers) and/or the lang def file if the contents specify
-         #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
-         PageDrawerLoadingUtils.loadBlockDrawerSets(newRoot, self.factory);
-         #self.loadWorkspaceSettings(newRoot);
-      else:
-         # load from original language/workspace root specification
-         blockWorkspace.loadSaveString(originalLangRoot);
-         # load block drawers and their content
-         PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
-         #loadWorkspaceSettings(originalLangRoot);
-         pass
+        '''
+        * Loads the workspace with the following content:
+        * - RenderableBlocks and their associated Block instances that reside
+        *   within the BlockCanvas
+        * @param newRoot the XML Element containing the new desired content.  Some of the
+        * content in newRoot may override the content in originalLangRoot.  (For now,
+        * pages are automatically overwritten.  In the future, will allow drawers
+        * to be optionally overriden or new drawers to be inserted.)
+        * @param originalLangRoot the original language/workspace specification content
+        * @requires originalLangRoot != null
+        '''
+        blockWorkspace = BlockWorkspace() 
+        self.blockTab.addTab(blockWorkspace, fileName)
+        self.blockTab.setCurrentWidget(blockWorkspace) 
+
+        if(newRoot != None):
+            # load pages, page drawers, and their blocks from save file
+            blockWorkspace.loadSaveString(newRoot);
+            # load the block drawers specified in the file (may contain
+            # custom drawers) and/or the lang def file if the contents specify
+            #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
+            PageDrawerLoadingUtils.loadBlockDrawerSets(newRoot, self.factory);
+            #self.loadWorkspaceSettings(newRoot);
+        else:
+            # load from original language/workspace root specification
+            blockWorkspace.loadSaveString(originalLangRoot);
+            # load block drawers and their content
+            PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
+            #loadWorkspaceSettings(originalLangRoot);
+            pass
 
 
     def addWidget(self,widget, addGraphically, floatOverCanvas):
-      '''
-      * Adds the specified widget to this Workspace
-      * @param widget the desired widget to add
-      * @param floatOverCanvas if true, the Workspace will add and render this widget such that it "floats"
-      * above the canvas and its set of blocks.  If false, the widget will be laid out beside the canvas.  This feature
-      * only applies if the specified widget is added graphically to the workspace (addGraphically = true)
-      * @param addGraphically  a Swing dependent parameter to tell the Workspace whether or not to add
-      * the specified widget as a child component.  This parameter should be false for widgets that have a
-      * parent already specified
-      '''
-      if(addGraphically):
-         if(floatOverCanvas):
-            widget.raise_()
-            #self.layout.addWidget(widget)
-            pass
-            #button = QtGui.QPushButton()
-            #self.layout.addWidget(button)
-            #widget.getJComponent().setVisible(true)
-            #revalidate()
-            #repaint()
-         else:
-            pass
-            #blockCanvas.getJComponent().setPreferredSize(new Dimension(blockCanvas.getWidth() - widget.getJComponent().getWidth(), blockCanvasLayer.getHeight()));
-
-
-      self.workspaceWidgets.append(widget)
-      #if(not success):
-      #   print("not able to add: "+widget);
+        '''
+        * Adds the specified widget to this Workspace
+        * @param widget the desired widget to add
+        * @param floatOverCanvas if true, the Workspace will add and render this widget such that it "floats"
+        * above the canvas and its set of blocks.  If false, the widget will be laid out beside the canvas.  This feature
+        * only applies if the specified widget is added graphically to the workspace (addGraphically = true)
+        * @param addGraphically  a Swing dependent parameter to tell the Workspace whether or not to add
+        * the specified widget as a child component.  This parameter should be false for widgets that have a
+        * parent already specified
+        '''
+        if(addGraphically):
+            if(floatOverCanvas):
+                widget.raise_()
+                pass
+            else:
+                pass
+        self.workspaceWidgets.append(widget)
 
     def reset(self):
       '''
@@ -222,7 +188,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       #revalidate();
 
     def getMiniMap(self):
-      return self.miniMap;
+        return self.miniMap;
 
     def getWidgetAt(self,point):
       '''
@@ -249,17 +215,17 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       return None; # hopefully we never get here
 
     def getSaveNode(self,document):
-      return self.getActiveCanvas().getSaveNode(document);
+        return self.getActiveCanvas().getSaveNode(document);
 
     def resizeEvent(self, event):
-      #self.trash.rePosition()
-      #self.miniMap.repositionMiniMap();
+        #self.trash.rePosition()
+        #self.miniMap.repositionMiniMap();
 
-      self.factory.onResize(event)
+        self.factory.onResize(event)
 
       
     def mousePressEvent(self, event):
-     self.factory.ResetButtons()
+        self.factory.ResetButtons()
 
 
 
@@ -312,14 +278,5 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
             blocks.append(rb)
 
         return blocks;
-
-
-    def getUnderRB(self, globalPos):
-        canvas = self.getActiveCanvas().canvas;
-        for rb in canvas.getBlocks():
-            pos = rb.mapFromGlobal( globalPos);
-            if rb.blockArea.contains(pos): 
-                return rb
-        return None       
  
         
