@@ -21,9 +21,11 @@ class Property(QtCore.QObject):
         self.obj_value = obj_value
         self.obj_data = obj_data
         self.setObjectName(name);
-
+        
     def row(self):
-        if self.parent:
+        if self.parent():
+            #print('children:')
+            #print(self.parent().children())
             return self.parent().children().index(self)
         return 0
 
@@ -42,11 +44,23 @@ class Property(QtCore.QObject):
 
     @readOnly.setter
     def readOnly(self, value):
-        self._readOnly = value
-      
+        self._readOnly = value      
 
-    def isReadOnly(self):
-        return self.readOnly
+    @property
+    def editorType(self):
+        return self.obj_type
+
+    @editorType.setter
+    def editorType(self, value):
+        self.obj_type = value
+
+    @property
+    def propertyData(self):
+        return self.obj_data
+
+    @propertyData.setter
+    def propertyData(self, value):
+        self.obj_data = value
 
     def createEditor(self, parent, option):
         editor = None
@@ -98,7 +112,7 @@ class Property(QtCore.QObject):
             editor.setColor(val);
             return True;
         else:
-            return False;	
+            return False;   
 
   
     def editorData(self, editor):

@@ -44,65 +44,52 @@ class BlockPropTreeModel(QPropertyModel):
         self.mainWnd = mainWnd
         self.rootItem = TreeItem(("Property", "Value"))
         self.setupModelData(rb, self.m_rootItem)
-
+        self.lang_root = None
+        
     def setupModelData(self, rb, parent):
         parents = [parent]
 
-        #columnData = ['A','B']  
-        #print(genusNode.attrib)
-        #
         self.properties['genusName'] = Property('Genus Name', self.block.getGenusName(), parents[-1])    
         self.properties['genusName'].readOnly = True
 
-        #self.properties['kind'] = Property('Genus Kind', genus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
         self.properties['label'] = Property('Label', self.block.getBlockLabel(), parents[-1])
         self.properties['label'].readOnly = True
-         
-        #self.properties['labelPrefix'] = Property('Label Prefix', genus.labelPrefix, parents[-1])
-        #self.properties['labelSuffix'] = Property('Label Suffix', genus.labelSuffix, parents[-1])    
-        #self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
-        #self.properties['isStarter'] = Property('Starter', genus.isStarter, parents[-1]) 
-        #self.properties['isTerminator'] = Property('Terminator', genus.isTerminator, parents[-1]) 
-        #self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
-        #self.all_connectors = genus.sockets
+        self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+        
+        #for key in self.block.properties:
+        #    self.properties[key] = Property(key,self.block.properties[key], self.lang_root)
 
-        #plug_index = 0
-        #socket_index = 0
-
-        #if genus.plug != None:
-        #  Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
-
-        #for connector in genus.sockets:
-          
-        #  connector_kind = connector.kind
-        #  if(connector_kind == 0):
-        #    Property('Socket #'+str(socket_index), '',  self.properties['connectors'])
-        #    socket_index += 1
-        #  else:
-        #    Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
-        #    plug_index += 1
-
-        lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
-        for key in self.block.properties:
-            self.properties[key] = Property(key,self.block.properties[key], lang_root)
-
-        if( 'module_name' not in self.block.properties):
-            if( 'module_name' in self.block.getGenus().properties):
-                self.properties['module_name'] = Property('module',self.block.getGenus().properties['module_name'], lang_root,Property.ADVANCED_EDITOR)
-            else:
-                self.properties['module_name'] = Property('module','', lang_root, lang_root,Property.ADVANCED_EDITOR)
-            self.properties['module_name'].onAdvBtnClick = self.getModuleName
-            
-        if( 'function_name' not in self.block.properties):
-            if( 'function_name' in self.block.getGenus().properties):
-                self.properties['function_name'] = Property('function',self.block.getGenus().properties['function_name'], lang_root)
-            else:
-                self.properties['function_name'] = Property('function','', lang_root)
-          
-        #self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
-
+        module_name = ''
+        if( 'module_name' in self.block.properties):
+            module_name = self.block.properties['module_name'] 
+        elif( 'module_name' in self.block.getGenus().properties):
+            module_name = self.block.getGenus().properties['module_name']            
+        
+        self.properties['module_name'] = Property('module',module_name, self.lang_root,Property.ADVANCED_EDITOR)
+        self.properties['module_name'].onAdvBtnClick = self.getModuleName
+    
+        function_name = ''
+        if( 'function_name' in self.block.properties):
+            function_name = self.block.properties['function_name'] 
+        elif( 'function_name' in self.block.getGenus().properties):
+            function_name = self.block.getGenus().properties['function_name']
+        
+        self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+                
+    def getModuleFuncList(self, module_name):
+        import inspect
+        from importlib import import_module
+        all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction)       
+        
+        func_list = []
+        for function in all_functions:
+            func_list.append(function[0])        
+    
+        return func_list
+    
     def getModuleName(self, editor):
+
         dlg = RestrictFileDialog(None)
         dlg.setDirectory('.')
         dlg.setWindowTitle( 'Choose module file' )
@@ -115,11 +102,16 @@ class BlockPropTreeModel(QPropertyModel):
             fileName = dlg.getRelatedPath()
             fileName = fileName.replace('.py', '')
             module_name = fileName.replace('/', '.')
-            self.properties['module_name'].setValue(module_name)
-            editor.text = module_name
-            #self.setData(self.index(0, 0, QModelIndex()), self.index(self.rowCount(QModelIndex()) - 1, 0, QModelIndex()))
-     
-        #filename = dlg.getOpenFileName(None, 'Choose module file', '.', "All python files(*.py)")
+            
+            self.properties['module_name'].setValue(module_name)            
+            module_name_index = self.getIndexForNode(self.properties['module_name'])         
+            self.dataChanged.emit(module_name_index, module_name_index) 
+            
+            self.properties['function_name'].editorType = Property.COMBO_BOX_EDITOR
+            self.properties['function_name'].propertyData = self.getModuleFuncList(module_name)
+            function_name_index = self.getIndexForNode(self.properties['function_name'])            
+            self.dataChanged.emit(function_name_index, function_name_index) 
+
         
     def onShowConnectorsInfo(self):
 
@@ -132,29 +124,13 @@ class BlockPropTreeModel(QPropertyModel):
         if(ret == True):
             item = index.internalPointer()
             property_name = item.objectName()
-          
-            if(property_name == 'Color'):
-                self.genus.color = value
             
-            if(property_name == 'Genus Kind'):
-                self.genus.kind = value
-            
-            if(property_name == 'Init Label'):
-                self.genus.initLabel = value
-            
-            if(property_name == 'Label Prefix'):
-                self.genus.labelPrefix = value 
-            
-            if(property_name == 'Label Suffix'):
-                self.genus.labelSuffix = value
-            
-            if(property_name == 'Starter'):
-                self.genus.isStarter = value        
-            
-            if(property_name == 'Terminator'):
-                self.genus.isTerminator = value     
+            print(property_name), print(value)
+            if(property_name == 'module'):
+                self.block.properties['module_name'] = value
                 
-            #if(property_name == 'module_name'):
-            #    self.genus.isTerminator = value    
+            if(property_name == 'function'):
+                self.block.properties['function_name'] = value  
             
+            print(self.block.properties)
         return ret

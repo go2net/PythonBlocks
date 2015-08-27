@@ -1022,10 +1022,12 @@ class RenderableBlock(QtGui.QWidget):
                 RenderableBlock.getRenderableBlock(socket.blockID).raise_()
 
         self.raise_()
+        #print('self.pickedUp = True')
         self.pickedUp = True; # mark this block as currently being picked up
         self.pressedPos = self.mapFromGlobal(event.globalPos())
         self.last_peer_socket = None
-
+        self.focusedBlock = self
+        
     def mouseMoveEvent(self, event): 
         
         if(self.focusedBlock != None and self.focusedBlock.pickedUp):
@@ -1055,6 +1057,7 @@ class RenderableBlock(QtGui.QWidget):
  
     def onMouseRelease(self, event):       
         self.window().onBlockClick(self)
+        
         if event.button() == QtCore.Qt.LeftButton:
             if (not self.pickedUp):
                 raise Exception("dropping without prior dragging?");

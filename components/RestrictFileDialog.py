@@ -62,7 +62,6 @@ class RestrictFileDialog(QFileDialog) :
         return self.mtopDir;
 
     def pathFits(self, path):
-        print(self.mtopDir)
         return self.mtopDir == '' or (path.startswith(self.mtopDir) and len(path) > len(self.mtopDir))
 
     def checkHistory(self):      

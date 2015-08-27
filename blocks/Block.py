@@ -1,38 +1,37 @@
 
-import re
 from blocks.BlockGenus import BlockGenus
 from blocks.BlockConnector import BlockConnector
 import uuid
-       
+
 class Block():
 
-   # The ID that is to be assigned to the next new block
-   NEXT_ID = 1
-   MAX_RESERVED_ID = -1
-   
-   # Defines a NULL id for a Block
-   NULL = -1
+    # The ID that is to be assigned to the next new block
+    NEXT_ID = 1
+    MAX_RESERVED_ID = -1
 
-   # A universal hashmap of all the Block instances
-   ALL_BLOCKS= {}
-   tmpObj = None
+    # Defines a NULL id for a Block
+    NULL = -1
+
+    # A universal hashmap of all the Block instances
+    ALL_BLOCKS= {}
+    tmpObj = None
    
-   def __init__(self, canvas):
-      self.canvas = canvas
-      self.pageLabel = ""
-      self.hasFocus = False;
-      self.isBad = False;
-      self.disabled = False
-      self.sockets = []
-      self.argumentDescriptions = []
-      self.properties = {}
-      self.outputConnection = None
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.pageLabel = ""
+        self.hasFocus = False;
+        self.isBad = False;
+        self.disabled = False
+        self.sockets = []
+        self.argumentDescriptions = []
+        self.properties = {}
+        self.outputConnection = None
   
-   def __del__(self):
-      pass
+    def __del__(self):
+        pass
 
-   @classmethod
-   def createBlockFromID(cls, canvas, genusName, linkToStubs=True, id=-1,label=None):
+    @classmethod
+    def createBlockFromID(cls, canvas, genusName, linkToStubs=True, id=-1,label=None):
       obj = cls(canvas)
       obj.linkToStubs = linkToStubs
       obj._blockID = id
@@ -117,39 +116,39 @@ class Block():
       return obj
       
    
-   @classmethod
-   def createBlock(cls, canvas,  genusName, linkToStubs, label=None):
+    @classmethod
+    def createBlock(cls, canvas,  genusName, linkToStubs, label=None):
      id = Block.generateId()
      return Block.createBlockFromID(canvas, genusName, linkToStubs, id,label)
 
-   @property
-   def blockID(self):
+    @property
+    def blockID(self):
       """I'm the 'x' property."""
       return self._blockID
 
-   @blockID.setter
-   def blockID(self, value):
+    @blockID.setter
+    def blockID(self, value):
       self._blockID = value
 
-   @blockID.deleter
-   def blockID(self):
+    @blockID.deleter
+    def blockID(self):
       del self._blockID       
       
-   def generateId():
+    def generateId():
        return str(uuid.uuid1())
        
-   def getInputTargetBlock(self, name):
-    socket = self.getSocketByName(name.lower())
-    if(socket == None):
-      return None
+    def getInputTargetBlock(self, name):
+        socket = self.getSocketByName(name.lower())
+        if(socket == None):
+          return None
+          
+        blockID = socket.blockID
+        if(blockID == -1):
+          return None
+        else:
+          return Block.getBlock(blockID)
       
-    blockID = socket.blockID
-    if(blockID == -1):
-      return None
-    else:
-      return Block.getBlock(blockID)
-      
-   def getBlock(blockID):
+    def getBlock(blockID):
      
       if(blockID == -1): return Block.tmpObj 
 
@@ -159,89 +158,89 @@ class Block():
          #print("Not found")
          return None
 
-   def isInfix(self):
-      genus = self.getGenus()
-      return genus.isInfix()
+    def isInfix(self):
+        genus = self.getGenus()
+        return genus.isInfix()
 
-   def getGenus(self):
-     return BlockGenus.getGenusWithName(self.genusName)
+    def getGenus(self):
+        return BlockGenus.getGenusWithName(self.genusName)
 
-   def changeLabelTo(self,  label):
-      self.label = label 
+    def changeLabelTo(self,  label):
+        self.label = label 
 
-   def hasPlug(self):
-     return not (self.plug == None);
+    def hasPlug(self):
+        return not (self.plug == None);
 
-   def getPlug(self):
-     return self.plug;
+    def getPlug(self):
+        return self.plug;
 
 
-   def hasPageLabel(self):
+    def hasPageLabel(self):
       return self.pageLabel != None and self.pageLabel != ""
 
-   def isCommandBlock(self):
+    def isCommandBlock(self):
       return self.getGenus().isCommandBlock()
 
-   def hasSiblings(self):
+    def hasSiblings(self):
      return self.getGenus().hasSiblings();
 
-   def getSiblingsList(self):
+    def getSiblingsList(self):
       return self.getGenus().getSiblingsList()
 
 
-   def hasBeforeConnector(self):
+    def hasBeforeConnector(self):
       return self.before != None;
 
-   def hasAfterConnector(self):
+    def hasAfterConnector(self):
       return self.after != None;
 
-   def getSockets(self):
+    def getSockets(self):
       return self.sockets
       
-   def getSocketByName(self, name):
+    def getSocketByName(self, name):
       for socket in self.getSockets():
         if(socket.getLabel() == name):
           return socket
       return None
 
-   def isProcedureDeclBlock(self):
+    def isProcedureDeclBlock(self):
       return self.getGenus().isProcedureDeclBlock();
 
-   def getAfterConnector(self):
+    def getAfterConnector(self):
       return self.after;
 
-   def getBeforeConnector(self):
+    def getBeforeConnector(self):
       return self.before;
 
-   def getBlockFullLabel(self):
+    def getBlockFullLabel(self):
       return self.getGenus().getLabelPrefix()+self.label+self.getGenus().getLabelSuffix();
       
-   def getBlockLabel(self):
+    def getBlockLabel(self):
       return self.label
 
-   def getLabelPrefix(self):
+    def getLabelPrefix(self):
       return self.getGenus().getLabelPrefix()
       
-   def getLabelSuffix(self):
+    def getLabelSuffix(self):
       return self.getGenus().getLabelSuffix()
       
-   def setBlockLabel(self, newLabel):
+    def setBlockLabel(self, newLabel):
       from blocks.BlockStub import BlockStub
       if (self.linkToStubs and self.hasStubs()):
           BlockStub.parentNameChanged(self.label, newLabel, self.blockID);
 
       self.label = newLabel;
 
-   def isLabelEditable(self):
+    def isLabelEditable(self):
       return self.getGenus()._isLabelEditable;
 
-   def getPageLabel(self):
+    def getPageLabel(self):
       return self.pageLabel;
 
-   def getNumSockets(self):
+    def getNumSockets(self):
       return len(self.sockets);
 
-   def getSocketAt(self, index):
+    def getSocketAt(self, index):
         if(index<len(self.sockets)):
            return self.sockets[index];
         else:
@@ -249,40 +248,40 @@ class Block():
         #assert index < sockets.size() : "Index "+index+" is greater than the num of sockets: "+sockets.size()+" of "+this;
       
 
-   def getInitBlockImageMap(self):
+    def getInitBlockImageMap(self):
       return self.getGenus().getInitBlockImageMap();
 
-   def isDeclaration(self):
+    def isDeclaration(self):
       return self.getGenus().isDeclaration();
 
-   def getColor(self):
+    def getColor(self):
       return self.getGenus().getColor();
 
-   def isDataBlock(self):
+    def isDataBlock(self):
       return self.getGenus().isDataBlock();
 
-   def isFunctionBlock(self):
+    def isFunctionBlock(self):
       return self.getGenus().isFunctionBlock();
       
-   def isVariable(self):
+    def isVariable(self):
       return self.getGenus().isVariableDeclBlock();      
 
-   def getArgumentDescription(self, index):
+    def getArgumentDescription(self, index):
       if (index < len(self.argumentDescriptions) and index >= 0):
          return self.argumentDescriptions[index];
 
       return None;
 
-   def getInitialLabel(self):
+    def getInitialLabel(self):
      return self.getGenus().getInitialLabel();
 
-   def labelMustBeUnique(self):
+    def labelMustBeUnique(self):
       return self.getGenus().labelMustBeUnique;
 
-   def hasDefaultArgs(self):
+    def hasDefaultArgs(self):
       return self.getGenus().hasDefaultArgs();
 
-   def linkAllDefaultArgs(self):
+    def linkAllDefaultArgs(self):
       if(self.getGenus().hasDefaultArgs()):
          defargIDs = []
          for con in self.sockets:
@@ -296,7 +295,7 @@ class Block():
 
       return None;
 
-   def blockConnected(self,connectedSocket, connectedBlockID):
+    def blockConnected(self,connectedSocket, connectedBlockID):
       from blocks.BlockStub import BlockStub
       if (connectedSocket.isExpandable):
          if (connectedSocket.getExpandGroup().length() > 0):
@@ -317,26 +316,26 @@ class Block():
       if(self.hasStubs()):
          BlockStub.parentConnectorsChanged(self.blockID);
 
-   def hasStubs(self):
+    def hasStubs(self):
       return self.linkToStubs and  self.getGenus().hasStubs();
 
-   def getBeforeBlockID(self):
+    def getBeforeBlockID(self):
       if (self.before == None):
          return Block.NULL;
       return self.before.blockID;
 
-   def getAfterBlockID(self):
+    def getAfterBlockID(self):
       if (self.after == None):
          return Block.NULL;
       return self.after.blockID;
 
-   def getPlugBlockID(self):
+    def getPlugBlockID(self):
       if(self.plug == None):
          return Block.NULL;
       return self.plug.blockID;
 
 
-   def getExpandGroup(groups, group):
+    def getExpandGroup(groups, group):
       for list in groups:
          # Always at least one element in the group.
          if (list[0].getExpandGroup() == group):
@@ -344,7 +343,7 @@ class Block():
 
       return None;
 
-   def expandSocketGroup(self,group):
+    def expandSocketGroup(self,group):
       '''
       * Expand a socket group in this block. For now, all new sockets will
       * be added after the last socket in the group.
@@ -369,7 +368,7 @@ class Block():
          newConn = BlockConnector(conn);
          self.sockets.add(index, newConn);
 
-   def shrinkSocketGroup(self, socket):
+    def shrinkSocketGroup(self, socket):
       '''
       * Shrink a socket group (un-expand it).
       '''
@@ -400,7 +399,7 @@ class Block():
          else:
              index+=1;
 
-   def canRemoveSocket(self, socket):
+    def canRemoveSocket(self, socket):
       '''
       * Returns true if the given expandable socket can be removed.
       '''
@@ -423,7 +422,7 @@ class Block():
       # remove it. (We also can't remove it if they're both -1, obviously.)
       return False;
 
-   def blockDisconnected(self,disconnectedSocket):
+    def blockDisconnected(self,disconnectedSocket):
       '''
       * Informs this Block that a block has disconnected from the specified disconnectedSocket
       * @param disconnectedSocket
@@ -442,7 +441,7 @@ class Block():
       if(self.hasStubs()):
          BlockStub.parentConnectorsChanged(self.blockID);
 
-   def getConnectorTo(self,otherBlockID):
+    def getConnectorTo(self,otherBlockID):
       '''
       * Searches for the BlockConnector linking this block to another block
       * @param otherBlockID the Block ID if the other block
@@ -461,7 +460,7 @@ class Block():
             return socket;
       return None;
 
-   def getGenusName(self):
+    def getGenusName(self):
       '''
       * Returns the name of this genus
       * FORWARDED FROM BLOCK GENUS
@@ -470,7 +469,7 @@ class Block():
       return self.genusName
 
 
-   def getSaveNode(self, document, x, y, commentNode, isCollapsed):
+    def getSaveNode(self, document, x, y, commentNode, isCollapsed):
       blockElement = document.createElement("Block");
 
       blockElement.setAttribute("id", str(self.blockID));
@@ -531,10 +530,10 @@ class Block():
 
 
       if (self.plug != None):
-        	plugElement = document.createElement("Plug");
-        	blockConnectorNode = self.plug.getSaveNode(document, "plug");
-        	plugElement.appendChild(blockConnectorNode);
-        	blockElement.appendChild(plugElement);
+            plugElement = document.createElement("Plug");
+            blockConnectorNode = self.plug.getSaveNode(document, "plug");
+            plugElement.appendChild(blockConnectorNode);
+            blockElement.appendChild(plugElement);
 
       if (len(self.sockets) > 0) :
          socketsElement = document.createElement("Sockets");
@@ -551,14 +550,13 @@ class Block():
 
       # save block properties that are not specified within genus
       # i.e. properties that were created/specified during runtime
-
+      print(self.properties)     
       if (len(self.properties) > 0):
          propertiesElement = document.createElement("LangSpecProperties");
-         for key, value in self.properties.iteritems():
-           
+         for key in self.properties:
             propertyElement = document.createElement("LangSpecProperty");
             propertyElement.setAttribute("key", key);
-            propertyElement.setAttribute("value", value);
+            propertyElement.setAttribute("value", self.properties[key]);
 
             propertiesElement.appendChild(propertyElement);
 
@@ -569,166 +567,152 @@ class Block():
 
 
 
-   def loadBlockFrom(node, canvas):
-      '''
-      * Loads Block information from the specified node and return a Block
-      * instance with the loaded information
-      * @param workspace The workspace in use
-      * @param node Node cantaining desired information
-      * @return Block instance containing loaded information
-      '''
-      from blocks.BlockStub import BlockStub
+    def loadBlockFrom(node, canvas):
+        '''
+        * Loads Block information from the specified node and return a Block
+        * instance with the loaded information
+        * @param workspace The workspace in use
+        * @param node Node cantaining desired information
+        * @return Block instance containing loaded information
+        '''
+        from blocks.BlockStub import BlockStub
+
+        block = None;
+        id = None;
+        genusName = None;
+        label = None;
+        pagelabel = None;
+        badMsg = None;
+        beforeID = None;
+        afterID = None;
+        plug = None;
+        sockets = []
+        blockLangProperties = {};
+        hasFocus = False;
+
+        # stub information if this node contains a stub
+        isStubBlock = False;
+        stubParentName = None;
+        stubParentGenus = None;
       
-      block = None;
-      id = None;
-      genusName = None;
-      label = None;
-      pagelabel = None;
-      badMsg = None;
-      beforeID = None;
-      afterID = None;
-      plug = None;
-      sockets = []
-      blockLangProperties = {};
-      hasFocus = False;
+        if (node.tag == ("BlockStub")):
+            isStubBlock = True;
+            blockNode = None;
+            stubChildren = node.getchildren();
+            for infoNode in stubChildren:
+                if (infoNode.tag == ("StubParentName")):
+                    stubParentName = infoNode.getTextContent();
+                elif (infoNode.tag ==("StubParentGenus")) :
+                   stubParentGenus = infoNode.getTextContent();
+                elif (infoNode.tag == ("Block")):
+                   blockNode = infoNode;
 
-      # stub information if this node contains a stub
-      isStubBlock = False;
-      stubParentName = None;
-      stubParentGenus = None;
-      pattern = "(.*)"
-      # Matcher nameMatcher;
-      
-      if (node.tag == ("BlockStub")):
-         isStubBlock = True;
-         blockNode = None;
-         stubChildren = node.getchildren();
-         for infoNode in stubChildren:
-            if (infoNode.tag == ("StubParentName")):
-               stubParentName = infoNode.getTextContent();
-            elif (infoNode.tag ==("StubParentGenus")) :
-               stubParentGenus = infoNode.getTextContent();
-            elif (infoNode.tag == ("Block")):
-               blockNode = infoNode;
-
-         node = blockNode;
+            node = blockNode;
 
 
-      if (node.tag == ("Block")):
-         # load attributes
-         if("id" in node.attrib):
-            id = node.attrib["id"]  #+ canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
-            # BUG: id may conflict with the new Block
-            # bug fix: HE Qichen 2012-2-24
+        if (node.tag == ("Block")):
+            # load attributes
+            if("id" in node.attrib):
+                id = node.attrib["id"]  #+ canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
 
-         if("genus-name" in node.attrib):
-            genusName = node.attrib["genus-name"]
+            if("genus-name" in node.attrib):
+                genusName = node.attrib["genus-name"]
 
+            # load optional items
+            if("has-focus" in node.attrib):
+                hasFocus = True if node.attrib["has-focus"] == ("yes") else False
 
-         # load optional items
-         if("has-focus" in node.attrib):
-            hasFocus = True if node.attrib["has-focus"] == ("yes") else False
+            # load elements
+            children = node.getchildren()
 
-         # load elements
-         children = node.getchildren()
+            for child in children:
+                if (child.tag == ("Label")):
+                    label = child.text;
+                elif (child.tag == ("PageLabel")):
+                    pagelabel = child.getTextContent;
+                elif (child.tag == ("CompilerErrorMsg")):
+                    badMsg = child.text;
+                elif  (child.tag == ("BeforeBlockId")):
+                    beforeID = child.text
+                elif  (child.tag == ("AfterBlockId")):
+                    afterID = child.text
+                elif  (child.tag == ("Plug")):
+                    plugs = child.getchildren(); #there should only one child
 
-         for child in children:
-            if (child.tag == ("Label")):
-                 label = child.text;
-            elif (child.tag == ("PageLabel")):
-                 pagelabel = child.getTextContent;
-            elif (child.tag == ("CompilerErrorMsg")):
-                 badMsg = child.text;
-            elif  (child.tag == ("BeforeBlockId")):
-                 beforeID = child.text
-            elif  (child.tag == ("AfterBlockId")):
-                 afterID = child.text
-            elif  (child.tag == ("Plug")):
-               plugs = child.getchildren(); #there should only one child
+                    for plugNode in plugs:
+                        if (plugNode.tag == ("BlockConnector")):
+                            plug = BlockConnector.loadBlockConnector(plugNode,);
 
-               for plugNode in plugs:
-                  if (plugNode.tag == ("BlockConnector")):
-                     plug = BlockConnector.loadBlockConnector(plugNode,);
+                elif  (child.tag == ("Sockets")) :
+                    socketNodes = child.getchildren();
+                    for  socketNode in socketNodes:
+                        if (socketNode.tag == ("BlockConnector")) :
+                            sockets.append(BlockConnector.loadBlockConnector(socketNode));
 
-            elif  (child.tag == ("Sockets")) :
-               socketNodes = child.getchildren();
-               for  socketNode in socketNodes:
-                  if (socketNode.tag == ("BlockConnector")) :
-                     sockets.append(BlockConnector.loadBlockConnector(socketNode));
+                elif  (child.tag == ("LangSpecProperties")):
+                    blockLangProperties = {}
+                    propertyNodes = child.getchildren();
 
-            elif  (child.tag == ("LangSpecProperties")):
-               blockLangProperties = {}
-               propertyNodes = child.getchildren();
-               key = None;
-               value = None;
-               for  propertyNode in propertyNodes:
-                  if (propertyNode.tag == ("LangSpecProperty")):
-                     nameMatcher = re.match(pattern,propertyNode.getAttribute("key"))
-                     if (nameMatcher): # will be true
-                       key = nameMatcher.group(1);
-
-                     opt_item = propertyNode.getAttributes("value");
-                     if (opt_item != None):
-                        nameMatcher = re.match(pattern,opt_item)
-                        if (nameMatcher): # will be true
-                           value = nameMatcher.group(1);
-                        else:
-                           value = propertyNode.getTextContent();
-
-                     if (key != None and value != None):
-                        blockLangProperties.put(key, value);
+                    for prop in propertyNodes:
                         key = None;
-                        value = None;
+                        value = None;                  
+                        if(prop.tag == ("LangSpecProperty")):
+                            if("key" in prop.attrib):
+                               key = prop.attrib["key"]
+                            if("value" in prop.attrib):
+                               value = prop.attrib["value"]
+                            else:
+                               value = prop.text
 
+                        if(key != None and value != None):
+                           blockLangProperties[key] = value
 
-         #assert genusName != null && id != null : "Block did not contain required info id: " + id + " genus: " + genusName;
-         #create block or block stub instance
-         if (not isStubBlock):
-            if (label == None):
-               block = Block.createBlockFromID(canvas, genusName, True, id);
+             #create block or block stub instance
+            if (not isStubBlock):
+                if (label == None):
+                   block = Block.createBlockFromID(canvas, genusName, True, id);
+                else:
+                   block = Block.createBlockFromID(canvas,  genusName,True, id,label);
+
             else:
-               block = Block.createBlockFromID(canvas,  genusName,True, id,label);
-
-         else:
-            #assert label != null : "Loading a block stub, but has a null label!";
-            block = BlockStub(node.workspace, id, genusName, label, stubParentName, stubParentGenus);
+                #assert label != null : "Loading a block stub, but has a null label!";
+                block = BlockStub(node.workspace, id, genusName, label, stubParentName, stubParentGenus);
 
 
-         if (plug != None):
-            # Some callers can change before/after/plug types. We have
-            # to synchronize so that we never have both.
-            # assert beforeID == null && afterID == null;
-            block.plug = plug;
-            block.removeBeforeAndAfter();
+            if (plug != None):
+                # Some callers can change before/after/plug types. We have
+                # to synchronize so that we never have both.
+                # assert beforeID == null && afterID == null;
+                block.plug = plug;
+                block.removeBeforeAndAfter();
 
-         if (len(sockets) > 0):
-             block.sockets = sockets;
+            if (len(sockets) > 0):
+                block.sockets = sockets;
 
-         if (beforeID != None):
-             block.before.setConnectorBlockID(beforeID);
+            if (beforeID != None):
+                block.before.setConnectorBlockID(beforeID);
 
-         if (afterID != None):
-             block.after.setConnectorBlockID(afterID);
+            if (afterID != None):
+                block.after.setConnectorBlockID(afterID);
 
-         if (pagelabel != None):
-             block.pageLabel = pagelabel;
+            if (pagelabel != None):
+                block.pageLabel = pagelabel;
 
-         if (badMsg != None):
-             block.isBad = True;
-             block.badMsg = badMsg;
+            if (badMsg != None):
+                block.isBad = True;
+                block.badMsg = badMsg;
 
-         block.hasFocus = hasFocus;
+            block.hasFocus = hasFocus;
 
-         #load language dependent properties
-         if (blockLangProperties != None and not len(blockLangProperties) == 0):
-             block.properties = blockLangProperties;
+            #load language dependent properties
+            if (blockLangProperties != None and len(blockLangProperties) > 0):
+                block.properties = blockLangProperties;
+
+            return block;
+
+        return None;
 
 
-         return block;
-
-
-      return None;
-
-   def removeBeforeAndAfter(self):
-      self.before = None;
-      self.after = None;
+    def removeBeforeAndAfter(self):
+        self.before = None;
+        self.after = None;
