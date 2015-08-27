@@ -18,13 +18,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         return self.createIndex(row, column, parentItem.children()[row])    
   
     def getIndexForNode(self, node):
-        node_row =  node.row()
-        if(node.parent() == None):
-            paretn_index = QtCore.QModelIndex()
-        else:
-            paretn_index = self.getIndexForNode(node.parent())
-        print(paretn_index)    
-        return self.index(node_row, 0, paretn_index)
+        return self.createIndex(node.row(), 1, node)    
   
     def headerData (self,  section, orientation, role) :
     

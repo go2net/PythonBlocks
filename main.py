@@ -242,15 +242,15 @@ class MainWnd(QtGui.QMainWindow):
         #this.setTitle(makeFrameTitle());
 
     def onRun(self):
-        #try:
-        gen = PythonGen(WorkspaceController.workspace)
-        code = gen.workspaceToCode()
-        print(code)
-        exec(code)
-        #except:
-        #  exc_type, exc_obj, exc_tb = sys.exc_info()
-        #  fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        #  print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
+        try:
+            gen = PythonGen(WorkspaceController.workspace)
+            code = gen.workspaceToCode()
+            print(code)
+            exec(code)
+        except:
+          exc_type, exc_obj, exc_tb = sys.exc_info()
+          fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+          print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
         #pass
 
     def loadFile(self):

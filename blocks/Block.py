@@ -710,9 +710,14 @@ class Block():
 
             return block;
 
-        return None;
-
+        return None
 
     def removeBeforeAndAfter(self):
         self.before = None;
         self.after = None;
+
+    def getProperty(self, property) :
+        if(property in self.properties):
+          return self.properties[property]
+        else:
+          return ''

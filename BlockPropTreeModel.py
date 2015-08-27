@@ -42,7 +42,6 @@ class BlockPropTreeModel(QPropertyModel):
         self.block = rb.getBlock()
         self.properties = {}
         self.mainWnd = mainWnd
-        self.rootItem = TreeItem(("Property", "Value"))
         self.setupModelData(rb, self.m_rootItem)
         self.lang_root = None
         
@@ -89,7 +88,7 @@ class BlockPropTreeModel(QPropertyModel):
         return func_list
     
     def getModuleName(self, editor):
-
+            
         dlg = RestrictFileDialog(None)
         dlg.setDirectory('.')
         dlg.setWindowTitle( 'Choose module file' )
@@ -104,15 +103,14 @@ class BlockPropTreeModel(QPropertyModel):
             module_name = fileName.replace('/', '.')
             
             self.properties['module_name'].setValue(module_name)            
-            module_name_index = self.getIndexForNode(self.properties['module_name'])         
+            module_name_index = self.getIndexForNode(self.properties['module_name']) 
             self.dataChanged.emit(module_name_index, module_name_index) 
             
             self.properties['function_name'].editorType = Property.COMBO_BOX_EDITOR
             self.properties['function_name'].propertyData = self.getModuleFuncList(module_name)
             function_name_index = self.getIndexForNode(self.properties['function_name'])            
             self.dataChanged.emit(function_name_index, function_name_index) 
-
-        
+      
     def onShowConnectorsInfo(self):
 
         dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
@@ -123,9 +121,8 @@ class BlockPropTreeModel(QPropertyModel):
         ret = super(BlockPropTreeModel, self).setData(index, value, role)
         if(ret == True):
             item = index.internalPointer()
-            property_name = item.objectName()
-            
-            print(property_name), print(value)
+            property_name = item.objectName()            
+
             if(property_name == 'module'):
                 self.block.properties['module_name'] = value
                 
