@@ -231,12 +231,12 @@ class MainWnd(QtGui.QMainWindow):
 
     def onOpen(self):
         if (self.isWorkspaceChanged()):
-           quit_msg = "There have no saved change, do you want to save it?"
-           reply = QtGui.QMessageBox.question(self, 'Message',
-                          quit_msg, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+            quit_msg = "There have no saved change, do you want to save it?"
+            reply = QtGui.QMessageBox.question(self, 'Message',
+                quit_msg, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
 
-           if reply == QtGui.QMessageBox.Yes:
-              self.onSave();
+            if reply == QtGui.QMessageBox.Yes:
+                self.onSave();
 
         self.loadFile();
         #this.setTitle(makeFrameTitle());
@@ -261,14 +261,14 @@ class MainWnd(QtGui.QMainWindow):
         self.filename = filename
 
         try:
-           QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
-           self.loadBlockFile(self.filename);
-          #context.setWorkspaceChanged(false);
+            QtGui.QApplication.setOverrideCursor(QtGui.QCursor(QtCore.Qt.WaitCursor))
+            self.loadBlockFile(self.filename);
+            #context.setWorkspaceChanged(false);
         #except:
         #   print("ERROR!")
         #   pass
         finally:
-           QtGui.QApplication.restoreOverrideCursor()
+            QtGui.QApplication.restoreOverrideCursor()
 
 
     def isWorkspaceChanged(self):

@@ -1,5 +1,6 @@
 from PyQt4 import  QtCore, QtGui
 from components.propertyeditor.Property import Property
+from components.RestrictFileDialog import RestrictFileDialog
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -102,3 +103,38 @@ class QPropertyModel(QtCore.QAbstractItemModel):
 
         return False;
 
+    def getModuleFuncList(self, module_name):
+        import inspect
+        from importlib import import_module
+        func_list = []
+        
+        if(module_name != ''):            
+            all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction)       
+            for function in all_functions:
+                func_list.append(function[0])        
+    
+        return func_list
+    
+    def getModuleName(self, editor):
+            
+        dlg = RestrictFileDialog(None)
+        dlg.setDirectory('.')
+        dlg.setWindowTitle( 'Choose module file' )
+        dlg.setViewMode( QFileDialog.Detail )
+        dlg.setNameFilters( [self.tr('All python files(*.py)'), self.tr('All Files (*)')] )
+        dlg.setDefaultSuffix( '.py' ) 
+        dlg.setTopDir('.')       
+        
+        if (dlg.exec_()):
+            fileName = dlg.getRelatedPath()
+            fileName = fileName.replace('.py', '')
+            module_name = fileName.replace('/', '.')
+            
+            self.properties['module_name'].setValue(module_name)            
+            module_name_index = self.getIndexForNode(self.properties['module_name']) 
+            self.dataChanged.emit(module_name_index, module_name_index) 
+            
+            self.properties['function_name'].editorType = Property.COMBO_BOX_EDITOR
+            self.properties['function_name'].propertyData = self.getModuleFuncList(module_name)
+            function_name_index = self.getIndexForNode(self.properties['function_name'])            
+            self.dataChanged.emit(function_name_index, function_name_index) 

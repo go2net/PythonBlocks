@@ -4,33 +4,6 @@ from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from ConnectorsInfoWnd import ConnectorsInfoWnd
 
-class TreeItem(object):
-    def __init__(self, data, parent=None):
-        self.parentItem = parent
-        self.itemData = data
-        self.childItems = []
-     
-    def columnCount(self):
-        return len(self.itemData)
-      
-    def childCount(self):
-        return len(self.childItems)
-      
-    def child(self, row):
-        return self.childItems[row]
-      
-    def data(self, column):
-        try:
-          return self.itemData[column]
-        except IndexError:
-          return None
-          
-    def parent(self):
-        return self.parentItem
-        
-    def appendChild(self, item):
-        self.childItems.append(item)
- 
 class BlockGenusTreeModel(QPropertyModel):
   
     def __init__(self, mainWnd, genus, langDefLocation, parent=None):
@@ -39,50 +12,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties = {}
         self.mainWnd = mainWnd
         self.langDefLocation = langDefLocation
-        self.rootItem = TreeItem(("Property", "Value"))
         self.setupModelData(genus, self.m_rootItem)
 
-    
-    '''      
-    def columnCount(self, parent):
-      if parent.isValid():
-          return parent.internalPointer().columnCount()
-      else:
-          return self.rootItem.columnCount()    
- 
-    def rowCount(self, parent):
-      if parent.column() > 0:
-          return 0
-
-      if not parent.isValid():
-          parentItem = self.rootItem
-      else:
-          parentItem = parent.internalPointer()
-
-      return parentItem.childCount()
- 
-
-    def index(self, row, column, parent):
-        if not self.hasIndex(row, column, parent):
-            return QtCore.QModelIndex()
-
-        if not parent.isValid():
-            parentItem = self.rootItem
-        else:
-            parentItem = parent.internalPointer()
-
-        childItem = parentItem.child(row)
-        if childItem:
-            return self.createIndex(row, column, childItem)
-        else:
-            return QtCore.QModelIndex()
-     
-    def headerData(self, section, orientation, role):
-        if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
-          return self.rootItem.data(section)
-
-        return None 
-    '''
     def setupModelData(self, genus, parent):
         parents = [parent]
         self.mainWnd.showBlock(genus)
@@ -116,14 +47,30 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket_index += 1
             else:
                 Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
-                plug_index += 1
-        
-            lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
-            for key in genus.properties:
-                Property(key,genus.properties[key], lang_root)
+                plug_index += 1 
             
             self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
-    
+
+        self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+        
+        module_name = ''
+        function_name = ''
+        
+        for key in genus.properties:
+            if(key == 'module_name'):
+                module_name = genus.properties['module_name']
+            elif(key == 'function_name'):
+                function_name = genus.properties['function_name'] 
+                
+            else:
+                Property(key,genus.properties[key], self.lang_root)
+        
+        self.properties['module_name'] = Property('module',module_name, self.lang_root,Property.ADVANCED_EDITOR)
+        self.properties['module_name'].onAdvBtnClick = self.getModuleName
+        
+        self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+
+
     def onShowConnectorsInfo(self):
 
         dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
@@ -157,36 +104,13 @@ class BlockGenusTreeModel(QPropertyModel):
             if(property_name == 'Terminator'):
                 self.genus.isTerminator = value     
 
+            if(property_name == 'module'):
+                self.genus.properties['module_name'] = value
+                
+            if(property_name == 'function'):
+                self.genus.properties['function_name'] = value  
+
             self.mainWnd.showBlock(self.genus)
         return ret
-        #def dataChanged ( topLeft, bottomRight ):
-        #  print('dataChanged')
 
-    '''  
-    def parent(self, index):
-        if not index.isValid():
-          return QtCore.QModelIndex()
-
-        childItem = index.internalPointer()
-        parentItem = childItem.parent()
-
-        if parentItem == self.rootItem:
-            return QtCore.QModelIndex()
-         
-    def data(self, index, role):
-        if not index.isValid():
-            return None
-
-        if role != QtCore.Qt.DisplayRole:
-            return None
-
-        item = index.internalPointer()
-
-        return item.data(index.column())
-      
-    def flags(self, index):
-        if not index.isValid():
-            return 0
-
-        return QtCore.Qt.ItemIsTristate |QtCore.Qt.ItemIsEditable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable  
-    ''' 
+ 

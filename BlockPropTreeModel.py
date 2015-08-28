@@ -2,37 +2,8 @@
 
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
-from components.RestrictFileDialog import RestrictFileDialog
 from ConnectorsInfoWnd import ConnectorsInfoWnd
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
 
-class TreeItem(object):
-    def __init__(self, data, parent=None):
-        self.parentItem = parent
-        self.itemData = data
-        self.childItems = []
-     
-    def columnCount(self):
-        return len(self.itemData)
-      
-    def childCount(self):
-        return len(self.childItems)
-      
-    def child(self, row):
-        return self.childItems[row]
-      
-    def data(self, column):
-        try:
-            return self.itemData[column]
-        except IndexError:
-            return None
-          
-    def parent(self):
-        return self.parentItem
-        
-    def appendChild(self, item):
-        self.childItems.append(item)
 
 class BlockPropTreeModel(QPropertyModel):
 
@@ -75,41 +46,6 @@ class BlockPropTreeModel(QPropertyModel):
             function_name = self.block.getGenus().properties['function_name']
         
         self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
-                
-    def getModuleFuncList(self, module_name):
-        import inspect
-        from importlib import import_module
-        all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction)       
-        
-        func_list = []
-        for function in all_functions:
-            func_list.append(function[0])        
-    
-        return func_list
-    
-    def getModuleName(self, editor):
-            
-        dlg = RestrictFileDialog(None)
-        dlg.setDirectory('.')
-        dlg.setWindowTitle( 'Choose module file' )
-        dlg.setViewMode( QFileDialog.Detail )
-        dlg.setNameFilters( [self.tr('All python files(*.py)'), self.tr('All Files (*)')] )
-        dlg.setDefaultSuffix( '.py' ) 
-        dlg.setTopDir('.')       
-        
-        if (dlg.exec_()):
-            fileName = dlg.getRelatedPath()
-            fileName = fileName.replace('.py', '')
-            module_name = fileName.replace('/', '.')
-            
-            self.properties['module_name'].setValue(module_name)            
-            module_name_index = self.getIndexForNode(self.properties['module_name']) 
-            self.dataChanged.emit(module_name_index, module_name_index) 
-            
-            self.properties['function_name'].editorType = Property.COMBO_BOX_EDITOR
-            self.properties['function_name'].propertyData = self.getModuleFuncList(module_name)
-            function_name_index = self.getIndexForNode(self.properties['function_name'])            
-            self.dataChanged.emit(function_name_index, function_name_index) 
       
     def onShowConnectorsInfo(self):
 
@@ -128,6 +64,5 @@ class BlockPropTreeModel(QPropertyModel):
                 
             if(property_name == 'function'):
                 self.block.properties['function_name'] = value  
-            
-            print(self.block.properties)
+
         return ret
