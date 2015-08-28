@@ -4,8 +4,8 @@
 		<Block genus-name="text_const" id="3">
 			<Label>中文测试</Label>
 			<Location>
-				<X>212.0</X>
-				<Y>147.0</Y>
+				<X>213.0</X>
+				<Y>148.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="2" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
@@ -13,8 +13,8 @@
 		</Block>
 		<Block genus-name="text_print" id="4">
 			<Location>
-				<X>120.0</X>
-				<Y>174.0</Y>
+				<X>121.0</X>
+				<Y>175.0</Y>
 			</Location>
 			<BeforeBlockId>2</BeforeBlockId>
 			<AfterBlockId>12</AfterBlockId>
@@ -25,8 +25,8 @@
 		<Block genus-name="str_var" id="5">
 			<Label>text</Label>
 			<Location>
-				<X>170.0</X>
-				<Y>177.0</Y>
+				<X>171.0</X>
+				<Y>178.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="4" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
@@ -34,8 +34,8 @@
 		</Block>
 		<Block genus-name="set_str_var" id="12">
 			<Location>
-				<X>120.0</X>
-				<Y>204.0</Y>
+				<X>121.0</X>
+				<Y>205.0</Y>
 			</Location>
 			<BeforeBlockId>4</BeforeBlockId>
 			<AfterBlockId>8</AfterBlockId>
@@ -46,8 +46,8 @@
 		<Block genus-name="text_const" id="13">
 			<Label>中文变量测试</Label>
 			<Location>
-				<X>212.0</X>
-				<Y>207.0</Y>
+				<X>213.0</X>
+				<Y>208.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="12" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
@@ -55,8 +55,8 @@
 		</Block>
 		<Block genus-name="if" id="8">
 			<Location>
-				<X>120.0</X>
-				<Y>234.0</Y>
+				<X>121.0</X>
+				<Y>235.0</Y>
 			</Location>
 			<BeforeBlockId>12</BeforeBlockId>
 			<AfterBlockId>eb0a263a-403a-11e5-a616-f0def1dc27fb</AfterBlockId>
@@ -67,8 +67,8 @@
 		</Block>
 		<Block genus-name="if" id="eb0a263a-403a-11e5-a616-f0def1dc27fb">
 			<Location>
-				<X>120.0</X>
-				<Y>306.0</Y>
+				<X>121.0</X>
+				<Y>307.0</Y>
 			</Location>
 			<BeforeBlockId>8</BeforeBlockId>
 			<Sockets num-sockets="2">
@@ -79,8 +79,8 @@
 		<Block genus-name="text_const" id="11">
 			<Label>Hello World</Label>
 			<Location>
-				<X>170.0</X>
-				<Y>117.0</Y>
+				<X>171.0</X>
+				<Y>118.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="10" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
@@ -88,8 +88,8 @@
 		</Block>
 		<Block genus-name="set_str_var" id="2">
 			<Location>
-				<X>120.0</X>
-				<Y>144.0</Y>
+				<X>121.0</X>
+				<Y>145.0</Y>
 			</Location>
 			<BeforeBlockId>10</BeforeBlockId>
 			<AfterBlockId>4</AfterBlockId>
@@ -99,8 +99,8 @@
 		</Block>
 		<Block genus-name="boolean" id="9">
 			<Location>
-				<X>182.0</X>
-				<Y>237.0</Y>
+				<X>183.0</X>
+				<Y>238.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="8" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
@@ -108,8 +108,8 @@
 		</Block>
 		<Block genus-name="text_print" id="6">
 			<Location>
-				<X>179.0</X>
-				<Y>266.0</Y>
+				<X>180.0</X>
+				<Y>267.0</Y>
 			</Location>
 			<BeforeBlockId>8</BeforeBlockId>
 			<Sockets num-sockets="1">
@@ -119,8 +119,8 @@
 		<Block genus-name="str_var" id="7">
 			<Label>text</Label>
 			<Location>
-				<X>229.0</X>
-				<Y>269.0</Y>
+				<X>230.0</X>
+				<Y>270.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="6" connector-kind="plug" connector-type="string" init-type="string" label="" position-type="mirror"/>
@@ -128,8 +128,8 @@
 		</Block>
 		<Block genus-name="boolean" id="16">
 			<Location>
-				<X>123.0</X>
-				<Y>85.0</Y>
+				<X>124.0</X>
+				<Y>86.0</Y>
 			</Location>
 			<Plug>
 				<BlockConnector con-block-id="0" connector-kind="plug" connector-type="boolean" init-type="boolean" label="" position-type="mirror"/>
@@ -137,8 +137,8 @@
 		</Block>
 		<Block genus-name="text_print" id="10">
 			<Location>
-				<X>120.0</X>
-				<Y>114.0</Y>
+				<X>121.0</X>
+				<Y>115.0</Y>
 			</Location>
 			<BeforeBlockId>0</BeforeBlockId>
 			<AfterBlockId>2</AfterBlockId>
@@ -148,16 +148,16 @@
 		</Block>
 		<Block genus-name="if" id="0">
 			<Location>
-				<X>61.0</X>
-				<Y>82.0</Y>
+				<X>62.0</X>
+				<Y>83.0</Y>
 			</Location>
 			<Sockets num-sockets="2">
 				<BlockConnector con-block-id="16" connector-kind="socket" connector-type="boolean" init-type="boolean" label="test" position-type="single"/>
 				<BlockConnector con-block-id="10" connector-kind="socket" connector-type="cmd" init-type="cmd" label="then" position-type="single"/>
 			</Sockets>
 			<LangSpecProperties>
-				<LangSpecProperty key="function_name" value="controls_if"/>
 				<LangSpecProperty key="module_name" value="generators.python.logic"/>
+				<LangSpecProperty key="function_name" value="ifBlock"/>
 			</LangSpecProperties>
 		</Block>
 	</Blocks>

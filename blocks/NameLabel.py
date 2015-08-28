@@ -20,43 +20,44 @@ class NameLabel(BlockLabel):
 
 
     def update(self):
-      from blocks.RenderableBlock import RenderableBlock
-      rb = RenderableBlock.getRenderableBlock(self.blockID);
-      if (rb != None):
-         x = 0;
-         y = 0;
-         if(rb.getBlock().isCommandBlock()): x+=5;
-         #if(rb.getBlock().isDeclaration()): x+=12;
-         if(rb.getBlock().hasPlug()):
-            x+=4+BlockConnectorShape.getConnectorDimensions(rb.getBlock().getPlug()).width();
-         if(rb.getBlock().isInfix()):
-            if(not rb.getBlock().getSocketAt(0).hasBlock()):
-                x+=30;
+        from blocks.RenderableBlock import RenderableBlock
+        rb = RenderableBlock.getRenderableBlock(self.blockID);
+        if (rb != None):
+            x = 0;
+            y = 0;
+            if(rb.getBlock().isCommandBlock()): x+=5;
+            #if(rb.getBlock().isDeclaration()): x+=12;
+            if(rb.getBlock().hasPlug()):
+                x+=4+BlockConnectorShape.getConnectorDimensions(rb.getBlock().getPlug()).width();
+            
+            if(rb.getBlock().isInfix()):
+                if(not rb.getBlock().getSocketAt(0).hasBlock()):
+                    x+=30;
+                else:
+                   if(rb.getSocketSpaceDimension(rb.getBlock().getSocketAt(0)) != None):
+                      x+= rb.getSocketSpaceDimension(rb.getBlock().getSocketAt(0)).width();
+
+            if(rb.getBlockWidget()==None):
+                y+=rb.getAbstractBlockArea().controlPointRect().height()/2;
             else:
-               if(rb.getSocketSpaceDimension(rb.getBlock().getSocketAt(0)) != None):
-                  x+= rb.getSocketSpaceDimension(rb.getBlock().getSocketAt(0)).width();
+                y+=8;
 
-         if(rb.getBlockWidget()==None):
-            y+=rb.getAbstractBlockArea().controlPointRect().height()/2;
-         else:
-            y+=8;
+            if(rb.getBlock().isCommandBlock()):
+                y-=2;
 
-         if(rb.getBlock().isCommandBlock()):
-            y-=2;
+            if(rb.getBlock().hasPageLabel() and rb.getBlock().hasAfterConnector()):
+                y-=BlockConnectorShape.CONTROL_PLUG_HEIGHT;
 
-         if(rb.getBlock().hasPageLabel() and rb.getBlock().hasAfterConnector()):
-            y-=BlockConnectorShape.CONTROL_PLUG_HEIGHT;
+            if(not rb.getBlock().hasPageLabel()):
+                y-=self.getAbstractHeight()/2;
 
-         if(not rb.getBlock().hasPageLabel()):
-            y-=self.getAbstractHeight()/2;
+            # Comment Label and Collapse Label take up some additional amount of space
+            x += rb.getControlLabelsWidth();
 
-         # Comment Label and Collapse Label take up some additional amount of space
-         x += rb.getControlLabelsWidth();
+            # if block is collapsed keep the name label from moving
+            y += BlockConnectorShape.CONTROL_PLUG_HEIGHT/2 if rb.isCollapsed() else 0;
+            #y+=3
+            x=self.rescale(x);
+            y=self.rescale(y);
 
-         # if block is collapsed keep the name label from moving
-         y += BlockConnectorShape.CONTROL_PLUG_HEIGHT/2 if rb.isCollapsed() else 0;
-         #y+=3
-         x=self.rescale(x);
-         y=self.rescale(y);
-
-         self.setPixelLocation(x, y);
+            self.setPixelLocation(x, y);
