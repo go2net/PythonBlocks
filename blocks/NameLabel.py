@@ -30,7 +30,7 @@ class NameLabel(BlockLabel):
             if(rb.getBlock().hasPlug()):
                 x+=4+BlockConnectorShape.getConnectorDimensions(rb.getBlock().getPlug()).width();
             
-            if(rb.getBlock().isInfix()):
+            if(rb.getBlock().isInfix() and rb.getBlock().getSocketAt(0) != None):
                 if(not rb.getBlock().getSocketAt(0).hasBlock()):
                     x+=30;
                 else:
