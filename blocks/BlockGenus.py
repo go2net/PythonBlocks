@@ -113,17 +113,17 @@ class BlockGenus():
     @isStarter.setter
     def isStarter(self, value):
         if (self._kind == 'data' or
-             self._kind == 'variable' or
-             self._kind == 'function'):
-          self._isStarter = True
+            self._kind == 'variable' or
+            self._kind == 'function'):
+            self._isStarter = True
         else:
-          self._isStarter = value
-          self._isStarterInConfig = value
+            self._isStarter = value
+            self._isStarterInConfig = value
           
         if (not self._isStarter):
-          self.before = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, -1);      
+            self.before = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, -1);      
         else:
-          self.before = None
+            self.before = None
           
     @isStarter.deleter
     def isStarter(self):
@@ -137,17 +137,17 @@ class BlockGenus():
     @isTerminator.setter
     def isTerminator(self, value):
         if (self._kind == 'data' or
-             self._kind == 'variable' or
-             self._kind == 'function'):
-          self._isTerminator = True
+            self._kind == 'variable' or
+            self._kind == 'function'):
+            self._isTerminator = True
         else:
-          self._isTerminator = value
-          self._isTerminatorInConfig = value
+            self._isTerminator = value
+            self._isTerminatorInConfig = value
           
         if (not self._isTerminator):
-          self.after = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(),  BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+            self.after = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(),  BlockConnector.PositionType.BOTTOM, "", False, False, -1);
         else:
-          self.after = None
+            self.after = None
           
     @isTerminator.deleter
     def isTerminator(self):
@@ -227,7 +227,7 @@ class BlockGenus():
                 defarglabel = None
 
                 if 'connector-kind' in connector.attrib:
-                    connectorKind = 0 if connector.attrib['connector-kind'] == "socket" else 1;
+                    connectorKind = connector.attrib['connector-kind'];
                 if 'connector-type' in connector.attrib:
                     connectorType = connector.attrib['connector-type']
                 if 'position-type' in connector.attrib:
@@ -284,7 +284,7 @@ class BlockGenus():
 
 
                 #set the connector kind
-                if(connectorKind == 0):
+                if(connectorKind == 'socket'):
                     genus.sockets.append(socket);
                 else:
                     genus.plug= socket;
@@ -467,36 +467,36 @@ class BlockGenus():
         newGenus = BlockGenus();
         # first, parse out the attributes
         if 'name' in genusNode.attrib:
-          newGenus.genusName = genusNode.attrib["name"]
-          BlockGenus.nameToGenus[newGenus.genusName] = newGenus
+            newGenus.genusName = genusNode.attrib["name"]
+            BlockGenus.nameToGenus[newGenus.genusName] = newGenus
             
         # assert that no other genus has this name
         # assert nameToGenus.get(newGenus.genusName) == null : "Block genus names must be unique.  A block genus already exists with this name: "+newGenus.genusName;
         if 'color' in genusNode.attrib:
-          col = genusNode.attrib["color"].split();
-          if(len(col) == 3):
-              newGenus.color = QtGui.QColor(int(col[0]), int(col[1]), int(col[2]));
-          else:
-              newGenus.color = QtCore.Qt.BLACK;
+            col = genusNode.attrib["color"].split();
+            if(len(col) == 3):
+                newGenus.color = QtGui.QColor(int(col[0]), int(col[1]), int(col[2]));
+            else:
+                newGenus.color = QtCore.Qt.BLACK;
 
         if 'kind' in genusNode.attrib:
-          newGenus.kind = genusNode.attrib["kind"]
+            newGenus.kind = genusNode.attrib["kind"]
 
         if 'family_name' in genusNode.attrib:
-          newGenus.familyName = genusNode.attrib["family_name"]
+            newGenus.familyName = genusNode.attrib["family_name"]
          
-          newGenus.family = BlockGenus.families[newGenus.familyName]
+            newGenus.family = BlockGenus.families[newGenus.familyName]
           
-          if(newGenus.familyName not in BlockGenus.familyBlocks):
-              BlockGenus.familyBlocks[newGenus.familyName] = []
+            if(newGenus.familyName not in BlockGenus.familyBlocks):
+                BlockGenus.familyBlocks[newGenus.familyName] = []
               
-          BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
+            BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
 
         if 'initlabel' in genusNode.attrib:
-          newGenus.initLabel = genusNode.attrib["initlabel"]
+            newGenus.initLabel = genusNode.attrib["initlabel"]
 
         if 'editable-label' in genusNode.attrib:
-          newGenus._isLabelEditable = True if genusNode.attrib["editable-label"] == ("yes") else False
+            newGenus._isLabelEditable = True if genusNode.attrib["editable-label"] == ("yes") else False
 
         if 'var-label' in genusNode.attrib:
           newGenus._isVarLabel = True if genusNode.attrib["var-label"] == ("yes") else False
@@ -505,26 +505,26 @@ class BlockGenus():
           newGenus.labelMustBeUnique = True if genusNode.attrib["label-unique"] == ("yes") else False
         
         if 'is-starter' in genusNode.attrib:
-          newGenus.isStarter= True if genusNode.attrib["is-starter"] == ("yes") else False
+            newGenus.isStarter= True if genusNode.attrib["is-starter"] == ("yes") else False
         else:
-          newGenus.isStarter = False          
+            newGenus.isStarter = False          
           
         if 'is-terminator' in genusNode.attrib:
-          newGenus.isTerminator= True if genusNode.attrib["is-terminator"] == ("yes") else False
+            newGenus.isTerminator= True if genusNode.attrib["is-terminator"] == ("yes") else False
         else:
-          newGenus.isTerminator = False
+            newGenus.isTerminator = False
           
         if 'is-label-value' in genusNode.attrib:
-          newGenus.isLabelValue= True if genusNode.attrib["is-label-value"] == ("yes") else False
+            newGenus.isLabelValue= True if genusNode.attrib["is-label-value"] == ("yes") else False
 
         if 'label-prefix' in genusNode.attrib:
-          newGenus.labelPrefix= genusNode.attrib["label-prefix"]
+            newGenus.labelPrefix= genusNode.attrib["label-prefix"]
 
         if 'label-suffix' in genusNode.attrib:
-          newGenus.labelSuffix= genusNode.attrib["label-suffix"]
+            newGenus.labelSuffix= genusNode.attrib["label-suffix"]
 
         if 'page-label-enabled' in genusNode.attrib:
-          newGenus.isPageLabelEnabled= True if genusNode.attrib["page-label-enabled"] == ("yes") else False
+            newGenus.isPageLabelEnabled= True if genusNode.attrib["page-label-enabled"] == ("yes") else False
 
         # if genus is a data genus (kind=data) or a variable block (and soon a declaration block)
         # it is both a starter and terminator
@@ -538,39 +538,39 @@ class BlockGenus():
 
         for genusChild in genusChildren:
 
-          if (genusChild.tag == ("description")):
-              # # # # # # # # # # # # # # # # # #
-              # / LOAD BLOCK GENUS DESCRIPTION # /
-              # # # # # # # # # # # # # # # # # #
-              BlockGenus.loadGenusDescription(genusChild.getchildren(), newGenus);
-          elif (genusChild.tag == ("BlockConnectors")):
-              # # # # # # # # # # # # # # # # # # # #
-              # / LOAD BLOCK CONNECTOR INFORMATION # /
-              # # # # # # # # # # # # # # # # # # # #
-              BlockGenus.loadBlockConnectorInformation(genusChild.getchildren(), newGenus);
+            if (genusChild.tag == ("description")):
+                  # # # # # # # # # # # # # # # # # #
+                  # / LOAD BLOCK GENUS DESCRIPTION # /
+                  # # # # # # # # # # # # # # # # # #
+                  BlockGenus.loadGenusDescription(genusChild.getchildren(), newGenus);
+            elif (genusChild.tag == ("BlockConnectors")):
+                # # # # # # # # # # # # # # # # # # # #
+                # / LOAD BLOCK CONNECTOR INFORMATION # /
+                # # # # # # # # # # # # # # # # # # # #
+                BlockGenus.loadBlockConnectorInformation(genusChild.getchildren(), newGenus);
 
-              # if genus has two connectors both of bottom position type than this block is an infix
-              # operator
-              if(newGenus.sockets != None and len(newGenus.sockets) == 2 and
-                      newGenus.sockets[0].getPositionType() == BlockConnector.PositionType.BOTTOM and
-                      newGenus.sockets[1].getPositionType() == BlockConnector.PositionType.BOTTOM):
-                  newGenus.__isInfix = True
-          elif(genusChild.tag == ("Images")):
-              # # # # # # # # # # # # /
-              # / LOAD BLOCK IMAGES # /
-              # # # # # # # # # # # # /
-              BlockGenus.loadBlockImages(genusChild.getchildren(), newGenus);
-          elif(genusChild.tag == ("LangSpecProperties")):
-              # # # # # # # # # # # # # # # # # # # # /
-              # / LOAD LANGUAGE SPECIFIC PROPERTIES # /
-              # # # # # # # # # # # # # # # # # # # # /
-              BlockGenus.loadLangDefProperties(genusChild.getchildren(), newGenus);
+                # if genus has two connectors both of bottom position type than this block is an infix
+                # operator
+                if( newGenus.sockets != None and len(newGenus.sockets) == 2 and
+                    newGenus.sockets[0].getPositionType() == BlockConnector.PositionType.BOTTOM and
+                    newGenus.sockets[1].getPositionType() == BlockConnector.PositionType.BOTTOM):
+                    newGenus.__isInfix = True
+            elif(genusChild.tag == ("Images")):
+                # # # # # # # # # # # # /
+                # / LOAD BLOCK IMAGES # /
+                # # # # # # # # # # # # /
+                BlockGenus.loadBlockImages(genusChild.getchildren(), newGenus);
+            elif(genusChild.tag == ("LangSpecProperties")):
+                # # # # # # # # # # # # # # # # # # # # /
+                # / LOAD LANGUAGE SPECIFIC PROPERTIES # /
+                # # # # # # # # # # # # # # # # # # # # /
+                BlockGenus.loadLangDefProperties(genusChild.getchildren(), newGenus);
 
-          elif (genusChild.tag == ("Stubs")):
-              # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-              # / LOAD STUBS INFO AND GENERATE GENUSES FOR EACH STUB # /
-              # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-              BlockGenus.loadStubs(genusChild.getchildren(), newGenus);
+            elif (genusChild.tag == ("Stubs")):
+                # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+                # / LOAD STUBS INFO AND GENERATE GENUSES FOR EACH STUB # /
+                # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+                BlockGenus.loadStubs(genusChild.getchildren(), newGenus);
 
 
         #  John's code to add command sockets... probably in the wrong place

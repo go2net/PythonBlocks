@@ -37,61 +37,53 @@ class BlockConnector():
     PositionType = enum("SINGLE", "MIRROR", "BOTTOM", "TOP")
 
     def __init__(self, kind, type, positionType, label, isLabelEditable, isExpandable, connBlockID, expandGroup = None):
-         
-      self._kind = kind
-      self._type = type
-      
-      self.positionType = positionType
-      self.label = label
-      self.isLabelEditable = isLabelEditable
-      self.connBlockID = connBlockID
-      self.isExpandable = isExpandable
-      
-      self.initKind = kind
-      self.initType = type
-      
-      self.expandGroup = "" if expandGroup == None else expandGroup
-      self.hasDefArg = False
+        self._kind = kind
+        self._type = type
+
+        self.positionType = positionType
+        self.label = label
+        self.isLabelEditable = isLabelEditable
+        self.connBlockID = connBlockID
+        self.isExpandable = isExpandable
+
+        self.initKind = kind
+        self.initType = type
+
+        self.expandGroup = "" if expandGroup == None else expandGroup
+        self.hasDefArg = False
   
     
     @property
     def kind(self):
-      """I'm the 'x' property."""
-      return self._kind
+        return self._kind
 
     @kind.setter
     def kind(self, value):
-      self._kind = value
+        self._kind = value
 
     @kind.deleter
     def kind(self):
-      del self._kind 
+        del self._kind 
 
     @property
     def type(self):
-      """I'm the 'x' property."""
-      return self._type
+        return self._type
 
     @type.setter
     def type(self, value):
-      self._type = value
+        self._type = value
       
     @type.deleter
     def type(self):
-     del self._kind 
+        del self._kind 
 
     @property
     def blockID(self):
-      """I'm the 'x' property."""
-      return self.connBlockID
+        return self.connBlockID
 
     @blockID.setter
     def blockID(self, value):
-      self.connBlockID = value
-
-    @blockID.deleter
-    def blockID(self):
-      del self._blockID 
+        self.connBlockID = value
 
 
     '''
@@ -100,34 +92,34 @@ class BlockConnector():
     * @param label the initial label of the default argument
     '''
     def setDefaultArgument(self,genusName, label):
-      self.hasDefArg = True
-      #elf.arg = DefArgument(genusName, label)
+        self.hasDefArg = True
+        #elf.arg = DefArgument(genusName, label)
 
     '''
     * Returns the PositionType of this
     * @return the PositionType of this
     '''
     def getPositionType(self):
-     return self.positionType
+        return self.positionType
 
     def hasBlock(self):
-      return self.connBlockID != -1
+        return self.connBlockID != -1
 
     def getLabel(self):
-      return self.label;
+        return self.label;
 
     def linkDefArgument(self):
-      from Block import Block
-      # checks if connector has a def arg or if connector already has a block
-      if(self.hasDefArg and self.connBlockID == -1):
-         block = Block(self.arg.getGenusName(), self.arg.label);
-         connBlockID = block.blockID;
-         return connBlockID;
+        from Block import Block
+        # checks if connector has a def arg or if connector already has a block
+        if(self.hasDefArg and self.connBlockID == -1):
+            block = Block(self.arg.getGenusName(), self.arg.label);
+            connBlockID = block.blockID;
+            return connBlockID;
 
-      return -1
+        return -1
 
     def setConnectorBlockID(self, id):
-      self.connBlockID = id;
+        self.connBlockID = id;
 
     def loadBlockConnector(node):
      con = None;
@@ -141,7 +133,7 @@ class BlockConnector():
      positionType = "single";
 
      if (node.tag == ("BlockConnector")):
-         # load attributes
+        # load attributes
          if("init-type" in node.attrib):
              initType = node.attrib["init-type"]
          
@@ -150,17 +142,21 @@ class BlockConnector():
              
          if("connector-type" in node.attrib):
              kind = node.attrib["connector-type"]
+             
          if("label" in node.attrib):
              label = node.attrib["label"]
+             
          if("con-block-id" in node.attrib):
              idConnected = node.attrib["con-block-id"] # + Block.MAX_RESERVED_ID
 
          if("label-editable" in node.attrib):
              isLabelEditable = node.attrib["label-editable"] == ("true");
+             
          if("is-expandable" in node.attrib):
              isExpandable = node.attrib["is-expandable"] == ("true");
 
          if("expand-group" in node.attrib):
+             
              expandGroup = node.attrib["expand-group"]
          if("position-type" in node.attrib):
              positionType = node.attrib["position-type"]
@@ -213,7 +209,6 @@ class BlockConnector():
 
       if (self.isLabelEditable):
          connectorElement.setAttribute("label-editable", "true");
-
 
       if (self.connBlockID != -1):
          connectorElement.setAttribute("con-block-id", str(self.connBlockID));

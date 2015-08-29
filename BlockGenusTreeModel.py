@@ -29,12 +29,13 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['color'] = Property('Color',genus.color , parents[-1], Property.COLOR_EDITOR)
         self.properties['isStarter'] = Property('Starter', genus.isStarter, parents[-1]) 
         self.properties['isTerminator'] = Property('Terminator', genus.isTerminator, parents[-1]) 
+        
         self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
-        self.all_connectors = genus.sockets
-        
         plug_index = 0
         socket_index = 0
+        
+        self.all_connectors = []
         
         if genus.plug != None:
             Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
@@ -49,7 +50,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 Property('Plug #'+str(plug_index), '',  self.properties['connectors'])
                 plug_index += 1 
             
-            self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
+        self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
 
         self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
         
@@ -71,13 +72,14 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
 
 
-    def onShowConnectorsInfo(self):
+    def onShowConnectorsInfo(self,  editor):
 
-        dlg = ConnectorsInfoWnd(self.mainWnd, self.all_connectors)
+        dlg = ConnectorsInfoWnd(self.mainWnd, self.genus)
         dlg.exec_()
         print('onShowConnectorsInfo')
 
     def setData(self, index, value, role):
+
         ret = super(BlockGenusTreeModel, self).setData(index, value, role)
         if(ret == True):
             item = index.internalPointer()
@@ -110,7 +112,7 @@ class BlockGenusTreeModel(QPropertyModel):
             if(property_name == 'function'):
                 self.genus.properties['function_name'] = value  
 
-            self.mainWnd.showBlock(self.genus)
+        self.mainWnd.showBlock(self.genus)
         return ret
 
  

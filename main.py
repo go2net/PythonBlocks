@@ -186,9 +186,7 @@ class MainWnd(QtGui.QMainWindow):
         from blocks.Block import Block
         from blocks.FactoryRenderableBlock import FactoryRenderableBlock
     
-        if(genus == None): return
-    
-        
+        if(genus == None): return   
     
         block = Block.createBlockFromID(None, genus.getGenusName())
             

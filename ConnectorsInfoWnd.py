@@ -3,52 +3,47 @@ from PyQt4.QtGui import *
 from PyQt4.uic import *
 
 class ConnectorsInfoWnd(QDialog):
-  def __init__(self, parent, all_connectors):
-    super(ConnectorsInfoWnd, self).__init__(parent)
-    loadUi('connector_info.ui', self)   
-    
-    self.header = ['Label', 'Kind', 'Type'] 
-    
-    connectors = []
-    
-    for row in range(len(all_connectors)):      
-      connector_info = {}
-      connector_node = all_connectors[row]
+    def __init__(self, parent, genus):
+     
+        super(ConnectorsInfoWnd, self).__init__(parent)
+        self.genus = genus
+        
+        loadUi('connector_info.ui', self)   
 
-      label = ''
-      if('label' in connector_node.attrib):
-        label = connector_node.attrib["label"]   
-      connector_info['label'] = label
-      
-      kind = ''
-      if('connector-kind' in connector_node.attrib):
-        kind = connector_node.attrib["connector-kind"]   
-    
-      connector_info['kind'] = kind  
-      
-      type = ''
-      if('connector-type' in connector_node.attrib):
-        type = connector_node.attrib["connector-type"]
-      
-      connector_info['type'] = type  
-      connectors.append(connector_info)
-    
-    model = ConnectorTableModel(self, connectors, self.header)
-    self.tableView.setModel(model)
+        self.header = ['Label', 'Kind', 'Type'] 
 
-    verticalHeader = self.tableView.verticalHeader();
-    #verticalHeader.setDefaultAlignment (Qt.AlignLeft)
-    verticalHeader.setResizeMode(QHeaderView.Fixed);
-    verticalHeader.setDefaultSectionSize(18);
+        connectors = []
 
-    self.tableView.setItemDelegate(MyDelegate(self.tableView));
-    self.tableView.setEditTriggers(QAbstractItemView.AllEditTriggers)
+        if(genus.plug != None):
+            connector_info = {}
+            plug = genus.plug
+            connector_info['label'] = plug.label 
+            connector_info['kind']  = plug.kind  
+            connector_info['type']  = plug.type    
+            connectors.append(connector_info)
+            
+        for socket in self.genus.sockets:      
+            connector_info = {}
+            connector_info['label'] = socket.label 
+            connector_info['kind']  = socket.kind  
+            connector_info['type']  = socket.type    
+            connectors.append(connector_info)
+    
+        model = ConnectorTableModel(self, connectors, self.header)
+        self.tableView.setModel(model)
+
+        verticalHeader = self.tableView.verticalHeader();
+        #verticalHeader.setDefaultAlignment (Qt.AlignLeft)
+        verticalHeader.setResizeMode(QHeaderView.Fixed);
+        verticalHeader.setDefaultSectionSize(18);
+
+        self.tableView.setItemDelegate(MyDelegate(self.tableView));
+        self.tableView.setEditTriggers(QAbstractItemView.AllEditTriggers)
       
 class ConnectorTableModel(QAbstractTableModel):    
     def __init__(self, parent, connectors, header, *args):
         QAbstractTableModel.__init__(self, parent, *args)
         self.connectors = connectors
-
         self.header = header
         
     def rowCount(self, parent):
@@ -110,41 +105,41 @@ class ConnectorTableModel(QAbstractTableModel):
       return None
         
 class MyDelegate(QItemDelegate):
-  def __inti__(self, parent):
-    super(MyDelegate, self).__init__(parent)
+    def __inti__(self, parent):
+        super(MyDelegate, self).__init__(parent)
     
-  def createEditor(self, parent, option, index):
-      if(index.column() == 0):
-        return QItemDelegate.createEditor(self, parent, option, index);
+    def createEditor(self, parent, option, index):
+        if(index.column() == 0):
+            return QItemDelegate.createEditor(self, parent, option, index);
       
-      if(index.column() == 1):       
-        combobox = QComboBox(parent)
-        combobox.addItems(['socket', 'plug'])
-        #combobox.currentIndexChanged[int].connect(self.currentIndexChanged)
-        return combobox
+        if(index.column() == 1):       
+            combobox = QComboBox(parent)
+            combobox.addItems(['socket', 'plug'])
+            #combobox.currentIndexChanged[int].connect(self.currentIndexChanged)
+            return combobox
       
-      if(index.column() == 2):
-        combobox = QComboBox(parent)
-        combobox.addItems(['boolean','number', 'string'])
-        #combobox.currentIndexChanged[int].connect(self.currentIndexChanged)
-        return combobox   
+        if(index.column() == 2):
+            combobox = QComboBox(parent)
+            combobox.addItems(['boolean','number', 'string'])
+            #combobox.currentIndexChanged[int].connect(self.currentIndexChanged)
+            return combobox   
 
-      return None   
+        return None   
       
  
-  def setEditorData (self, editor, index):
+    def setEditorData (self, editor, index):
 
 
-    #self.m_finishedMapper.blockSignals(True);
-    text = index.model().data(index, Qt.DisplayRole)    
-   
-    if index.column() == 0:
-      QItemDelegate.setEditorData(self, editor, index);
- 
-    if index.column() == 1:
-      _ind = editor.findText(text)
-      editor.setCurrentIndex(_ind)
-    
-    if index.column() == 2:
-      _ind = editor.findText(text)
-      editor.setCurrentIndex(_ind)
+        #self.m_finishedMapper.blockSignals(True);
+        text = index.model().data(index, Qt.DisplayRole)    
+
+        if index.column() == 0:
+            QItemDelegate.setEditorData(self, editor, index);
+
+        if index.column() == 1:
+            _ind = editor.findText(text)
+            editor.setCurrentIndex(_ind)
+
+        if index.column() == 2:
+            _ind = editor.findText(text)
+            editor.setCurrentIndex(_ind)

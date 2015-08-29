@@ -664,8 +664,8 @@ class Block():
                             else:
                                value = prop.text
 
-                        if(key != None and value != None):
-                           blockLangProperties[key] = value
+                            if(key != None and value != None):
+                               blockLangProperties[key] = value
 
              #create block or block stub instance
             if (not isStubBlock):
