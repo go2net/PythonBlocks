@@ -188,7 +188,7 @@ class MainWnd(QtGui.QMainWindow):
     
         if(genus == None): return   
     
-        block = Block.createBlockFromID(None, genus.getGenusName())
+        block = Block.createBlockFromID(None, genus.genusName)
             
         child_list = self.wndPreview.findChildren(FactoryRenderableBlock)
         for i in reversed(range(len(child_list))): 

@@ -46,6 +46,7 @@ class Block():
       
       # copy connectors from BlockGenus
       genus = BlockGenus.getGenusWithName(genusName)
+
       if(genus == None):
           raise Exception("genusName: "+genusName+" does not exist.")
 

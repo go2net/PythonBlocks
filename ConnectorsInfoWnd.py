@@ -3,11 +3,11 @@ from PyQt4.QtGui import *
 from PyQt4.uic import *
 
 class ConnectorsInfoWnd(QDialog):
-    def __init__(self, parent, genus):
+    def __init__(self, treeModel, genus):
      
-        super(ConnectorsInfoWnd, self).__init__(parent)
+        super(ConnectorsInfoWnd, self).__init__()
         self.genus = genus
-        self.mainWnd = parent
+        self.treeModel = treeModel
         
         loadUi('connector_info.ui', self)   
 
@@ -64,7 +64,7 @@ class ConnectorTableModel(QAbstractTableModel):
           connector.type = value
         
         #emit dataChanged(index, index);
-        self.InfoWnd.mainWnd.showBlock(self.InfoWnd.genus)
+        self.InfoWnd.treeModel.showBlock(self.InfoWnd.genus)
         return True;
       return False;
 
