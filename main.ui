@@ -31,7 +31,7 @@
       </property>
       <widget class="QWidget" name="pgHome"/>
       <widget class="QWidget" name="pgBlockEditor"/>
-      <widget class="QWidget" name="pgBlockGenusConfig">
+      <widget class="QWidget" name="pgDrawerSets">
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <property name="spacing">
          <number>0</number>
@@ -95,7 +95,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="wndApplyGenus">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -192,7 +192,7 @@
     <addaction name="separator"/>
     <addaction name="actionTestBench"/>
     <addaction name="actionBlockEditor"/>
-    <addaction name="actionBlockGenusConfiguration"/>
+    <addaction name="actionDrawersets"/>
    </widget>
    <widget class="QMenu" name="menuStart">
     <property name="title">
@@ -296,7 +296,7 @@
    </attribute>
    <addaction name="actionTestBench"/>
    <addaction name="actionBlockEditor"/>
-   <addaction name="actionBlockGenusConfiguration"/>
+   <addaction name="actionDrawersets"/>
   </widget>
   <widget class="QToolBar" name="toolBar3">
    <property name="windowTitle">
@@ -328,6 +328,104 @@
      </property>
      <item>
       <widget class="QPropertyEditorWidget" name="tvBlockPropView"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="drawerSetsWnd">
+   <property name="windowTitle">
+    <string>Block Drawer Sets</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QTreeWidget" name="twDrawerSets">
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DropOnly</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::CopyAction</enum>
+       </property>
+       <column>
+        <property name="text">
+         <string>1</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>New Item</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>New Subitem</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>New Item</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>New Item</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>New Item</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>New Subitem</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>New Subitem</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>New Item</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -444,18 +542,6 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionBlockGenusConfiguration">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset>
-     <normaloff>resource/gnome_system_config.png</normaloff>resource/gnome_system_config.png</iconset>
-   </property>
-   <property name="text">
-    <string>Block Genus Configuration</string>
-   </property>
-  </action>
   <action name="actionBlockEditor">
    <property name="checkable">
     <bool>true</bool>
@@ -478,6 +564,15 @@
    </property>
    <property name="text">
     <string>Test Bench</string>
+   </property>
+  </action>
+  <action name="actionDrawersets">
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/128-48.png</normaloff>resource/128-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Drawer Sets Configuration</string>
    </property>
   </action>
  </widget>

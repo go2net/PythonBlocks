@@ -3,6 +3,8 @@
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from ConnectorsInfoWnd import ConnectorsInfoWnd
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
 
 class BlockGenusTreeModel(QPropertyModel):
   
@@ -29,7 +31,9 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['labelPrefix'] = Property('Label Prefix', tmpGenus.labelPrefix, parents[-1])
         self.properties['labelSuffix'] = Property('Label Suffix', tmpGenus.labelSuffix, parents[-1])    
         self.properties['color'] = Property('Color',tmpGenus.color , parents[-1], Property.COLOR_EDITOR)
-        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, parents[-1]) 
+        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, parents[-1])        
+
+        
         self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, parents[-1]) 
         
         self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
@@ -68,6 +72,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['module_name'].onAdvBtnClick = self.getModuleName
         
         self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+
 
     def fillConnectInfo(self,  socket,  parent):
         Property('label', socket.label,parent)
@@ -124,8 +129,16 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket_index += 1
 
         self.showBlock(self.tmpGenus)
-        return ret
+
     
+        if(self.tmpGenus == self.genus): 
+            print('self.tmpGenus == self.genus')
+            self.mainWnd.wndApplyGenus.hide()
+        else:
+            print('self.tmpGenus != self.genus')
+            self.mainWnd.wndApplyGenus.show()
+            
+        return ret    
     def setConnectorProp(self, connector, property_name, value):
         tt = 'connector.'+property_name+'=\'' + str(value)+'\''
         print(tt)

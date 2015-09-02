@@ -196,6 +196,24 @@ class BlockGenus():
         if(self._genusName not in BlockGenus.nameToGenus):
             BlockGenus.nameToGenus[self._genusName] = self          
   
+    def __eq__(self, other):
+        if(other == None): return False
+        if(self.color != other.color): return False
+        if(self._kind != other._kind): return False
+        if(self.initLabel != other.initLabel): return False
+        if(self.labelPrefix != other.labelPrefix): return False
+        if(self.labelSuffix != other.labelSuffix): return False
+        if(self.isStarter != other.isStarter): return False
+        if(self.isTerminator != other.isTerminator): return False
+        
+        if('module_name' in self.properties and 'module_name' in other.properties):
+            if(self.properties['module_name'] != other.properties['module_name']): return False
+            
+        if('function_name' in self.properties and 'function_name' in other.properties):    
+            if(self.properties['function_name'] != other.properties['function_name']): return False       
+    
+        return True
+  
     def getGenusWithName(name):
         if(name in BlockGenus.nameToGenus):
             return BlockGenus.nameToGenus[name]

@@ -33,11 +33,10 @@ class MainWnd(QtGui.QMainWindow):
         self.viewGroup = QtGui.QActionGroup(self)
         self.viewGroup.addAction(self.actionTestBench)
         self.viewGroup.addAction(self.actionBlockEditor)
-        self.viewGroup.addAction(self.actionBlockGenusConfiguration)
+        self.viewGroup.addAction(self.actionDrawersets)
         self.actionBlockEditor.setChecked(True)
 
-        self.connect(self.viewGroup,QtCore.SIGNAL("triggered(QAction*)"),self.onActionTriggered)
-               
+        self.connect(self.viewGroup,QtCore.SIGNAL("triggered(QAction*)"),self.onActionTriggered)               
 
         self.actionQuit.triggered.connect(self.close)
        
@@ -54,6 +53,7 @@ class MainWnd(QtGui.QMainWindow):
 
         layout  = QtGui.QHBoxLayout()
         self.wndPreview.setLayout(layout);
+        self.wndApplyGenus.hide()
 
         #self.blockPreviewWnd.resizeEvent = self.onResize
 
@@ -120,28 +120,24 @@ class MainWnd(QtGui.QMainWindow):
         self.stackedWidget.setCurrentWidget(widget)
         if widget == self.pgHome:
             self.blockGenusWnd.hide()
-            self.blockPropWnd.hide()
-            #self.blockPreviewWnd.hide()
-            #self.dockWidget.hide()        
+            self.blockPropWnd.hide()   
         if widget == self.pgBlockEditor:
             self.blockGenusWnd.hide()
-            self.blockPropWnd.show()
-            #self.blockPreviewWnd.hide()
-            #self.dockWidget.show()           
-        if widget == self.pgBlockGenusConfig:  
+            self.blockPropWnd.show()        
+        if widget == self.pgDrawerSets:  
             self.blockGenusWnd.show()
+            self.drawerSetsWnd.show()
+            self.lwBlockGenus.setDragEnabled(True)
+            self.lwBlockGenus.setDragDropMode(QtGui.QAbstractItemView.DragOnly); 
             self.blockPropWnd.hide()
-            #self.blockPreviewWnd.show()
-            #self.dockWidget.hide()     
 
     def onActionTriggered(self, action):
         if action == self.actionTestBench:
             widget = self.pgHome
         if action == self.actionBlockEditor:
             widget = self.pgBlockEditor    
-        if action == self.actionBlockGenusConfiguration:  
-            widget = self.pgBlockGenusConfig
-            
+        if action == self.actionDrawersets:  
+            widget = self.pgDrawerSets        
         self.setActiveWidget(widget)
             
     def InitBlockGenusListWidget(self):
@@ -169,6 +165,9 @@ class MainWnd(QtGui.QMainWindow):
         self.tvBlockGenusView.setModel(model)
         self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
         self.tvBlockGenusView.expandAll()
+        
+        #isStarterIndex = model.getIndexForNode(model.properties['connectors'])
+        #self.tvBlockGenusView.setIndexWidget(isStarterIndex, QtGui.QCheckBox())
 
     def onBlockClick(self, block):
         from BlockPropTreeModel import BlockPropTreeModel
