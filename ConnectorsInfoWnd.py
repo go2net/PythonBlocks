@@ -7,6 +7,7 @@ class ConnectorsInfoWnd(QDialog):
      
         super(ConnectorsInfoWnd, self).__init__(parent)
         self.genus = genus
+        self.mainWnd = parent
         
         loadUi('connector_info.ui', self)   
 
@@ -14,20 +15,11 @@ class ConnectorsInfoWnd(QDialog):
 
         connectors = []
 
-        if(genus.plug != None):
-            connector_info = {}
-            plug = genus.plug
-            connector_info['label'] = plug.label 
-            connector_info['kind']  = plug.kind  
-            connector_info['type']  = plug.type    
-            connectors.append(connector_info)
+        if(genus.plug != None):  
+            connectors.append(genus.plug)
             
-        for socket in self.genus.sockets:      
-            connector_info = {}
-            connector_info['label'] = socket.label 
-            connector_info['kind']  = socket.kind  
-            connector_info['type']  = socket.type    
-            connectors.append(connector_info)
+        for socket in self.genus.sockets: 
+            connectors.append(socket)
     
         model = ConnectorTableModel(self, connectors, self.header)
         self.tableView.setModel(model)
@@ -45,6 +37,7 @@ class ConnectorTableModel(QAbstractTableModel):
         QAbstractTableModel.__init__(self, parent, *args)
         self.connectors = connectors
         self.header = header
+        self.InfoWnd = parent
         
     def rowCount(self, parent):
         return len(self.connectors)
@@ -60,17 +53,18 @@ class ConnectorTableModel(QAbstractTableModel):
       
     def setData(self, index, value, role=Qt.DisplayRole):
       if (index.isValid() and role == Qt.EditRole):
-        connector_info = self.connectors[index.row()]
+        connector = self.connectors[index.row()]
         if(index.column() == 0):
-          connector_info['label'] = value
+          connector.label = value
           
         if(index.column() == 1):
-          connector_info['kind'] = value
+          connector.kind = value
           
         if(index.column() == 2):
-          connector_info['type'] = value
+          connector.type = value
         
         #emit dataChanged(index, index);
+        self.InfoWnd.mainWnd.showBlock(self.InfoWnd.genus)
         return True;
       return False;
 
@@ -81,16 +75,16 @@ class ConnectorTableModel(QAbstractTableModel):
       elif role != Qt.DisplayRole:
           return None
           
-      connector_info = self.connectors[index.row()]
+      connector = self.connectors[index.row()]
 
       if(index.column() == 0):
-        return connector_info['label']
+        return connector.label
         
       if(index.column() == 1):
-        return connector_info['kind']
+        return connector.kind
         
       if(index.column() == 2):
-        return connector_info['type']       
+        return connector.type       
 
           
       return None

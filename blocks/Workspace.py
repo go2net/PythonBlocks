@@ -35,9 +35,9 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
         splitter.setStretchFactor (1, 1 )
         layout.addWidget(splitter);
 
+
         self.addWidget(self.factory, True, False);
         self.setMouseTracking(True)
-
         
     def onCloseBlockCanvas(self,  index):
         if (index == -1) :

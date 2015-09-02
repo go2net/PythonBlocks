@@ -24,7 +24,7 @@ class RenderableBlock(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         self._workspaceWidget = _workspaceWidget
         self.setMouseTracking(True);
-
+        
     def __del__(self):
         pass
 
@@ -82,19 +82,19 @@ class RenderableBlock(QtGui.QWidget):
             obj.collapseLabel.parent = obj
 
         if(block.isInfix()):
-            obj.blockShape = InfixBlockShape(obj)
+            obj.blockShape = InfixBlockShape(obj);
         else:
-            obj.blockShape = BlockShape(obj) 
-        
+            obj.blockShape = BlockShape(obj);
+
         if(not obj.isLoading):
             obj.reformBlockShape()
             obj.updateBuffImg()
         else:
             obj.blockArea = QtGui.QPainterPath ()        
-
+        
         #if(isinstance(obj,FactoryRenderableBlock)):
         #  Block.MAX_RESERVED_ID = max(Block.MAX_RESERVED_ID, obj.blockID)
- 
+          
         return obj
         
     
@@ -139,13 +139,13 @@ class RenderableBlock(QtGui.QWidget):
     def reformBlockShape(self):
 
         if(self.blockShape == None): return
+
         self.abstractBlockArea = self.blockShape.reformArea();
-        
+
         # TODO for zooming, create an AffineTransform to scale the block shape
         #at = AffineTransform();
         #at.setToScale(zoom, zoom);
         self.blockArea = self.abstractBlockArea #.createTransformedArea(at);
-        
         #if(True): return
         #note: need to add twice the highlight stroke width so that the highlight does not get cut off
         updatedDimensionRect = QtCore.QRectF(
@@ -273,7 +273,6 @@ class RenderableBlock(QtGui.QWidget):
 
     def paintEvent(self,event):
         try:
-
           painter = QtGui.QPainter();
           #painter.setRenderHints(QtGui.QPainter.HighQualityAntialiasing)
           painter.begin(self)
@@ -292,7 +291,6 @@ class RenderableBlock(QtGui.QWidget):
               else:
                   painter.drawImage(0,0,self.buffImg);
           painter.end()
-
         except:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

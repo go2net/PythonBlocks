@@ -41,7 +41,7 @@ class BlockShape():
       else:
          print("Cannot create shape of null RenderableBlock.");
 
-        #initialize gernal path segements around the block shape
+ 		#initialize gernal path segements around the block shape
       #self.painterPath = None
 
       self.setupProperties();
@@ -64,15 +64,15 @@ class BlockShape():
       Determine the dimensions of the block shape so there is enough space to
       draw all of the shape's features.
       '''
-        # if it has a plug, then offset the start of drawing the block
+		# if it has a plug, then offset the start of drawing the block
       initX = 0
       initY = 0;
 
       if self.block.hasPlug():
          initX = BlockConnectorShape.getConnectorDimensions(self.block.getPlug()).width()
 
-        ###CHECK FOR CUSTOM SHAPES###
-        # for every customBlockShapes
+		###CHECK FOR CUSTOM SHAPES###
+		# for every customBlockShapes
       cornerPoints =  [None,None,None,None];
 
       # System.out.println(block.getGenusName() + " custom size: " + customBlockShapeSets.size());
@@ -86,21 +86,21 @@ class BlockShape():
             return
 
 
-        # if custom shape not found, then continue to derive it
-        # as determined by the renderable block
-        # POSITIONING FACTORS:
-        # initial x: plug on left side
-        # initial y: should always be 0 so top is at highest point
-        # SIZE FACTORS:
-        # width: default size of block, size of text
-        # height: how many sockets
+		# if custom shape not found, then continue to derive it
+		# as determined by the renderable block
+		# POSITIONING FACTORS:
+		# initial x: plug on left side
+		# initial y: should always be 0 so top is at highest point
+		# SIZE FACTORS:
+		# width: default size of block, size of text
+		# height: how many sockets
 
       width = self.determineBlockWidth()
       height = self.determineBlockHeight()
 
       self.blockBody = QtCore.QRect( initX, initY, width, height)
 
-        # derived fields
+		# derived fields
       self.topLeftCorner  = QtCore.QPoint(self.blockBody.x(),  self.blockBody.y());
       self.topRightCorner = QtCore.QPoint(self.blockBody.x() + self.blockBody.width(), self.blockBody.y());
       self.botLeftCorner  = QtCore.QPoint(self.blockBody.x(),  self.blockBody.y() +    self.blockBody.height());
@@ -257,8 +257,8 @@ class BlockShape():
 
          # find theta from line from current corner to other corner
          theta = math.atan2(otherCorner.x() - currentCorner.x(),
-                                #negate since (0,0) at upper left
-                                -(otherCorner.y() - currentCorner.y()));
+   								#negate since (0,0) at upper left
+   								-(otherCorner.y() - currentCorner.y()));
 
          dx = self.blockCornerRadius * math.cos(math.pi/2 - theta);
          dy = self.blockCornerRadius * math.sin(math.pi/2 - theta);
@@ -294,8 +294,8 @@ class BlockShape():
       BlockShapeUtil.cornerTo(self.gpTop, self.topRightCorner, self.botRightCorner, self.blockCornerRadius);
       #BlockShapeUtil.lineTo(self.gpTop, self.topRightCorner.x(),self.topRightCorner.y())
       # end topside
-    # gpTop.lineTo(blockBody.x + blockBody.width, blockBody.y + blockCornerRadius);
-    # gpTop.lineTo((float) topRightCorner.getX(), (float) topRightCorner.getY() + blockCornerRadius);
+   	# gpTop.lineTo(blockBody.x + blockBody.width, blockBody.y + blockCornerRadius);
+   	# gpTop.lineTo((float) topRightCorner.getX(), (float) topRightCorner.getY() + blockCornerRadius);
       self.setEndPoint(self.gpTop, self.topRightCorner, self.botRightCorner, False);
 
    def makeRightSide(self):
@@ -312,7 +312,7 @@ class BlockShape():
       # ADD MIRRORED PLUG ////
       # if it has a mirrored plug, then add it
       if((self.block.getPlug() != None) and
-        (self.block.getPlug().getPositionType() == (BlockConnector.PositionType.MIRROR))):
+   		(self.block.getPlug().getPositionType() == (BlockConnector.PositionType.MIRROR))):
          # add the plug to the gpRight
          BlockShape.BCS.addDataPlug(self.gpRight, self.block.getPlug().type, True, True);
 
@@ -454,7 +454,7 @@ class BlockShape():
 
 
    def appendConnectorOffset(self,gp, topPoint, botPoint,
-                                        blockConnector, aboveConnector):
+   										blockConnector, aboveConnector):
 
       # if top and bottom are equal, then no offset necessary
       if(topPoint.x() == botPoint.x()): return;
