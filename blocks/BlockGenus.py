@@ -43,7 +43,7 @@ class BlockGenus():
         self.kind = ""
         self.labelPrefix = ""
         self.labelSuffix = ""
-        self.genusName = ""
+        self._genusName = ""
         self.familyName = ''
 
         self.plug = None
@@ -102,9 +102,24 @@ class BlockGenus():
                 genusToCopy.after.isExpandable,
                 genusToCopy.after.connBlockID,
                 genusToCopy.after.expandGroup)
+                
+        
+        for socketToCopy in genusToCopy.sockets:
+            socket = BlockConnector(
+                socketToCopy.kind,
+                socketToCopy.type,
+                socketToCopy.positionType,
+                socketToCopy.label,
+                socketToCopy.isLabelEditable,
+                socketToCopy.isExpandable,
+                socketToCopy.connBlockID,
+                socketToCopy.expandGroup) 
+            self.sockets.append(socket)
 
-        self.genusName = newGenusName
-
+        self._genusName = newGenusName
+        
+        BlockGenus.nameToGenus[newGenusName] = self
+            
     @property
     def isStarter(self):
         """I'm the 'x' property."""
@@ -169,18 +184,19 @@ class BlockGenus():
         else:
           self.isStarter = self._isStarterInConfig
           self.isTerminator = self._isTerminatorInConfig
-        
-    @kind.deleter
-    def kind(self):
-        del self._kind  
-  
+
+    @property
+    def genusName(self):
+        """I'm the 'x' property."""
+        return self._genusName
+
+    @genusName.setter
+    def genusName(self, value):
+        self._genusName = value
+        if(self._genusName not in BlockGenus.nameToGenus):
+            BlockGenus.nameToGenus[self._genusName] = self          
   
     def getGenusWithName(name):
-        '''
-        Returns the BlockGenus with the specified name; None if this name does not exist
-        name: the name of the desired BlockGenus
-        return the BlockGenus with the specified name; None if this name does not exist
-        '''
         if(name in BlockGenus.nameToGenus):
             return BlockGenus.nameToGenus[name]
         else:
@@ -413,7 +429,7 @@ class BlockGenus():
                 else:
                     # not a unique stub, add generic stub
                     genus.stubList.append(stubGenus);
-
+            
 
 
     def loadBlockGenera(root):
@@ -738,13 +754,6 @@ class BlockGenus():
          * @return true iff this genus is an infix operator.  This genus must be supporting two bottom sockets.
         '''
         return self.__isInfix
-
-    def getGenusName(self):
-        '''
-         * Returns the name of this genus
-         * @return the name of this genus
-        '''
-        return self.genusName
 
     def getInitialLabel(self):
         '''
