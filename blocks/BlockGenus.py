@@ -38,7 +38,8 @@ class BlockGenus():
         self.labelMustBeUnique = True
 
         self.color = 0
-
+        self.isDirty = False
+        
         self.initLabel = ""
         self.kind = ""
         self.labelPrefix = ""

@@ -6,17 +6,24 @@ from ConnectorsInfoWnd import ConnectorsInfoWnd
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
+class BlockGenusTreeView(QTreeView):
+    def __init__(self, parent):
+        super(BlockGenusTreeView, self).__init__(parent)
+        self.isDirty = False
+        
 class BlockGenusTreeModel(QPropertyModel):
   
-    def __init__(self, mainWnd, genus, langDefLocation, parent=None):
+    def __init__(self, view,  mainWnd, genus, langDefLocation, parent=None):
         from blocks.BlockGenus import BlockGenus
         super(BlockGenusTreeModel, self).__init__(parent)
+        self.view = view
         self.genus = genus
         self.tmpGenus = BlockGenus(genus.genusName, '__previewGenus__')
         self.properties = {}
         self.mainWnd = mainWnd
         self.langDefLocation = langDefLocation
         self.setupModelData(self.tmpGenus, self.m_rootItem)
+        self.isDirty = False
 
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
@@ -130,12 +137,11 @@ class BlockGenusTreeModel(QPropertyModel):
 
         self.showBlock(self.tmpGenus)
 
-    
-        if(self.tmpGenus == self.genus): 
-            print('self.tmpGenus == self.genus')
+        #self.isDirty = self.tmpGenus != self.genus
+        self.genus.isDirty = self.tmpGenus != self.genus
+        if(not self.genus.isDirty): 
             self.mainWnd.wndApplyGenus.hide()
         else:
-            print('self.tmpGenus != self.genus')
             self.mainWnd.wndApplyGenus.show()
             
         return ret    
@@ -163,10 +169,10 @@ class BlockGenusTreeModel(QPropertyModel):
             widget.setParent(None)
             widget.deleteLater()
             
-        factoryRB = FactoryRenderableBlock.from_block(None, block)
+        self.factoryRB = FactoryRenderableBlock.from_block(None, block)
         #factoryRB.setParent(self.mainWnd.wndPreview)
         #print('%d:%d'%(factoryRB.getBlockWidth(), factoryRB.getBlockHeight()))
-        factoryRB.setFixedSize(factoryRB.width(), factoryRB.height())
-        preview_wnd_layout.addWidget(factoryRB, Qt.AlignCenter); 
+        self.factoryRB.setFixedSize(self.factoryRB.width(), self.factoryRB.height())
+        preview_wnd_layout.addWidget(self.factoryRB, Qt.AlignCenter); 
     
         pass 

@@ -240,7 +240,7 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QListWidget" name="lwBlockGenus">
+      <widget class="GenusListWidget" name="lwBlockGenus">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -349,82 +349,29 @@
      </property>
      <item>
       <widget class="QTreeWidget" name="twDrawerSets">
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
        <property name="dragDropMode">
         <enum>QAbstractItemView::DropOnly</enum>
        </property>
        <property name="defaultDropAction">
         <enum>Qt::CopyAction</enum>
        </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
        <column>
         <property name="text">
-         <string>1</string>
+         <string notr="true">1</string>
         </property>
        </column>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Subitem</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>New Item</string>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>New Subitem</string>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-        <item>
-         <property name="text">
-          <string>New Subitem</string>
-         </property>
-        </item>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>New Item</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
@@ -567,6 +514,9 @@
    </property>
   </action>
   <action name="actionDrawersets">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>resource/128-48.png</normaloff>resource/128-48.png</iconset>
@@ -581,6 +531,11 @@
    <class>QPropertyEditorWidget</class>
    <extends>QTreeView</extends>
    <header>components.propertyeditor.QPropertyEditorWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>GenusListWidget</class>
+   <extends>QListWidget</extends>
+   <header>components.GenusListWidget</header>
   </customwidget>
  </customwidgets>
  <tabstops>

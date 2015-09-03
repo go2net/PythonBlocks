@@ -15,6 +15,7 @@ from PyQt4.QtGui import QDockWidget
 class MainWnd(QtGui.QMainWindow):
 
     def __init__(self):
+
         super(MainWnd, self).__init__()
         self.filename = None
 
@@ -54,7 +55,7 @@ class MainWnd(QtGui.QMainWindow):
         layout  = QtGui.QHBoxLayout()
         self.wndPreview.setLayout(layout);
         self.wndApplyGenus.hide()
-
+        self.lwBlockGenus.setMainWnd(self)
         #self.blockPreviewWnd.resizeEvent = self.onResize
 
     def __createDockWindow(self, name):
@@ -116,14 +117,15 @@ class MainWnd(QtGui.QMainWindow):
                                self.factoryWidget, self.tr("Blocks Factory"))            
   
     def setActiveWidget(self, widget):
-        print(widget)
         self.stackedWidget.setCurrentWidget(widget)
         if widget == self.pgHome:
             self.blockGenusWnd.hide()
             self.blockPropWnd.hide()   
+            self.drawerSetsWnd.hide()       
         if widget == self.pgBlockEditor:
             self.blockGenusWnd.hide()
-            self.blockPropWnd.show()        
+            self.blockPropWnd.show() 
+            self.drawerSetsWnd.hide()       
         if widget == self.pgDrawerSets:  
             self.blockGenusWnd.show()
             self.drawerSetsWnd.show()
@@ -154,15 +156,16 @@ class MainWnd(QtGui.QMainWindow):
     def onBlockGenusItemChanged(self):
         from BlockGenusTreeModel import BlockGenusTreeModel
         from components.propertyeditor.QVariantDelegate import QVariantDelegate
+        print('onBlockGenusItemChanged')
         items = self.lwBlockGenus.selectedItems()    
         if(len(items) != 1): return
         item = items[0]
 
         genus = item.data(QtCore.Qt.UserRole)
         langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
-        model = BlockGenusTreeModel(self, genus, langDefLocation)
+        self.genusTreeModel = BlockGenusTreeModel(self.tvBlockGenusView, self, genus, langDefLocation)
         self.tvBlockGenusView.init()
-        self.tvBlockGenusView.setModel(model)
+        self.tvBlockGenusView.setModel(self.genusTreeModel)
         self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
         self.tvBlockGenusView.expandAll()
         
@@ -309,6 +312,6 @@ class MainWnd(QtGui.QMainWindow):
         self.workspaceEmpty = True;
 
 if __name__ == '__main__':
-  app = QtGui.QApplication(sys.argv)
-  win = MainWnd()
-  sys.exit(app.exec_())
+    app = QtGui.QApplication(sys.argv)
+    win = MainWnd()
+    sys.exit(app.exec_())

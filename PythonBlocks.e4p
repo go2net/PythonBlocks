@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-08-29, 21:26:48 -->
+<!-- Saved: 2015-09-03, 21:45:47 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -15,7 +15,6 @@
   <TranslationPattern>Portable Python 3.2.5.1/App/Lib/site-packages/PyQt4/translations/assistant_%language%.qm</TranslationPattern>
   <Eol index="-1"/>
   <Sources>
-    <Source>main.py</Source>
     <Source>__init__.py</Source>
     <Source>blocks/bevel_test.py</Source>
     <Source>blocks/bevel_types.py</Source>
@@ -81,6 +80,8 @@
     <Source>components/propertyeditor/AdvanceEditor.py</Source>
     <Source>components/RestrictFileDialog.py</Source>
     <Source>ConnectorsInfoWnd.py</Source>
+    <Source>components/GenusListWidget.py</Source>
+    <Source>PythonBlocks.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
@@ -89,7 +90,7 @@
   <Resources/>
   <Interfaces/>
   <Others/>
-  <MainScript>main.py</MainScript>
+  <MainScript>PythonBlocks.py</MainScript>
   <Vcs>
     <VcsType>None</VcsType>
   </Vcs>
