@@ -68,8 +68,6 @@ class FactoryManager(WorkspaceWidget):
    def getparentWidget(self):
       return self.parentWidget
 
-
-
    def addStaticDrawerNoPos(self,name, color):
       '''
       Adds a static drawer if no drawer with the specified name already exists.
@@ -159,7 +157,7 @@ class FactoryManager(WorkspaceWidget):
       '''
       # find canvas
       for canvas in self.staticCanvases:
-         if (canvas.getName() == drawer):
+         if (canvas.name == drawer):
             #canvas.addBlocks(blocks)
             for block in blocks:
                if(block == None or Block.NULL == block.blockID): continue
@@ -194,7 +192,7 @@ class FactoryManager(WorkspaceWidget):
          widget.deleteLater()
 
       for index in range(0,self.canvas.count()):
-         name = self.canvas.widget(index).getName()
+         name = self.canvas.widget(index).name
          button = QtGui.QPushButton(name,self.navigator)
          #button.setFlat(True)
          button.clicked.connect(partial(self.OnPressed,sender=button))
@@ -216,7 +214,7 @@ class FactoryManager(WorkspaceWidget):
 
       for index in range(0,self.canvas.count()):
          widget = self.canvas.widget(index)
-         if(widget.getName() == sender.text()):
+         if(widget.name == sender.text()):
             self.canvas.setCurrentIndex(index)
             self.active_canvas = widget
             break

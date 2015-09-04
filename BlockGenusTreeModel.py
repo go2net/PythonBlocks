@@ -21,6 +21,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.tmpGenus = BlockGenus(genus.genusName, '__previewGenus__')
         self.properties = {}
         self.mainWnd = mainWnd
+        self.mainWnd.btnApply.clicked.connect(self.onApply)
         self.langDefLocation = langDefLocation
         self.setupModelData(self.tmpGenus, self.m_rootItem)
         self.isDirty = False
@@ -149,6 +150,11 @@ class BlockGenusTreeModel(QPropertyModel):
         tt = 'connector.'+property_name+'=\'' + str(value)+'\''
         print(tt)
         exec(tt)
+
+    def onApply(self):
+        self.genus.copyDataFrom(self.tmpGenus)
+        self.mainWnd.wndApplyGenus.hide()
+        self.genus.isDirty = False
 
     def showBlock(self, genus):
         from blocks.Block import Block

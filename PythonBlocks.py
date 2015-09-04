@@ -26,6 +26,7 @@ class MainWnd(QtGui.QMainWindow):
         self.connect(self.actionSave, QtCore.SIGNAL('triggered()'), self.onSave)
         self.connect(self.actionSaveAs, QtCore.SIGNAL('triggered()'), self.onSaveAs)
         self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
+        self.actionSaveAll.triggered.connect(self.onSaveAll)
 
         #self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
 
@@ -48,6 +49,7 @@ class MainWnd(QtGui.QMainWindow):
         
         self.resetWorksapce()
         self.InitBlockGenusListWidget()
+        self.InitBlockDrawerSetsTreeWidget()
         self.setActiveWidget(self.pgBlockEditor)
 
         self.show()
@@ -144,8 +146,8 @@ class MainWnd(QtGui.QMainWindow):
             
     def InitBlockGenusListWidget(self):
         from blocks.BlockGenus import BlockGenus
-
-        for name in BlockGenus.nameToGenus:
+        
+        for name in sorted(BlockGenus.nameToGenus):
           item = QtGui.QListWidgetItem()
           item.setText(name)
           item.setData(QtCore.Qt.UserRole, BlockGenus.nameToGenus[name])
@@ -162,8 +164,8 @@ class MainWnd(QtGui.QMainWindow):
         item = items[0]
 
         genus = item.data(QtCore.Qt.UserRole)
-        langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
-        self.genusTreeModel = BlockGenusTreeModel(self.tvBlockGenusView, self, genus, langDefLocation)
+        drawerSetsFile = os.getcwd() + "\\"+ "support\\block_drawersets.xml"
+        self.genusTreeModel = BlockGenusTreeModel(self.tvBlockGenusView, self, genus, drawerSetsFile)
         self.tvBlockGenusView.init()
         self.tvBlockGenusView.setModel(self.genusTreeModel)
         self.tvBlockGenusView.setItemDelegate(QVariantDelegate(self.tvBlockGenusView));
@@ -171,7 +173,24 @@ class MainWnd(QtGui.QMainWindow):
         
         #isStarterIndex = model.getIndexForNode(model.properties['connectors'])
         #self.tvBlockGenusView.setIndexWidget(isStarterIndex, QtGui.QCheckBox())
-
+    
+    def InitBlockDrawerSetsTreeWidget(self):
+        #from components.DrawerSetsTreeView import DrawerSetsTreeView
+        langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
+        
+        root = self.wc.setLangDefFilePath("support\\lang_def.xml")
+        #self.wc.loadFreshWorkspace();
+        self.tvDrawerSets.init(root)
+        #self.drawerSetsModel = DrawerSetsTreeModel(self.tvDrawerSets, self, langDefLocation)
+        #self.tvDrawerSets.setModel(self.drawerSetsModel)
+        #self.tvDrawerSets.expandAll()
+        
+        #factory = self.wc.workspace.factory
+        #for canvas in reversed(factory.canvas.findChildren(FactoryCanvas)) :
+        #    print(canvas.name)
+        return    
+        pass
+    
     def onBlockClick(self, block):
         from BlockPropTreeModel import BlockPropTreeModel
         from components.propertyeditor.QVariantDelegate import QVariantDelegate
@@ -301,6 +320,9 @@ class MainWnd(QtGui.QMainWindow):
         block_file.write(self.wc.getSaveString())
         block_file.close()
 
+    def onSaveAll(self):
+        print('onSaveAll')
+        
     def resetWorksapce(self):
         self.wc.resetWorkspace();
         self.wc.setLangDefFilePath("support\\lang_def.xml")

@@ -128,7 +128,7 @@
               <widget class="QWidget" name="widget_2" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="btnApply">
                   <property name="minimumSize">
                    <size>
                     <width>80</width>
@@ -283,6 +283,7 @@
    <addaction name="separator"/>
    <addaction name="actionSave"/>
    <addaction name="actionSaveAs"/>
+   <addaction name="actionSaveAll"/>
   </widget>
   <widget class="QToolBar" name="toolBar1">
    <property name="windowTitle">
@@ -348,7 +349,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QTreeWidget" name="twDrawerSets">
+      <widget class="DrawerSetsTreeView" name="tvDrawerSets">
        <property name="dragEnabled">
         <bool>true</bool>
        </property>
@@ -364,14 +365,9 @@
        <property name="rootIsDecorated">
         <bool>true</bool>
        </property>
-       <attribute name="headerVisible">
-        <bool>false</bool>
+       <attribute name="headerDefaultSectionSize">
+        <number>0</number>
        </attribute>
-       <column>
-        <property name="text">
-         <string notr="true">1</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
@@ -476,7 +472,7 @@
      <normaloff>resource/SaveAs.png</normaloff>resource/SaveAs.png</iconset>
    </property>
    <property name="text">
-    <string>Save as</string>
+    <string>Save As</string>
    </property>
   </action>
   <action name="actionBlockGenusManagement">
@@ -525,6 +521,15 @@
     <string>Drawer Sets Configuration</string>
    </property>
   </action>
+  <action name="actionSaveAll">
+   <property name="icon">
+    <iconset>
+     <normaloff>resource/48x48-save_all.png</normaloff>resource/48x48-save_all.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save All</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -536,6 +541,11 @@
    <class>GenusListWidget</class>
    <extends>QListWidget</extends>
    <header>components.GenusListWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>DrawerSetsTreeView</class>
+   <extends>QTreeView</extends>
+   <header>components.DrawerSetsTreeView</header>
   </customwidget>
  </customwidgets>
  <tabstops>

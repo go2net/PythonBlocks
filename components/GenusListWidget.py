@@ -4,13 +4,13 @@ from PyQt4.QtGui import *
 class GenusListWidget(QListWidget):
     def __init__(self, parent):
         super(GenusListWidget, self).__init__(parent)
-        self.currentItemChanged.connect(self.onCurrentItemChanged)
-        self.itemChanged.connect(self.onItemChanged)
+        #self.currentItemChanged.connect(self.onCurrentItemChanged)
+        #self.itemChanged.connect(self.onItemChanged)
         self.viewport().installEventFilter(self); 
         self.installEventFilter(self); 
         #self.setMouseTracking(True);
     def setMainWnd(self, mainWnd):
-        self.mainWnd = mainWnd   
+        self.mainWnd = mainWnd
     
     def eventFilter(self, source,  event):
         #from blocks.FactoryRenderableBlock import FactoryRenderableBlock
@@ -54,11 +54,11 @@ class GenusListWidget(QListWidget):
             ret = msgBox.exec_()
             if ret  == QMessageBox.Apply:
                 genus.copyDataFrom(tmpGenus)
-                pass
+                genus.isDirty = False
+                self.mainWnd.wndApplyGenus.hide()
             if ret  == QMessageBox.Discard:
                 genus.isDirty = False
                 self.mainWnd.wndApplyGenus.hide()
-                pass
             if ret  == QMessageBox.Cancel:
                 return True        
         return False
@@ -74,8 +74,9 @@ class GenusListWidget(QListWidget):
         
         # write the relative cursor position to mime data
         mimeData = QMimeData()
-        # simple string with 'x,y'
-        mimeData.setText('%d,%d' % (e.x(), e.y())) 
+        
+        item = self.currentItem()
+        mimeData.setText(item.text())    
         
         block = Block.createBlockFromID(None, genusName)
         factoryRB = FactoryRenderableBlock.from_block(None, block)
@@ -84,7 +85,8 @@ class GenusListWidget(QListWidget):
         # let's make it fancy. we'll show a "ghost" of the button as we drag
         # grab the button to a pixmap
         pixmap = QPixmap.grabWidget(factoryRB)
-
+        mimeData.setImageData(pixmap)
+        
         # below makes the pixmap half transparent
         painter = QPainter(pixmap)
         painter.setCompositionMode(painter.CompositionMode_DestinationIn)
@@ -107,6 +109,7 @@ class GenusListWidget(QListWidget):
         else:
             print ('copied')
     
+    '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus
         #return
@@ -173,3 +176,4 @@ class GenusListWidget(QListWidget):
     def goBack(self):
         #qDebug("GoBack: %d", currentRow);
         self.setCurrentItem(self.currentItem);
+    '''

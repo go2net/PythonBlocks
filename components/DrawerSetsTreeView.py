@@ -1,22 +1,25 @@
+#!/usr/bin/env python
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
-class FactoryTreeView (QtGui.QTreeView):
-    def __init__(self, root):
-        super(FactoryTreeView, self).__init__()
+class DrawerSetsTreeView (QtGui.QTreeView):
+    def __init__(self, parent=None):
+        super(DrawerSetsTreeView, self).__init__(parent)
         self.header() .close ()
+        
+    def init(self, root):
         self.root = root
         
-        self.model = FactoryTreeModel(self.root)
+        self.model = DrawerSetsTreeMode(self.root)
         self.setModel(self.model)
-        self.setItemDelegate(FactoryBlockDelegate(self.model));    
+        self.setItemDelegate(DrawerSetsDelegate(self.model));    
         self.connect(self, QtCore.SIGNAL("clicked(QModelIndex)"), self.onClicked)
         self.setExpandsOnDoubleClick(False)
         #self.setStyleSheet("QTreeView::item:hover{background-color:#FFFF00;}");
         self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
-        #self.layout().setContentsMargins(5, 5, 5, 5)
-        
+        #self.layout().setContentsMargins(5, 5, 5, 5)        
+    
     def onClicked (self, index):
         item = index.internalPointer();	
             
@@ -53,7 +56,7 @@ class FactoryTreeView (QtGui.QTreeView):
         if (item !=None and item.parent == self.model.rootNode):
             pass
             
-class FactoryTreeNode():
+class DrawerSetsTreeNode():
     def __init__(self,  parent, obj):
         self.parent = parent
         self.obj = obj
@@ -84,11 +87,11 @@ class FactoryTreeNode():
         else:
           return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
       
-class FactoryTreeModel(QtCore.QAbstractItemModel):    
+class DrawerSetsTreeMode(QtCore.QAbstractItemModel):    
     def __init__(self, root):
-        super(FactoryTreeModel, self).__init__()
+        super(DrawerSetsTreeMode, self).__init__()
         
-        self.rootNode = FactoryTreeNode(None, 'root')
+        self.rootNode = DrawerSetsTreeNode(None, 'root')
         
         self.root = root
         self.drawerRBs = self.loadBlockDrawerSets(root)        
@@ -172,7 +175,7 @@ class FactoryTreeModel(QtCore.QAbstractItemModel):
                 if(drawerNode.tag == "BlockDrawer"):
                     if("name" in drawerNode.attrib):
                         drawerName = drawerNode.attrib["name"]
-                        node = FactoryTreeNode(self.rootNode, drawerName)
+                        node = DrawerSetsTreeNode(self.rootNode, drawerName)
                         self.rootNode.children.append(node)
 
                         #manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
@@ -184,16 +187,16 @@ class FactoryTreeModel(QtCore.QAbstractItemModel):
                                 genusName = blockNode.text
                                 newBlock = Block.createBlock(None, genusName, False)
                                 rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(225,225,225,100))
-                                sub_node = FactoryTreeNode(node, rb)
+                                sub_node = DrawerSetsTreeNode(node, rb)
                                 node.children.append(sub_node)
                                 
 
                 #manager.addStaticBlocks(drawerRBs, drawerName);
         return self.rootNode
 
-class FactoryBlockDelegate(QtGui.QItemDelegate):
+class DrawerSetsDelegate(QtGui.QItemDelegate):
     def __init__(self, treeModel):
-        super(FactoryBlockDelegate, self).__init__()
+        super(DrawerSetsDelegate, self).__init__()
         self.treeModel = treeModel
         
     def sizeHint (self, option, index):
@@ -222,5 +225,5 @@ class FactoryBlockDelegate(QtGui.QItemDelegate):
             #painter.end()
         else:
             
-            super(FactoryBlockDelegate, self).paint(painter, option, index)    
+            super(DrawerSetsDelegate, self).paint(painter, option, index)    
         

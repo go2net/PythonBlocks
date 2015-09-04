@@ -67,7 +67,7 @@ class FactoryCanvas(QtGui.QFrame, WorkspaceWidget):
         self.color = color
 
         #self.setBackground(QtCore.Qt.gray);
-        self.setName (name);
+        self.name = name
 
         self.setColor(color);
         #self.mygroupbox = QtGui.QGroupBox(name)
@@ -85,14 +85,15 @@ class FactoryCanvas(QtGui.QFrame, WorkspaceWidget):
         self.layout().addWidget(self.captionPanel)
         self.layout().addWidget(self.scrollPanel)
         self.block_list = []
-        
-    def setName(self, name):
-      QtGui.QWidget.setObjectName(self,name)
-      self.repaint()
+    
+    @property
+    def name(self):
+        return self.objectName()
 
-    def getName(self):
-      return self.objectName()
-
+    @name.setter
+    def name(self, value):
+        self.setObjectName(value)
+    
     def getBlocksByName(self,genusName):
       if(genusName in self.block_list):
          return self.block_list[genusName]

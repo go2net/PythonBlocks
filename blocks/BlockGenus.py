@@ -214,7 +214,24 @@ class BlockGenus():
             if(self.properties['function_name'] != other.properties['function_name']): return False       
     
         return True
-  
+    
+    def copyDataFrom(self,  other):
+        if(other == None): return
+        self.color = other.color
+        self._kind = other._kind
+        self.initLabel = other.initLabel
+        self.labelPrefix = other.labelPrefix
+        self.labelSuffix = other.labelSuffix
+        self.isStarter = other.isStarter
+        self.isTerminator = other.isTerminator
+        
+        if('module_name' in other.properties):
+            self.properties['module_name'] = other.properties['module_name']
+        else:
+            self.properties['module_name'] = ''
+        if('function_name' in other.properties):    
+            self.properties['function_name'] = other.properties['function_name']    
+    
     def getGenusWithName(name):
         if(name in BlockGenus.nameToGenus):
             return BlockGenus.nameToGenus[name]
