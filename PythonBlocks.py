@@ -156,7 +156,7 @@ class MainWnd(QtGui.QMainWindow):
     def onBlockGenusItemChanged(self):
         from BlockGenusTreeModel import BlockGenusTreeModel
         from components.propertyeditor.QVariantDelegate import QVariantDelegate
-        print('onBlockGenusItemChanged')
+        #print('onBlockGenusItemChanged')
         items = self.lwBlockGenus.selectedItems()    
         if(len(items) != 1): return
         item = items[0]

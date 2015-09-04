@@ -4,10 +4,64 @@ from PyQt4.QtGui import *
 class GenusListWidget(QListWidget):
     def __init__(self, parent):
         super(GenusListWidget, self).__init__(parent)
-        self.currentItemChanged.connect(self.onItemChanged)
-        
+        self.currentItemChanged.connect(self.onCurrentItemChanged)
+        self.itemChanged.connect(self.onItemChanged)
+        self.viewport().installEventFilter(self); 
+        self.installEventFilter(self); 
+        #self.setMouseTracking(True);
     def setMainWnd(self, mainWnd):
         self.mainWnd = mainWnd   
+    
+    def eventFilter(self, source,  event):
+        #from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+        ret = False
+        if (event.type() ==  QEvent.MouseButtonPress):
+            if event.button() == Qt.LeftButton:
+                item  = self.itemAt(event.pos()) 
+                previous = self.currentItem()
+                ret = self.onItemChanging(item, previous)
+
+        elif (event.type() ==  QEvent.KeyPress):
+            previous = self.currentItem()
+            item = None
+            row = self.currentRow()
+            if(event.key() == Qt.Key_Up):
+                if(previous != None and row >0):                    
+                    item = self.item(row-1)
+                        
+            if(event.key() == Qt.Key_Down):
+                if(previous != None and row < self.count()-1):
+                    item = self.item(row+1)
+            ret = self.onItemChanging(item, previous)
+
+        if(ret == False):
+            return QListWidget.eventFilter(self, source,  event);
+        else:
+            return True
+            
+    def onItemChanging(self,current, previous ):  
+        from blocks.BlockGenus import BlockGenus
+        if(previous == None or current==previous): return False
+        genusName =  previous.text()
+        genus = BlockGenus.getGenusWithName(genusName)
+        if(genus.isDirty):
+            tmpGenus = BlockGenus.getGenusWithName('__previewGenus__')
+            msgBox = QMessageBox()
+            msgBox.setText("The Genus Block has been modified.")
+            msgBox.setInformativeText("Do you want to apply your changes?")
+            msgBox.setStandardButtons(QMessageBox.Apply | QMessageBox.Discard | QMessageBox.Cancel)
+            msgBox.setDefaultButton(QMessageBox.Apply)
+            ret = msgBox.exec_()
+            if ret  == QMessageBox.Apply:
+                genus.copyDataFrom(tmpGenus)
+                pass
+            if ret  == QMessageBox.Discard:
+                genus.isDirty = False
+                self.mainWnd.wndApplyGenus.hide()
+                pass
+            if ret  == QMessageBox.Cancel:
+                return True        
+        return False
     
     def mouseMoveEvent(self, e):
         from blocks.Block import Block
@@ -52,10 +106,15 @@ class GenusListWidget(QListWidget):
             print ('moved')
         else:
             print ('copied')
-
-
-    def onItemChanged(self, current, previous):
+    
+    def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus
+        #return
+        #print('onItemChanged')
+        return
+        
+        previous = self.currentItem()
+        
         if previous == None: return
 
         genusName =  previous.text()
@@ -77,5 +136,40 @@ class GenusListWidget(QListWidget):
                 self.mainWnd.wndApplyGenus.hide()
                 pass
             if ret  == QMessageBox.Cancel:
-                self.setCurrentItem(previous)
+                return
+                pass    
+        
+        
+        
+    def onCurrentItemChanged(self, current, previous):
+        from blocks.BlockGenus import BlockGenus
+        print('onCurrentItemChanged')
+        return
+        if previous == None: return
+
+        genusName =  previous.text()
+        genus = BlockGenus.getGenusWithName(genusName)
+        print(current.text())
+        if(genus.isDirty):
+            tmpGenus = BlockGenus.getGenusWithName('__previewGenus__')
+            msgBox = QMessageBox()
+            msgBox.setText("The Genus Block has been modified.")
+            msgBox.setInformativeText("Do you want to apply your changes?")
+            msgBox.setStandardButtons(QMessageBox.Apply | QMessageBox.Discard | QMessageBox.Cancel)
+            msgBox.setDefaultButton(QMessageBox.Apply)
+            ret = msgBox.exec_()
+            if ret  == QMessageBox.Apply:
+                genus.copyDataFrom(tmpGenus)
+                pass
+            if ret  == QMessageBox.Discard:
+                genus.isDirty = False
+                self.mainWnd.wndApplyGenus.hide()
+                pass
+            if ret  == QMessageBox.Cancel:
+                self.currentItem = previous
+                QTimer.singleShot(0, self.goBack);
                 pass                
+
+    def goBack(self):
+        #qDebug("GoBack: %d", currentRow);
+        self.setCurrentItem(self.currentItem);
