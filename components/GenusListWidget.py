@@ -76,7 +76,7 @@ class GenusListWidget(QListWidget):
         mimeData = QMimeData()
         
         item = self.currentItem()
-        mimeData.setText(item.text())    
+        mimeData.setText(item.text())
         
         block = Block.createBlockFromID(None, genusName)
         factoryRB = FactoryRenderableBlock.from_block(None, block)

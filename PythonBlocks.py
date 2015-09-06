@@ -176,7 +176,7 @@ class MainWnd(QtGui.QMainWindow):
     
     def InitBlockDrawerSetsTreeWidget(self):
         #from components.DrawerSetsTreeView import DrawerSetsTreeView
-        langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
+        #langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
         
         root = self.wc.setLangDefFilePath("support\\lang_def.xml")
         #self.wc.loadFreshWorkspace();
