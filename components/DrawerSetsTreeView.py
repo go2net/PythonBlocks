@@ -81,25 +81,25 @@ class DrawerSetsTreeView (QtGui.QTreeView):
     #        print('acceptProposedAction')
     #        event.acceptProposedAction() 
  
-class DrawerSetsTreeNode():
+class DrawerSetsTreeNode(QObject):
     def __init__(self,  parent, obj):
-        self.parent = parent
+        super(DrawerSetsTreeNode, self).__init__(parent)
+        #self.parent = parent
         self.obj = obj
         self.children = []
+        
     def isRoot(self):
-        return self.parent == None    
+        return self.parent() == None    
     
     def row(self):
-        if self.parent:
-            return self.parent.children.index(self)
+        if self.parent():
+            return self.parent().children.index(self)
         return 0
    
 class DrawerSetsTreeMode(QtCore.QAbstractItemModel):    
     def __init__(self, root):
-        super(DrawerSetsTreeMode, self).__init__()
-        
-        self.rootNode = DrawerSetsTreeNode(None, 'root')
-        
+        super(DrawerSetsTreeMode, self).__init__()        
+        self.rootNode = DrawerSetsTreeNode(None, 'root')        
         self.root = root
         self.drawerRBs = self.loadBlockDrawerSets(root)        
         
@@ -144,16 +144,32 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
           return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
    
     def mimeTypes(self):
-        return ['text/xml']
+        return ["application/block.genus"]
 
-    def mimeData(self, indexes):
-        mimedata = QtCore.QMimeData()
-        mimedata.setData('text/xml', 'mimeData')
-        return mimedata
+    def mimeData(self, indices):
+        mimeData = QtCore.QMimeData()
+        encodedData = QtCore.QByteArray()
+        stream = QtCore.QDataStream(encodedData, QtCore.QIODevice.WriteOnly)
+ 
+        for index in indices:
+            if not index.isValid():
+                continue
+            node = index.internalPointer()
 
-    #def dropMimeData(self, data, action, row, column, parent):
-    #    print ('dropMimeData %s %s %s %s' % (data.data('text/xml'), action, row, parent) )
-    #    return True
+            # variant = QtCore.QVariant(node)
+
+            # add all the items into the stream
+            stream << node
+
+        print("Encoding drag with: ", "application/block.genus")
+        mimeData.setData("application/block.genus", encodedData)
+        return mimeData
+
+    def dropMimeData(self, data, action, row, column, parent):
+        encodedData = data.data("application/block.genus")
+        print(encodedData)
+        #print ('dropMimeData %s %s %s %s' % (data.data('text/xml'), action, row, parent) )
+        return True
         
     def parent ( self,  index ) :
 
@@ -161,7 +177,7 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             return QtCore.QModelIndex()
 
         childItem = index.internalPointer();
-        parentItem = childItem.parent;
+        parentItem = childItem.parent();
 
         if (not parentItem or parentItem == self.rootNode):
             return QtCore.QModelIndex()
@@ -180,7 +196,7 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             role == QtCore.Qt.DisplayRole or
             role == QtCore.Qt.EditRole):
             
-            if(item.parent == self.rootNode):
+            if(item.parent() == self.rootNode):
                 return item.obj
             else:
                 rb = item.obj
