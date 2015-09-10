@@ -7,27 +7,33 @@ class DrawerSetsTreeView (QtGui.QTreeView):
     def __init__(self, parent=None):
         super(DrawerSetsTreeView, self).__init__(parent)
         self.header() .close ()
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.setAcceptDrops(True)
+        
+        #self.setDragDropMode(QAbstractItemView.InternalMove)
+        #self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setSelectionMode(QAbstractItemView.ExtendedSelection);
         self.setDragEnabled(True)
+        self.viewport().setAcceptDrops(True)
+        #self.setDragEnabled(True)
+        self.setDropIndicatorShown(True);
+        
     def init(self, root):
         self.root = root
         
         self.model = DrawerSetsTreeMode(self.root)
         self.setModel(self.model)
-        self.setItemDelegate(DrawerSetsDelegate(self.model));    
-        self.connect(self, QtCore.SIGNAL("itemClicked(QModelIndex)"), self.itemClicked)
-        self.connect(self, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.onContentMenu)
+        #self.setItemDelegate(DrawerSetsDelegate(self.model));    
+        #self.connect(self, QtCore.SIGNAL("itemClicked(QModelIndex)"), self.itemClicked)
+        #self.connect(self, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.onContentMenu)
         self.setExpandsOnDoubleClick(False)
         #self.setStyleSheet("QTreeView::item:hover{background-color:#FFFF00;}");
         self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
         #self.layout().setContentsMargins(5, 5, 5, 5)        
     
-    def mouseReleaseEvent (self, event):
-        if (event.button() & Qt.RightButton):
-            self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
-        elif (event.button() & Qt.LeftButton):
-            self.emit(SIGNAL("itemClicked (QModelIndex)"), self.indexAt(event.pos()))
+    #def mouseReleaseEvent (self, event):
+    #    if (event.button() & Qt.RightButton):
+    #        self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
+    #    elif (event.button() & Qt.LeftButton):
+    #        self.emit(SIGNAL("itemClicked (QModelIndex)"), self.indexAt(event.pos()))
  
     def onContentMenu(self, pos):
         print('onContentMenu')
@@ -54,12 +60,12 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             #print(focusedItem)
             #print(item)
             #print('******END******')
-            #if(focusedIndex == index):
+            if(focusedIndex == index):
             #    print('focusedIndex')
-            #    painter.setPen(QtGui.QColor(0, 0, 240) )
-            #else:
-            #    painter.setPen(QtGui.QColor(200, 200, 200) )
-            #painter.drawRect(option.rect);
+                painter.setPen(QtGui.QColor(0, 0, 240) )
+            else:
+                painter.setPen(QtGui.QColor(200, 200, 200) )
+            painter.drawRect(option.rect);
 
 
         QtGui.QTreeView.drawRow(self, painter, newOption, index);
@@ -69,11 +75,11 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         if (item !=None and item.parent == self.model.rootNode):
             pass
     
-    def dragEnterEvent(self, event):
-        print(event.mimeData().formats())
-        if (event.mimeData().hasFormat("text/plain")):
-            print('acceptProposedAction')
-            event.acceptProposedAction() 
+    #def dragEnterEvent(self, event):
+    #    print(event.mimeData().formats())
+    #    if (event.mimeData().hasFormat("text/plain")):
+    #        print('acceptProposedAction')
+    #        event.acceptProposedAction() 
  
 class DrawerSetsTreeNode():
     def __init__(self,  parent, obj):
@@ -87,25 +93,7 @@ class DrawerSetsTreeNode():
         if self.parent:
             return self.parent.children.index(self)
         return 0
-    def flags (self,  index ) :
-        return QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled; 
-
-        if (not index.isValid()):
-          return QtCore.Qt.ItemIsEnabled;
-
-        item = index.internalPointer();
-
-        if (index.column() == 0):
-            return QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable 
-            
-        # only allow change of value attribute
-        if (item.isRoot()):
-          return  QtCore.Qt.ItemIsEnabled;  
-        elif (item.isReadOnly()):
-          return  QtCore.Qt.ItemIsDragEnabled 
-        else:
-          return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
-      
+   
 class DrawerSetsTreeMode(QtCore.QAbstractItemModel):    
     def __init__(self, root):
         super(DrawerSetsTreeMode, self).__init__()
@@ -132,7 +120,41 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             return QtCore.QModelIndex()
 
         return self.createIndex(row, column, parentItem.children[row])
- 
+
+    def flags(self, index):
+        if not index.isValid():
+            return QtCore.Qt.ItemIsEnabled
+        return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | \
+               QtCore.Qt.ItemIsDragEnabled | QtCore.Qt.ItemIsDropEnabled  
+               
+        if (not index.isValid()):
+          return QtCore.Qt.ItemIsEnabled;
+
+        item = index.internalPointer();
+
+        if (index.column() == 0):
+            return QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable 
+            
+        # only allow change of value attribute
+        if (item.isRoot()):
+          return  QtCore.Qt.ItemIsEnabled;  
+        elif (item.isReadOnly()):
+          return  QtCore.Qt.ItemIsDragEnabled 
+        else:
+          return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
+   
+    def mimeTypes(self):
+        return ['text/xml']
+
+    def mimeData(self, indexes):
+        mimedata = QtCore.QMimeData()
+        mimedata.setData('text/xml', 'mimeData')
+        return mimedata
+
+    #def dropMimeData(self, data, action, row, column, parent):
+    #    print ('dropMimeData %s %s %s %s' % (data.data('text/xml'), action, row, parent) )
+    #    return True
+        
     def parent ( self,  index ) :
 
         if (not index.isValid()):
@@ -216,8 +238,20 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
     def OnContextMenuRequested(self, index, globalPos):
         print('OnContextMenuRequested')
 
-    def dropMimeData(self, data, action, row, column, parent):
-       print('dropMimeData')
+    def supportedDropActions(self): 
+        return QtCore.Qt.CopyAction | QtCore.Qt.MoveAction 
+        
+    #def removeRows(self,  row, count, parent):
+    #    print("Remove");
+    #    if(parent.isValid()):
+    #        return False;
+    #    self.beginRemoveRows(parent, row, row + count - 1);
+    #    for i in range(0, self.count()):
+    #        pass
+    #        # delete m_pAllData->takeAt(row);
+    #    self.endRemoveRows();
+    #    return TRUE;
+
 
 class DrawerSetsDelegate(QtGui.QItemDelegate):
     def __init__(self, treeModel):

@@ -350,14 +350,11 @@
      </property>
      <item>
       <widget class="DrawerSetsTreeView" name="tvDrawerSets">
-       <property name="dragEnabled">
+       <property name="acceptDrops">
         <bool>true</bool>
        </property>
-       <property name="dragDropMode">
-        <enum>QAbstractItemView::DropOnly</enum>
-       </property>
        <property name="defaultDropAction">
-        <enum>Qt::CopyAction</enum>
+        <enum>Qt::ActionMask</enum>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
