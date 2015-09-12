@@ -299,17 +299,41 @@ class MainWnd(QtGui.QMainWindow):
            #self.wc.resetWorkspace();
            self.wc.loadProjectFromPath(filename);
 
-    def onSave(self):
+    def onSave(self):        
+        widget = self.stackedWidget.currentWidget()
+        if widget == self.pgHome:
+            pass     
+        if widget == self.pgBlockEditor:
+            self.onSaveBlockEditor()   
+        if widget == self.pgDrawerSets:  
+            self.onSaveDrawerSets()         
+
+    def onSaveBlockEditor(self):        
         import codecs
         filename = self.filename
         if(filename == None or filename == ''):
-          filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks(*.blks)")
-          if(filename == ''): return   # User cancel load 
+            filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks(*.blks)")
+            if(filename == ''): return   # User cancel load 
           
         block_file = codecs.open(filename, "w",'utf-8')
         block_file.write(self.wc.getSaveString())
         block_file.close()
 
+    def onSaveDrawerSets(self):        
+        import codecs
+        drawerSetsFileName = 'support\block_drawersets.xml'
+          
+        file = codecs.open(drawerSetsFileName, "w",'utf-8')        
+        file.write(self.tvDrawerSets.getSaveString())
+        file.close()
+        
+        genusFileName = 'support\block_genuses.xml'
+          
+        file = codecs.open(genusFileName, "w",'utf-8')        
+        file.write(self.lwBlockGenus.getSaveString())
+        file.close()        
+
+        
     def onSaveAs(self):
         import codecs
         filename = QtGui.QFileDialog.getSaveFileName(self, "Save file", "", ".blks(*.blks)")

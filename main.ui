@@ -354,13 +354,22 @@
         <bool>true</bool>
        </property>
        <property name="defaultDropAction">
-        <enum>Qt::ActionMask</enum>
+        <enum>Qt::MoveAction</enum>
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
        <property name="rootIsDecorated">
         <bool>true</bool>
+       </property>
+       <property name="itemsExpandable">
+        <bool>false</bool>
+       </property>
+       <property name="allColumnsShowFocus">
+        <bool>true</bool>
+       </property>
+       <property name="expandsOnDoubleClick">
+        <bool>false</bool>
        </property>
        <attribute name="headerDefaultSectionSize">
         <number>0</number>

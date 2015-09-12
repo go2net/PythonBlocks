@@ -115,6 +115,9 @@ class GenusListWidget(QListWidget):
         else:
             print ('copied')
     
+    def getSaveString(self):
+        return ''
+    
     '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus
