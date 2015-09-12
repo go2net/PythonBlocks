@@ -66,25 +66,31 @@ class GenusListWidget(QListWidget):
     def mouseMoveEvent(self, e):
         from blocks.Block import Block
         from blocks.FactoryRenderableBlock import FactoryRenderableBlock
-        
+        from components.PyMimeData import PyMimeData
+        from components.DrawerSetsTreeView import DrawerSetsTreeNode        
+
         if e.buttons() != Qt.LeftButton:
             return
         
         genusName =  self.currentItem().text()
+        newBlock = Block.createBlock(None, genusName, False)
+        rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QColor(225,225,225,100))
+        sub_node = DrawerSetsTreeNode(None, rb)        
+        mimeData = PyMimeData(sub_node) 
         
         # write the relative cursor position to mime data
-        mimeData = QMimeData()
+        #mimeData = QMimeData()
         
-        item = self.currentItem()
-        mimeData.setText(item.text())
+        #item = self.currentItem()
+        #mimeData.setText(item.text())
         
-        block = Block.createBlockFromID(None, genusName)
-        factoryRB = FactoryRenderableBlock.from_block(None, block)
+        #block = Block.createBlockFromID(None, genusName)
+        #factoryRB = FactoryRenderableBlock.from_block(None, block)
         
         #print(self.mainWnd.genusTreeModel.factoryRB)
         # let's make it fancy. we'll show a "ghost" of the button as we drag
         # grab the button to a pixmap
-        pixmap = QPixmap.grabWidget(factoryRB)
+        pixmap = QPixmap.grabWidget(rb)
         mimeData.setImageData(pixmap)
         
         # below makes the pixmap half transparent
