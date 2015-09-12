@@ -10,13 +10,14 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         super(DrawerSetsTreeView, self).__init__(parent)
         self.header() .close ()        
         #self.setDragDropMode(QAbstractItemView.InternalMove)
-        #self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.setSelectionMode(QAbstractItemView.ExtendedSelection);
         self.setDragEnabled(True)
         self.viewport().setAcceptDrops(True)
         #self.setDragEnabled(True)
         self.setDropIndicatorShown(True);
-
+        self.popMenu = QtGui.QMenu(self)
+        
     def init(self, root):
         self.root = root
         
@@ -26,19 +27,42 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         self.connect(self, QtCore.SIGNAL("itemClicked(QModelIndex)"), self.itemClicked)
         self.connect(self, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.onContentMenu)
         self.setExpandsOnDoubleClick(False)
-        #self.setStyleSheet("QTreeView::item:hover{background-color:#FFFF00;}");
-        self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
+        self.setStyleSheet("QTreeView::item:hover{background-color:#FFFF00;}");
+        #self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
         #self.layout().setContentsMargins(5, 5, 5, 5)        
         self.setDefaultDropAction(Qt.MoveAction)
         
-    def mouseReleaseEvent (self, event):
-        if (event.button() & Qt.RightButton):
-            self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
-        elif (event.button() & Qt.LeftButton):
-            self.emit(SIGNAL("itemClicked (QModelIndex)"), self.indexAt(event.pos()))
+    #def mouseReleaseEvent (self, event):
+    #    if (event.button() & Qt.RightButton):
+    #        self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
+    #    elif (event.button() & Qt.LeftButton):
+    #        self.emit(SIGNAL("itemClicked (QModelIndex)"), self.indexAt(event.pos()))
  
     def onContentMenu(self, pos):
-        print('onContentMenu')
+        focusedIndex = self.indexAt(pos)
+        focusedItem = focusedIndex.internalPointer()        
+        
+        if(focusedItem == None): return
+        
+        self.popMenu.clear()
+
+        #some test list for test
+        if not focusedItem.isLeafNode():
+            action = self.popMenu.addAction('Rename')
+            action = self.popMenu.addAction('Remove - ' + focusedItem.obj)
+        else:
+            action = self.popMenu.addAction('Remove - ' + focusedItem.obj.getBlock().genusName)
+        self.popMenu.addSeparator()     
+        expand_all_action = self.popMenu.addAction('Expand all')
+        self.connect(expand_all_action,QtCore.SIGNAL("triggered()"),self.expandAll)    
+        
+        collapse_all_action = self.popMenu.addAction('Collapse all')    
+        self.connect(collapse_all_action,QtCore.SIGNAL("triggered()"),self.collapseAll)    
+        
+        #self.connect(action,QtCore.SIGNAL("triggered()"),self,QtCore.SLOT("printItem('%s')" % item))    
+        
+        self.popMenu.exec_(self.mapToGlobal(pos))
+   
         
     def itemClicked (self, index):
 
@@ -49,28 +73,18 @@ class DrawerSetsTreeView (QtGui.QTreeView):
                 self.collapse(index)
             else:
                 self.expand(index)
-
-    def drawRow (self, painter,option, index) :
-        item = index.internalPointer(); 
-        newOption = option
+                
+    def drawBranches(self, painter, rect, index):
+        item = index.internalPointer();         
         if (item !=None and not item.isLeafNode()):
-            #painter.fillRect(option.rect, QtCore.Qt.green);
-            #newOption.palette.setBrush( QPalette.AlternateBase, Qt.green);
             focusedIndex = self.indexAt(self.mapFromGlobal(QtGui.QCursor.pos()))
-            focusedItem = focusedIndex.internalPointer();   
-            #print('******BEGIN******')
-            #print(focusedItem)
-            #print(item)
-            #print('******END******')
             if(focusedIndex == index):
             #    print('focusedIndex')
-                painter.setPen(QtGui.QColor(0, 0, 240) )
+                painter.fillRect(rect, QColor(250, 0, 0) )
             else:
-                painter.setPen(QtGui.QColor(200, 200, 200) )
-            painter.drawRect(option.rect);
-
-
-        QtGui.QTreeView.drawRow(self, painter, newOption, index);
+                painter.fillRect(rect, QColor(200, 200, 200) )
+        
+        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
         
     def entered(self,  index):
         item = index.internalPointer();
@@ -123,7 +137,13 @@ class DrawerSetsTreeNode(QObject):
         
     def remove(self, node):
         return self.children.remove(node)        
-            
+    
+    def nodeExist(self, node):
+        for child_node in self.children:
+            if(node.obj.getBlock().genusName == child_node.obj.getBlock().genusName):
+                return True
+        return False
+        
 class DrawerSetsTreeMode(QtCore.QAbstractItemModel):    
     def __init__(self, root, view):
         super(DrawerSetsTreeMode, self).__init__()        
@@ -159,18 +179,15 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             
         item = index.internalPointer()        
         
-        if(item.isLeafNode()):      
-            
+        if(item.isLeafNode()):
             return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | \
                       QtCore.Qt.ItemIsDragEnabled   
-        else:
+        elif (not item.isRoot()):
             return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | \
-                      QtCore.Qt.ItemIsDropEnabled     
+                      QtCore.Qt.ItemIsDropEnabled | QtCore.Qt.ItemIsEditable;
         
         if (not index.isValid()):
           return QtCore.Qt.ItemIsEnabled;
-
-
 
         if (index.column() == 0):
             return QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsSelectable 
@@ -226,12 +243,17 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             #old_row = dragNode.row()
             if(dragNode.parent() ==  parentNode):
                 parentNode.insert(row,parentNode.pop(dragNode.row()))
-            else:               
+            else: 
+                
+                if(parentNode.nodeExist(dragNode)): 
+                    return True
+                
                 if(dragNode.parent() != None):
                     dragNode.parent().remove(dragNode)
                     old_parent_index =  self.getIndexForNode(dragNode.parent())
                     self.removeRow(row, old_parent_index)
                     self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), old_parent_index, old_parent_index) 
+
                 parentNode.insert(row,dragNode)
                 self.insertRow(row, parentIndex)                
            
