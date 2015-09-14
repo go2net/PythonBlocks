@@ -17,7 +17,7 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         #self.setDragEnabled(True)
         self.setDropIndicatorShown(True);
         self.popMenu = QtGui.QMenu(self)
-        
+        self.focusedIndex = None
     def init(self, root):
         self.root = root
         
@@ -31,12 +31,25 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         #self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
         #self.layout().setContentsMargins(5, 5, 5, 5)        
         self.setDefaultDropAction(Qt.MoveAction)
+        self.setMouseTracking(True);
         
     def mouseReleaseEvent (self, event):
         #if (event.button() & Qt.RightButton):
         #    self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
         if (event.button() & Qt.LeftButton):
             self.emit(SIGNAL("itemClicked (QModelIndex)"), self.indexAt(event.pos()))
+ 
+    def mouseMoveEvent (self, event):
+        focusedIndex = self.indexAt(event.pos())
+        if(self.focusedIndex != focusedIndex):
+            self.focusedIndex = focusedIndex
+            self.repaint()
+            print('repaint')
+        #self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), focusedIndex, focusedIndex) 
+        #focusedItem = focusedIndex.internalPointer()
+        #print(focusedItem)
+            
+        pass
  
     def onContentMenu(self, pos):
         focusedIndex = self.indexAt(pos)
@@ -84,8 +97,16 @@ class DrawerSetsTreeView (QtGui.QTreeView):
                 self.expand(index)
  
     def drawRow( self, painter, option, index ) :
-        painter.save();
+        self.drawItem(painter, option.rect, index)
+        super(DrawerSetsTreeView, self).drawRow( painter, option, index );  
+ 
+    def drawBranches(self, painter, rect, index):
+        #self.drawItem(painter, rect, index)        
+        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
+
+    def drawItem(self, painter, rect,  index):
         item = index.internalPointer();         
+        
         if (item !=None and not item.isLeafNode()):            
             focusedIndex = self.indexAt(self.mapFromGlobal(QtGui.QCursor.pos()))
             focusedItem = focusedIndex.internalPointer()
@@ -95,31 +116,20 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             else:
                 brush = QBrush( QColor( 240, 240, 240 ) )
                 pen = QColor( 200, 200, 200 ) 
-            
-            rect = option.rect
+
             rect.setX(2)
             rect.setY(rect.y() + 2)           
 
             rect.setWidth (self.viewport().width()-4)
             rect.setHeight  (rect.height()-2)
             
+            painter.save()
             painter.setBrush (brush)
             painter.setPen(pen)
             #painter.fillRect( option.rect, brush) 
-            painter.drawRect( option.rect) 
-
-        painter.restore();
-        super(DrawerSetsTreeView, self).drawRow( painter, option, index );
-
- 
-    def drawBranches(self, painter, rect, index):
-        #item = index.internalPointer();         
-        #if (item !=None and not item.isLeafNode()):
-        #    painter.fillRect(rect, QColor(240, 240, 240) )
-        #else:
-        #    painter.fillRect(rect, QColor(200, 200, 200) )
-        
-        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
+            painter.drawRect( rect) 
+            painter.restore();
+              
         
     def entered(self,  index):
         item = index.internalPointer();
