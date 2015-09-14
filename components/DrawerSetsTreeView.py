@@ -95,26 +95,25 @@ class DrawerSetsTreeView (QtGui.QTreeView):
                 self.expand(index)
  
     def drawRow( self, painter, option, index ) :
-        self.drawItem(painter, option.rect, index)
-        super(DrawerSetsTreeView, self).drawRow( painter, option, index );  
- 
-    def drawBranches(self, painter, rect, index):
-        #self.drawItem(painter, rect, index)        
-        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
-
-    def drawItem(self, painter, rect,  index):
-        item = index.internalPointer();         
+        item = index.internalPointer()        
         
         if (item !=None and not item.isLeafNode()):            
             focusedIndex = self.indexAt(self.mapFromGlobal(QtGui.QCursor.pos()))
             focusedItem = focusedIndex.internalPointer()
+            serifFont = option.font
+            
             if(focusedItem == item):
                 brush = QBrush( QColor( 240, 240, 250 ) );
-                pen = QColor( 100, 100, 255 )          
+                pen = QColor( 100, 100, 255 )
+                serifFont.setBold(True);
             else:
                 brush = QBrush( QColor( 240, 240, 240 ) )
                 pen = QColor( 200, 200, 200 ) 
-
+                serifFont.setBold(False);
+                
+            option.font = serifFont;
+            
+            rect = option.rect
             rect.setX(2)
             rect.setY(rect.y() + 2)           
 
@@ -127,6 +126,15 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             #painter.fillRect( option.rect, brush) 
             painter.drawRect( rect) 
             painter.restore();
+            
+        super(DrawerSetsTreeView, self).drawRow( painter, option, index );  
+ 
+    def drawBranches(self, painter, rect, index):
+        #self.drawItem(painter, rect, index)        
+        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
+
+    def drawItem(self, painter, rect,  index,  option=None):
+        pass
               
         
     def entered(self,  index):
@@ -135,7 +143,8 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             pass
 
     def getSaveString(self):
-        return ''
+        #print('DrawerSetsTreeView.getSaveString()')
+        return self.model.getSaveString()
         
     #def startDrag(self, supportedActions):
     #    if(self.defaultDropAction() != Qt.IgnoreAction and 
@@ -157,8 +166,19 @@ class DrawerSetsTreeNode(QObject):
         #self.parent = parent
         self.obj = obj
         self.children = []
-        self._isLeaf = isLeaf        
-       
+        self._isLeaf = isLeaf 
+ 
+    def getNodeInfo(self):
+        drawerSetInfo = {}  
+        if self.isRoot() or not self._isLeaf:
+            drawerSetInfo['name'] = self.obj
+            drawerSetInfo['children'] = [node.getNodeInfo() for node in self.children]
+        else:
+            drawerSetInfo['name'] = self.obj.getBlock().genusName        
+        
+        #print(drawerSetInfo)
+        return drawerSetInfo
+        
     def isRoot(self):
         return self.parent() == None    
     
@@ -197,7 +217,12 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
         self.root = root
         self.view = view
         self.drawerRBs = self.loadBlockDrawerSets(root)        
-        
+
+    def getSaveString(self):
+        import json
+        #print('DrawerSetsTreeMode.getSaveString()')
+        return json.dumps(self.rootNode.getNodeInfo(), sort_keys=False, indent=2)
+    
     def columnCount (self,  parent):
         return 1
 
@@ -229,7 +254,7 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
             return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | \
                       QtCore.Qt.ItemIsDragEnabled   
         elif (not item.isRoot()):
-            return  QtCore.Qt.ItemIsDropEnabled 
+            return  QtCore.Qt.ItemIsDropEnabled
         
         if (not index.isValid()):
           return QtCore.Qt.ItemIsEnabled;

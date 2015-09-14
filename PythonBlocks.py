@@ -321,13 +321,14 @@ class MainWnd(QtGui.QMainWindow):
 
     def onSaveDrawerSets(self):        
         import codecs
-        drawerSetsFileName = 'support\block_drawersets.xml'
+
+        drawerSetsFileName = 'support\\block_drawersets.jason'
           
         file = codecs.open(drawerSetsFileName, "w",'utf-8')        
         file.write(self.tvDrawerSets.getSaveString())
         file.close()
         
-        genusFileName = 'support\block_genuses.xml'
+        genusFileName = 'support\\block_genuses.jason'
           
         file = codecs.open(genusFileName, "w",'utf-8')        
         file.write(self.lwBlockGenus.getSaveString())

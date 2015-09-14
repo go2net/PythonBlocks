@@ -116,8 +116,14 @@ class GenusListWidget(QListWidget):
             print ('copied')
     
     def getSaveString(self):
-        return ''
-    
+        import json
+        items = []
+        for index in range(self.count()):
+            item= self.item(index)
+            item_info = item.data(Qt.UserRole).getGenusInfo()
+            items.append(item_info)
+        
+        return json.dumps(items, sort_keys=True, indent=2)
     '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus

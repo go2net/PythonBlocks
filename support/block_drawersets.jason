@@ -1,0 +1,342 @@
+{
+  "children": [
+    {
+      "children": [
+        {
+          "name": "setup"
+        },
+        {
+          "name": "forever"
+        },
+        {
+          "name": "runforsometime"
+        },
+        {
+          "name": "runonce"
+        },
+        {
+          "name": "clear-all"
+        },
+        {
+          "name": "clear-everyone"
+        },
+        {
+          "name": "clear-patches"
+        },
+        {
+          "name": "set-score"
+        },
+        {
+          "name": "score"
+        }
+      ],
+      "name": "Setup and Run"
+    },
+    {
+      "children": [
+        {
+          "name": "fd"
+        },
+        {
+          "name": "bk"
+        },
+        {
+          "name": "lt"
+        },
+        {
+          "name": "rt"
+        },
+        {
+          "name": "up"
+        },
+        {
+          "name": "down"
+        },
+        {
+          "name": "setxy"
+        }
+      ],
+      "name": "Movement"
+    },
+    {
+      "children": [
+        {
+          "name": "if"
+        },
+        {
+          "name": "ifelse"
+        },
+        {
+          "name": "repeater"
+        },
+        {
+          "name": "logic_operation"
+        },
+        {
+          "name": "not"
+        },
+        {
+          "name": "logic_compare"
+        },
+        {
+          "name": "boolean"
+        }
+      ],
+      "name": "Logic"
+    },
+    {
+      "children": [
+        {
+          "name": "keyboard-up"
+        },
+        {
+          "name": "keyboard-space"
+        },
+        {
+          "name": "joy-xaxis"
+        },
+        {
+          "name": "joy-yaxis"
+        },
+        {
+          "name": "joy-radius"
+        },
+        {
+          "name": "joy-angle"
+        },
+        {
+          "name": "dpad-angle"
+        },
+        {
+          "name": "joy-button1?"
+        },
+        {
+          "name": "joy-button2?"
+        },
+        {
+          "name": "joy-button3?"
+        },
+        {
+          "name": "joy-button4?"
+        }
+      ],
+      "name": "Controls"
+    },
+    {
+      "children": [
+        {
+          "name": "stamp"
+        },
+        {
+          "name": "pc"
+        },
+        {
+          "name": "stomp"
+        },
+        {
+          "name": "yank"
+        },
+        {
+          "name": "patch-height"
+        }
+      ],
+      "name": "Terrain"
+    },
+    {
+      "children": [
+        {
+          "name": "who"
+        },
+        {
+          "name": "setc"
+        },
+        {
+          "name": "color"
+        },
+        {
+          "name": "setshape"
+        },
+        {
+          "name": "shape"
+        },
+        {
+          "name": "setbreed"
+        },
+        {
+          "name": "breed"
+        },
+        {
+          "name": "seth"
+        },
+        {
+          "name": "heading"
+        },
+        {
+          "name": "penup"
+        },
+        {
+          "name": "pendown"
+        },
+        {
+          "name": "pendown?"
+        },
+        {
+          "name": "setscale"
+        },
+        {
+          "name": "scale"
+        }
+      ],
+      "name": "Traits"
+    },
+    {
+      "children": [
+        {
+          "name": "text_const"
+        },
+        {
+          "name": "say"
+        },
+        {
+          "name": "text_print"
+        },
+        {
+          "name": "set-status"
+        },
+        {
+          "name": "to-string"
+        },
+        {
+          "name": "string-append"
+        },
+        {
+          "name": "logic_compare"
+        }
+      ],
+      "name": "Text"
+    },
+    {
+      "children": [
+        {
+          "name": "math_number"
+        },
+        {
+          "name": "pi"
+        },
+        {
+          "name": "e"
+        },
+        {
+          "name": "math_arithmetic"
+        },
+        {
+          "name": "logic_compare"
+        },
+        {
+          "name": "atan"
+        },
+        {
+          "name": "random"
+        },
+        {
+          "name": "round"
+        },
+        {
+          "name": "int"
+        },
+        {
+          "name": "min"
+        },
+        {
+          "name": "max"
+        },
+        {
+          "name": "remainder"
+        },
+        {
+          "name": "power"
+        },
+        {
+          "name": "abs"
+        },
+        {
+          "name": "sqrt"
+        },
+        {
+          "name": "sin"
+        },
+        {
+          "name": "cos"
+        },
+        {
+          "name": "tan"
+        },
+        {
+          "name": "asin"
+        },
+        {
+          "name": "acos"
+        },
+        {
+          "name": "log"
+        },
+        {
+          "name": "ln"
+        }
+      ],
+      "name": "Math"
+    },
+    {
+      "children": [
+        {
+          "name": "procedure"
+        },
+        {
+          "name": "proc-param-number"
+        },
+        {
+          "name": "proc-param-string"
+        },
+        {
+          "name": "proc-param-boolean"
+        },
+        {
+          "name": "proc-param-list"
+        }
+      ],
+      "name": "Procedure"
+    },
+    {
+      "children": [
+        {
+          "name": "color"
+        },
+        {
+          "name": "setc"
+        },
+        {
+          "name": "random-color"
+        }
+      ],
+      "name": "Colors"
+    },
+    {
+      "children": [
+        {
+          "name": "num_var"
+        },
+        {
+          "name": "str_var"
+        },
+        {
+          "name": "set_num_var"
+        },
+        {
+          "name": "set_str_var"
+        }
+      ],
+      "name": "variables"
+    }
+  ],
+  "name": "root"
+}

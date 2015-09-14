@@ -27,6 +27,8 @@ class BlockGenus():
 
         self._isLabelEditable = False
         self.isLabelValue = False
+        self._isVarLabel = False
+        self.isPageLabelEnabled = False
         
         self._isStarter = False
         self._isTerminator = False
@@ -509,6 +511,40 @@ class BlockGenus():
         for genusNode in genusNodes: # find them
           BlockGenus.loadGenus(genusNode)
 
+    def getColorInfo(color):
+        color_info = {}
+        color_info['r'] = color.red()
+        color_info['g'] = color.green()
+        color_info['b'] = color.blue()
+        return color_info
+        
+    def getLangSpecProperties(self):
+        return ''
+        
+    def getConnectorsInfo(self):
+        return ''
+    
+    def getGenusInfo(self):
+        genusInfo = {}
+        genusInfo['name'] = self.genusName
+        genusInfo['color'] = BlockGenus.getColorInfo(self.color)
+        genusInfo['kind'] = self.kind
+        genusInfo['family_name'] = self.familyName
+        genusInfo['initlabel'] = self.initLabel
+        genusInfo['editable-label'] = self._isLabelEditable
+        genusInfo['var-label'] = self._isVarLabel
+        genusInfo['label-unique'] = self.labelMustBeUnique
+        genusInfo['is-starter'] = self.isStarter
+        genusInfo['is-terminator'] = self.isTerminator        
+        genusInfo['is-label-value'] = self.isLabelValue
+        genusInfo['label-prefix'] = self.labelPrefix
+        genusInfo['label-suffix'] = self.labelSuffix
+        genusInfo['page-label-enabled'] = self.isPageLabelEnabled
+        
+        genusInfo['LangSpecProperties'] = self.getLangSpecProperties()
+        genusInfo['BlockConnectors'] = self.getConnectorsInfo()
+        
+        return genusInfo
     
     def loadGenus(genusNode):
         '''
@@ -546,15 +582,21 @@ class BlockGenus():
 
         if 'initlabel' in genusNode.attrib:
             newGenus.initLabel = genusNode.attrib["initlabel"]
+        else:
+            newGenus.initLabel = ''            
 
         if 'editable-label' in genusNode.attrib:
             newGenus._isLabelEditable = True if genusNode.attrib["editable-label"] == ("yes") else False
 
         if 'var-label' in genusNode.attrib:
-          newGenus._isVarLabel = True if genusNode.attrib["var-label"] == ("yes") else False
+            newGenus._isVarLabel = True if genusNode.attrib["var-label"] == ("yes") else False
+        else:
+            newGenus._isVarLabel = False
 
         if 'label-unique' in genusNode.attrib:
-          newGenus.labelMustBeUnique = True if genusNode.attrib["label-unique"] == ("yes") else False
+            newGenus.labelMustBeUnique = True if genusNode.attrib["label-unique"] == ("yes") else False
+        else:
+            newGenus.labelMustBeUnique = False
         
         if 'is-starter' in genusNode.attrib:
             newGenus.isStarter= True if genusNode.attrib["is-starter"] == ("yes") else False
@@ -568,16 +610,24 @@ class BlockGenus():
           
         if 'is-label-value' in genusNode.attrib:
             newGenus.isLabelValue= True if genusNode.attrib["is-label-value"] == ("yes") else False
+        else:
+            newGenus.isLabelValue = False
 
         if 'label-prefix' in genusNode.attrib:
             newGenus.labelPrefix= genusNode.attrib["label-prefix"]
-
+        else:
+            newGenus.labelPrefix = ''
+            
         if 'label-suffix' in genusNode.attrib:
             newGenus.labelSuffix= genusNode.attrib["label-suffix"]
-
+        else:
+            newGenus.labelSuffix = ''
+            
         if 'page-label-enabled' in genusNode.attrib:
             newGenus.isPageLabelEnabled= True if genusNode.attrib["page-label-enabled"] == ("yes") else False
-
+        else:
+            newGenus.isPageLabelEnabled = ''
+            
         # if genus is a data genus (kind=data) or a variable block (and soon a declaration block)
         # it is both a starter and terminator
         # in other words, it should not have before and after connectors
