@@ -43,8 +43,7 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         focusedIndex = self.indexAt(event.pos())
         if(self.focusedIndex != focusedIndex):
             self.focusedIndex = focusedIndex
-            self.repaint()
-            print('repaint')
+        self.model.dataChanged.emit(QModelIndex(), QModelIndex())
         #self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), focusedIndex, focusedIndex) 
         #focusedItem = focusedIndex.internalPointer()
         #print(focusedItem)
@@ -111,7 +110,7 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             focusedIndex = self.indexAt(self.mapFromGlobal(QtGui.QCursor.pos()))
             focusedItem = focusedIndex.internalPointer()
             if(focusedItem == item):
-                brush = QBrush( QColor( 250, 250, 250 ) );
+                brush = QBrush( QColor( 240, 240, 250 ) );
                 pen = QColor( 100, 100, 255 )          
             else:
                 brush = QBrush( QColor( 240, 240, 240 ) )
