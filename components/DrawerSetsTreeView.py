@@ -47,8 +47,7 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         #self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), focusedIndex, focusedIndex) 
         #focusedItem = focusedIndex.internalPointer()
         #print(focusedItem)
-            
-        pass
+        super(DrawerSetsTreeView, self).mouseMoveEvent(event);      
  
     def onContentMenu(self, pos):
         focusedIndex = self.indexAt(pos)
