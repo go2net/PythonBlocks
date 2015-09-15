@@ -126,12 +126,13 @@ class DrawerSetsTreeView (QtGui.QTreeView):
             #painter.fillRect( option.rect, brush) 
             painter.drawRect( rect) 
             painter.restore();
-            
+
+            #painter.end()
+                
         super(DrawerSetsTreeView, self).drawRow( painter, option, index );  
  
     def drawBranches(self, painter, rect, index):
-        #self.drawItem(painter, rect, index)        
-        super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
+         super(DrawerSetsTreeView, self).drawBranches(painter, rect, index)
 
     def drawItem(self, painter, rect,  index,  option=None):
         pass

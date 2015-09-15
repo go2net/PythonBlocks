@@ -1,11 +1,47 @@
 [
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "module_name",
+        "value": ""
+      },
+      {
+        "key": "function_name",
+        "value": "math_number"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "abs"
+      }
+    ],
     "color": {
-      "b": 220,
-      "g": 20,
-      "r": 15
+      "b": 208,
+      "g": 224,
+      "r": 64
     },
     "editable-label": false,
     "family_name": "",
@@ -22,8 +58,40 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "module_name",
+        "value": ""
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "acos"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -44,8 +112,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "module_name",
+        "value": ""
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "aerial-on"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -66,8 +143,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "module_name",
+        "value": ""
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "aerial?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -88,8 +188,32 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "ID",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -110,8 +234,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "agent-eye-on"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -132,8 +261,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "agent-eye?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -154,8 +302,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "special-value",
+        "value": "animals/turtle-default"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-num"
+      }
+    ],
     "color": {
       "b": 138,
       "g": 252,
@@ -176,8 +343,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "asin"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -198,8 +393,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "x",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "y",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "atan"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -220,8 +452,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": true,
+        "label": "data",
+        "label-editable": true,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-bar-graph",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "monitor"
+      },
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -242,8 +497,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "steps",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "bk"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -264,8 +538,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "boolean"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.logic"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -286,8 +579,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "breed"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -308,8 +620,35 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "nop"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -330,8 +669,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "special-value",
+        "value": "animals/sonic-sonic"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-num"
+      }
+    ],
     "color": {
       "b": 138,
       "g": 252,
@@ -352,8 +710,8 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [],
     "color": {
       "b": 0,
       "g": 0,
@@ -374,8 +732,25 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-procedure"
+      },
+      {
+        "key": "is-breed-set-by-canvas",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -396,8 +771,21 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "ca"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -418,8 +806,25 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "clear-breeds"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -440,8 +845,21 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "ct"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -462,8 +880,21 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "cp"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -484,8 +915,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-collision",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-collision"
+      }
+    ],
     "color": {
       "b": 128,
       "g": 128,
@@ -506,8 +965,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "agent-color"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -528,8 +1006,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "degs",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "cos"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -550,8 +1056,35 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "count-breeds"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 30,
@@ -572,8 +1105,56 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "condition",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "ask-arg",
+        "value": "0"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "inline-arg",
+        "value": "0"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "count-breeds-with"
+      },
+      {
+        "key": "inline-stack-type",
+        "value": "breed"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 30,
@@ -594,8 +1175,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "inline-arg",
+        "value": "0"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "count-everyone"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -616,8 +1220,48 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "ask-arg",
+        "value": "0"
+      },
+      {
+        "key": "inline-arg",
+        "value": "0"
+      },
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "count-everyone-with"
+      },
+      {
+        "key": "inline-stack-type",
+        "value": "breed"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -638,8 +1282,43 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "num",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "include-breed-shape",
+        "value": "yes"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      },
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "crt-breed"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -660,8 +1339,64 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "num",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "do",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "ask-arg",
+        "value": "1"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "include-breed-shape",
+        "value": "yes"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      },
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "inline-arg",
+        "value": "1"
+      },
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "crt-breed-do"
+      },
+      {
+        "key": "inline-stack-type",
+        "value": "breed-forever"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -682,8 +1417,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "steps",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "down"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -704,8 +1458,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "dpad-angle"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -726,8 +1499,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "math_const"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.math"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -748,8 +1540,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "steps",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "fd"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -770,8 +1581,35 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-forever"
+      },
+      {
+        "key": "runtime-type",
+        "value": "forever"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -792,8 +1630,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -814,8 +1667,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "scope",
+        "value": "local"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-local"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -836,8 +1712,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "scope",
+        "value": "local"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-local"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -858,8 +1757,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "scope",
+        "value": "local"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-local"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -880,8 +1802,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "scope",
+        "value": "local"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-local"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -902,8 +1847,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "heading"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -924,8 +1888,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "test",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "then",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "ifBlock"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.logic"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 80,
@@ -946,8 +1938,41 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "test",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "then",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "else",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "ifelse"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 80,
@@ -968,8 +1993,18 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [],
     "color": {
       "b": 0,
       "g": 0,
@@ -990,8 +2025,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "int"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1012,8 +2075,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-angle"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1034,8 +2116,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-button-1?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1056,8 +2157,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-button-2?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1078,8 +2198,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-button-3?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1100,8 +2239,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-button-4?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1122,8 +2280,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-radius"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1144,8 +2321,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-xaxis"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1166,8 +2362,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "joy-yaxis"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1188,8 +2403,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "keyboard-down"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1210,8 +2444,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "keyboard-left"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1232,8 +2485,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "keyboard-right"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1254,8 +2526,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "keyboard-space"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1276,8 +2567,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "keyboard-up"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1298,8 +2608,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": true,
+        "label": "data",
+        "label-editable": true,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "monitor"
+      },
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "is-line-graph",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -1320,8 +2653,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "ln"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1342,8 +2703,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "log"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1364,8 +2753,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "equals"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1386,8 +2812,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "or"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1408,8 +2871,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "degs",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "lt"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -1430,8 +2912,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "sum"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1452,8 +2971,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "math_number"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.math"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -1474,8 +3012,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "max"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1496,8 +3071,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "min"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1518,8 +3130,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitor",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "monitor"
+      },
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -1540,8 +3175,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "not"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1562,8 +3225,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "num_var"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.variables"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -1584,8 +3266,13 @@
     "var-label": true
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "over-shoulder-on"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1606,8 +3293,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "over-shoulder?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1628,8 +3334,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "overhead-off"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1650,8 +3361,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "overhead-on"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1672,8 +3388,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "overhead?"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1694,8 +3429,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "patch-height"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1716,8 +3470,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "pc"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -1738,8 +3511,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "pd"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -1760,8 +3542,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "pendown?"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -1782,8 +3583,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "pu"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -1804,8 +3614,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "math_const"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.math"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -1826,8 +3655,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "play"
+      }
+    ],
     "color": {
       "b": 107,
       "g": 255,
@@ -1848,8 +3692,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "power"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -1870,8 +3751,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "boolean",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "type",
+        "value": "boolean"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 10,
@@ -1892,8 +3792,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "poly-list",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "type",
+        "value": "list"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 10,
@@ -1914,8 +3833,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "type",
+        "value": "number"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 10,
@@ -1936,8 +3874,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "type",
+        "value": "string"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 10,
@@ -1958,8 +3915,35 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": true,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-procedure"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "eval-procedure"
+      },
+      {
+        "key": "is-breed-set-by-canvas",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 10,
@@ -1980,8 +3964,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "quotient"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2002,8 +4023,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "random"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2024,8 +4073,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "random-color"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2046,8 +4110,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "random-shape"
+      }
+    ],
     "color": {
       "b": 138,
       "g": 252,
@@ -2068,8 +4147,45 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "remainder"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2090,8 +4206,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "times",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "do",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "controls_repeat"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.loops"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 80,
@@ -2112,8 +4256,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "round"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2134,8 +4306,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "degs",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "rt"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2156,8 +4347,44 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "secs",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-forever"
+      },
+      {
+        "key": "runtime-type",
+        "value": "runforsometime"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2178,8 +4405,35 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "breed-forever"
+      },
+      {
+        "key": "runtime-type",
+        "value": "runonce"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2200,8 +4454,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime-bar-graph",
+        "value": "yes"
+      },
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2222,8 +4485,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "runtime-type",
+        "value": "forever"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2244,8 +4516,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime-line-graph",
+        "value": "yes"
+      },
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2266,8 +4547,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2288,8 +4574,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "runtime-type",
+        "value": "runonce"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2310,8 +4605,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2332,8 +4632,13 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2354,8 +4659,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "runtime-type",
+        "value": "runforsometime"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2376,8 +4690,17 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "is-runtime-table",
+        "value": "yes"
+      },
+      {
+        "key": "is-runtime",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2398,8 +4721,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "say"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 201,
@@ -2420,8 +4762,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "agent-scale"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -2442,8 +4803,25 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "include-breed",
+        "value": "yes"
+      },
+      {
+        "key": "is-owned-by-breed",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "scatter-agents"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2464,8 +4842,21 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "scatter-everyone"
+      },
+      {
+        "key": "is-setup-block",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2486,8 +4877,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "score"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -2508,8 +4918,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "set-agent-camera"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -2530,8 +4959,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "set-score"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -2552,8 +4996,23 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "vm-cmd-name",
+        "value": "set-status"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 201,
@@ -2574,8 +5033,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "set_num_var"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.variables"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2596,8 +5074,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "set_str_var"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.variables"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2618,8 +5115,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "setbreed"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2640,8 +5156,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "setc"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2662,8 +5197,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "seth"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2684,8 +5238,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "set-scale"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2706,8 +5279,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "setshape"
+      }
+    ],
     "color": {
       "b": 225,
       "g": 180,
@@ -2728,8 +5320,18 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [],
     "color": {
       "b": 0,
       "g": 0,
@@ -2750,8 +5352,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "cmd",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "setup"
+      },
+      {
+        "key": "is-setup",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2772,8 +5397,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "xcor",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "ycor",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "setxy"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2794,8 +5447,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "shape"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -2816,8 +5488,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "degs",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "sin"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2838,8 +5538,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number-inv",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-slider",
+        "value": "yes"
+      },
+      {
+        "key": "stack-type",
+        "value": "monitor"
+      },
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2860,8 +5583,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "sqrt"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -2882,8 +5633,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "color",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "stamp"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 236,
@@ -2904,8 +5674,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "height",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "stomp"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 236,
@@ -2926,8 +5715,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "str_var"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.variables"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -2948,8 +5756,45 @@
     "var-label": true
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 2
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "sentence"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 201,
@@ -2970,8 +5815,31 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": true,
+        "label": "data",
+        "label-editable": true,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "monitor"
+      },
+      {
+        "key": "has-runtime-equiv",
+        "value": "yes"
+      },
+      {
+        "key": "is-table",
+        "value": "yes"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -2992,8 +5860,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "degs",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "tan"
+      }
+    ],
     "color": {
       "b": 220,
       "g": 20,
@@ -3014,8 +5910,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "text_const"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.text"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 0,
@@ -3036,8 +5951,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "function_name",
+        "value": "text_print"
+      },
+      {
+        "key": "module_name",
+        "value": "generators.python.text"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 201,
@@ -3058,8 +5992,36 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "string",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      },
+      {
+        "connector-kind": "socket",
+        "connector-type": "poly",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "to-string"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 201,
@@ -3080,8 +6042,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "steps",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "up"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 0,
@@ -3102,8 +6083,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "who"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -3124,8 +6124,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "is-monitorable",
+        "value": "yes"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "who-of-agent-camera"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 255,
@@ -3146,8 +6165,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "xcor"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,
@@ -3168,8 +6206,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "socket",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "height",
+        "label-editable": false,
+        "position-type": 0
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "yank"
+      }
+    ],
     "color": {
       "b": 0,
       "g": 236,
@@ -3190,8 +6247,27 @@
     "var-label": false
   },
   {
-    "BlockConnectors": "",
-    "LangSpecProperties": "",
+    "BlockConnectors": [
+      {
+        "connector-kind": "plug",
+        "connector-type": "number",
+        "expand-group": "",
+        "is-expandable": false,
+        "label": "",
+        "label-editable": false,
+        "position-type": 1
+      }
+    ],
+    "LangSpecProperties": [
+      {
+        "key": "stack-type",
+        "value": "breed"
+      },
+      {
+        "key": "vm-cmd-name",
+        "value": "ycor"
+      }
+    ],
     "color": {
       "b": 255,
       "g": 220,

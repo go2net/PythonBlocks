@@ -64,22 +64,14 @@ class BlockGenusTreeModel(QPropertyModel):
 
         self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
         
-        module_name = ''
-        function_name = ''
-        
-        for key in tmpGenus.properties:
-            if(key == 'module_name'):
-                module_name = tmpGenus.properties['module_name']
-            elif(key == 'function_name'):
-                function_name = tmpGenus.properties['function_name'] 
-                
-            else:
-                Property(key,tmpGenus.properties[key], self.lang_root)
-        
+        module_name= tmpGenus.properties['module_name']
         self.properties['module_name'] = Property('module',module_name, self.lang_root,Property.ADVANCED_EDITOR)
         self.properties['module_name'].onAdvBtnClick = self.getModuleName
-        
-        self.properties['function_name'] = Property('function',function_name, self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+        self.properties['function_name'] = Property('function',tmpGenus.properties['function_name'] , self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+
+        for key in tmpGenus.properties:
+            if(key != 'module_name' and key != 'function_name'):
+                self.properties[key] = Property(key,tmpGenus.properties[key], self.lang_root)
 
 
     def fillConnectInfo(self,  socket,  parent):
@@ -118,13 +110,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 self.tmpGenus.isStarter = value        
 
             if(property_name == 'Terminator'):
-                self.tmpGenus.isTerminator = value     
-
-            if(property_name == 'module'):
-                self.tmpGenus.properties['module_name'] = value
-                
-            if(property_name == 'function'):
-                self.tmpGenus.properties['function_name'] = value  
+                self.tmpGenus.isTerminator = value 
 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
                 self.setConnectorProp(self.tmpGenus.plug,property_name, value )
@@ -135,7 +121,12 @@ class BlockGenusTreeModel(QPropertyModel):
                     self.setConnectorProp(socket,property_name, value )
                     break
                 socket_index += 1
-
+                
+            for key in self.tmpGenus.properties:    
+                if(property_name==key):
+                    self.tmpGenus.properties[key] = value  
+                    break
+                
         self.showBlock(self.tmpGenus)
 
         #self.isDirty = self.tmpGenus != self.genus

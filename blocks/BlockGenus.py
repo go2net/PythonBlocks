@@ -14,6 +14,11 @@ class BlockGenus():
     def __init__(self,genusName = None, newGenusName=None):
 
         self.properties = {}
+        
+        # make sure key module and function exist
+        self.properties['module_name'] = ''
+        self.properties['function_name'] = ''
+        
         self.blockImageMap = {}        
 
         self.family = {}
@@ -118,6 +123,9 @@ class BlockGenus():
                 socketToCopy.connBlockID,
                 socketToCopy.expandGroup) 
             self.sockets.append(socket)
+            
+        for key in genusToCopy.properties:
+            self.properties[key] = genusToCopy.properties[key]
 
         self._genusName = newGenusName
         
@@ -209,11 +217,12 @@ class BlockGenus():
         if(self.isStarter != other.isStarter): return False
         if(self.isTerminator != other.isTerminator): return False
         
-        if('module_name' in self.properties and 'module_name' in other.properties):
-            if(self.properties['module_name'] != other.properties['module_name']): return False
-            
-        if('function_name' in self.properties and 'function_name' in other.properties):    
-            if(self.properties['function_name'] != other.properties['function_name']): return False       
+        for key in self.properties:
+            if(key in self.properties and key in other.properties):
+                if(self.properties[key] != other.properties[key]):
+                    return False
+            else:
+                return False   
     
         return True
     
@@ -260,7 +269,17 @@ class BlockGenus():
                 argumentDescription = description.text
                 if(argumentDescription != ""):
                     genus.argumentDescriptions.append(argumentDescription)
-
+        
+    
+    def getConnectorInfoList(self):
+        connector_list = []
+        if(self.plug != None):
+            connector_list.append(self.plug.getConnectorInfo())
+    
+        for socket in self.sockets:
+            connector_list.append(socket.getConnectorInfo())
+            
+        return connector_list  
 
     def loadBlockConnectorInformation(connectors, genus):
         '''
@@ -407,7 +426,15 @@ class BlockGenus():
                             exc_type, exc_obj, exc_tb = sys.exc_info()
                             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                             print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
-
+                            
+    def getLangSpecProperties(self):
+        properities = []
+        for key in self.properties:
+            properity = {}
+            properity['key'] = key
+            properity['value'] = self.properties[key]
+            properities.append(properity)
+        return properities
 
     def loadLangDefProperties(properties, genus):
         '''
@@ -516,14 +543,8 @@ class BlockGenus():
         color_info['r'] = color.red()
         color_info['g'] = color.green()
         color_info['b'] = color.blue()
-        return color_info
-        
-    def getLangSpecProperties(self):
-        return ''
-        
-    def getConnectorsInfo(self):
-        return ''
-    
+        return color_info     
+
     def getGenusInfo(self):
         genusInfo = {}
         genusInfo['name'] = self.genusName
@@ -542,7 +563,7 @@ class BlockGenus():
         genusInfo['page-label-enabled'] = self.isPageLabelEnabled
         
         genusInfo['LangSpecProperties'] = self.getLangSpecProperties()
-        genusInfo['BlockConnectors'] = self.getConnectorsInfo()
+        genusInfo['BlockConnectors'] = self.getConnectorInfoList()
         
         return genusInfo
     

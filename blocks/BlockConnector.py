@@ -85,6 +85,17 @@ class BlockConnector():
     def blockID(self, value):
         self.connBlockID = value
 
+    def getConnectorInfo(self):
+        ConnectorInfo = {}
+        ConnectorInfo['position-type'] = self.positionType
+        ConnectorInfo['connector-kind'] = self.kind
+        ConnectorInfo['connector-type'] = self.type
+        ConnectorInfo['is-expandable'] = self.isExpandable
+        ConnectorInfo['label-editable'] = self.isLabelEditable
+        ConnectorInfo['label'] = self.label
+        ConnectorInfo['expand-group'] = self.expandGroup
+        
+        return ConnectorInfo
 
     '''
     * Sets this connector's default argument to the specified genus and initial label.
