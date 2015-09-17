@@ -29,9 +29,9 @@ class LabelWidget(QtGui.QWidget):
       self.textLabel = ShadowLabel(self)
       self.menu = LabelMenu(self)      
 
-      self.isEditable = False
-      self.isVariable = False
-      self.hasMenu = False
+      self.isEditable   = False
+      self.isVariable   = False
+      self.hasMenu    = False
       self.editingText = False
       self.isPressed = False
       self.menuShowed = False
@@ -469,7 +469,7 @@ class LabelMenu(ShadowLabel):
     
     def renameVariable(self, sender, item):
         old_name = self.text()
-        new_name, ok = QtGui.QInputDialog.getText(self, 'Variable','Change variable name from {0} to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
+        new_name, ok = QtGui.QInputDialog.getText(self.window(), 'Rename variable','Change variable name from "{0}" to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
         if(ok and new_name != self.text()):
           self.popupmenu = None
           #self.labelWidget.fireGenusChanged(new_name)  

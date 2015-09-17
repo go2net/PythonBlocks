@@ -18,9 +18,10 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         self.setDropIndicatorShown(True);
         self.popMenu = QtGui.QMenu(self)
         self.focusedIndex = None
-    def init(self, root):
-        self.root = root
         
+    def init(self, root):
+        
+        self.root = root        
         self.model = DrawerSetsTreeMode(self.root,self)
         self.setModel(self.model)
         self.setItemDelegate(DrawerSetsDelegate(self.model));    
@@ -57,6 +58,8 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         if(focusedItem != None): 
             if not focusedItem.isLeafNode():
                 #action = self.popMenu.addAction('Rename')
+                rename_nodes_action = self.popMenu.addAction('Rename - ' + focusedItem.obj)
+                rename_nodes_action.triggered.connect(lambda: self.onRenameNode(focusedItem))
                 remove_nodes_action = self.popMenu.addAction('Remove - ' + focusedItem.obj)
                 remove_nodes_action.triggered.connect(lambda: self.onRemoveNodes(focusedItem))
             else:
@@ -75,6 +78,13 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         
         self.popMenu.exec_(self.mapToGlobal(pos))
    
+    def onRenameNode(self, node):        
+        old_name = node.obj
+        new_name, ok = QtGui.QInputDialog.getText(self.window(), 'Rename variable','Change variable name from "{0}" to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
+        node.obj = new_name
+        index = self.model.getIndexForNode(node)
+        self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+        
     def onRemoveNode(self,  node):
         self.model.removeNode(node)
         
@@ -171,11 +181,13 @@ class DrawerSetsTreeNode(QObject):
  
     def getNodeInfo(self):
         drawerSetInfo = {}  
-        if self.isRoot() or not self._isLeaf:
-            drawerSetInfo['name'] = self.obj
-            drawerSetInfo['children'] = [node.getNodeInfo() for node in self.children]
+        if self.isRoot():
+            drawerSetInfo['block_drawer_sets'] =  [node.getNodeInfo() for node in self.children]      
+        elif not self._isLeaf:
+            drawerSetInfo['drawer'] = self.obj
+            drawerSetInfo['member'] = [node.getNodeInfo() for node in self.children]
         else:
-            drawerSetInfo['name'] = self.obj.getBlock().genusName        
+            drawerSetInfo['genus'] = self.obj.getBlock().genusName        
         
         #print(drawerSetInfo)
         return drawerSetInfo
@@ -393,38 +405,32 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
         else:
             return True
  
-    def loadBlockDrawerSets(self, root):
+    def buildNodes(self, data):
         from blocks.Block import Block
-        from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+        from blocks.FactoryRenderableBlock import FactoryRenderableBlock        
+        if 'block_drawer_sets' in data:
+            block_drawer_sets = data['block_drawer_sets']
+            for drawerElement in block_drawer_sets:
+                if 'drawer' in drawerElement and 'member' in drawerElement:
+                    drawerName = drawerElement['drawer']
+                    node = DrawerSetsTreeNode(self.rootNode, drawerName, False)
+                    self.rootNode.children.append(node)                
+                    member = drawerElement['member']
+                    for genusElement in member:
+                        if 'genus' in genusElement:
+                            genusName = genusElement['genus']
+                            newBlock = Block.createBlock(None, genusName, False)
+                            rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(255,255,255,0))
+                            sub_node = DrawerSetsTreeNode(node, rb)
+                            node.children.append(sub_node)
+ 
+    def loadBlockDrawerSets(self, path):
+        import json
+        f=open(path)
+        data=json.load(f)
+        self.buildNodes(data)
+        return
 
-        drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
-
-        for drawerSetNode in drawerSetNodes:
-            drawerNodes=drawerSetNode.getchildren()
-
-            # retreive drawer information of this bar
-            for drawerNode in drawerNodes:
-                if(drawerNode.tag == "BlockDrawer"):
-                    if("name" in drawerNode.attrib):
-                        drawerName = drawerNode.attrib["name"]
-                        node = DrawerSetsTreeNode(self.rootNode, drawerName, False)
-                        self.rootNode.children.append(node)
-
-                        #manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
-
-                        drawerBlocks = drawerNode.getchildren()
-                        blockNode = None
-                        for blockNode in drawerBlocks:
-                            if(blockNode.tag == "BlockGenusMember"):
-                                genusName = blockNode.text
-                                newBlock = Block.createBlock(None, genusName, False)
-                                rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(255,255,255,0))
-                                sub_node = DrawerSetsTreeNode(node, rb)
-                                node.children.append(sub_node)
-                                
-
-                #manager.addStaticBlocks(drawerRBs, drawerName);
-        return self.rootNode
 
     def OnContextMenuRequested(self, index, globalPos):
         print('OnContextMenuRequested')

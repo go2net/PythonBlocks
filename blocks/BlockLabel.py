@@ -134,7 +134,7 @@ class BlockLabel():
     
     if(block.getGenus().familyName in BlockGenus.familyBlocks):
       for genus in  BlockGenus.familyBlocks[block.getGenus().familyName]:
-          genusName = genus.getGenusName()
+          genusName = genus.genusName
           if genusName not in FactoryRenderableBlock.factoryRBs: continue
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
           for rb in factoryBlock.child_list:

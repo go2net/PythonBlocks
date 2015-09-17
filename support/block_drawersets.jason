@@ -1,342 +1,341 @@
 {
-  "children": [
+  "block_drawer_sets": [
     {
-      "children": [
+      "drawer": "Setup and Run",
+      "member": [
         {
-          "name": "setup"
+          "genus": "setup"
         },
         {
-          "name": "forever"
+          "genus": "forever"
         },
         {
-          "name": "runforsometime"
+          "genus": "runforsometime"
         },
         {
-          "name": "runonce"
+          "genus": "runonce"
         },
         {
-          "name": "clear-all"
+          "genus": "clear-all"
         },
         {
-          "name": "clear-everyone"
+          "genus": "clear-everyone"
         },
         {
-          "name": "clear-patches"
+          "genus": "clear-patches"
         },
         {
-          "name": "set-score"
+          "genus": "set-score"
         },
         {
-          "name": "score"
+          "genus": "score"
         }
-      ],
-      "name": "Setup and Run"
+      ]
     },
     {
-      "children": [
+      "drawer": "Movement",
+      "member": [
         {
-          "name": "fd"
+          "genus": "fd"
         },
         {
-          "name": "bk"
+          "genus": "bk"
         },
         {
-          "name": "lt"
+          "genus": "lt"
         },
         {
-          "name": "rt"
+          "genus": "rt"
         },
         {
-          "name": "up"
+          "genus": "up"
         },
         {
-          "name": "down"
+          "genus": "down"
         },
         {
-          "name": "setxy"
+          "genus": "setxy"
         }
-      ],
-      "name": "Movement"
+      ]
     },
     {
-      "children": [
+      "drawer": "Logic",
+      "member": [
         {
-          "name": "if"
+          "genus": "if"
         },
         {
-          "name": "ifelse"
+          "genus": "ifelse"
         },
         {
-          "name": "repeater"
+          "genus": "repeater"
         },
         {
-          "name": "logic_operation"
+          "genus": "logic_operation"
         },
         {
-          "name": "not"
+          "genus": "not"
         },
         {
-          "name": "logic_compare"
+          "genus": "logic_compare"
         },
         {
-          "name": "boolean"
+          "genus": "boolean"
         }
-      ],
-      "name": "Logic"
+      ]
     },
     {
-      "children": [
+      "drawer": "Controls",
+      "member": [
         {
-          "name": "keyboard-up"
+          "genus": "keyboard-up"
         },
         {
-          "name": "keyboard-space"
+          "genus": "keyboard-space"
         },
         {
-          "name": "joy-xaxis"
+          "genus": "joy-xaxis"
         },
         {
-          "name": "joy-yaxis"
+          "genus": "joy-yaxis"
         },
         {
-          "name": "joy-radius"
+          "genus": "joy-radius"
         },
         {
-          "name": "joy-angle"
+          "genus": "joy-angle"
         },
         {
-          "name": "dpad-angle"
+          "genus": "dpad-angle"
         },
         {
-          "name": "joy-button1?"
+          "genus": "joy-button1?"
         },
         {
-          "name": "joy-button2?"
+          "genus": "joy-button2?"
         },
         {
-          "name": "joy-button3?"
+          "genus": "joy-button3?"
         },
         {
-          "name": "joy-button4?"
+          "genus": "joy-button4?"
         }
-      ],
-      "name": "Controls"
+      ]
     },
     {
-      "children": [
+      "drawer": "Terrain",
+      "member": [
         {
-          "name": "stamp"
+          "genus": "stomp"
         },
         {
-          "name": "pc"
+          "genus": "pc"
         },
         {
-          "name": "stomp"
+          "genus": "yank"
         },
         {
-          "name": "yank"
+          "genus": "patch-height"
         },
         {
-          "name": "patch-height"
+          "genus": "stamp"
         }
-      ],
-      "name": "Terrain"
+      ]
     },
     {
-      "children": [
+      "drawer": "Traits",
+      "member": [
         {
-          "name": "who"
+          "genus": "who"
         },
         {
-          "name": "setc"
+          "genus": "setc"
         },
         {
-          "name": "color"
+          "genus": "color"
         },
         {
-          "name": "setshape"
+          "genus": "setshape"
         },
         {
-          "name": "shape"
+          "genus": "shape"
         },
         {
-          "name": "setbreed"
+          "genus": "setbreed"
         },
         {
-          "name": "breed"
+          "genus": "breed"
         },
         {
-          "name": "seth"
+          "genus": "seth"
         },
         {
-          "name": "heading"
+          "genus": "heading"
         },
         {
-          "name": "penup"
+          "genus": "penup"
         },
         {
-          "name": "pendown"
+          "genus": "pendown"
         },
         {
-          "name": "pendown?"
+          "genus": "pendown?"
         },
         {
-          "name": "setscale"
+          "genus": "setscale"
         },
         {
-          "name": "scale"
+          "genus": "scale"
         }
-      ],
-      "name": "Traits"
+      ]
     },
     {
-      "children": [
+      "drawer": "Text",
+      "member": [
         {
-          "name": "text_const"
+          "genus": "text_const"
         },
         {
-          "name": "say"
+          "genus": "say"
         },
         {
-          "name": "text_print"
+          "genus": "text_print"
         },
         {
-          "name": "set-status"
+          "genus": "set-status"
         },
         {
-          "name": "to-string"
+          "genus": "to-string"
         },
         {
-          "name": "string-append"
+          "genus": "string-append"
         },
         {
-          "name": "logic_compare"
+          "genus": "logic_compare"
         }
-      ],
-      "name": "Text"
+      ]
     },
     {
-      "children": [
+      "drawer": "Math",
+      "member": [
         {
-          "name": "math_number"
+          "genus": "math_number"
         },
         {
-          "name": "pi"
+          "genus": "pi"
         },
         {
-          "name": "e"
+          "genus": "e"
         },
         {
-          "name": "math_arithmetic"
+          "genus": "math_arithmetic"
         },
         {
-          "name": "logic_compare"
+          "genus": "logic_compare"
         },
         {
-          "name": "atan"
+          "genus": "atan"
         },
         {
-          "name": "random"
+          "genus": "random"
         },
         {
-          "name": "round"
+          "genus": "round"
         },
         {
-          "name": "int"
+          "genus": "int"
         },
         {
-          "name": "min"
+          "genus": "min"
         },
         {
-          "name": "max"
+          "genus": "max"
         },
         {
-          "name": "remainder"
+          "genus": "remainder"
         },
         {
-          "name": "power"
+          "genus": "power"
         },
         {
-          "name": "abs"
+          "genus": "abs"
         },
         {
-          "name": "sqrt"
+          "genus": "sqrt"
         },
         {
-          "name": "sin"
+          "genus": "sin"
         },
         {
-          "name": "cos"
+          "genus": "cos"
         },
         {
-          "name": "tan"
+          "genus": "tan"
         },
         {
-          "name": "asin"
+          "genus": "asin"
         },
         {
-          "name": "acos"
+          "genus": "acos"
         },
         {
-          "name": "log"
+          "genus": "log"
         },
         {
-          "name": "ln"
+          "genus": "ln"
         }
-      ],
-      "name": "Math"
+      ]
     },
     {
-      "children": [
+      "drawer": "Procedure",
+      "member": [
         {
-          "name": "procedure"
+          "genus": "procedure"
         },
         {
-          "name": "proc-param-number"
+          "genus": "proc-param-number"
         },
         {
-          "name": "proc-param-string"
+          "genus": "proc-param-string"
         },
         {
-          "name": "proc-param-boolean"
+          "genus": "proc-param-boolean"
         },
         {
-          "name": "proc-param-list"
+          "genus": "proc-param-list"
         }
-      ],
-      "name": "Procedure"
+      ]
     },
     {
-      "children": [
+      "drawer": "Colors",
+      "member": [
         {
-          "name": "color"
+          "genus": "color"
         },
         {
-          "name": "setc"
+          "genus": "setc"
         },
         {
-          "name": "random-color"
+          "genus": "random-color"
         }
-      ],
-      "name": "Colors"
+      ]
     },
     {
-      "children": [
+      "drawer": "variables",
+      "member": [
         {
-          "name": "num_var"
+          "genus": "num_var"
         },
         {
-          "name": "str_var"
+          "genus": "str_var"
         },
         {
-          "name": "set_num_var"
+          "genus": "set_num_var"
         },
         {
-          "name": "set_str_var"
+          "genus": "set_str_var"
         }
-      ],
-      "name": "variables"
+      ]
     }
-  ],
-  "name": "root"
+  ]
 }

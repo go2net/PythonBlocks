@@ -180,7 +180,7 @@ class MainWnd(QtGui.QMainWindow):
         
         root = self.wc.setLangDefFilePath("support\\lang_def.xml")
         #self.wc.loadFreshWorkspace();
-        self.tvDrawerSets.init(root)
+        self.tvDrawerSets.init("support\\block_drawersets.jason")
         #self.drawerSetsModel = DrawerSetsTreeModel(self.tvDrawerSets, self, langDefLocation)
         #self.tvDrawerSets.setModel(self.drawerSetsModel)
         #self.tvDrawerSets.expandAll()
