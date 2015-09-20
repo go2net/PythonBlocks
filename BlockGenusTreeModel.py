@@ -3,6 +3,7 @@
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from ConnectorsInfoWnd import ConnectorsInfoWnd
+from blocks.BlockGenus import BlockGenus
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
@@ -28,22 +29,35 @@ class BlockGenusTreeModel(QPropertyModel):
 
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
-        self.showBlock(tmpGenus)
-        
-        #columnData = ['A','B']  
-        #print(genusNode.attrib)
-        #
-        self.properties['genusName'] = Property('Genus Name', tmpGenus.genusName, parents[-1])    
+        self.showBlock(tmpGenus)       
+    
+        self.properties['genusName'] = Property('Genus Name', tmpGenus.genusName, parents[-1])         
         self.properties['kind'] = Property('Genus Kind', tmpGenus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
-        self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1])
+        
+        familyNameList = ['n/a']
+        familyName = tmpGenus.familyName
+        for name in BlockGenus.families:
+            familyNameList.append(name)
+        if(familyName == ''):
+            familyName = 'n/a'
+            
+        self.properties['familyName'] = Property('Family Name', familyName, parents[-1], Property.COMBO_BOX_EDITOR,familyNameList)             
+
+        labelList= []
+        if familyName in BlockGenus.families:            
+            family = BlockGenus.families[familyName]
+            for name in family:
+                labelList.append(family[name])  
+        if(labelList != []):
+            self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1], Property.COMBO_BOX_EDITOR,labelList)
+        else:
+            self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1])
+        
         self.properties['labelPrefix'] = Property('Label Prefix', tmpGenus.labelPrefix, parents[-1])
         self.properties['labelSuffix'] = Property('Label Suffix', tmpGenus.labelSuffix, parents[-1])    
         self.properties['color'] = Property('Color',tmpGenus.color , parents[-1], Property.COLOR_EDITOR)
-        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, parents[-1])        
-
-        
-        self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, parents[-1]) 
-        
+        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, parents[-1])
+        self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, parents[-1])         
         self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
 
         plug_index = 0
@@ -91,6 +105,22 @@ class BlockGenusTreeModel(QPropertyModel):
             item = index.internalPointer()
             property_name = item.objectName()
 
+            if(property_name == 'Family Name'):
+                self.tmpGenus.familyName = value
+                labelList= []
+                if value in BlockGenus.families:            
+                    family = BlockGenus.families[value]
+                    for name in family:
+                        labelList.append(family[name])  
+
+                if(labelList != []):
+                    self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
+                    self.properties['initLabel'].propertyData = labelList
+                else:
+                    self.properties['initLabel'].editorType = None
+                
+                #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+                
             if(property_name == 'Color'):
                 self.tmpGenus.color = value
             

@@ -11,17 +11,34 @@ class PageDrawerLoadingUtils():
       pass
 
    def loadBlockDrawerSets(root, manager):
- 
-      drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
+        import json
+        f=open("support\\block_drawersets.jason")
+        data=json.load(f)
+        if 'block_drawer_sets' in data:
+            block_drawer_sets = data['block_drawer_sets']
+            for drawerElement in block_drawer_sets:
+                if 'drawer' in drawerElement and 'genus-list' in drawerElement:
+                    drawerName = drawerElement['drawer']
+                    canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));  
+                    drawerRBs = []
+                    member = drawerElement['genus-list']
+                    for genusName in member:
+                        newBlock = Block.createBlock(canvas, genusName, False)                            
+                        rb = FactoryRenderableBlock.from_block(canvas, newBlock,False, QtGui.QColor(225,225,225,100))
+                        drawerRBs.append(rb);
+                    manager.addStaticBlocks(drawerRBs, drawerName) 
+        return
+        
+        drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
 
-      for drawerSetNode in drawerSetNodes:
+        for drawerSetNode in drawerSetNodes:
          drawerNodes=drawerSetNode.getchildren()
          # retreive drawer information of this bar
          for drawerNode in drawerNodes:
             if(drawerNode.tag == "BlockDrawer"):
                drawerName = None
                if("name" in drawerNode.attrib):
-               	drawerName = drawerNode.attrib["name"]
+                drawerName = drawerNode.attrib["name"]
 
                canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
 

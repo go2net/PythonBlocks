@@ -87,11 +87,11 @@ class BlockConnector():
 
     def getConnectorInfo(self):
         ConnectorInfo = {}
-        ConnectorInfo['position-type'] = self.positionType
-        ConnectorInfo['connector-kind'] = self.kind
-        ConnectorInfo['connector-type'] = self.type
-        ConnectorInfo['is-expandable'] = self.isExpandable
-        ConnectorInfo['label-editable'] = self.isLabelEditable
+        ConnectorInfo['position'] = self.positionType
+        ConnectorInfo['kind'] = self.kind
+        ConnectorInfo['type'] = self.type
+        ConnectorInfo['expandable'] = self.isExpandable
+        ConnectorInfo['editable'] = self.isLabelEditable
         ConnectorInfo['label'] = self.label
         ConnectorInfo['expand-group'] = self.expandGroup
         

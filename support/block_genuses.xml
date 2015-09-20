@@ -1779,7 +1779,7 @@
 			</BlockConnectors>
 			<Images>
 				<Image block-location="southwest" image-editable="yes" width="15" height="15">
-					<FileLocation>support/forever_switch_on.png</FileLocation>
+					<FileLocation>/support/forever_switch_on.png</FileLocation>
 				</Image>
 			</Images>
 			<LangSpecProperties>
@@ -1816,7 +1816,7 @@
 			</BlockConnectors>
 			<Images>
 				<Image block-location="southwest" image-editable="yes" width="15" height="15">
-					<FileLocation>support/forever_switch_on.png</FileLocation>
+					<FileLocation>/support/forever_switch_on.png</FileLocation>
 				</Image>
 			</Images>
 			<LangSpecProperties>
@@ -1860,7 +1860,7 @@
 			</BlockConnectors>
 			<Images>
 				<Image block-location="southwest" image-editable="yes" width="15" height="15">
-					<FileLocation>support/forever_switch_on.png</FileLocation>
+					<FileLocation>/support/forever_switch_on.png</FileLocation>
 				</Image>
 			</Images>
 			<LangSpecProperties>
@@ -2335,8 +2335,8 @@
 				<BlockConnector connector-kind="plug" connector-type="string"></BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image width="64" height="64">
-					<FileLocation>/models/animals/turtle/default_icon.png</FileLocation>
+				<Image block-location="southwest" image-editable="yes" width="32" height="32">
+					<FileLocation>/support/forever_switch_on.png</FileLocation>
 				</Image>
 			</Images>
 			<LangSpecProperties>
@@ -2350,8 +2350,8 @@
 				<BlockConnector connector-kind="plug" connector-type="string"></BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image width="64" height="64">
-					<FileLocation>/models/animals/sonic/sonic_icon.png</FileLocation>
+				<Image>
+					<FileLocation>/resource/79-Home.png</FileLocation>
 				</Image>
 			</Images>
 			<LangSpecProperties>

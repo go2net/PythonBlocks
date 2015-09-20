@@ -1,5 +1,8 @@
 
 from PyQt4 import QtCore,QtGui
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+
 import math, os, sys
 
 from blocks.Block import Block
@@ -14,7 +17,7 @@ from blocks.BlockConnectorShape import BlockConnectorShape
 from blocks.GraphicsManager import GraphicsManager
 from blocks.BlockShapeUtil import BlockShapeUtil
 from blocks.BlockLinkChecker import BlockLinkChecker
-
+from blocks.BlockImageIcon import BlockImageIcon
 
 class RenderableBlock(QtGui.QWidget):
 
@@ -64,6 +67,23 @@ class RenderableBlock(QtGui.QWidget):
         
         obj.zoom = 1.0;
         obj.socketTags = []
+        obj.imageMap = {}
+        
+        # initialize block image map
+        # note: must do this before updateBuffImg();
+        for  loc, img in obj.getBlock().getInitBlockImageMap().items():
+            #print('BlockImageIcon')
+            #print('Image ICON width=%d,height=%d'%(img.icon.width(), img.icon.height()))
+            icon = BlockImageIcon(
+                img.icon, 
+                img.location, 
+                img.isEditable,
+                img.wrapText)
+            obj.imageMap[loc] = icon
+            icon.setParent(obj)
+            #print('ICON width=%d,height=%d'%(icon.width(), icon.height()))
+            #obj.add(icon)
+
 
         # initialize tags, labels, and sockets:
         obj.plugTag = ConnectorTag(block.getPlug());
@@ -243,7 +263,7 @@ class RenderableBlock(QtGui.QWidget):
     def accomodateImagesHeight(self):
         maxImgHt = 0;
         for img in self.getBlock().getInitBlockImageMap().values():
-            maxImgHt += img.getImageIcon().getIconHeight();
+            maxImgHt += img.icon.height();
 
         return maxImgHt;
 
@@ -251,7 +271,7 @@ class RenderableBlock(QtGui.QWidget):
     def accomodateImagesWidth(self):
         maxImgWt = 0;
         for img in self.getBlock().getInitBlockImageMap().values():
-            maxImgWt += img.getImageIcon().getIconWidth();
+            maxImgWt += img.icon.width();
 
         return maxImgWt;
 
@@ -407,10 +427,56 @@ class RenderableBlock(QtGui.QWidget):
         p.fillPath(self.blockArea,brush)
         #p.drawPath(self.blockArea);
         p.drawImage(0,0,bevelImage);
+        
+        # DRAW BLOCK IMAGES
+        self.repositionBlockImages(self.blockArea.controlPointRect().width(),
+            self.blockArea.controlPointRect().height());
+        
         p.end()
         del p
         
         #self.buffImg.save("d:\\temp1.png")
+
+
+    def repositionBlockImages(self, width,  height):
+        '''
+        * Draws the BlockImageIcon instances of this onto itself
+        * @param buffImgG2 the current Graphics2D representation of this
+         * @param width the current width of the buffered image
+         * @param height the current height of the buffered image
+        '''        
+        margin = 5
+
+        # TODO need to take other images into acct if we enable multiple block images
+        for loc, img  in self.imageMap.items():
+            icon = img.icon
+            imgLoc = QPoint(0,0);
+            if(img.location == 'CENTER'):
+                imgLoc = QPoint((width-icon.width())/2, (height - icon.height())/2);
+            elif(img.location ==  'NORTH'):
+                imgLoc = QPoint((width-icon.width())/2, margin);
+            elif(img.location ==  'SOUTH'):
+                imgLoc = QPoint((width-icon.width())/2, height-margin-icon.height());
+            elif(img.location ==  'EAST'):
+                imgLoc = QPoint(width - margin-icon.width(), (height - icon.height())/2);
+            elif(img.location ==  'WEST'):
+                imgLoc = QPoint(margin, (height-icon.height())/2);
+            elif(img.location ==  'NORTHEAST'):
+                imgLoc = QPoint(width-margin-icon.width(), margin);
+            elif(img.location ==  'NORTHWEST'):
+                imgLoc = QPoint(margin, margin);
+            elif(img.location ==  'SOUTHEAST'):
+                imgLoc = QPoint(width-margin-icon.width(), height-margin-icon.height());
+            elif(img.location ==  'SOUTHWEST'):
+                # put in southwest corner
+                imgLoc = QPoint(margin, height - (icon.height() + margin));
+
+            if(self.getBlock().hasPlug() and  (img.location != 'EAST' or 
+                img.location != 'NORTHEAST' or 
+                img.location != 'SOUTHEAST')):
+                        
+                imgLoc.setX(imgLoc.x() + 4)  # need to nudge it a little more because of plug
+            img.move(imgLoc.x(), imgLoc.y())
 
     def synchronizeSockets(self):
         changed = False;

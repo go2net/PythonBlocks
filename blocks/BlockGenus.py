@@ -3,6 +3,9 @@ from PyQt4 import QtCore,QtGui
 from blocks.BlockConnector import BlockConnector
 from blocks.BlockConnectorShape import BlockConnectorShape
 
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+
 class BlockGenus():
     EMPTY_STRING = ""
 
@@ -62,12 +65,17 @@ class BlockGenus():
         #assert !genusName.equals(newGenusName)  : "BlockGenuses must have unique names: "+genusName;
 
         genusToCopy = BlockGenus.getGenusWithName(genusName)
-
+        
+        self.familyName = genusToCopy.familyName
+        
         self.expandGroups = genusToCopy.expandGroups    # doesn't change
         self.areSocketsExpandable = genusToCopy.areSocketsExpandable
-        self.color = QtGui.QColor(genusToCopy.color.red(), genusToCopy.color.green(), genusToCopy.color.blue())
+        self.color = QtGui.QColor(genusToCopy.color.red(), genusToCopy.color.green(), genusToCopy.color.blue())        
         self.hasDefArgs = genusToCopy.hasDefArgs
+        
+        
         self.initLabel = genusToCopy.initLabel
+        
         self._isLabelEditable = genusToCopy._isLabelEditable;
         #self._isVarLabel = genusToCopy._isVarLabel;
         self.isLabelValue = genusToCopy.isLabelValue;
@@ -123,7 +131,11 @@ class BlockGenus():
                 socketToCopy.connBlockID,
                 socketToCopy.expandGroup) 
             self.sockets.append(socket)
-            
+        
+        for loc, img in genusToCopy.blockImageMap.items():
+            self.blockImageMap[loc] = img    
+
+    
         for key in genusToCopy.properties:
             self.properties[key] = genusToCopy.properties[key]
 
@@ -371,13 +383,15 @@ class BlockGenus():
                     genus.addToExpandGroup(genus.expandGroups, socket);
 
     def loadBlockImages(images, genus):
+        from blocks.BlockImageIcon import ImageLocation
+        from blocks.BlockImageIcon import BlockImageIcon
         '''
         * Loads the images to be drawn on the visible block instances of this
         * @param images NodeList of image information to load from
         * @param genus BlockGenus instance to load images onto
         '''
         #the current working directory of this
-
+    
         location = None;
         isEditable = False
         textWrap = False
@@ -409,18 +423,20 @@ class BlockGenus():
                     if(imageLocationNode.tag == ("FileLocation")):
                         fileLocation = imageLocationNode.text
                         try:
-                            fileURL = "" #URL("file", "", os.getcwd() +fileLocation)
-                            #if(fileURL != None and location != None):
+                            if(fileLocation != ''):
                                 # translate location String to ImageLocation representation
-                                #imgLoc = ImageLocation.getImageLocation(location)
+                                if(location != None):
+                                    imgLoc= ImageLocation.getImageLocation(location)
+                                else:
+                                    imgLoc= ImageLocation.getImageLocation('center')
+                                    
                                 #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
 
                                 #store in blockImageMap
-                                #icon = ImageIcon(fileURL);
-                                #if(width > 0 and height > 0):
-                                #    icon.setImage(icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH))
-
-                                #genus.blockImageMap.put(imgLoc, BlockImageIcon(icon, imgLoc, isEditable, textWrap))
+                                icon = QPixmap(os.getcwd() +fileLocation)
+                                if(width > 0 and height > 0): 
+                                    icon = icon.scaled(width, height)
+                                genus.blockImageMap[imgLoc] =  BlockImageIcon(icon, imgLoc, isEditable, textWrap)
 
                         except:
                             exc_type, exc_obj, exc_tb = sys.exc_info()

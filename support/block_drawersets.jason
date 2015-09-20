@@ -1,341 +1,156 @@
 {
   "block_drawer_sets": [
     {
-      "drawer": "Setup and Run",
-      "member": [
-        {
-          "genus": "setup"
-        },
-        {
-          "genus": "forever"
-        },
-        {
-          "genus": "runforsometime"
-        },
-        {
-          "genus": "runonce"
-        },
-        {
-          "genus": "clear-all"
-        },
-        {
-          "genus": "clear-everyone"
-        },
-        {
-          "genus": "clear-patches"
-        },
-        {
-          "genus": "set-score"
-        },
-        {
-          "genus": "score"
-        }
-      ]
+      "genus-list": [
+        "setup",
+        "aerial-on",
+        "bshape",
+        "ashape",
+        "forever",
+        "runforsometime",
+        "runonce",
+        "clear-all",
+        "clear-everyone",
+        "clear-patches",
+        "set-score",
+        "score"
+      ],
+      "drawer": "Setup and Run1111"
     },
     {
-      "drawer": "Movement",
-      "member": [
-        {
-          "genus": "fd"
-        },
-        {
-          "genus": "bk"
-        },
-        {
-          "genus": "lt"
-        },
-        {
-          "genus": "rt"
-        },
-        {
-          "genus": "up"
-        },
-        {
-          "genus": "down"
-        },
-        {
-          "genus": "setxy"
-        }
-      ]
+      "genus-list": [
+        "fd",
+        "bk",
+        "lt",
+        "rt",
+        "up",
+        "down",
+        "setxy"
+      ],
+      "drawer": "Movement"
     },
     {
-      "drawer": "Logic",
-      "member": [
-        {
-          "genus": "if"
-        },
-        {
-          "genus": "ifelse"
-        },
-        {
-          "genus": "repeater"
-        },
-        {
-          "genus": "logic_operation"
-        },
-        {
-          "genus": "not"
-        },
-        {
-          "genus": "logic_compare"
-        },
-        {
-          "genus": "boolean"
-        }
-      ]
+      "genus-list": [
+        "if",
+        "ifelse",
+        "repeater",
+        "logic_operation",
+        "not",
+        "logic_compare",
+        "boolean"
+      ],
+      "drawer": "Logic"
     },
     {
-      "drawer": "Controls",
-      "member": [
-        {
-          "genus": "keyboard-up"
-        },
-        {
-          "genus": "keyboard-space"
-        },
-        {
-          "genus": "joy-xaxis"
-        },
-        {
-          "genus": "joy-yaxis"
-        },
-        {
-          "genus": "joy-radius"
-        },
-        {
-          "genus": "joy-angle"
-        },
-        {
-          "genus": "dpad-angle"
-        },
-        {
-          "genus": "joy-button1?"
-        },
-        {
-          "genus": "joy-button2?"
-        },
-        {
-          "genus": "joy-button3?"
-        },
-        {
-          "genus": "joy-button4?"
-        }
-      ]
+      "genus-list": [
+        "keyboard-up",
+        "keyboard-space",
+        "joy-xaxis",
+        "joy-yaxis",
+        "joy-radius",
+        "joy-angle",
+        "dpad-angle",
+        "joy-button1?",
+        "joy-button2?",
+        "joy-button3?",
+        "joy-button4?"
+      ],
+      "drawer": "Controls"
     },
     {
-      "drawer": "Terrain",
-      "member": [
-        {
-          "genus": "stomp"
-        },
-        {
-          "genus": "pc"
-        },
-        {
-          "genus": "yank"
-        },
-        {
-          "genus": "patch-height"
-        },
-        {
-          "genus": "stamp"
-        }
-      ]
+      "genus-list": [
+        "stomp",
+        "pc",
+        "yank",
+        "patch-height",
+        "stamp"
+      ],
+      "drawer": "Terrain"
     },
     {
-      "drawer": "Traits",
-      "member": [
-        {
-          "genus": "who"
-        },
-        {
-          "genus": "setc"
-        },
-        {
-          "genus": "color"
-        },
-        {
-          "genus": "setshape"
-        },
-        {
-          "genus": "shape"
-        },
-        {
-          "genus": "setbreed"
-        },
-        {
-          "genus": "breed"
-        },
-        {
-          "genus": "seth"
-        },
-        {
-          "genus": "heading"
-        },
-        {
-          "genus": "penup"
-        },
-        {
-          "genus": "pendown"
-        },
-        {
-          "genus": "pendown?"
-        },
-        {
-          "genus": "setscale"
-        },
-        {
-          "genus": "scale"
-        }
-      ]
+      "genus-list": [
+        "who",
+        "setc",
+        "color",
+        "setshape",
+        "shape",
+        "setbreed",
+        "breed",
+        "seth",
+        "heading",
+        "penup",
+        "pendown",
+        "pendown?",
+        "setscale",
+        "scale"
+      ],
+      "drawer": "Traits"
     },
     {
-      "drawer": "Text",
-      "member": [
-        {
-          "genus": "text_const"
-        },
-        {
-          "genus": "say"
-        },
-        {
-          "genus": "text_print"
-        },
-        {
-          "genus": "set-status"
-        },
-        {
-          "genus": "to-string"
-        },
-        {
-          "genus": "string-append"
-        },
-        {
-          "genus": "logic_compare"
-        }
-      ]
+      "genus-list": [
+        "text_const",
+        "say",
+        "text_print",
+        "set-status",
+        "to-string",
+        "string-append",
+        "logic_compare"
+      ],
+      "drawer": "Text"
     },
     {
-      "drawer": "Math",
-      "member": [
-        {
-          "genus": "math_number"
-        },
-        {
-          "genus": "pi"
-        },
-        {
-          "genus": "e"
-        },
-        {
-          "genus": "math_arithmetic"
-        },
-        {
-          "genus": "logic_compare"
-        },
-        {
-          "genus": "atan"
-        },
-        {
-          "genus": "random"
-        },
-        {
-          "genus": "round"
-        },
-        {
-          "genus": "int"
-        },
-        {
-          "genus": "min"
-        },
-        {
-          "genus": "max"
-        },
-        {
-          "genus": "remainder"
-        },
-        {
-          "genus": "power"
-        },
-        {
-          "genus": "abs"
-        },
-        {
-          "genus": "sqrt"
-        },
-        {
-          "genus": "sin"
-        },
-        {
-          "genus": "cos"
-        },
-        {
-          "genus": "tan"
-        },
-        {
-          "genus": "asin"
-        },
-        {
-          "genus": "acos"
-        },
-        {
-          "genus": "log"
-        },
-        {
-          "genus": "ln"
-        }
-      ]
+      "genus-list": [
+        "math_number",
+        "pi",
+        "e",
+        "math_arithmetic",
+        "logic_compare",
+        "atan",
+        "random",
+        "round",
+        "int",
+        "min",
+        "max",
+        "remainder",
+        "power",
+        "abs",
+        "sqrt",
+        "sin",
+        "cos",
+        "tan",
+        "asin",
+        "acos",
+        "log",
+        "ln"
+      ],
+      "drawer": "Math"
     },
     {
-      "drawer": "Procedure",
-      "member": [
-        {
-          "genus": "procedure"
-        },
-        {
-          "genus": "proc-param-number"
-        },
-        {
-          "genus": "proc-param-string"
-        },
-        {
-          "genus": "proc-param-boolean"
-        },
-        {
-          "genus": "proc-param-list"
-        }
-      ]
+      "genus-list": [
+        "procedure",
+        "proc-param-number",
+        "proc-param-string",
+        "proc-param-boolean",
+        "proc-param-list"
+      ],
+      "drawer": "Procedure"
     },
     {
-      "drawer": "Colors",
-      "member": [
-        {
-          "genus": "color"
-        },
-        {
-          "genus": "setc"
-        },
-        {
-          "genus": "random-color"
-        }
-      ]
+      "genus-list": [
+        "color",
+        "setc",
+        "random-color"
+      ],
+      "drawer": "Colors"
     },
     {
-      "drawer": "variables",
-      "member": [
-        {
-          "genus": "num_var"
-        },
-        {
-          "genus": "str_var"
-        },
-        {
-          "genus": "set_num_var"
-        },
-        {
-          "genus": "set_str_var"
-        }
-      ]
+      "genus-list": [
+        "num_var",
+        "str_var",
+        "set_num_var",
+        "set_str_var"
+      ],
+      "drawer": "variables"
     }
   ]
 }

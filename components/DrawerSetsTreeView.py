@@ -185,9 +185,9 @@ class DrawerSetsTreeNode(QObject):
             drawerSetInfo['block_drawer_sets'] =  [node.getNodeInfo() for node in self.children]      
         elif not self._isLeaf:
             drawerSetInfo['drawer'] = self.obj
-            drawerSetInfo['member'] = [node.getNodeInfo() for node in self.children]
-        else:
-            drawerSetInfo['genus'] = self.obj.getBlock().genusName        
+            drawerSetInfo['genus-list'] = [node.obj.getBlock().genusName for node in self.children]
+        #else:
+        #    drawerSetInfo['genus'] = self.obj.getBlock().genusName        
         
         #print(drawerSetInfo)
         return drawerSetInfo
@@ -411,18 +411,16 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
         if 'block_drawer_sets' in data:
             block_drawer_sets = data['block_drawer_sets']
             for drawerElement in block_drawer_sets:
-                if 'drawer' in drawerElement and 'member' in drawerElement:
+                if 'drawer' in drawerElement and 'genus-list' in drawerElement:
                     drawerName = drawerElement['drawer']
                     node = DrawerSetsTreeNode(self.rootNode, drawerName, False)
                     self.rootNode.children.append(node)                
-                    member = drawerElement['member']
-                    for genusElement in member:
-                        if 'genus' in genusElement:
-                            genusName = genusElement['genus']
-                            newBlock = Block.createBlock(None, genusName, False)
-                            rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(255,255,255,0))
-                            sub_node = DrawerSetsTreeNode(node, rb)
-                            node.children.append(sub_node)
+                    member = drawerElement['genus-list']
+                    for genusName in member:
+                        newBlock = Block.createBlock(None, genusName, False)
+                        rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(255,255,255,0))
+                        sub_node = DrawerSetsTreeNode(node, rb)
+                        node.children.append(sub_node)
  
     def loadBlockDrawerSets(self, path):
         import json
