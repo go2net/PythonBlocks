@@ -2,7 +2,7 @@
 
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
-from ConnectorsInfoWnd import ConnectorsInfoWnd
+from components.ConnectorsInfoWnd import ConnectorsInfoWnd
 from blocks.BlockGenus import BlockGenus
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -10,7 +10,7 @@ from PyQt4.QtGui import *
 class BlockGenusTreeView(QTreeView):
     def __init__(self, parent):
         super(BlockGenusTreeView, self).__init__(parent)
-        self.isDirty = False
+        self.isDirty = False        
         
 class BlockGenusTreeModel(QPropertyModel):
   
@@ -26,6 +26,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.langDefLocation = langDefLocation
         self.setupModelData(self.tmpGenus, self.m_rootItem)
         self.isDirty = False
+        self.popMenu = QMenu(self.view)
 
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
@@ -56,10 +57,28 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['labelPrefix'] = Property('Label Prefix', tmpGenus.labelPrefix, parents[-1])
         self.properties['labelSuffix'] = Property('Label Suffix', tmpGenus.labelSuffix, parents[-1])    
         self.properties['color'] = Property('Color',tmpGenus.color , parents[-1], Property.COLOR_EDITOR)
-        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, parents[-1])
-        self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, parents[-1])         
-        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)    
-
+ 
+         
+        ############
+        #      Image          #
+        ############
+        self.img_root = Property('Image','', parents[-1],Property.ADVANCED_EDITOR_WITH_MENU) 
+        for loc, img in tmpGenus.blockImageMap.items():
+            self.properties['img_url'] = Property('URL', img.url, self.limg_root )
+            self.properties['img_location'] = Property('Location', img.location, self.img_root )
+            self.properties['img_size'] = Property('Size', img.size, self.img_root )
+            self.properties['image-editable'] = Property('Editable', img.isEditable, self.img_root )
+            self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, self.img_root )
+        
+        self.img_root.onAdvBtnClick = self.onLoadImageFromFile
+        self.img_root.onMenuBtnClick = self.onShowImgSelMenu
+    
+        ############
+        #      Connector     #
+        ############
+        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)   
+        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, self.properties['connectors'] )
+        self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, self.properties['connectors'] ) 
         plug_index = 0
         socket_index = 0
         
@@ -76,6 +95,9 @@ class BlockGenusTreeModel(QPropertyModel):
             
         self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
 
+        ############
+        #      Language       #
+        ############
         self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
         
         module_name= tmpGenus.properties['module_name']
@@ -93,6 +115,34 @@ class BlockGenusTreeModel(QPropertyModel):
         Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
         Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
 
+    def onLoadImageFromFile(self,  editor):        
+        self.loadFromFile()        
+        
+    def onShowImgSelMenu(self,  editor):
+        
+        self.popMenu.clear() 
+
+        choose_file_action = self.popMenu.addAction('Choose file')
+        choose_file_action.triggered.connect(lambda: self.loadFromFile())
+        
+        from_url_action = self.popMenu.addAction('From URL')
+        from_url_action.triggered.connect(lambda: self.loadFromURL())
+        
+        self.popMenu.exec_(QCursor().pos())
+        pass
+        
+    def loadFromFile(self):
+        print('loadFromFile')
+        filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
+
+        if(filename == ''): return   # User cancel load
+
+        self.filename = filename
+        
+        
+    def loadFromURL(self):
+        print('loadFromURL')
+        
     def onShowConnectorsInfo(self,  editor):
 
         dlg = ConnectorsInfoWnd(self, self.tmpGenus)
@@ -186,7 +236,7 @@ class BlockGenusTreeModel(QPropertyModel):
 
         block = Block.createBlockFromID(None, genus.genusName)
         
-        preview_wnd_layout  = self.mainWnd.wndPreview.layout()        
+        preview_wnd_layout  = self.mainWnd.wndPreview.layout()
 
         #for i in reversed(range(preview_wnd_layout.count())):
         #    preview_wnd_layout.itemAt(i).widget().setParent(None)

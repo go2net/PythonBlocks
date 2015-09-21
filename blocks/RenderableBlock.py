@@ -75,8 +75,9 @@ class RenderableBlock(QtGui.QWidget):
             #print('BlockImageIcon')
             #print('Image ICON width=%d,height=%d'%(img.icon.width(), img.icon.height()))
             icon = BlockImageIcon(
-                img.icon, 
+                img.url, 
                 img.location, 
+                0, 0, 
                 img.isEditable,
                 img.wrapText)
             obj.imageMap[loc] = icon

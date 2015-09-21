@@ -2,7 +2,7 @@
 
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
-from ConnectorsInfoWnd import ConnectorsInfoWnd
+from components.ConnectorsInfoWnd import ConnectorsInfoWnd
 
 
 class BlockPropTreeModel(QPropertyModel):

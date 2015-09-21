@@ -1,9 +1,10 @@
 
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
+import os
 
 class AdvanceEditor(QWidget):
-    def __init__(self, property, parent):
+    def __init__(self, property, parent, showMenuButton=False):
         super(AdvanceEditor, self).__init__(parent)
 
         layout = QHBoxLayout(self)
@@ -20,9 +21,16 @@ class AdvanceEditor(QWidget):
         self.button.setText('...')
         self.button.setToolTip('Advanced...')
         self.button.setFixedSize(18, 18)
-
         layout.addWidget(self.txtEditor)
         layout.addWidget(self.button)
+        
+        if(showMenuButton):
+            self.menuButton = QPushButton(self)
+            self.menuButton.setText('')
+            self.menuButton.setToolTip('Advanced...')
+            self.menuButton.setIcon(QIcon(os.getcwd() +'\\resource\\arrow_triangle-down.png'))
+            self.menuButton.setFixedSize(18, 18)  
+            layout.addWidget(self.menuButton)
 
         layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(layout)

@@ -9,10 +9,11 @@ from components.propertyeditor.AdvanceEditor import  AdvanceEditor
 
 class Property(QtCore.QObject):
     ROOT_NODE = 0
-    ADVANCED_EDITOR = 1
-    COMBO_BOX_EDITOR = 2
-    COLOR_EDITOR = 3
-    CHECKBOX_EDITOR = 4
+    ADVANCED_EDITOR = 1    
+    ADVANCED_EDITOR_WITH_MENU = 2
+    COMBO_BOX_EDITOR = 3
+    COLOR_EDITOR = 4
+    CHECKBOX_EDITOR = 5
   
     def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
         super(Property, self).__init__(parent)
@@ -70,7 +71,12 @@ class Property(QtCore.QObject):
             advancedEditor = AdvanceEditor(self, parent)
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             return advancedEditor
-            
+        if(self.obj_type == Property.ADVANCED_EDITOR_WITH_MENU):
+            advancedEditor = AdvanceEditor(self, parent, True)
+            advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
+            advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
+            return advancedEditor        
+        
         if(self.obj_type == Property.CHECKBOX_EDITOR):
             #checked = self.obj_data
             chkBox = QCheckBox(parent)
@@ -95,6 +101,10 @@ class Property(QtCore.QObject):
   
     def onAdvBtnClick(self, editor):
         print('onAdvBtnClick')
+        
+    def onMenuBtnClick(self, editor):
+        print('onMenuBtnClick')        
+        
  
     def setEditorData(self, editor, val):
         if(self.obj_type == None): return False

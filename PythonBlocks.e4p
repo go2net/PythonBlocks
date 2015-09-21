@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-09-05, 01:37:51 -->
+<!-- Saved: 2015-09-21, 14:28:17 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -65,25 +65,27 @@
     <Source>generators/python/text.py</Source>
     <Source>generators/python/math.py</Source>
     <Source>generators/python/loops.py</Source>
-    <Source>BlockGenusTreeModel.py</Source>
     <Source>components/propertyeditor/QPropertyModel.py</Source>
     <Source>components/propertyeditor/QVariantDelegate.py</Source>
     <Source>components/propertyeditor/QPropertyEditorWidget.py</Source>
     <Source>components/propertyeditor/Property.py</Source>
     <Source>components/propertyeditor/ColorCombo.py</Source>
-    <Source>BlockPropTreeModel.py</Source>
     <Source>qq.py</Source>
-    <Source>FactoryTreeView.py</Source>
     <Source>ttt.py</Source>
     <Source>blocks/BlockWorkspace.py</Source>
     <Source>checkbox.py</Source>
     <Source>components/propertyeditor/AdvanceEditor.py</Source>
     <Source>components/RestrictFileDialog.py</Source>
-    <Source>ConnectorsInfoWnd.py</Source>
     <Source>components/GenusListWidget.py</Source>
     <Source>PythonBlocks.py</Source>
     <Source>components/DrawerSetsTreeView.py</Source>
     <Source>drop.py</Source>
+    <Source>blocks/BlockImageIcon.py</Source>
+    <Source>components/BlockGenusTreeModel.py</Source>
+    <Source>components/BlockPropTreeModel.py</Source>
+    <Source>components/ConnectorsInfoWnd.py</Source>
+    <Source>components/FactoryTreeView.py</Source>
+    <Source>components/PyMimeData.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>

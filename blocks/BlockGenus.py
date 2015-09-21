@@ -23,7 +23,7 @@ class BlockGenus():
         self.properties['function_name'] = ''
         
         self.blockImageMap = {}        
-
+        self.imageFile = ''
         self.family = {}
         self.sockets = []
         self.stubList = []
@@ -432,11 +432,7 @@ class BlockGenus():
                                     
                                 #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
 
-                                #store in blockImageMap
-                                icon = QPixmap(os.getcwd() +fileLocation)
-                                if(width > 0 and height > 0): 
-                                    icon = icon.scaled(width, height)
-                                genus.blockImageMap[imgLoc] =  BlockImageIcon(icon, imgLoc, isEditable, textWrap)
+                                genus.blockImageMap[imgLoc] =  BlockImageIcon(fileLocation, imgLoc, width, height, isEditable, textWrap)
 
                         except:
                             exc_type, exc_obj, exc_tb = sys.exc_info()

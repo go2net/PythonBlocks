@@ -156,7 +156,7 @@ class MainWnd(QtGui.QMainWindow):
         self.lwBlockGenus.itemSelectionChanged.connect(self.onBlockGenusItemChanged)
 
     def onBlockGenusItemChanged(self):
-        from BlockGenusTreeModel import BlockGenusTreeModel
+        from components.BlockGenusTreeModel import BlockGenusTreeModel
         from components.propertyeditor.QVariantDelegate import QVariantDelegate
         #print('onBlockGenusItemChanged')
         items = self.lwBlockGenus.selectedItems()    
@@ -192,7 +192,7 @@ class MainWnd(QtGui.QMainWindow):
         pass
     
     def onBlockClick(self, block):
-        from BlockPropTreeModel import BlockPropTreeModel
+        from components.BlockPropTreeModel import BlockPropTreeModel
         from components.propertyeditor.QVariantDelegate import QVariantDelegate
 
         model = BlockPropTreeModel(self, block)
@@ -273,7 +273,7 @@ class MainWnd(QtGui.QMainWindow):
         #pass
 
     def loadFile(self):
-        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', ".blks(*.blks)")
+        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', tr("All files (*.*);;JPEG (*.jpg *.jpeg);;TIFF (*.tif)" ))
 
         if(filename == ''): return   # User cancel load
 

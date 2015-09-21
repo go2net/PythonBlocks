@@ -1,6 +1,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.uic import *
+import os
 
 class ConnectorsInfoWnd(QDialog):
     def __init__(self, treeModel, genus):
@@ -8,8 +9,8 @@ class ConnectorsInfoWnd(QDialog):
         super(ConnectorsInfoWnd, self).__init__()
         self.genus = genus
         self.treeModel = treeModel
-        
-        loadUi('connector_info.ui', self)   
+        dirname, filename = os.path.split(os.path.abspath(__file__))
+        loadUi(dirname+'\\connector_info.ui', self)   
 
         self.header = ['Label', 'Kind', 'Type'] 
 
