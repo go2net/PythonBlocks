@@ -77,13 +77,13 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
             # load the block drawers specified in the file (may contain
             # custom drawers) and/or the lang def file if the contents specify
             #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
-            PageDrawerLoadingUtils.loadBlockDrawerSets(newRoot, self.factory);
+            PageDrawerLoadingUtils.loadBlockDrawerSets("", self.factory);
             #self.loadWorkspaceSettings(newRoot);
         else:
             # load from original language/workspace root specification
             blockWorkspace.loadSaveString(originalLangRoot);
             # load block drawers and their content
-            PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
+            PageDrawerLoadingUtils.loadBlockDrawerSets("support\\block_drawersets.jason", self.factory);
             #loadWorkspaceSettings(originalLangRoot);
             pass
 

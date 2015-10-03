@@ -5,7 +5,8 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 from components.propertyeditor.ColorCombo import  ColorCombo
-from components.propertyeditor.AdvanceEditor import  AdvanceEditor
+from components.propertyeditor.AdvanceEditor import  AdvanceEditor,  ImageEditor
+
 
 class Property(QtCore.QObject):
     ROOT_NODE = 0
@@ -14,6 +15,7 @@ class Property(QtCore.QObject):
     COMBO_BOX_EDITOR = 3
     COLOR_EDITOR = 4
     CHECKBOX_EDITOR = 5
+    IMAGE_EDITOR = 6
   
     def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
         super(Property, self).__init__(parent)
@@ -76,6 +78,12 @@ class Property(QtCore.QObject):
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
             return advancedEditor        
+        if(self.obj_type == Property.IMAGE_EDITOR):
+            imageEditor = ImageEditor(self, parent, True)
+            imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
+            imageEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(imageEditor))
+            return imageEditor          
+        
         
         if(self.obj_type == Property.CHECKBOX_EDITOR):
             #checked = self.obj_data
@@ -116,15 +124,20 @@ class Property(QtCore.QObject):
             
         if(self.obj_type == Property.ADVANCED_EDITOR): 
             editor.text = val
-            return True       
+            return True
             
         if(self.obj_type == Property.COLOR_EDITOR):
-            editor.setColor(val);
-            return True;
-        else:
-            return False;   
+            editor.setColor(val)
+            return True; 
 
-  
+        if(self.obj_type == Property.IMAGE_EDITOR):
+            if(val != None):
+                editor.icon = val['icon']
+                editor.text = val['url']
+            return True;
+ 
+        return False;  
+            
     def editorData(self, editor):
 
         if(self.obj_type == None): return False
@@ -140,9 +153,15 @@ class Property(QtCore.QObject):
           
         if(self.obj_type == Property.COLOR_EDITOR):  
             return editor.color()
-        else:
-            return None
+            
+        if(self.obj_type == Property.IMAGE_EDITOR):  
+            image_data = {}
+            image_data['url'] = editor.text
+            image_data['icon'] = editor.icon
+            print(image_data)
+            return image_data
 
+        return None
   
     @QtCore.pyqtSlot(int)
     def currentIndexChanged(self):

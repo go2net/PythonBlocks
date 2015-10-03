@@ -356,7 +356,6 @@ class WorkspaceController():
         #     pass
 
     def loadProjectFromPath(self, path):
-
         # XXX here, we could be strict and only allow valid documents...
         # validate(doc);
         projectRoot = etree.parse(path).getroot()

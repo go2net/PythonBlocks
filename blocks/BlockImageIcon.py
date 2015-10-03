@@ -49,8 +49,10 @@ class  FileDownloader(QObject) :
         print('QUIT')    
     
     def fileDownloaded(self, reply) :
+        #print('fileDownloaded')
         self._downloadedData = reply.readAll()
         # emit a signal
+        #print(self._downloadedData)
         reply.deleteLater();
         self.emit(SIGNAL("downloaded()")) 
      
@@ -65,7 +67,7 @@ class BlockImageIcon(QLabel):
         self._url = ''
         self.fileLocation = fileLocation
         self.blockImageIcon = QPixmap()
-        self.loadImage(QUrl('F://projects/PythonBlocks/resource/79-Home.png'))
+        self.loadImage(QUrl.fromLocalFile('F://projects/PythonBlocks/resource/79-Home.png'))
         self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
         self.img_loc = img_loc
         self._isEditable = isEditable
@@ -77,7 +79,7 @@ class BlockImageIcon(QLabel):
 
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
-        if(width > 0 and height > 0): 
+        if(self.blockImageIcon != None and width > 0 and height > 0): 
             self.blockImageIcon = self.blockImageIcon.scaled(width, height)        
         self.resize(self.blockImageIcon.size()) 
         pass

@@ -10,9 +10,10 @@ class PageDrawerLoadingUtils():
    def __init__(self):
       pass
 
-   def loadBlockDrawerSets(root, manager):
+   def loadBlockDrawerSets(block_drawersets, manager):
         import json
-        f=open("support\\block_drawersets.jason")
+        if(block_drawersets == ''): return
+        f=open(block_drawersets)
         data=json.load(f)
         if 'block_drawer_sets' in data:
             block_drawer_sets = data['block_drawer_sets']

@@ -62,9 +62,13 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      Image          #
         ############
-        self.img_root = Property('Image','', parents[-1],Property.ADVANCED_EDITOR_WITH_MENU) 
+        blockImageIcon = QPixmap('F://projects/PythonBlocks/resource/79-Home.png')
+        image_data = {}
+        image_data['icon'] = blockImageIcon
+        image_data['url'] = 'F://projects/PythonBlocks/resource/79-Home.png'
+        self.img_root = Property('Image',image_data, parents[-1],Property.IMAGE_EDITOR) 
         for loc, img in tmpGenus.blockImageMap.items():
-            self.properties['img_url'] = Property('URL', img.url, self.limg_root )
+            self.properties['img_url'] = Property('URL', img.url, self.img_root )
             self.properties['img_location'] = Property('Location', img.location, self.img_root )
             self.properties['img_size'] = Property('Size', img.size, self.img_root )
             self.properties['image-editable'] = Property('Editable', img.isEditable, self.img_root )
@@ -116,7 +120,9 @@ class BlockGenusTreeModel(QPropertyModel):
         Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
 
     def onLoadImageFromFile(self,  editor):        
-        self.loadFromFile()        
+        editor.text = self.loadFromFile() 
+        blockImageIcon = QPixmap(editor.text) 
+        editor.icon = blockImageIcon
         
     def onShowImgSelMenu(self,  editor):
         
@@ -132,13 +138,11 @@ class BlockGenusTreeModel(QPropertyModel):
         pass
         
     def loadFromFile(self):
-        print('loadFromFile')
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
 
-        if(filename == ''): return   # User cancel load
+        #if(filename == ''): return   # User cancel load
 
-        self.filename = filename
-        
+        return filename
         
     def loadFromURL(self):
         print('loadFromURL')
@@ -191,7 +195,11 @@ class BlockGenusTreeModel(QPropertyModel):
 
             if(property_name == 'Terminator'):
                 self.tmpGenus.isTerminator = value 
-
+                
+            if(property_name == 'Image'):
+                #self.img_root = value 
+                pass
+                
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
                 self.setConnectorProp(self.tmpGenus.plug,property_name, value )
             

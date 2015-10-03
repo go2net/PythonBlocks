@@ -177,8 +177,8 @@ class MainWnd(QtGui.QMainWindow):
     def InitBlockDrawerSetsTreeWidget(self):
         #from components.DrawerSetsTreeView import DrawerSetsTreeView
         #langDefLocation = os.getcwd() + "\\"+ "support\\block_genuses.xml"
-        
-        root = self.wc.setLangDefFilePath("support\\lang_def.xml")
+        #print('InitBlockDrawerSetsTreeWidget')
+        #root = self.wc.setLangDefFilePath("support\\lang_def.xml")
         #self.wc.loadFreshWorkspace();
         self.tvDrawerSets.init("support\\block_drawersets.jason")
         #self.drawerSetsModel = DrawerSetsTreeModel(self.tvDrawerSets, self, langDefLocation)
@@ -273,7 +273,7 @@ class MainWnd(QtGui.QMainWindow):
         #pass
 
     def loadFile(self):
-        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', tr("All files (*.*);;JPEG (*.jpg *.jpeg);;TIFF (*.tif)" ))
+        filename = QtGui.QFileDialog.getOpenFileName(self, 'Open File', '.', "Block file (*.blks);;All files (*.*)" )
 
         if(filename == ''): return   # User cancel load
 

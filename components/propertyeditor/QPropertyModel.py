@@ -75,17 +75,32 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         if (not index.isValid()):
             return None
 
-        item = index.internalPointer();
+        item = index.internalPointer()
 
-        if(role == QtCore.Qt.ToolTipRole or
-           role == QtCore.Qt.DecorationRole or
-           role == QtCore.Qt.DisplayRole or
-           role == QtCore.Qt.EditRole):
-            if (index.column() == 0):
-                return item.objectName().replace('_', ' ');
+        if(item.obj_type == Property.IMAGE_EDITOR):
+            if (index.column() == 0) and (
+                role == QtCore.Qt.ToolTipRole or
+                role == QtCore.Qt.DecorationRole or
+                role == QtCore.Qt.DisplayRole or
+                role == QtCore.Qt.EditRole):
+                return item.objectName().replace('_', ' ');            
             if (index.column() == 1):
-                return item.value(role);
-          
+                if(role == QtCore.Qt.DecorationRole):
+                    return item.value(role)['icon'].scaled(18, 18)
+                if(role == QtCore.Qt.DisplayRole):
+                    return item.value(role)['url'] 
+                if(role == QtCore.Qt.EditRole):
+                    return item.value(role)             
+        else:
+            if(role == QtCore.Qt.ToolTipRole or
+               role == QtCore.Qt.DecorationRole or
+               role == QtCore.Qt.DisplayRole or
+               role == QtCore.Qt.EditRole):
+                if (index.column() == 0):
+                    return item.objectName().replace('_', ' ');
+                if (index.column() == 1):
+                    return item.value(role)            
+        
         if(role == QtCore.Qt.BackgroundRole):
             if (item.isRoot()): 
                 return QtGui.QApplication.palette("QTreeView").brush(QtGui.QPalette.Normal, QtGui.QPalette.Button).color();
