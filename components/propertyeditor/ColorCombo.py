@@ -19,18 +19,18 @@ class ColorCombo(QComboBox):
         self.currentIndexChanged[int].connect(self.currentChanged)
         #self.setMinimumHeight(21)
     
+    @property
     def color(self):
         return self.itemData(self.currentIndex(), Qt.DecorationRole);
 
-
-    def setColor(self, color):
-        self.m_init = color;
-        self.setCurrentIndex(self.findData(color,Qt.DecorationRole));
+    @color.setter
+    def color(self, value):
+        self.m_init = value;
+        self.setCurrentIndex(self.findData(value,Qt.DecorationRole));
         if (self.currentIndex() == -1):
-            self.addItem(color.name());
-            self.setItemData(self.count()-1, color, Qt.DecorationRole);
-            self.setCurrentIndex(self.count()-1);
-
+            self.addItem(value.name());
+            self.setItemData(self.count()-1, value, Qt.DecorationRole);
+            self.setCurrentIndex(self.count()-1);     
 
     def currentChanged(self,  index):
 

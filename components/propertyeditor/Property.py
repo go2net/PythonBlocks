@@ -127,7 +127,7 @@ class Property(QtCore.QObject):
             return True
             
         if(self.obj_type == Property.COLOR_EDITOR):
-            editor.setColor(val)
+            editor.color = val
             return True; 
 
         if(self.obj_type == Property.IMAGE_EDITOR):
@@ -152,7 +152,7 @@ class Property(QtCore.QObject):
             return editor.currentText()
           
         if(self.obj_type == Property.COLOR_EDITOR):  
-            return editor.color()
+            return editor.color
             
         if(self.obj_type == Property.IMAGE_EDITOR):  
             image_data = {}

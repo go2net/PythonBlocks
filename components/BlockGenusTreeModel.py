@@ -132,10 +132,12 @@ class BlockGenusTreeModel(QPropertyModel):
     
     def loadImage(self, url):
         from blocks.BlockImageIcon import FileDownloader
+        QApplication.setOverrideCursor(Qt.WaitCursor);
         downloader = FileDownloader(url)
         imgData = downloader.downloadedData()
         icon = QPixmap()
         icon.loadFromData(imgData)
+        QApplication.restoreOverrideCursor();
         return icon
     
     def onShowImgSelMenu(self,  editor):
