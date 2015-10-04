@@ -62,20 +62,25 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      Image          #
         ############
-        blockImageIcon = QPixmap('F://projects/PythonBlocks/resource/79-Home.png')
-        image_data = {}
-        image_data['icon'] = blockImageIcon
-        image_data['url'] = 'F://projects/PythonBlocks/resource/79-Home.png'
-        self.img_root = Property('Image',image_data, parents[-1],Property.IMAGE_EDITOR) 
+        self.imgs_root = Property('Images','',  parents[-1],Property.ADVANCED_EDITOR) 
+        img_index = 0
         for loc, img in tmpGenus.blockImageMap.items():
-            self.properties['img_url'] = Property('URL', img.url, self.img_root )
-            self.properties['img_location'] = Property('Location', img.location, self.img_root )
-            self.properties['img_size'] = Property('Size', img.size, self.img_root )
-            self.properties['image-editable'] = Property('Editable', img.isEditable, self.img_root )
-            self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, self.img_root )
+            url = QUrl.fromLocalFile(img.url)    
+            icon = self.loadImage(url)
+
+            image_data = {}
+            image_data['icon'] = icon
+            image_data['url'] = url.toString()
+
+            img_root = Property('Img #'+str(img_index),image_data, self.imgs_root,Property.IMAGE_EDITOR) 
+            self.properties['Img #'+str(img_index)] = img_root
+            self.properties['img_location'] = Property('Location', img.location, img_root )
+            self.properties['img_size'] = Property('Size', img.size, img_root )
+            self.properties['image-editable'] = Property('Editable', img.isEditable, img_root )
+            self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, img_root )
         
-        self.img_root.onAdvBtnClick = self.onLoadImageFromFile
-        self.img_root.onMenuBtnClick = self.onShowImgSelMenu
+            img_root.onAdvBtnClick = self.loadFromFile
+            img_root.onMenuBtnClick = self.onShowImgSelMenu
     
         ############
         #      Connector     #
@@ -120,32 +125,45 @@ class BlockGenusTreeModel(QPropertyModel):
         Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
 
     def onLoadImageFromFile(self,  editor):        
-        editor.text = self.loadFromFile() 
-        blockImageIcon = QPixmap(editor.text) 
+        editor.text = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
+
+        blockImageIcon = self.loadImageFromUrl(QUrl.fromLocalFile(editor.text))
         editor.icon = blockImageIcon
-        
+    
+    def loadImage(self, url):
+        from blocks.BlockImageIcon import FileDownloader
+        downloader = FileDownloader(url)
+        imgData = downloader.downloadedData()
+        icon = QPixmap()
+        icon.loadFromData(imgData)
+        return icon
+    
     def onShowImgSelMenu(self,  editor):
         
         self.popMenu.clear() 
 
         choose_file_action = self.popMenu.addAction('Choose file')
-        choose_file_action.triggered.connect(lambda: self.loadFromFile())
+        choose_file_action.triggered.connect(lambda: self.loadFromFile(editor))
         
         from_url_action = self.popMenu.addAction('From URL')
-        from_url_action.triggered.connect(lambda: self.loadFromURL())
+        from_url_action.triggered.connect(lambda: self.loadFromURL(editor))
         
         self.popMenu.exec_(QCursor().pos())
         pass
         
-    def loadFromFile(self):
+    def loadFromFile(self, editor):
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
-
-        #if(filename == ''): return   # User cancel load
+        url = QUrl.fromLocalFile(filename)    
+        editor.text = url.toString()    
+        editor.icon = self.loadImage(url)
 
         return filename
         
-    def loadFromURL(self):
-        print('loadFromURL')
+    def loadFromURL(self, editor):
+        url = QUrl('http://www.sinaimg.cn/dy/2015/0924/U3093P1DT20150924110049.jpg')
+        #url = QUrl.fromLocalFile(filename)    
+        editor.text = url.toString()    
+        editor.icon = self.loadImage(url)
         
     def onShowConnectorsInfo(self,  editor):
 

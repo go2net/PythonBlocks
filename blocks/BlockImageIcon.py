@@ -29,7 +29,7 @@ class ImageLocation():
 
 
 class  FileDownloader(QObject) :
-    def __init__(self, url, parent):
+    def __init__(self, url, parent=None):
         QObject.__init__(self, parent)
 
         self.manager  = QNetworkAccessManager()
