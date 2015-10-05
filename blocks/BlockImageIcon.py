@@ -79,10 +79,26 @@ class BlockImageIcon(QLabel):
 
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
-        if(self.blockImageIcon != None and width > 0 and height > 0): 
+        if(self.blockImageIcon != None and not self.blockImageIcon.isNull() and width > 0 and height > 0): 
             self.blockImageIcon = self.blockImageIcon.scaled(width, height)        
         self.resize(self.blockImageIcon.size()) 
         pass
+    
+    def getImageInfo(self):
+        ImageInfo = {}
+        ImageInfo['location'] = self.location
+        ImageInfo['isEditable'] = self.isEditable
+        ImageInfo['wrapText'] = self.wrapText
+        ImageInfo['url'] = self.url
+       
+        
+        # Save QPixmap to QByteArray via QBuffer.
+        byte_array = QByteArray()
+        buffer = QBuffer(byte_array)
+        buffer.open(QIODevice.WriteOnly)
+        self.icon.save(buffer, 'PNG')
+        #ImageInfo['icon'] = byte_array
+        return ImageInfo
     
     def loadImage(self, url):
         imageUrl = QUrl(url);

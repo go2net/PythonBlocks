@@ -293,6 +293,13 @@ class BlockGenus():
             
         return connector_list  
 
+    def getImageList(self):
+        img_list = []
+        for loc, img in self.blockImageMap.items():
+            img_list.append(img.getImageInfo())
+            
+        return img_list  
+
     def loadBlockConnectorInformation(connectors, genus):
         '''
          * Loads the BlockConnector information of the specified genus
@@ -576,7 +583,7 @@ class BlockGenus():
         
         genusInfo['LangSpecProperties'] = self.getLangSpecProperties()
         genusInfo['BlockConnectors'] = self.getConnectorInfoList()
-        
+        genusInfo['Images'] = self.getImageList()
         return genusInfo
     
     def loadGenus(genusNode):

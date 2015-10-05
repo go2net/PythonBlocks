@@ -16,7 +16,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
     
         obj_type = p.obj_type
         if(obj_type != None):     
-            editor = p.createEditor(parent, option);
+            editor = p.createEditor(self, parent, option);
             if (editor != None):
                 if (editor.metaObject().indexOfSignal("editFinished()") != -1):
                     self.connect(editor, QtCore.SIGNAL("editFinished()"), self.m_finishedMapper, QtCore.SLOT("map()"));
@@ -34,10 +34,11 @@ class QVariantDelegate(QtGui.QItemDelegate):
   
     @QtCore.pyqtSlot()
     def currentIndexChanged(self):
-        #self.commitData.emit(self.sender())
-        #self.closeEditor.emit(self.sender())
-        self.emit(SIGNAL("commitData(QWidget*)"), self.sender())
-        self.emit(SIGNAL("closeEditor(QWidget*)"), self.sender())
+        self.commitData.emit(self.sender())
+        #self.closeEditor.emit(self.sender(), QAbstractItemDelegate.NoHint)
+        #self.emit(SIGNAL("commitData(QWidget*)"), self.sender())
+        #self.emit(SIGNAL("closeEditor(QWidget*)"), self.sender())
+        pass
         
     def setModelData(self, editor, model, index) :
         data = index.model().data(index, Qt.EditRole);	

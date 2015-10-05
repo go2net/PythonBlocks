@@ -86,7 +86,11 @@ class QPropertyModel(QtCore.QAbstractItemModel):
                 return item.objectName().replace('_', ' ');            
             if (index.column() == 1):
                 if(role == QtCore.Qt.DecorationRole):
-                    return item.value(role)['icon'].scaled(18, 18)
+                    if(item.value(role)['icon'] != None and not item.value(role)['icon'].isNull()):
+                        return item.value(role)['icon'].scaled(18, 18)
+                    else:
+                        return None
+                        
                 if(role == QtCore.Qt.DisplayRole):
                     return item.value(role)['url'] 
                 if(role == QtCore.Qt.EditRole):

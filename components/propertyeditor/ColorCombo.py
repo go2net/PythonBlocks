@@ -6,6 +6,7 @@ class ColorCombo(QComboBox):
     def __init__(self, property, parent):
         super(ColorCombo, self).__init__(parent)
         self.property = property
+        #self.delegate = delegate
         colorNames = QColor.colorNames();
         self.m_init = QColor(0, 0, 255)
         index = 0
@@ -45,7 +46,10 @@ class ColorCombo(QComboBox):
 
             else:
                 self.setCurrentIndex(self.findData(self.m_init));
-        #self.emit(SIGNAL("commitData(QWidget*)"), self)
+                
+        #self.delegate.commitData.emit(self)
+        #self.emit(SIGNAL("commitData(QWidget*)"), self.parent())
+        
         #self.commitData.emit(self.sender())
         #self.property.setValue(self.color())
         #self.parent().update()

@@ -74,7 +74,7 @@ class BlockGenusTreeModel(QPropertyModel):
 
             img_root = Property('Img #'+str(img_index),image_data, self.imgs_root,Property.IMAGE_EDITOR) 
             self.properties['Img #'+str(img_index)] = img_root
-            self.properties['img_location'] = Property('Location', img.location, img_root )
+            self.properties['img_location'] = Property('Location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
             self.properties['img_size'] = Property('Size', img.size, img_root )
             self.properties['image-editable'] = Property('Editable', img.isEditable, img_root )
             self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, img_root )
@@ -155,6 +155,9 @@ class BlockGenusTreeModel(QPropertyModel):
         
     def loadFromFile(self, editor):
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
+        if not filename:
+            return
+            
         url = QUrl.fromLocalFile(filename)    
         editor.text = url.toString()    
         editor.icon = self.loadImage(url)
@@ -215,10 +218,15 @@ class BlockGenusTreeModel(QPropertyModel):
 
             if(property_name == 'Terminator'):
                 self.tmpGenus.isTerminator = value 
-                
-            if(property_name == 'Image'):
-                #self.img_root = value 
-                pass
+            
+            img_index = 0
+            for loc, img in self.tmpGenus.blockImageMap.items():            
+                if(property_name == 'Img #'+str(img_index)):
+                    img.icon = value['icon']
+                    img.url = value['url']
+                    print(img.url)
+                    pass
+                img_index += 1
                 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
                 self.setConnectorProp(self.tmpGenus.plug,property_name, value )

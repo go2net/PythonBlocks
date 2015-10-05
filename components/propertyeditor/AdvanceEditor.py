@@ -45,9 +45,9 @@ class AdvanceEditor(QWidget):
         self.txtEditor.setText(value)
 
 class ImageEditor(QWidget):
-    def __init__(self, property, parent, showMenuButton=False):
+    def __init__(self, property, delegate, parent, showMenuButton=False):
         super(ImageEditor, self).__init__(parent)
-
+        self.delegate = delegate
         layout = QHBoxLayout(self)
         layout.setSpacing(0)    
         
@@ -97,6 +97,7 @@ class ImageEditor(QWidget):
     @text.setter
     def text(self, value):
         self.txtEditor.setText(value)
+        self.delegate.commitData.emit(self)
 
     @property
     def icon(self):
@@ -105,5 +106,6 @@ class ImageEditor(QWidget):
     @icon.setter
     def icon(self, value):
         self._icon = value
+        self.delegate.commitData.emit(self)
         #tmp_icon =self._icon.scaled(18, 18)
         #self.label.setPixmap(tmp_icon)

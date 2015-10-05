@@ -65,7 +65,7 @@ class Property(QtCore.QObject):
     def propertyData(self, value):
         self.obj_data = value
 
-    def createEditor(self, parent, option):
+    def createEditor(self, delegate, parent, option):
         editor = None
         if(self.obj_type == None or self.obj_type == Property.ROOT_NODE): return None
 
@@ -79,7 +79,7 @@ class Property(QtCore.QObject):
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
             return advancedEditor        
         if(self.obj_type == Property.IMAGE_EDITOR):
-            imageEditor = ImageEditor(self, parent, True)
+            imageEditor = ImageEditor(self, delegate, parent, True)
             imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
             imageEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(imageEditor))
             return imageEditor          
@@ -97,7 +97,7 @@ class Property(QtCore.QObject):
           
             confineCombo = QtGui.QComboBox(parent)
             confineCombo.addItems(confiningChoices)
-            confineCombo.currentIndexChanged[int].connect(self.currentIndexChanged)
+            #confineCombo.currentIndexChanged.connect( lambda sender=confineCombo, _delegate=delegate: self.onIndexChanged(sender, _delegate)) 
             return confineCombo
             
         if(self.obj_type == Property.COLOR_EDITOR):
@@ -158,12 +158,12 @@ class Property(QtCore.QObject):
             image_data = {}
             image_data['url'] = editor.text
             image_data['icon'] = editor.icon
-            print(image_data)
             return image_data
 
         return None
   
-    @QtCore.pyqtSlot(int)
-    def currentIndexChanged(self):
-        return
+    #@QtCore.pyqtSlot(int)
+    def onIndexChanged(self, sender, delegate):
+        print(sender)
+        delegate.commitData.emit(sender)
         #self.commitData.emit(self.sender())  
