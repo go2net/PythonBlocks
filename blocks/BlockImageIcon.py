@@ -85,19 +85,24 @@ class BlockImageIcon(QLabel):
         pass
     
     def getImageInfo(self):
+        import base64
         ImageInfo = {}
         ImageInfo['location'] = self.location
         ImageInfo['isEditable'] = self.isEditable
         ImageInfo['wrapText'] = self.wrapText
         ImageInfo['url'] = self.url
-       
+        ImageInfo['width'] = self.width()
+        ImageInfo['height'] = self.height()
         
         # Save QPixmap to QByteArray via QBuffer.
         byte_array = QByteArray()
         buffer = QBuffer(byte_array)
         buffer.open(QIODevice.WriteOnly)
         self.icon.save(buffer, 'PNG')
-        #ImageInfo['icon'] = byte_array
+        icon_data = byte_array.data()
+        b64_data = base64.b64encode(icon_data)
+        icon_b64_str = b64_data.decode("utf-8") 
+        ImageInfo['icon'] = icon_b64_str
         return ImageInfo
     
     def loadImage(self, url):
@@ -115,7 +120,8 @@ class BlockImageIcon(QLabel):
 
     @icon.setter
     def icon(self, value):
-        self.blockImageIcon = value
+        blockImageIcon = value.scaled(self.width(), self.height())
+        self.blockImageIcon = blockImageIcon
         self.setPixmap(value)
         
         

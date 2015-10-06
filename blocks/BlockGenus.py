@@ -306,6 +306,7 @@ class BlockGenus():
          * @param connectors NodeList of connector information to load from
          * @param genus BlockGenus to load block connector information onto
         '''
+        return
         for connector in connectors:
             if(connector.tag == "BlockConnector"):
                 label = "";
@@ -389,6 +390,95 @@ class BlockGenus():
                 if (len(expandGroup) > 0):
                     genus.addToExpandGroup(genus.expandGroups, socket);
 
+    
+
+
+    def loadConnectors(connectors, genus):
+        for connector in connectors:
+            label = "";
+            connectorType = "none";
+            connectorKind = 0  # where 0 is socket, 1 is plug
+            positionType = "single"
+            isExpandable = False
+            isLabelEditable = False
+            expandGroup = ""
+            defargname = None
+            defarglabel = None
+
+            if 'kind' in connector:
+                connectorKind = connector['kind'];
+            if 'type' in connector:
+                connectorType = connector['type']
+            if 'position' in connector:
+                positionType = connector['position']
+            if 'expandable' in connector:
+                isExpandable = True if connector['expandable'] == "yes" else False
+            if 'editable' in connector:
+                isLabelEditable = True if connector['editable'] == "yes" else False
+
+            # load optional items
+            if 'label' in connector:
+                label = connector['label']
+
+            if 'expand-group' in connector:
+                expandGroup = connector['expand-group']
+
+
+            '''
+            for defarg in connector.getchildren():
+                if(defarg.tag == "DefaultArg"):
+
+                    if 'genus-name' in defarg.attrib:
+                        defargname = defarg.attrib['genus-name']
+
+                     # assert BlockGenus.nameToGenus.get(defargname) != null : "Unknown BlockGenus: "+defargname;
+                    # warning: if this block genus does not have an editable label, the label being loaded does not
+                    # have an affect
+                    if 'label' in defarg.attrib:
+                        defarglabel = defarg.attrib['label']
+
+                    genus.hasDefArgs = True;
+            '''
+
+            # set the position type for this new connector, by default its set to single
+            if(positionType == "mirror"):
+                position_type = BlockConnector.PositionType.MIRROR
+            elif(positionType == ("bottom")):
+                position_type = BlockConnector.PositionType.BOTTOM
+            else:
+                position_type = BlockConnector.PositionType.SINGLE
+
+            socket = BlockConnector(
+                connectorKind, 
+                connectorType,
+                position_type,
+                label,
+                isLabelEditable,
+                isExpandable,
+                -1,
+                expandGroup);
+
+            # add def args if any
+            if(defargname != None):
+                socket.setDefaultArgument(defargname, defarglabel);
+
+
+            #set the connector kind
+            if(connectorKind == 'socket'):
+                genus.sockets.append(socket);
+            else:
+                genus.plug= socket;
+                #assert (!socket.isExpandable()) : genus.genusName + " can not have an expandable plug.  Every block has at most one plug.";
+
+
+            if(socket.isExpandable):
+                genus.areSocketsExpandable = True;
+
+            if (len(expandGroup) > 0):
+                genus.addToExpandGroup(genus.expandGroups, socket);
+
+
+
     def loadBlockImages(images, genus):
         from blocks.BlockImageIcon import ImageLocation
         from blocks.BlockImageIcon import BlockImageIcon
@@ -398,7 +488,7 @@ class BlockGenus():
         * @param genus BlockGenus instance to load images onto
         '''
         #the current working directory of this
-    
+        return
         location = None;
         isEditable = False
         textWrap = False
@@ -445,7 +535,50 @@ class BlockGenus():
                             exc_type, exc_obj, exc_tb = sys.exc_info()
                             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                             print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
-                            
+
+    def loadImages(images, genus):
+        from blocks.BlockImageIcon import ImageLocation
+        from blocks.BlockImageIcon import BlockImageIcon
+        '''
+        * Loads the images to be drawn on the visible block instances of this
+        * @param images NodeList of image information to load from
+        * @param genus BlockGenus instance to load images onto
+        '''
+
+        location = None;
+        isEditable = False
+        textWrap = False
+        for i in range(0,len(images)):
+            imageNode = images[i]
+            if("location" in imageNode):
+                location = imageNode["location"];
+
+            if("isEditable" in imageNode):
+                isEditable = imageNode["isEditablee"]
+
+            if("wrapText" in imageNode):
+                textWrap = imageNode.attrib["wrapText"]
+
+            width = -1;
+            height = -1;
+
+            if("width" in imageNode):
+                width = int(imageNode["width"]);
+
+            if("height" in imageNode):
+                height = int(imageNode["height"]);
+
+            if("url" in imageNode):
+                url = int(imageNode["url"]);
+            #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
+            try:
+                genus.blockImageMap[location] =  BlockImageIcon(url, imgLoc, width, height, isEditable, textWrap)
+
+            except:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
+                               
     def getLangSpecProperties(self):
         properities = []
         for key in self.properties:
@@ -461,6 +594,7 @@ class BlockGenus():
          * @param properties NodeList of properties to load from file
          * @param genus BlockGenus to load the properties onto
         '''
+        return
         key = None
         value = None
 
@@ -521,7 +655,12 @@ class BlockGenus():
         * Loads the all the initial BlockGenuses and BlockGenus families of this language
         * @param root the Element carrying the specifications of the BlockGenuses
         '''      
-        
+        import json
+        f=open('./support/block_genuses.jason')
+        data=json.load(f)
+        for genus_info in data:
+            BlockGenus.loadGenusInfo(genus_info)
+        return
         # # # # # # # # # # # # # # # # # # /
         # / LOAD BLOCK FAMILY INFORMATION # /
         # # # # # # # # # # # # # # # # # # /
@@ -724,6 +863,126 @@ class BlockGenus():
 
 
         return newGenus
+
+    def loadGenusInfo(genus_info):
+        '''
+        # # # # # # # # # # # # # # # # # /
+        # / LOAD BLOCK GENUS PROPERTIES # /
+        # # # # # # # # # # # # # # # # # /
+        '''
+        newGenus = BlockGenus();
+        # first, parse out the attributes
+        if 'name' in genus_info:
+            newGenus.genusName = genus_info["name"]
+            BlockGenus.nameToGenus[newGenus.genusName] = newGenus
+            
+        # assert that no other genus has this name
+        # assert nameToGenus.get(newGenus.genusName) == null : "Block genus names must be unique.  A block genus already exists with this name: "+newGenus.genusName;
+        if 'color' in genus_info:
+            col = genus_info["color"]
+            newGenus.color = QtGui.QColor(int(col['r']), int(col['g']), int(col['b']));
+        else:
+            newGenus.color = QtCore.Qt.BLACK;
+
+        if 'kind' in genus_info:
+            newGenus.kind = genus_info["kind"]
+
+        if 'family_name' in genus_info:
+            newGenus.familyName = genus_info["family_name"]
+         
+            #newGenus.family = BlockGenus.families[newGenus.familyName]
+          
+            #if(newGenus.familyName not in BlockGenus.familyBlocks):
+            #    BlockGenus.familyBlocks[newGenus.familyName] = []
+              
+            #BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
+
+        if 'initlabel' in genus_info:
+            newGenus.initLabel =genus_info["initlabel"]
+        else:
+            newGenus.initLabel = ''            
+
+        if 'editable-label' in genus_info:
+            newGenus._isLabelEditable = genus_info["editable-label"]
+
+        if 'var-label' in genus_info:
+            newGenus._isVarLabel = genus_info["var-label"]
+        else:
+            newGenus._isVarLabel = False
+
+        if 'label-unique' in genus_info:
+            newGenus.labelMustBeUnique = genus_info["label-unique"]
+        else:
+            newGenus.labelMustBeUnique = False
+        
+        if 'is-starter' in genus_info:
+            newGenus.isStarter= genus_info["is-starter"]
+        else:
+            newGenus.isStarter = False          
+          
+        if 'is-terminator' in genus_info:
+            newGenus.isTerminator= genus_info["is-terminator"]
+        else:
+            newGenus.isTerminator = False
+          
+        if 'is-label-value' in genus_info:
+            newGenus.isLabelValue= genus_info["is-label-value"]
+        else:
+            newGenus.isLabelValue = False
+
+        if 'label-prefix' in genus_info:
+            newGenus.labelPrefix= genus_info["label-prefix"]
+        else:
+            newGenus.labelPrefix = ''
+            
+        if 'label-suffix' in genus_info:
+            newGenus.labelSuffix= genus_info["label-suffix"]
+        else:
+            newGenus.labelSuffix = ''
+            
+        if 'page-label-enabled' in genus_info:
+            newGenus.isPageLabelEnabled= genus_info["page-label-enabled"]
+        else:
+            newGenus.isPageLabelEnabled = ''
+            
+        # if genus is a data genus (kind=data) or a variable block (and soon a declaration block)
+        # it is both a starter and terminator
+        # in other words, it should not have before and after connectors
+        #if(newGenus.isDataBlock() or newGenus.isVariableDeclBlock() or newGenus.isFunctionBlock()):
+        #  newGenus.isStarter = True;
+        #  newGenus.isTerminator = True;
+
+        # next, parse out the elements
+        if 'description' in genus_info:
+            BlockGenus.loadGenusDescription(genus_info['description'], newGenus);
+        
+        if 'BlockConnectors' in genus_info:
+            BlockGenus.loadConnectors(genus_info['BlockConnectors'], newGenus);
+
+            # if genus has two connectors both of bottom position type than this block is an infix
+            # operator
+            if( newGenus.sockets != None and len(newGenus.sockets) == 2 and
+                newGenus.sockets[0].getPositionType() == BlockConnector.PositionType.BOTTOM and
+                newGenus.sockets[1].getPositionType() == BlockConnector.PositionType.BOTTOM):
+                    newGenus.__isInfix = True
+        if 'Images' in genus_info:
+            BlockGenus.loadImages(genus_info['Images'], newGenus);
+        if 'LangSpecProperties' in genus_info:
+            BlockGenus.loadLangDefProperties(genus_info['LangSpecProperties'], newGenus);
+        if 'Stubs' in genus_info:
+            BlockGenus.loadStubs(genus_info['Stubs'], newGenus);
+
+
+        #  John's code to add command sockets... probably in the wrong place
+        #if (not newGenus.isStarter):
+        #  newGenus.before = BlockConnector(BlockConnectorShape.getCommandShapeName(),'' , BlockConnector.PositionType.TOP, "", False, False, -1);
+
+        #if (not newGenus.isTerminator):
+        #  newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), '' , BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+
+
+        return newGenus
+
 
     def hasSiblings(self):
         '''

@@ -65,8 +65,11 @@ class BlockGenusTreeModel(QPropertyModel):
         self.imgs_root = Property('Images','',  parents[-1],Property.ADVANCED_EDITOR) 
         img_index = 0
         for loc, img in tmpGenus.blockImageMap.items():
-            url = QUrl.fromLocalFile(img.url)    
-            icon = self.loadImage(url)
+            url = QUrl.fromLocalFile(img.url) 
+            if(img.icon != None):
+                icon = img.icon
+            else:
+                icon = self.loadImage(url)
 
             image_data = {}
             image_data['icon'] = icon
@@ -165,7 +168,7 @@ class BlockGenusTreeModel(QPropertyModel):
         return filename
         
     def loadFromURL(self, editor):
-        url = QUrl('http://www.sinaimg.cn/dy/2015/0924/U3093P1DT20150924110049.jpg')
+        url = QUrl('http://www.sinaimg.cn/dy/slidenews/1_img/2015_41/2841_619665_577450.jpg')
         #url = QUrl.fromLocalFile(filename)    
         editor.text = url.toString()    
         editor.icon = self.loadImage(url)

@@ -199,10 +199,10 @@ class BlockShape():
     def reformArea(self):
         # hopefully reseting is less costly than creating new ones
 
-        self.gpTop = QtGui.QPainterPath ()
-        self.gpRight = QtGui.QPainterPath ()
-        self.gpBottom = QtGui.QPainterPath ()
-        self.gpLeft = QtGui.QPainterPath ()
+        self.gpTop = QtGui.QPainterPath()
+        self.gpRight = QtGui.QPainterPath()
+        self.gpBottom = QtGui.QPainterPath()
+        self.gpLeft = QtGui.QPainterPath()
 
         self.setupDimensions();
 
