@@ -84,9 +84,6 @@ class RenderableBlock(QtGui.QWidget):
                 img.wrapText)
             obj.imageMap[loc] = icon
             icon.setParent(obj)
-            #print('ICON width=%d,height=%d'%(icon.width(), icon.height()))
-            #obj.add(icon)
-
 
         # initialize tags, labels, and sockets:
         obj.plugTag = ConnectorTag(block.getPlug());

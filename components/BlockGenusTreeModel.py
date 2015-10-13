@@ -127,10 +127,12 @@ class BlockGenusTreeModel(QPropertyModel):
         img_root.onMenuBtnClick = self.onShowImgSelMenu
 
         self.properties['Img #'+str(img_index)] = img_root
-        self.properties['img_location'] = Property('Location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
-        self.properties['img_size'] = Property('Size', img.size, img_root )
-        self.properties['image-editable'] = Property('Editable', img.isEditable, img_root )
-        self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, img_root )
+        self.properties['location'] = Property('location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
+        self.properties['width'] = Property('width',img.width(), img_root  )
+        self.properties['height'] = Property('height',img.height(),img_root)
+        
+        self.properties['editable'] = Property('editable', img.isEditable, img_root )
+        self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )
         
     def fillConnectInfo(self,  socket,  parent):
         Property('label', socket.label,parent)
@@ -258,7 +260,13 @@ class BlockGenusTreeModel(QPropertyModel):
                     img.isEditable = value
                     
                 if(property_name == 'Wraptext'):
-                    img.wrapText = value                    
+                    img.wrapText = value
+                if(property_name == 'width'):
+                    img.resize(value, img.height())
+                if(property_name == 'height'):
+                    img.resize(img.width(),  value)
+                    
+                    
                     
                 img_index += 1
                 
