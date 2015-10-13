@@ -77,6 +77,7 @@ class RenderableBlock(QtGui.QWidget):
             icon = BlockImageIcon(
                 img.url, 
                 img.location, 
+                img.icon, 
                 0, 0, 
                 img.isEditable,
                 img.wrapText)

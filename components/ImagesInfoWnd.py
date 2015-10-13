@@ -49,7 +49,7 @@ class ImageTableModel(QAbstractTableModel):
     
     def addImage(self):
         from blocks.BlockImageIcon import BlockImageIcon
-        img = BlockImageIcon('', 'test', 16, 16, False, False)
+        img = BlockImageIcon('', 'test', None, 32, 32, False, False)
         self.blockImages.append(img)
         index = QModelIndex ()
         self.insertRow(len(self.blockImages), index)

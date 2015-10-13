@@ -109,11 +109,14 @@ class BlockGenusTreeModel(QPropertyModel):
             img_index += 1
    
     def addImage(self,  imgs_root, img_index,  img):
-        url = QUrl.fromLocalFile(img.url) 
-        if(img.icon != None):
+        url = QUrl(img.url) 
+        print(img.icon)
+        if(img.icon != None and not img.icon.isNull() and img.width() > 0 and img.height() > 0): 
             icon = img.icon
         else:
             icon = self.loadImage(url)
+            img.icon = icon
+            print(icon)
             
         image_data = {}
         image_data['icon'] = icon
@@ -247,8 +250,16 @@ class BlockGenusTreeModel(QPropertyModel):
             for loc, img in self.tmpGenus.blockImageMap.items():            
                 if(property_name == 'Img #'+str(img_index)):
                     img.icon = value['icon']
-                    img.url = value['url']
-                    pass
+                    img.url = value['url']                    
+                if(property_name == 'Location'):
+                    img.location = value
+                    
+                if(property_name == 'Editable'):
+                    img.isEditable = value
+                    
+                if(property_name == 'Wraptext'):
+                    img.wrapText = value                    
+                    
                 img_index += 1
                 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):

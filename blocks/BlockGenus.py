@@ -247,6 +247,8 @@ class BlockGenus():
         self.labelSuffix = other.labelSuffix
         self.isStarter = other.isStarter
         self.isTerminator = other.isTerminator
+        for loc, img in other.blockImageMap.items(): 
+            self.blockImageMap[loc] = img
         
         if('module_name' in other.properties):
             self.properties['module_name'] = other.properties['module_name']
@@ -537,8 +539,8 @@ class BlockGenus():
                             print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
 
     def loadImages(images, genus):
-        from blocks.BlockImageIcon import ImageLocation
         from blocks.BlockImageIcon import BlockImageIcon
+        import base64
         '''
         * Loads the images to be drawn on the visible block instances of this
         * @param images NodeList of image information to load from
@@ -553,11 +555,11 @@ class BlockGenus():
             if("location" in imageNode):
                 location = imageNode["location"];
 
-            if("isEditable" in imageNode):
-                isEditable = imageNode["isEditablee"]
+            if("editable" in imageNode):
+                isEditable = imageNode["editable"]
 
             if("wrapText" in imageNode):
-                textWrap = imageNode.attrib["wrapText"]
+                textWrap = imageNode["wrapText"]
 
             width = -1;
             height = -1;
@@ -569,11 +571,20 @@ class BlockGenus():
                 height = int(imageNode["height"]);
 
             if("url" in imageNode):
-                url = int(imageNode["url"]);
+                url = imageNode["url"]
+            
+            icon = None
+            if('icon' in imageNode) :
+                icon_data = base64.b64decode( imageNode["icon"])
+                icon = QPixmap()
+                icon.loadFromData(icon_data)
             #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
             try:
-                genus.blockImageMap[location] =  BlockImageIcon(url, imgLoc, width, height, isEditable, textWrap)
-
+                img = BlockImageIcon(url, location, icon,  width, height, isEditable, textWrap)
+                if(icon != None):
+                    img.icon = icon
+                genus.blockImageMap[location] =  img
+                
             except:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]

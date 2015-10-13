@@ -62,17 +62,20 @@ class  FileDownloader(QObject) :
 
 class BlockImageIcon(QLabel):
     
-    def __init__(self, fileLocation, img_loc, width, height, isEditable, wrapText):
+    def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText):
         QLabel.__init__(self)
-        self._url = ''
-        self.fileLocation = fileLocation
-        self.blockImageIcon = QPixmap()
-        self.loadImage(QUrl.fromLocalFile('F://projects/PythonBlocks/resource/79-Home.png'))
-        self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
+        self._url = url
+        
+        if(_icon == None):
+            self.blockImageIcon = QPixmap()
+        #    self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
+        else:
+            self.blockImageIcon = _icon
+            
         self.img_loc = img_loc
         self._isEditable = isEditable
         self._wrapText = wrapText
-        self.setPixmap(self.blockImageIcon)
+        
         #setPreferredSize(new Dimension(blockImageIcon.getIconWidth(), blockImageIcon.getIconHeight()));
    
         #self.setText('HELLO') 
@@ -81,7 +84,8 @@ class BlockImageIcon(QLabel):
         #icon = QPixmap(os.getcwd() +fileLocation)
         if(self.blockImageIcon != None and not self.blockImageIcon.isNull() and width > 0 and height > 0): 
             self.blockImageIcon = self.blockImageIcon.scaled(width, height)        
-        self.resize(self.blockImageIcon.size()) 
+            self.setPixmap(self.blockImageIcon)
+        self.resize(QSize(width, height)) 
         pass
     
     def getImageInfo(self):
@@ -119,12 +123,13 @@ class BlockImageIcon(QLabel):
         return self.blockImageIcon
 
     @icon.setter
-    def icon(self, value):
-        blockImageIcon = value.scaled(self.width(), self.height())
-        self.blockImageIcon = blockImageIcon
-        self.setPixmap(value)
-        
-        
+    def icon(self, _icon):
+        if(_icon != None and not _icon.isNull() and self.width() > 0 and self.height() > 0): 
+            blockImageIcon = _icon.scaled(self.width(), self.height())
+            self.blockImageIcon = blockImageIcon
+            self.setPixmap(_icon)        
+        else:
+            print(self.width())
     @property
     def location(self):
         return self.img_loc

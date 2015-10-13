@@ -267,7 +267,7 @@ class BlockShapeUtil():
       light = ShapeBevel.getLightVector(-1,-2,2);
       bevelSize = 3;
       # create image
-      img = img = QtGui.QImage(
+      img = QtGui.QImage(
             width,
             height,
             QtGui.QImage.Format_ARGB32);
