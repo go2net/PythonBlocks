@@ -67,28 +67,27 @@ class ConnectorTableModel(QAbstractTableModel):
         #emit dataChanged(index, index);
         self.InfoWnd.treeModel.showBlock(self.InfoWnd.genus)
         return True;
-      return False;
-
-    
+      return False
+      
     def data(self, index, role):
-      if not index.isValid():
-          return None
-      elif role != Qt.DisplayRole:
-          return None
+        if not index.isValid():
+            return None
+        elif role != Qt.DisplayRole:
+            return None
           
-      connector = self.connectors[index.row()]
+        connector = self.connectors[index.row()]
 
-      if(index.column() == 0):
-        return connector.label
-        
-      if(index.column() == 1):
-        return connector.kind
-        
-      if(index.column() == 2):
-        return connector.type       
+        if(index.column() == 0):
+            return connector.label
+
+        if(index.column() == 1):
+            return connector.kind
+
+        if(index.column() == 2):
+            return connector.type       
 
           
-      return None
+        return None
 
     def headerData(self, col, orientation, role):
       if orientation == Qt.Horizontal and role == Qt.DisplayRole:
@@ -100,7 +99,8 @@ class ConnectorTableModel(QAbstractTableModel):
       return None
         
 class MyDelegate(QItemDelegate):
-    def __inti__(self, parent):
+    def __init__(self, parent):
+        print('MyDelegate init')
         super(MyDelegate, self).__init__(parent)
     
     def createEditor(self, parent, option, index):

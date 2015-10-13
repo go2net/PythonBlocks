@@ -3,6 +3,7 @@
 from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from components.ConnectorsInfoWnd import ConnectorsInfoWnd
+from components.ImagesInfoWnd import ImagesInfoWnd
 from blocks.BlockGenus import BlockGenus
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -57,34 +58,14 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['labelPrefix'] = Property('Label Prefix', tmpGenus.labelPrefix, parents[-1])
         self.properties['labelSuffix'] = Property('Label Suffix', tmpGenus.labelSuffix, parents[-1])    
         self.properties['color'] = Property('Color',tmpGenus.color , parents[-1], Property.COLOR_EDITOR)
- 
-         
+          
         ############
         #      Image          #
         ############
         self.imgs_root = Property('Images','',  parents[-1],Property.ADVANCED_EDITOR) 
-        img_index = 0
-        for loc, img in tmpGenus.blockImageMap.items():
-            url = QUrl.fromLocalFile(img.url) 
-            if(img.icon != None):
-                icon = img.icon
-            else:
-                icon = self.loadImage(url)
-
-            image_data = {}
-            image_data['icon'] = icon
-            image_data['url'] = url.toString()
-
-            img_root = Property('Img #'+str(img_index),image_data, self.imgs_root,Property.IMAGE_EDITOR) 
-            self.properties['Img #'+str(img_index)] = img_root
-            self.properties['img_location'] = Property('Location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
-            self.properties['img_size'] = Property('Size', img.size, img_root )
-            self.properties['image-editable'] = Property('Editable', img.isEditable, img_root )
-            self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, img_root )
+        self.imgs_root.onAdvBtnClick = self.onShowImagesInfo
+        self.addImages(self.imgs_root, tmpGenus)
         
-            img_root.onAdvBtnClick = self.loadFromFile
-            img_root.onMenuBtnClick = self.onShowImgSelMenu
-    
         ############
         #      Connector     #
         ############
@@ -120,8 +101,34 @@ class BlockGenusTreeModel(QPropertyModel):
         for key in tmpGenus.properties:
             if(key != 'module_name' and key != 'function_name'):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.lang_root)
+    
+    def addImages(self,  imgs_root, genus):
+        img_index = 0
+        for loc, img in self.tmpGenus.blockImageMap.items():           
+            self.addImage(imgs_root, img_index, img)
+            img_index += 1
+   
+    def addImage(self,  imgs_root, img_index,  img):
+        url = QUrl.fromLocalFile(img.url) 
+        if(img.icon != None):
+            icon = img.icon
+        else:
+            icon = self.loadImage(url)
+            
+        image_data = {}
+        image_data['icon'] = icon
+        image_data['url'] = url.toString() 
+ 
+        img_root = Property('Img #'+str(img_index),image_data, imgs_root,Property.IMAGE_EDITOR) 
+        img_root.onAdvBtnClick = self.loadFromFile
+        img_root.onMenuBtnClick = self.onShowImgSelMenu
 
-
+        self.properties['Img #'+str(img_index)] = img_root
+        self.properties['img_location'] = Property('Location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
+        self.properties['img_size'] = Property('Size', img.size, img_root )
+        self.properties['image-editable'] = Property('Editable', img.isEditable, img_root )
+        self.properties['image-wraptext'] = Property('Wraptext', img.wrapText, img_root )
+        
     def fillConnectInfo(self,  socket,  parent):
         Property('label', socket.label,parent)
         Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
@@ -143,6 +150,19 @@ class BlockGenusTreeModel(QPropertyModel):
         QApplication.restoreOverrideCursor();
         return icon
     
+    def onShowImagesInfo(self, editor):
+        dlg = ImagesInfoWnd(self, self.tmpGenus)
+        retCode = dlg.exec_()
+        if retCode == QDialog.Accepted:
+            self.imgs_root.children().clear()
+            
+            for img in dlg.blockImages:
+                self.tmpGenus.blockImageMap[img.location] = img
+                
+            self.addImages(self.imgs_root, self.tmpGenus)
+            index = self.getIndexForNode(self.imgs_root)
+            self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+            
     def onShowImgSelMenu(self,  editor):
         
         self.popMenu.clear() 
@@ -156,6 +176,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.popMenu.exec_(QCursor().pos())
         pass
         
+    
+    
     def loadFromFile(self, editor):
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
         if not filename:
@@ -174,7 +196,6 @@ class BlockGenusTreeModel(QPropertyModel):
         editor.icon = self.loadImage(url)
         
     def onShowConnectorsInfo(self,  editor):
-
         dlg = ConnectorsInfoWnd(self, self.tmpGenus)
         dlg.exec_()
 
@@ -227,7 +248,6 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'Img #'+str(img_index)):
                     img.icon = value['icon']
                     img.url = value['url']
-                    print(img.url)
                     pass
                 img_index += 1
                 
