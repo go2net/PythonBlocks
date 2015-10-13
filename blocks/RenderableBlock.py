@@ -78,7 +78,8 @@ class RenderableBlock(QtGui.QWidget):
                 img.url, 
                 img.location, 
                 img.icon, 
-                0, 0, 
+                img.width(), 
+                img.height(), 
                 img.isEditable,
                 img.wrapText)
             obj.imageMap[loc] = icon
@@ -479,7 +480,7 @@ class RenderableBlock(QtGui.QWidget):
                         
                 imgLoc.setX(imgLoc.x() + 4)  # need to nudge it a little more because of plug
             img.move(imgLoc.x(), imgLoc.y())
-
+            
     def synchronizeSockets(self):
         changed = False;
         newSocketTags = []

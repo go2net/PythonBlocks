@@ -65,10 +65,12 @@ class BlockImageIcon(QLabel):
     def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText):
         QLabel.__init__(self)
         self._url = url
-        
+        print('width=%d,height=%d'%(width, height))
         if(_icon == None):
             self.blockImageIcon = QPixmap()
-        #    self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
+            if(self._url != ''):
+                self.imgCtrl = FileDownloader(QUrl(url))
+                self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
         else:
             self.blockImageIcon = _icon
             
@@ -78,13 +80,14 @@ class BlockImageIcon(QLabel):
         
         #setPreferredSize(new Dimension(blockImageIcon.getIconWidth(), blockImageIcon.getIconHeight()));
    
-        #self.setText('HELLO') 
+        self.setText('HELLO') 
 
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
         if(self.blockImageIcon != None and not self.blockImageIcon.isNull() and width > 0 and height > 0): 
             self.blockImageIcon = self.blockImageIcon.scaled(width, height)        
             self.setPixmap(self.blockImageIcon)
+            print('setPixmap')
         self.resize(QSize(width, height)) 
         pass
     
