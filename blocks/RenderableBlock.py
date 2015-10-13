@@ -263,7 +263,7 @@ class RenderableBlock(QtGui.QWidget):
     def accomodateImagesHeight(self):
         maxImgHt = 0;
         for img in self.getBlock().getInitBlockImageMap().values():
-            maxImgHt += img.icon.height();
+            maxImgHt += img.height();
 
         return maxImgHt;
 
@@ -271,7 +271,7 @@ class RenderableBlock(QtGui.QWidget):
     def accomodateImagesWidth(self):
         maxImgWt = 0;
         for img in self.getBlock().getInitBlockImageMap().values():
-            maxImgWt += img.icon.width();
+            maxImgWt += img.width()
 
         return maxImgWt;
 

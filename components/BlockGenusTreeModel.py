@@ -253,21 +253,19 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'Img #'+str(img_index)):
                     img.icon = value['icon']
                     img.url = value['url']                    
-                if(property_name == 'Location'):
+                if(property_name == 'location'):
                     img.location = value
                     
-                if(property_name == 'Editable'):
+                if(property_name == 'editable'):
                     img.isEditable = value
                     
-                if(property_name == 'Wraptext'):
+                if(property_name == 'wraptext'):
                     img.wrapText = value
                 if(property_name == 'width'):
                     img.resize(value, img.height())
                 if(property_name == 'height'):
                     img.resize(img.width(),  value)
-                    
-                    
-                    
+  
                 img_index += 1
                 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
@@ -325,6 +323,7 @@ class BlockGenusTreeModel(QPropertyModel):
             widget.deleteLater()
             
         self.factoryRB = FactoryRenderableBlock.from_block(None, block)
+        self.factoryRB.updateBuffImg()
         #factoryRB.setParent(self.mainWnd.wndPreview)
         #print('%d:%d'%(factoryRB.getBlockWidth(), factoryRB.getBlockHeight()))
         self.factoryRB.setFixedSize(self.factoryRB.width(), self.factoryRB.height())

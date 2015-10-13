@@ -65,7 +65,7 @@ class BlockImageIcon(QLabel):
     def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText):
         QLabel.__init__(self)
         self._url = url
-        print('width=%d,height=%d'%(width, height))
+
         if(_icon == None):
             self.blockImageIcon = QPixmap()
             if(self._url != ''):
@@ -80,17 +80,31 @@ class BlockImageIcon(QLabel):
         
         #setPreferredSize(new Dimension(blockImageIcon.getIconWidth(), blockImageIcon.getIconHeight()));
    
-        self.setText('HELLO') 
-
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
         if(self.blockImageIcon != None and not self.blockImageIcon.isNull() and width > 0 and height > 0): 
             self.blockImageIcon = self.blockImageIcon.scaled(width, height)        
             self.setPixmap(self.blockImageIcon)
-            print('setPixmap')
+
         self.resize(QSize(width, height)) 
-        pass
     
+    def resizeEvent(self, event):
+        try:
+            #if(event.oldSize().width() == -1): return
+            if(event.oldSize() != event.size()):
+                if(self._url != ''):
+                    self.imgCtrl = FileDownloader(QUrl(self._url ))
+                    self.blockImageIcon.loadFromData(self.imgCtrl.downloadedData())
+                    self.blockImageIcon = self.blockImageIcon.scaled(event.size().width(), event.size().height()) 
+            #self.resize(event.size()) 
+            QLabel.resizeEvent(self, event)
+        except:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
+
+        
+        
     def getImageInfo(self):
         import base64
         ImageInfo = {}
