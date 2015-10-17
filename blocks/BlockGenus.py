@@ -578,11 +578,11 @@ class BlockGenus():
                 icon_data = base64.b64decode( imageNode["icon"])
                 icon = QPixmap()
                 icon.loadFromData(icon_data)
+
             #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
             try:
+                icon = icon.scaled(width, height) 
                 img = BlockImageIcon(url, location, icon,  width, height, isEditable, textWrap)
-                if(icon != None):
-                    img.icon = icon
                 genus.blockImageMap[location] =  img
                 
             except:

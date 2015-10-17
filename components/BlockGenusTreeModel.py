@@ -110,13 +110,12 @@ class BlockGenusTreeModel(QPropertyModel):
    
     def addImage(self,  imgs_root, img_index,  img):
         url = QUrl(img.url) 
-        print(img.icon)
+        print(img.icon.size())
         if(img.icon != None and not img.icon.isNull() and img.width() > 0 and img.height() > 0): 
             icon = img.icon
         else:
             icon = self.loadImage(url)
             img.icon = icon
-            print(icon)
             
         image_data = {}
         image_data['icon'] = icon

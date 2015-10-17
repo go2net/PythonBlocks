@@ -73,8 +73,8 @@ class RenderableBlock(QtGui.QWidget):
         # note: must do this before updateBuffImg();
         for  loc, img in obj.getBlock().getInitBlockImageMap().items():
             #print('BlockImageIcon')
-            #print('Image ICON width=%d,height=%d'%(img.icon.width(), img.icon.height()))
-            icon = BlockImageIcon(
+        
+            img = BlockImageIcon(
                 img.url, 
                 img.location, 
                 img.icon, 
@@ -82,8 +82,8 @@ class RenderableBlock(QtGui.QWidget):
                 img.height(), 
                 img.isEditable,
                 img.wrapText)
-            obj.imageMap[loc] = icon
-            icon.setParent(obj)
+            obj.imageMap[loc] = img
+            img.setParent(obj)
 
         # initialize tags, labels, and sockets:
         obj.plugTag = ConnectorTag(block.getPlug());
