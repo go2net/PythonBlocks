@@ -110,7 +110,6 @@ class BlockGenusTreeModel(QPropertyModel):
    
     def addImage(self,  imgs_root, img_index,  img):
         url = QUrl(img.url) 
-        print(img.icon.size())
         if(img.icon != None and not img.icon.isNull() and img.width() > 0 and img.height() > 0): 
             icon = img.icon
         else:
@@ -146,12 +145,16 @@ class BlockGenusTreeModel(QPropertyModel):
     
     def loadImage(self, url):
         from blocks.BlockImageIcon import FileDownloader
-        QApplication.setOverrideCursor(Qt.WaitCursor);
-        downloader = FileDownloader(url)
-        imgData = downloader.downloadedData()
+        
         icon = QPixmap()
-        icon.loadFromData(imgData)
-        QApplication.restoreOverrideCursor();
+        QApplication.setOverrideCursor(Qt.WaitCursor)
+        try:
+            downloader = FileDownloader(url)
+            imgData = downloader.downloadedData()
+            icon.loadFromData(imgData)
+        finally:
+            QApplication.restoreOverrideCursor()
+            
         return icon
     
     def onShowImagesInfo(self, editor):
@@ -261,10 +264,9 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'wraptext'):
                     img.wrapText = value
                 if(property_name == 'width'):
-                    img.resize(value, img.height())
+                    img.setSize(value, img.height())
                 if(property_name == 'height'):
-                    img.resize(img.width(),  value)
-  
+                    img.setSize(img.width(),  value)
                 img_index += 1
                 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
@@ -307,7 +309,7 @@ class BlockGenusTreeModel(QPropertyModel):
         from blocks.FactoryRenderableBlock import FactoryRenderableBlock
         from PyQt4.QtCore import Qt 
         
-        if(genus == None): return        
+        if(genus == None): return
 
         block = Block.createBlockFromID(None, genus.genusName)
         

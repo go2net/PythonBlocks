@@ -72,8 +72,6 @@ class RenderableBlock(QtGui.QWidget):
         # initialize block image map
         # note: must do this before updateBuffImg();
         for  loc, img in obj.getBlock().getInitBlockImageMap().items():
-            #print('BlockImageIcon')
-        
             img = BlockImageIcon(
                 img.url, 
                 img.location, 

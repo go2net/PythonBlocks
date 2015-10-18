@@ -1,7 +1,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from PyQt4.QtNetwork import QNetworkAccessManager, QNetworkRequest
-import sys
+import sys, os
 
 class ImageLocation():
     
@@ -87,26 +87,27 @@ class BlockImageIcon(QLabel):
             #print('scaled in __init__')
             #self._imgIcon = self._imgIcon.scaled(width, height)        
             self.setPixmap(self._imgIcon)
-
         self.resize(QSize(width, height)) 
     
-    def resizeEvent(self, event):
+    def setSize(self,  width,  height):
+        
+        QApplication.setOverrideCursor(Qt.WaitCursor);        
         try:
-            if(event.oldSize() != event.size() and self._imgIcon != None and event.size() != self._imgIcon.size()):
+            if(width != self._imgIcon.width() or height != self._imgIcon.height()):
                 if(self._url != ''):
                     self.imgCtrl = FileDownloader(QUrl(self._url ))
                     icon = QPixmap()
                     icon.loadFromData(self.imgCtrl.downloadedData())
-                    self._imgIcon =icon.scaled(event.size().width(), event.size().height()) 
+                    self._imgIcon =icon.scaled(width, height) 
                     self.setPixmap(self._imgIcon)
-                    
-            #self.resize(event.size()) 
-            QLabel.resizeEvent(self, event)
+            self.resize(QSize(width,height )) 
         except:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-            print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
-        
+            print(exc_type, fname, exc_tb.tb_lineno,exc_obj)        
+        finally:
+            QApplication.restoreOverrideCursor();
+    
     def getImageInfo(self):
         import base64
         ImageInfo = {}
@@ -145,7 +146,7 @@ class BlockImageIcon(QLabel):
     @icon.setter
     def icon(self, _icon):
         if(_icon != None and not _icon.isNull() and self.width() > 0 and self.height() > 0): 
-            self._imgIcon = _icon.scaled(self.width(), self.height())
+            self._imgIcon = _icon.scaled(self.width(), self.height())  
             self.setPixmap(self._imgIcon)        
         else:
             print(self.width())
