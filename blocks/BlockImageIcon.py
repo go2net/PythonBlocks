@@ -28,7 +28,6 @@ class ImageLocation():
         index = ImageLocation.LOCATION.indexof(s)
         return ImageLocation.ALIGMENT[index]
 
-
 class  FileDownloader(QObject) :
     def __init__(self, url, parent=None):        
         QObject.__init__(self, parent)

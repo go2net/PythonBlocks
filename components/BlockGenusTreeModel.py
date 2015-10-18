@@ -181,9 +181,7 @@ class BlockGenusTreeModel(QPropertyModel):
         from_url_action.triggered.connect(lambda: self.loadFromURL(editor))
         
         self.popMenu.exec_(QCursor().pos())
-        pass
-        
-    
+   
     
     def loadFromFile(self, editor):
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
@@ -197,10 +195,12 @@ class BlockGenusTreeModel(QPropertyModel):
         return filename
         
     def loadFromURL(self, editor):
-        url = QUrl('http://www.sinaimg.cn/dy/slidenews/1_img/2015_41/2841_619665_577450.jpg')
-        #url = QUrl.fromLocalFile(filename)    
-        editor.text = url.toString()    
-        editor.icon = self.loadImage(url)
+        input, ok = QInputDialog.getText(self.mainWnd, 'URL', 'Enter url:')
+        if ok:  
+            url = QUrl(input)
+            #url = QUrl.fromLocalFile(filename)    
+            editor.text = url.toString()    
+            editor.icon = self.loadImage(url)
         
     def onShowConnectorsInfo(self,  editor):
         dlg = ConnectorsInfoWnd(self, self.tmpGenus)
