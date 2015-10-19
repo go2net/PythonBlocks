@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-09-21, 14:28:17 -->
+<!-- Saved: 2015-10-19, 11:29:37 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -80,12 +80,14 @@
     <Source>PythonBlocks.py</Source>
     <Source>components/DrawerSetsTreeView.py</Source>
     <Source>drop.py</Source>
-    <Source>blocks/BlockImageIcon.py</Source>
+    <Source>components/PyMimeData.py</Source>
+    <Source>yy.py</Source>
     <Source>components/BlockGenusTreeModel.py</Source>
     <Source>components/BlockPropTreeModel.py</Source>
     <Source>components/ConnectorsInfoWnd.py</Source>
     <Source>components/FactoryTreeView.py</Source>
-    <Source>components/PyMimeData.py</Source>
+    <Source>components/ImagesInfoWnd.py</Source>
+    <Source>blocks/BlockImageIcon.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
