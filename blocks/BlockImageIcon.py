@@ -61,10 +61,10 @@ class  FileDownloader(QObject) :
 
 class BlockImageIcon(QLabel):
     
-    def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText, lockAspectRatio=True):
+    def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText, lockRatio=True):
         QLabel.__init__(self)
         self._url = url
-        self._lockAspectRatio = lockAspectRatio
+        self._lockRatio = lockRatio
         if(_icon == None):
             self._imgIcon = QPixmap()
             if(self._url != ''):
@@ -83,7 +83,7 @@ class BlockImageIcon(QLabel):
    
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
-        if lockAspectRatio:
+        if lockRatio:
             height = width * self._imgIcon.height()/self._imgIcon.width()
         
         if(self._imgIcon != None and not self._imgIcon.isNull() and width > 0 and height > 0): 
@@ -93,21 +93,22 @@ class BlockImageIcon(QLabel):
    
         self.resize(QSize(width,height )) 
         
-    def setSize(self, width, height):
+    def setSize(self, width, height,  forceReload=False):
         
         QApplication.setOverrideCursor(Qt.WaitCursor);        
         try:
-            if(width != self._imgIcon.width() or height != self._imgIcon.height()):
+            if(forceReload or width != self._imgIcon.width() or height != self._imgIcon.height()):
                 if(self._url != ''):
                     self.imgCtrl = FileDownloader(QUrl(self._url ))
                     icon = QPixmap()
                     icon.loadFromData(self.imgCtrl.downloadedData())
                 
-                if self.lockAspectRatio:
-                    height = width * self._imgIcon.height()/self._imgIcon.width()
-            
-                    self._imgIcon =icon.scaled(width, height)
-                    self.setPixmap(self._imgIcon)
+                if self.lockRatio:
+                    height = width * icon.height()/icon.width()
+                
+                print('w:%d,h:%d'%(width, height))
+                self._imgIcon =icon.scaled(width, height)
+                self.setPixmap(self._imgIcon)
                     
             self.resize(QSize(width,height )) 
         except:
@@ -155,7 +156,13 @@ class BlockImageIcon(QLabel):
     @icon.setter
     def icon(self, _icon):
         if(_icon != None and not _icon.isNull() and self.width() > 0 and self.height() > 0): 
-            self._imgIcon = _icon.scaled(self.width(), self.height())  
+            if(self.lockRatio):
+                height = self.width() * _icon.height()/_icon.width()
+            else:
+                height = self.height()
+                
+            self.resize(self.width(), height)
+            self._imgIcon = _icon.scaled(self.width(), height)  
             self.setPixmap(self._imgIcon)        
         else:
             print(self.width())
@@ -185,15 +192,16 @@ class BlockImageIcon(QLabel):
         self._wrapText = value 
         
     @property
-    def lockAspectRatio(self):
-        return self._lockAspectRatio
+    def lockRatio(self):
+        return self._lockRatio
 
-    @lockAspectRatio.setter
-    def lockAspectRatio(self, value):
-        self._lockAspectRatio = value
-        if self._lockAspectRatio:
+    @lockRatio.setter
+    def lockRatio(self, value):
+        self._lockRatio = value
+        if self._lockRatio:
             height = self.width() * self._imgIcon.height()/self._imgIcon.width()  
             self.resize(QSize(self.width(),height )) 
+            print('w:%d,h:%d'%(self.width(), self.height()))
         
     @property
     def url(self):

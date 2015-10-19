@@ -563,9 +563,15 @@ class BlockGenus():
 
             width = -1;
             height = -1;
-
+            
+            if("lockRatio" in imageNode):
+                lockRatio = imageNode["lockRatio"]
+            else:
+                lockRatio = False
+                
             if("width" in imageNode):
                 width = int(imageNode["width"]);
+                
 
             if("height" in imageNode):
                 height = int(imageNode["height"]);
@@ -581,8 +587,12 @@ class BlockGenus():
 
             #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
             try:
+                if(lockRatio):
+                    height = width * icon.height()/icon.width()
+                    
                 icon = icon.scaled(width, height) 
-                img = BlockImageIcon(url, location, icon,  width, height, isEditable, textWrap)
+                
+                img = BlockImageIcon(url, location, icon,  width, height, isEditable, textWrap, lockRatio)
                 genus.blockImageMap[location] =  img
                 
             except:

@@ -39,8 +39,7 @@ class BlockGenusTreeModel(QPropertyModel):
         if 'Img #' in item.parent().objectName():
             img = item.parent().value()['img']
             if(property_name == 'height'):
-                #print(img.lockAspectRatio)
-                if not img.lockAspectRatio:                
+                if not img.lockRatio:                
                     return Qt.ItemIsEnabled | Qt.ItemIsEditable;
                 else:
                     return Qt.NoItemFlags
@@ -145,7 +144,7 @@ class BlockGenusTreeModel(QPropertyModel):
 
         self.properties['Img #'+str(img_index)] = img_root
         self.properties['location'] = Property('location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
-        self.properties['lock_aspect_ratio'] = Property('lock aspect ratio',img.lockAspectRatio, img_root  )
+        self.properties['lock_ratio'] = Property('lock ratio',img.lockRatio, img_root  )
         self.properties['width'] = Property('width',img.width(), img_root  )
         self.properties['height'] = Property('height',img.height(),img_root)
         
@@ -270,7 +269,6 @@ class BlockGenusTreeModel(QPropertyModel):
             if(property_name == 'Terminator'):
                 self.tmpGenus.isTerminator = value 
             
-            img_index = 0
             
             if 'Img #' in property_name:
                 img = value['img']
@@ -289,16 +287,18 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'wraptext'):
                     img.wrapText = value
                     
-                if(property_name == 'lock aspect ratio'):
-                    print(value)
-                    img.lockAspectRatio = value
-                    
+                if(property_name == 'lock ratio'):
+                    if(value==True and img.lockRatio != value):
+                        img.lockRatio = value
+                        img.setSize(img.width(), img.height(), True)
+                    else:
+                        img.lockRatio = value
+                        
                 if(property_name == 'width'):
                     img.setSize(value, img.height())
                     
                 if(property_name == 'height'):
                     img.setSize(img.width(),  value)
-                img_index += 1
                 
             if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
                 self.setConnectorProp(self.tmpGenus.plug,property_name, value )
