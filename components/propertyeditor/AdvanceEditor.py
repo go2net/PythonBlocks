@@ -52,6 +52,7 @@ class ImageEditor(QWidget):
         layout.setSpacing(0)    
         
         self._icon = None
+        self._img = None
         
         #self.label = QLabel(self)
         #self.label.resize(self.width(), self.height())
@@ -109,3 +110,15 @@ class ImageEditor(QWidget):
         self.delegate.commitData.emit(self)
         #tmp_icon =self._icon.scaled(18, 18)
         #self.label.setPixmap(tmp_icon)
+        
+    @property
+    def img(self):
+        return self._img
+        
+    @img.setter
+    def img(self, value):
+        self._img = value
+        self.delegate.commitData.emit(self)
+        #tmp_icon =self._icon.scaled(18, 18)
+        #self.label.setPixmap(tmp_icon)
+                

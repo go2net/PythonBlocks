@@ -31,7 +31,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
                
         return None # QtCore.QVariant();
 
-    def flags (self,  index ) :
+    def flags (self,  index ):
         if (not index.isValid()):
             return QtCore.Qt.ItemIsEnabled;
         

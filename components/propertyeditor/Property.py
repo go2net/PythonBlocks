@@ -79,11 +79,10 @@ class Property(QtCore.QObject):
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
             return advancedEditor        
         if(self.obj_type == Property.IMAGE_EDITOR):
-            imageEditor = ImageEditor(self, delegate, parent, True)
+            imageEditor = ImageEditor(self, delegate, parent, True)            
             imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
             imageEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(imageEditor))
-            return imageEditor          
-        
+            return imageEditor
         
         if(self.obj_type == Property.CHECKBOX_EDITOR):
             #checked = self.obj_data
@@ -134,6 +133,7 @@ class Property(QtCore.QObject):
             if(val != None):
                 editor.icon = val['icon']
                 editor.text = val['url']
+                editor.img = val['img']
             return True;
  
         return False;  
@@ -158,6 +158,7 @@ class Property(QtCore.QObject):
             image_data = {}
             image_data['url'] = editor.text
             image_data['icon'] = editor.icon
+            image_data['img'] = editor.img
             return image_data
 
         return None

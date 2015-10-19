@@ -61,9 +61,10 @@ class  FileDownloader(QObject) :
 
 class BlockImageIcon(QLabel):
     
-    def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText):
+    def __init__(self, url, img_loc, _icon, width, height, isEditable, wrapText, lockAspectRatio=True):
         QLabel.__init__(self)
         self._url = url
+        self._lockAspectRatio = lockAspectRatio
         if(_icon == None):
             self._imgIcon = QPixmap()
             if(self._url != ''):
@@ -82,13 +83,17 @@ class BlockImageIcon(QLabel):
    
         #store in blockImageMap
         #icon = QPixmap(os.getcwd() +fileLocation)
+        if lockAspectRatio:
+            height = width * self._imgIcon.height()/self._imgIcon.width()
+        
         if(self._imgIcon != None and not self._imgIcon.isNull() and width > 0 and height > 0): 
             #print('scaled in __init__')
             #self._imgIcon = self._imgIcon.scaled(width, height)        
             self.setPixmap(self._imgIcon)
-        self.resize(QSize(width, height)) 
-    
-    def setSize(self,  width,  height):
+   
+        self.resize(QSize(width,height )) 
+        
+    def setSize(self, width, height):
         
         QApplication.setOverrideCursor(Qt.WaitCursor);        
         try:
@@ -97,8 +102,13 @@ class BlockImageIcon(QLabel):
                     self.imgCtrl = FileDownloader(QUrl(self._url ))
                     icon = QPixmap()
                     icon.loadFromData(self.imgCtrl.downloadedData())
-                    self._imgIcon =icon.scaled(width, height) 
+                
+                if self.lockAspectRatio:
+                    height = width * self._imgIcon.height()/self._imgIcon.width()
+            
+                    self._imgIcon =icon.scaled(width, height)
                     self.setPixmap(self._imgIcon)
+                    
             self.resize(QSize(width,height )) 
         except:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -172,8 +182,19 @@ class BlockImageIcon(QLabel):
 
     @wrapText.setter
     def wrapText(self, value):
-        self._wrapText = value    
-  
+        self._wrapText = value 
+        
+    @property
+    def lockAspectRatio(self):
+        return self._lockAspectRatio
+
+    @lockAspectRatio.setter
+    def lockAspectRatio(self, value):
+        self._lockAspectRatio = value
+        if self._lockAspectRatio:
+            height = self.width() * self._imgIcon.height()/self._imgIcon.width()  
+            self.resize(QSize(self.width(),height )) 
+        
     @property
     def url(self):
         return self._url

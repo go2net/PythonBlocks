@@ -29,6 +29,24 @@ class BlockGenusTreeModel(QPropertyModel):
         self.isDirty = False
         self.popMenu = QMenu(self.view)
 
+    def flags (self,  index ):
+        if (not index.isValid()):
+            return Qt.NoItemFlags;
+        
+        item = index.internalPointer()
+        property_name = item.objectName()
+
+        if 'Img #' in item.parent().objectName():
+            img = item.parent().value()['img']
+            if(property_name == 'height'):
+                #print(img.lockAspectRatio)
+                if not img.lockAspectRatio:                
+                    return Qt.ItemIsEnabled | Qt.ItemIsEditable;
+                else:
+                    return Qt.NoItemFlags
+
+        return QPropertyModel.flags(self, index)
+       
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
         self.showBlock(tmpGenus)       
@@ -118,7 +136,8 @@ class BlockGenusTreeModel(QPropertyModel):
             
         image_data = {}
         image_data['icon'] = icon
-        image_data['url'] = url.toString() 
+        image_data['url'] = url.toString()
+        image_data['img'] = img
  
         img_root = Property('Img #'+str(img_index),image_data, imgs_root,Property.IMAGE_EDITOR) 
         img_root.onAdvBtnClick = self.loadFromFile
@@ -126,6 +145,7 @@ class BlockGenusTreeModel(QPropertyModel):
 
         self.properties['Img #'+str(img_index)] = img_root
         self.properties['location'] = Property('location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
+        self.properties['lock_aspect_ratio'] = Property('lock aspect ratio',img.lockAspectRatio, img_root  )
         self.properties['width'] = Property('width',img.width(), img_root  )
         self.properties['height'] = Property('height',img.height(),img_root)
         
@@ -251,10 +271,15 @@ class BlockGenusTreeModel(QPropertyModel):
                 self.tmpGenus.isTerminator = value 
             
             img_index = 0
-            for loc, img in self.tmpGenus.blockImageMap.items():            
-                if(property_name == 'Img #'+str(img_index)):
-                    img.icon = value['icon']
-                    img.url = value['url']                    
+            
+            if 'Img #' in property_name:
+                img = value['img']
+                img.icon = value['icon']
+                img.url = value['url']
+                    
+            if 'Img #' in item.parent().objectName():         
+                img = item.parent().value()['img']  
+                    
                 if(property_name == 'location'):
                     img.location = value
                     
@@ -263,8 +288,14 @@ class BlockGenusTreeModel(QPropertyModel):
                     
                 if(property_name == 'wraptext'):
                     img.wrapText = value
+                    
+                if(property_name == 'lock aspect ratio'):
+                    print(value)
+                    img.lockAspectRatio = value
+                    
                 if(property_name == 'width'):
                     img.setSize(value, img.height())
+                    
                 if(property_name == 'height'):
                     img.setSize(img.width(),  value)
                 img_index += 1
