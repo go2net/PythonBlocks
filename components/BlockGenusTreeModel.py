@@ -277,7 +277,15 @@ class BlockGenusTreeModel(QPropertyModel):
                     
             if 'Img #' in item.parent().objectName():         
                 img = item.parent().value()['img']  
-                    
+                
+                items = item.parent().children()
+                height_item = None
+                for item in items:
+                    if item.objectName() == 'height':
+                        height_item = item
+                        break
+                
+            
                 if(property_name == 'location'):
                     img.location = value
                     
@@ -290,12 +298,22 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'lock ratio'):
                     if(value==True and img.lockRatio != value):
                         img.lockRatio = value
-                        img.setSize(img.width(), img.height(), True)
+                        if (height_item != None):
+                            height = img.width()*img.icon.height()/img.icon.width()
+                            height_item.setValue(height)                        
+                        img.setSize(img.width(), height, True)
+                        
                     else:
                         img.lockRatio = value
                         
                 if(property_name == 'width'):
-                    img.setSize(value, img.height())
+                    if (img.lockRatio == True and height_item != None):
+                        height = img.width()*img.icon.height()/img.icon.width()
+                        height_item.setValue(height)
+                    else:
+                        height = img.height()
+                        
+                    img.setSize(value, height, True)
                     
                 if(property_name == 'height'):
                     img.setSize(img.width(),  value)
