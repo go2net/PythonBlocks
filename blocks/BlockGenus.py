@@ -22,7 +22,7 @@ class BlockGenus():
         self.properties['module_name'] = ''
         self.properties['function_name'] = ''
         
-        self.blockImageMap = {}        
+        self.blockImages = [] 
         self.imageFile = ''
         self.family = {}
         self.sockets = []
@@ -132,8 +132,8 @@ class BlockGenus():
                 socketToCopy.expandGroup) 
             self.sockets.append(socket)
         
-        for loc, img in genusToCopy.blockImageMap.items():
-            self.blockImageMap[loc] = img    
+        for img in genusToCopy.blockImages:
+            self.blockImages.append(img)    
 
     
         for key in genusToCopy.properties:
@@ -230,11 +230,25 @@ class BlockGenus():
         if(self.isTerminator != other.isTerminator): return False
         
         for key in self.properties:
-            if(key in self.properties and key in other.properties):
+            if(key in other.properties):
                 if(self.properties[key] != other.properties[key]):
                     return False
             else:
-                return False   
+                return False
+
+        if(len(self.blockImages) != len(other.blockImages)):
+            return False
+            
+        for img_index in range(len(self.blockImages)): 
+            img1 = self.blockImages[img_index]
+            img2 = other.blockImages[img_index]
+            if(img1.location != img2.location) or \
+              (img1.width() != img2.width()) or \
+              (img1.height() != img2.height()) or \
+              (img1.icon != img2.icon):                  
+                return False
+            else:
+                return False                  
     
         return True
     
@@ -247,8 +261,8 @@ class BlockGenus():
         self.labelSuffix = other.labelSuffix
         self.isStarter = other.isStarter
         self.isTerminator = other.isTerminator
-        for loc, img in other.blockImageMap.items(): 
-            self.blockImageMap[loc] = img
+        for img in other.blockImages: 
+            self.blockImages.append(img)
         
         if('module_name' in other.properties):
             self.properties['module_name'] = other.properties['module_name']
@@ -295,9 +309,9 @@ class BlockGenus():
             
         return connector_list  
 
-    def getImageList(self):
+    def getImageList(self): 
         img_list = []
-        for loc, img in self.blockImageMap.items():
+        for img in self.blockImages:
             img_list.append(img.getImageInfo())
             
         return img_list  
@@ -531,7 +545,7 @@ class BlockGenus():
                                     
                                 #assert imgLoc != null : "Invalid location string loaded: "+imgLoc;
 
-                                genus.blockImageMap[imgLoc] =  BlockImageIcon(fileLocation, imgLoc, width, height, isEditable, textWrap)
+                                genus.blockImages.append(BlockImageIcon(fileLocation, imgLoc, width, height, isEditable, textWrap))
 
                         except:
                             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -593,7 +607,7 @@ class BlockGenus():
                 icon = icon.scaled(width, height) 
                 
                 img = BlockImageIcon(url, location, icon,  width, height, isEditable, textWrap, lockRatio)
-                genus.blockImageMap[location] =  img
+                genus.blockImages.append(img)
                 
             except:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -1188,8 +1202,8 @@ class BlockGenus():
         '''
         return self.labelSuffix
 
-    def getInitBlockImageMap(self):
-        return self.blockImageMap;
+    def getInitBlockImages(self):
+        return self.blockImages;
 
     def getBlockDescription(self):
         '''

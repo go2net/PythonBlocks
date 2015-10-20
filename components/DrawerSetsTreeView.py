@@ -449,7 +449,7 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
         return self.removeRows(row, 1, parentIndex) 
 
     def removeRows(self, row, count, parentIndex): 
-        self.beginRemoveRows(parentIndex, row, row) 
+        self.beginRemoveRows(parentIndex, row, row+count) 
         self.endRemoveRows() 
         return True 
 

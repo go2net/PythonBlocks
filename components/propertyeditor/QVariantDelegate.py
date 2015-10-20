@@ -41,7 +41,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
         pass
         
     def setModelData(self, editor, model, index) :
-        data = index.model().data(index, Qt.EditRole);	
+        data = index.model().data(index, Qt.EditRole);  
         obj_type = index.internalPointer().obj_type
         if(obj_type != None):  
             data = index.internalPointer().editorData(editor);
@@ -53,7 +53,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
     
     def setEditorData (self, editor, index):
         #self.m_finishedMapper.blockSignals(True);
-        data = index.model().data(index, QtCore.Qt.EditRole);	
+        data = index.model().data(index, QtCore.Qt.EditRole);   
         
         obj_type = index.internalPointer().obj_type
         if(obj_type != None):              

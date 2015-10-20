@@ -67,12 +67,12 @@ class RenderableBlock(QtGui.QWidget):
         
         obj.zoom = 1.0;
         obj.socketTags = []
-        obj.imageMap = {}
+        obj.imageList = []
         
         # initialize block image map
         # note: must do this before updateBuffImg();
-        for  loc, img in obj.getBlock().getInitBlockImageMap().items():
-            img = BlockImageIcon(
+        for  img in obj.getBlock().getInitBlockImages():
+            new_img = BlockImageIcon(
                 img.url, 
                 img.location, 
                 img.icon, 
@@ -80,8 +80,8 @@ class RenderableBlock(QtGui.QWidget):
                 img.height(), 
                 img.isEditable,
                 img.wrapText)
-            obj.imageMap[loc] = img
-            img.setParent(obj)
+            obj.imageList.append(new_img)
+            new_img.setParent(obj)
 
         # initialize tags, labels, and sockets:
         obj.plugTag = ConnectorTag(block.getPlug());
@@ -260,7 +260,7 @@ class RenderableBlock(QtGui.QWidget):
 
     def accomodateImagesHeight(self):
         maxImgHt = 0;
-        for img in self.getBlock().getInitBlockImageMap().values():
+        for img in self.getBlock().getInitBlockImages():
             maxImgHt += img.height();
 
         return maxImgHt;
@@ -268,7 +268,7 @@ class RenderableBlock(QtGui.QWidget):
 
     def accomodateImagesWidth(self):
         maxImgWt = 0;
-        for img in self.getBlock().getInitBlockImageMap().values():
+        for img in self.getBlock().getInitBlockImages():
             maxImgWt += img.width()
 
         return maxImgWt;
@@ -446,7 +446,7 @@ class RenderableBlock(QtGui.QWidget):
         margin = 5
 
         # TODO need to take other images into acct if we enable multiple block images
-        for loc, img  in self.imageMap.items():
+        for img  in self.imageList:
             icon = img.icon
             imgLoc = QPoint(0,0);
             if(img.location == 'CENTER'):

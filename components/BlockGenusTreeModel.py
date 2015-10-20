@@ -31,10 +31,13 @@ class BlockGenusTreeModel(QPropertyModel):
 
     def flags (self,  index ):
         if (not index.isValid()):
-            return Qt.NoItemFlags;
+            return Qt.ItemIsEnabled;
         
         item = index.internalPointer()
         property_name = item.objectName()
+
+        if property_name == 'Genus Name':
+            return Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
         if 'Img #' in item.parent().objectName():
             img = item.parent().value()['img']
@@ -50,7 +53,7 @@ class BlockGenusTreeModel(QPropertyModel):
         parents = [parent]
         self.showBlock(tmpGenus)       
     
-        self.properties['genusName'] = Property('Genus Name', tmpGenus.genusName, parents[-1])         
+        self.properties['genusName'] = Property('Genus Name', self.genus.genusName, parents[-1])         
         self.properties['kind'] = Property('Genus Kind', tmpGenus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
         
         familyNameList = ['n/a']
@@ -120,10 +123,8 @@ class BlockGenusTreeModel(QPropertyModel):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.lang_root)
     
     def addImages(self,  imgs_root, genus):
-        img_index = 0
-        for loc, img in self.tmpGenus.blockImageMap.items():           
-            self.addImage(imgs_root, img_index, img)
-            img_index += 1
+        for img_index in range(len(self.tmpGenus.blockImages)):           
+            self.addImage(imgs_root, img_index, self.tmpGenus.blockImages[img_index])
    
     def addImage(self,  imgs_root, img_index,  img):
         url = QUrl(img.url) 
@@ -179,16 +180,29 @@ class BlockGenusTreeModel(QPropertyModel):
     def onShowImagesInfo(self, editor):
         dlg = ImagesInfoWnd(self, self.tmpGenus)
         retCode = dlg.exec_()
+        
         if retCode == QDialog.Accepted:
+            root_index = self.getIndexForNode(self.imgs_root)
+            self.removeRows(0, len(self.imgs_root.children()),root_index)
             self.imgs_root.children().clear()
             
+            self.tmpGenus.blockImages.clear()
             for img in dlg.blockImages:
-                self.tmpGenus.blockImageMap[img.location] = img
+                self.tmpGenus.blockImages.append(img)
                 
-            self.addImages(self.imgs_root, self.tmpGenus)
-            index = self.getIndexForNode(self.imgs_root)
-            self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
-            
+            #self.addImages(self.imgs_root, self.tmpGenus)
+
+
+            self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
+    
+    def removeRow(self, row, parentIndex): 
+        return self.removeRows(row, 1, parentIndex) 
+
+    def removeRows(self, row, count, parentIndex): 
+        self.beginRemoveRows(parentIndex, row, row+count) 
+        self.endRemoveRows() 
+        return True 
+    
     def onShowImgSelMenu(self,  editor):
         
         self.popMenu.clear() 

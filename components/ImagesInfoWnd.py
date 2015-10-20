@@ -20,7 +20,7 @@ class ImagesInfoWnd(QDialog):
 
         self.blockImages= []
             
-        for loc, img in genus.blockImageMap.items():
+        for img in genus.blockImages:
             self.blockImages.append(img)
     
         model = ImageTableModel(self, self.blockImages, self.header)
@@ -49,7 +49,10 @@ class ImageTableModel(QAbstractTableModel):
     
     def addImage(self):
         from blocks.BlockImageIcon import BlockImageIcon
-        img = BlockImageIcon('', 'test', None, 32, 32, False, False)
+        print(os.getcwd())
+        icon = QPixmap(os.getcwd() + "\\" + 'resource\\117-puzzle.png')
+        print(icon.width())
+        img = BlockImageIcon('', 'CENTER', icon, 32, 32, False, False)
         self.blockImages.append(img)
         index = QModelIndex ()
         self.insertRow(len(self.blockImages), index)
@@ -94,8 +97,6 @@ class ImageTableModel(QAbstractTableModel):
         elif role != Qt.DisplayRole:
             return None
           
-        #image = self.blockImageMap[index.row()]
-
         if(index.column() == 0):
             return str(index.row())
         else:

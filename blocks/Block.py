@@ -249,8 +249,8 @@ class Block():
         #assert index < sockets.size() : "Index "+index+" is greater than the num of sockets: "+sockets.size()+" of "+this;
       
 
-    def getInitBlockImageMap(self):
-      return self.getGenus().getInitBlockImageMap();
+    def getInitBlockImages(self):
+      return self.getGenus().getInitBlockImages();
 
     def isDeclaration(self):
       return self.getGenus().isDeclaration();

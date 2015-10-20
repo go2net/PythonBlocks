@@ -104,6 +104,7 @@ class BlockImageIcon(QLabel):
                     icon.loadFromData(self.imgCtrl.downloadedData())
                 
                 if self.lockRatio:
+                    print('icon w:%d,h:%d'%(icon.width(), icon.height()))
                     height = width * icon.height()/icon.width()
                 
                 print('w:%d,h:%d'%(width, height))
