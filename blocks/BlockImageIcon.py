@@ -103,13 +103,13 @@ class BlockImageIcon(QLabel):
                     icon = QPixmap()
                     icon.loadFromData(self.imgCtrl.downloadedData())
                 
-                if self.lockRatio:
-                    print('icon w:%d,h:%d'%(icon.width(), icon.height()))
-                    height = width * icon.height()/icon.width()
-                
-                print('w:%d,h:%d'%(width, height))
-                self._imgIcon =icon.scaled(width, height)
-                self.setPixmap(self._imgIcon)
+                    if self.lockRatio:
+                        print('icon w:%d,h:%d'%(icon.width(), icon.height()))
+                        height = width * icon.height()/icon.width()
+                    
+                    print('w:%d,h:%d'%(width, height))
+                    self._imgIcon = icon.scaled(width, height)
+                    self.setPixmap(self._imgIcon)
                     
             self.resize(QSize(width,height )) 
         except:
