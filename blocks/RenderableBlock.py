@@ -256,22 +256,23 @@ class RenderableBlock(QtGui.QWidget):
         if(self.getBlock().hasPageLabel()):
             return self.pageLabel.getAbstractHeight();
         else:
-            return 0;
+            return 0
 
     def accomodateImagesHeight(self):
-        maxImgHt = 0;
+        maxImgHt = 0
+        
         for img in self.getBlock().getInitBlockImages():
-            maxImgHt += img.height();
-
-        return maxImgHt;
+            maxImgHt += img.height()
+            
+        return maxImgHt+10
 
 
     def accomodateImagesWidth(self):
-        maxImgWt = 0;
+        maxImgWt = 0
         for img in self.getBlock().getInitBlockImages():
             maxImgWt += img.width()
 
-        return maxImgWt;
+        return maxImgWt+10
 
     def getBlockWidgetDimension(self):
         if (self.blockWidget == None):

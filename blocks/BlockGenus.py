@@ -261,7 +261,9 @@ class BlockGenus():
         self.labelSuffix = other.labelSuffix
         self.isStarter = other.isStarter
         self.isTerminator = other.isTerminator
-        for img in other.blockImages: 
+        
+        self.blockImages = []
+        for img in other.blockImages:
             self.blockImages.append(img)
         
         if('module_name' in other.properties):
