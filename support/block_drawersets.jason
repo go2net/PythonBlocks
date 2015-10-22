@@ -4,6 +4,7 @@
       "genus-list": [
         "setup",
         "aerial-on",
+        "aerial?",
         "abs",
         "bshape",
         "ashape",
