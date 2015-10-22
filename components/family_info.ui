@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Family Configuration</string>
   </property>
-  <widget class="QListView" name="familyList">
+  <widget class="QListWidget" name="familyList">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -109,7 +109,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QListView" name="listView_2">
+  <widget class="QListWidget" name="variableList">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -160,7 +160,7 @@
     </size>
    </property>
   </widget>
-  <widget class="QLabel" name="variableList">
+  <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>172</x>
@@ -192,7 +192,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="edtFamily">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -202,7 +202,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="edtVar">
    <property name="geometry">
     <rect>
      <x>170</x>

@@ -20,13 +20,19 @@ class FamilyInfoWnd(QDialog):
         self.btnOk.clicked.connect(self.accept)
         self.btnCancel.clicked.connect(self.reject)
 
-    def onAddFamily(self):        
+    def onAddFamily(self): 
+        familyName = self.edtFamily.text()
+        item = QListWidgetItem(familyName)
+        self.familyList.addItem(item)
         return
         
     def onDelFamily(self):        
         return        
         
-    def onAddVar(self):        
+    def onAddVar(self):  
+        varName = self.edtVar.text()
+        item = QListWidgetItem(varName)
+        self.variableList.addItem(item)        
         return        
         
     def onDelVar(self):
