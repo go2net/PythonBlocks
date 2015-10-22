@@ -16,7 +16,7 @@ class ImagesInfoWnd(QDialog):
         self.btnOk.clicked.connect(self.accept)
         self.btnCancel.clicked.connect(self.reject)
         
-        self.header = ['#','Image', 'Location', 'Size', 'Editable', 'Wraptext'] 
+        self.header = ['#','Image', 'Location', 'Width','Height','Editable', 'Wraptext'] 
 
         self.blockImages= []
             
@@ -31,9 +31,9 @@ class ImagesInfoWnd(QDialog):
         verticalHeader.setResizeMode(QHeaderView.Fixed);
         verticalHeader.setDefaultSectionSize(18)    
         
-        delegate = MyDelegate(self.tableView)
-        self.tableView.setItemDelegate(delegate)
-        self.tableView.setEditTriggers(QAbstractItemView.AllEditTriggers)
+        #delegate = MyDelegate(self.tableView)
+        #self.tableView.setItemDelegate(delegate)
+        #self.tableView.setEditTriggers(QAbstractItemView.AllEditTriggers)
 
     def onAddImage(self):
         self.tableView.model().addImage()
@@ -49,9 +49,7 @@ class ImageTableModel(QAbstractTableModel):
     
     def addImage(self):
         from blocks.BlockImageIcon import BlockImageIcon
-        print(os.getcwd())
         icon = QPixmap(os.getcwd() + "\\" + 'resource\\117-puzzle.png')
-        print(icon.width())
         img = BlockImageIcon('', 'CENTER', icon, 32, 32, False, False)
         self.blockImages.append(img)
         index = QModelIndex ()
@@ -92,24 +90,33 @@ class ImageTableModel(QAbstractTableModel):
         return False
     
     def data(self, index, role):
+
         if not index.isValid():
             return None
-        elif role != Qt.DisplayRole:
-            return None
-          
-        if(index.column() == 0):
-            return str(index.row())
-        else:
-            return ''
         
-        '''  
+        if(index.column() == 0) and (role == Qt.DisplayRole):
+            return str(index.row())
+
+        image = self.blockImages[index.row()]
+        icon = image.icon.scaled(24, 24*image.icon.height()/image.icon.width())
+        
         if(index.column() == 1):
-        return image.kind
+            if role == Qt.DecorationRole:
+                return icon    
+            elif (role == Qt.DisplayRole):
+                return ''
+            #return image.icon
+        if(index.column() == 2) and (role == Qt.DisplayRole):
+            return image.width()            
+        if(index.column() == 3) and (role == Qt.DisplayRole):
+            return image.width()
+        if(index.column() == 4) and (role == Qt.DisplayRole):
+            return image.height()  
+        if(index.column() == 5) and (role == Qt.DisplayRole):
+            return image.isEditable
+        if(index.column() == 6) and (role == Qt.DisplayRole):
+            return image.wrapText              
 
-        if(index.column() == 2):
-        return image.type       
-
-        '''
         return None
 
     def headerData(self, col, orientation, role):
@@ -155,11 +162,11 @@ class MyDelegate(QItemDelegate):
  
     def setEditorData (self, editor, index):
         #self.m_finishedMapper.blockSignals(True);
-        text = index.model().data(index, Qt.DisplayRole)    
+        #text = index.model().data(index, Qt.DisplayRole)    
 
         if index.column() == 0:
             QItemDelegate.setEditorData(self, editor, index);
-
+        '''
         if index.column() == 1:
             _ind = editor.findText(text)
             editor.setCurrentIndex(_ind)
@@ -167,3 +174,4 @@ class MyDelegate(QItemDelegate):
         if index.column() == 2:
             _ind = editor.findText(text)
             editor.setCurrentIndex(_ind)
+        '''    

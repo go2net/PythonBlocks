@@ -183,17 +183,23 @@ class BlockGenusTreeModel(QPropertyModel):
         
         if retCode == QDialog.Accepted:
             root_index = self.getIndexForNode(self.imgs_root)
+            
+            # Remove rows from view
             self.removeRows(0, len(self.imgs_root.children()),root_index)
             self.imgs_root.children().clear()
             
-            self.tmpGenus.blockImages.clear()
+            # Remove rows from model
+            for item in self.imgs_root.children():
+                item.setParent(None)
+            
+            # Clear blockImages
+            self.tmpGenus.blockImages = []
             for img in dlg.blockImages:
                 self.tmpGenus.blockImages.append(img)
-                
-            #self.addImages(self.imgs_root, self.tmpGenus)
 
+            self.addImages(self.imgs_root, self.tmpGenus)
 
-            self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
+            #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
     
     def removeRow(self, row, parentIndex): 
         return self.removeRows(row, 1, parentIndex) 
