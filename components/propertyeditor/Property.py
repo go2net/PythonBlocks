@@ -5,7 +5,7 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 from components.propertyeditor.ColorCombo import  ColorCombo
-from components.propertyeditor.AdvanceEditor import  AdvanceEditor,  ImageEditor
+from components.propertyeditor.AdvanceEditor import  AdvanceEditor,AdvancedComboBox, ImageEditor
 
 
 class Property(QtCore.QObject):
@@ -13,9 +13,10 @@ class Property(QtCore.QObject):
     ADVANCED_EDITOR = 1    
     ADVANCED_EDITOR_WITH_MENU = 2
     COMBO_BOX_EDITOR = 3
-    COLOR_EDITOR = 4
-    CHECKBOX_EDITOR = 5
-    IMAGE_EDITOR = 6
+    ADVANCED_COMBO_BOX = 4
+    COLOR_EDITOR = 5
+    CHECKBOX_EDITOR = 6
+    IMAGE_EDITOR = 7
   
     def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
         super(Property, self).__init__(parent)
@@ -96,8 +97,18 @@ class Property(QtCore.QObject):
           
             confineCombo = QtGui.QComboBox(parent)
             confineCombo.addItems(confiningChoices)
+            confineCombo.setEditable(False) 
             #confineCombo.currentIndexChanged.connect( lambda sender=confineCombo, _delegate=delegate: self.onIndexChanged(sender, _delegate)) 
             return confineCombo
+            
+        if(self.obj_type == Property.ADVANCED_COMBO_BOX):
+            confiningChoices = self.obj_data
+          
+            advComboBox = AdvancedComboBox(self, parent)
+            advComboBox.comboBox.addItems(confiningChoices)
+            advComboBox.button.clicked.connect(lambda: self.onAdvBtnClick(advComboBox))
+            #confineCombo.currentIndexChanged.connect( lambda sender=confineCombo, _delegate=delegate: self.onIndexChanged(sender, _delegate)) 
+            return advComboBox            
             
         if(self.obj_type == Property.COLOR_EDITOR):
             editor = ColorCombo(self, parent);
@@ -107,8 +118,12 @@ class Property(QtCore.QObject):
    
   
     def onAdvBtnClick(self, editor):
-        print('onAdvBtnClick')
-        
+        print('onAdvBtnClick')        
+       
+    def editTextChanged(self,  text):
+        print(text)
+        pass
+    
     def onMenuBtnClick(self, editor):
         print('onMenuBtnClick')        
         

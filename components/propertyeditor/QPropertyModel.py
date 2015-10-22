@@ -141,7 +141,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         dlg.setViewMode( QFileDialog.Detail )
         dlg.setNameFilters( [self.tr('All python files(*.py)'), self.tr('All Files (*)')] )
         dlg.setDefaultSuffix( '.py' ) 
-        dlg.setTopDir('.')       
+        dlg.setTopDir('.')
         
         if (dlg.exec_()):
             fileName = dlg.getRelatedPath()

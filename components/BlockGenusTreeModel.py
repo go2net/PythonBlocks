@@ -4,6 +4,8 @@ from components.propertyeditor.QPropertyModel import  QPropertyModel
 from components.propertyeditor.Property import Property
 from components.ConnectorsInfoWnd import ConnectorsInfoWnd
 from components.ImagesInfoWnd import ImagesInfoWnd
+from components.FamilyInfoWnd import FamilyInfoWnd
+
 from blocks.BlockGenus import BlockGenus
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -63,8 +65,8 @@ class BlockGenusTreeModel(QPropertyModel):
         if(familyName == ''):
             familyName = 'n/a'
             
-        self.properties['familyName'] = Property('Family Name', familyName, parents[-1], Property.COMBO_BOX_EDITOR,familyNameList)             
-
+        self.properties['familyName'] = Property('Family Name', familyName, parents[-1], Property.ADVANCED_COMBO_BOX,familyNameList)             
+        self.properties['familyName'].onAdvBtnClick = self.onShowFamilyInfo
         labelList= []
         if familyName in BlockGenus.families:            
             family = BlockGenus.families[familyName]
@@ -108,19 +110,26 @@ class BlockGenusTreeModel(QPropertyModel):
             
         self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
 
-        ############
-        #      Language       #
-        ############
-        self.lang_root = Property('Language','', parents[-1],Property.ADVANCED_EDITOR) 
+        ###########
+        # Properties #
+        ###########
+        self.prop_root = Property('Properties','', parents[-1],Property.ADVANCED_EDITOR) 
         
         module_name= tmpGenus.properties['module_name']
-        self.properties['module_name'] = Property('module',module_name, self.lang_root,Property.ADVANCED_EDITOR)
+        self.properties['module_name'] = Property('module',module_name, self.prop_root,Property.ADVANCED_EDITOR)
         self.properties['module_name'].onAdvBtnClick = self.getModuleName
-        self.properties['function_name'] = Property('function',tmpGenus.properties['function_name'] , self.lang_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+        self.properties['function_name'] = Property('function',tmpGenus.properties['function_name'] , self.prop_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
 
         for key in tmpGenus.properties:
             if(key != 'module_name' and key != 'function_name'):
-                self.properties[key] = Property(key,tmpGenus.properties[key], self.lang_root)
+                self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
+    
+    def onShowFamilyInfo(self,  editor):
+        dlg = FamilyInfoWnd(self, self.tmpGenus)
+        retCode = dlg.exec_()
+        
+        if retCode == QDialog.Accepted:
+            pass
     
     def addImages(self,  imgs_root, genus):
         for img_index in range(len(self.tmpGenus.blockImages)):           
@@ -347,11 +356,19 @@ class BlockGenusTreeModel(QPropertyModel):
                     self.setConnectorProp(socket,property_name, value )
                     break
                 socket_index += 1
-                
-            for key in self.tmpGenus.properties:    
-                if(property_name==key):
-                    self.tmpGenus.properties[key] = value  
-                    break
+
+            if 'Properties' in item.parent().objectName():
+                print(property_name)
+                if(property_name=='module'):
+                    self.tmpGenus.properties['module_name'] = value                    
+                elif(property_name=='function'):    
+                    self.tmpGenus.properties['function_name'] = value
+                else:        
+                    for key, value in self.tmpGenus.properties.items():
+                        if(key == property_name):
+                            self.tmpGenus.properties[property_name] = value
+                            break
+
                 
         self.showBlock(self.tmpGenus)
 

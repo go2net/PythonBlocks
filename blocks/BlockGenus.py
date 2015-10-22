@@ -231,6 +231,7 @@ class BlockGenus():
         
         for key in self.properties:
             if(key in other.properties):
+                print(self.properties[key])
                 if(self.properties[key] != other.properties[key]):
                     return False
             else:

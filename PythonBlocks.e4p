@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project PythonBlocks -->
-<!-- Saved: 2015-10-19, 11:29:37 -->
+<!-- Saved: 2015-10-22, 16:27:19 -->
 <!-- Copyright (C) 2015 ,  -->
 <Project version="5.1">
   <Language>en_US</Language>
@@ -88,6 +88,8 @@
     <Source>components/FactoryTreeView.py</Source>
     <Source>components/ImagesInfoWnd.py</Source>
     <Source>blocks/BlockImageIcon.py</Source>
+    <Source>MainWnd.py</Source>
+    <Source>components/FamilyInfoWnd.py</Source>
   </Sources>
   <Forms>
     <Form>main.ui</Form>
