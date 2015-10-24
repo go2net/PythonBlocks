@@ -19,7 +19,7 @@ class FamilyInfoWnd(QDialog):
         self.btnAddVar.clicked.connect(self.onAddVar)
         self.btnDelVar.clicked.connect(self.onDelVar)       
         
-        self.btnOk.clicked.connect(self.onOk)
+        self.btnOk.clicked.connect(self.accept)
         self.btnCancel.clicked.connect(self.reject)
 
         self.edtFamily.textChanged.connect(self.onFamilyNameChanged)
@@ -30,11 +30,16 @@ class FamilyInfoWnd(QDialog):
         self.varList.itemSelectionChanged .connect(self.onVarListSelectionChanged)
         self.varList.setSelectionMode(QAbstractItemView.SingleSelection)
         
+        self.families = {}
+        
         for familyName in BlockGenus.families:
             item = QListWidgetItem(familyName)
             self.familyList.addItem(item) 
 
-        self.families = {}
+            self.families[familyName] = []
+            
+            for varName in BlockGenus.families[familyName]:
+                self.families[familyName] .append(varName)
 
     def onOk(self):
         items = self.allFamilyNames()
