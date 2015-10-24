@@ -93,6 +93,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="btnAddFamily">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>142</x>
@@ -110,8 +113,14 @@
      <height>24</height>
     </size>
    </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="btnDelFamily">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -133,7 +142,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QListWidget" name="variableList">
+  <widget class="QListWidget" name="varList">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -147,6 +156,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="btnAddVar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>301</x>
@@ -166,6 +178,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="btnDelVar">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>170</x>

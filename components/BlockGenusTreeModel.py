@@ -129,7 +129,12 @@ class BlockGenusTreeModel(QPropertyModel):
         retCode = dlg.exec_()
         
         if retCode == QDialog.Accepted:
-            pass
+            BlockGenus.families = {}
+            for familyName in dlg.allFamilyNames():
+                editor.comboBox.addItem(familyName)
+                BlockGenus.families[familyName] = []
+                for variName in dlg.families[familyName]:
+                    BlockGenus.families[familyName].append(variName)
     
     def addImages(self,  imgs_root, genus):
         for img_index in range(len(self.tmpGenus.blockImages)):           
