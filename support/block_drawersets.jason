@@ -1,6 +1,7 @@
 {
   "block_drawer_sets": [
     {
+      "drawer": "Setup and Run",
       "genus-list": [
         "setup",
         "aerial-on",
@@ -16,10 +17,10 @@
         "clear-patches",
         "set-score",
         "score"
-      ],
-      "drawer": "Setup and Run"
+      ]
     },
     {
+      "drawer": "Movement",
       "genus-list": [
         "fd",
         "bk",
@@ -28,10 +29,10 @@
         "up",
         "down",
         "setxy"
-      ],
-      "drawer": "Movement"
+      ]
     },
     {
+      "drawer": "Logic",
       "genus-list": [
         "if",
         "ifelse",
@@ -40,10 +41,10 @@
         "not",
         "logic_compare",
         "boolean"
-      ],
-      "drawer": "Logic"
+      ]
     },
     {
+      "drawer": "Controls",
       "genus-list": [
         "keyboard-up",
         "keyboard-space",
@@ -56,20 +57,20 @@
         "joy-button2?",
         "joy-button3?",
         "joy-button4?"
-      ],
-      "drawer": "Controls"
+      ]
     },
     {
+      "drawer": "Terrain",
       "genus-list": [
         "stomp",
         "pc",
         "yank",
         "patch-height",
         "stamp"
-      ],
-      "drawer": "Terrain"
+      ]
     },
     {
+      "drawer": "Traits",
       "genus-list": [
         "who",
         "setc",
@@ -85,10 +86,10 @@
         "pendown?",
         "setscale",
         "scale"
-      ],
-      "drawer": "Traits"
+      ]
     },
     {
+      "drawer": "Text",
       "genus-list": [
         "text_const",
         "say",
@@ -97,10 +98,10 @@
         "to-string",
         "string-append",
         "logic_compare"
-      ],
-      "drawer": "Text"
+      ]
     },
     {
+      "drawer": "Math",
       "genus-list": [
         "math_number",
         "pi",
@@ -124,35 +125,34 @@
         "acos",
         "log",
         "ln"
-      ],
-      "drawer": "Math"
+      ]
     },
     {
+      "drawer": "Procedure",
       "genus-list": [
         "procedure",
         "proc-param-number",
         "proc-param-string",
         "proc-param-boolean",
         "proc-param-list"
-      ],
-      "drawer": "Procedure"
+      ]
     },
     {
+      "drawer": "Colors",
       "genus-list": [
         "color",
         "setc",
         "random-color"
-      ],
-      "drawer": "Colors"
+      ]
     },
     {
+      "drawer": "variables",
       "genus-list": [
         "num_var",
         "str_var",
         "set_num_var",
         "set_str_var"
-      ],
-      "drawer": "variables"
+      ]
     }
   ]
 }

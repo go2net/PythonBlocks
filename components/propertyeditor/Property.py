@@ -107,7 +107,7 @@ class Property(QtCore.QObject):
             advComboBox = AdvancedComboBox(self, parent)
             advComboBox.comboBox.addItems(confiningChoices)
             advComboBox.button.clicked.connect(lambda: self.onAdvBtnClick(advComboBox))
-            #confineCombo.currentIndexChanged.connect( lambda sender=confineCombo, _delegate=delegate: self.onIndexChanged(sender, _delegate)) 
+            advComboBox.comboBox.currentIndexChanged['QString'].connect( lambda val, sender=advComboBox:self.onIndexChanged(val, sender)) 
             return advComboBox            
             
         if(self.obj_type == Property.COLOR_EDITOR):
@@ -134,6 +134,11 @@ class Property(QtCore.QObject):
         if(self.obj_type == Property.COMBO_BOX_EDITOR):      
             index = editor.findText(val)
             editor.setCurrentIndex(index)
+            return True
+            
+        if(self.obj_type == Property.ADVANCED_COMBO_BOX):      
+            index = editor.comboBox.findText(val)
+            editor.comboBox.setCurrentIndex(index)
             return True
             
         if(self.obj_type == Property.ADVANCED_EDITOR): 
@@ -165,7 +170,10 @@ class Property(QtCore.QObject):
             
         if(self.obj_type == Property.COMBO_BOX_EDITOR):
             return editor.currentText()
-          
+            
+        if(self.obj_type == Property.ADVANCED_COMBO_BOX):
+            return editor.comboBox.currentText()   
+            
         if(self.obj_type == Property.COLOR_EDITOR):  
             return editor.color
             
@@ -177,9 +185,9 @@ class Property(QtCore.QObject):
             return image_data
 
         return None
-  
+      
     #@QtCore.pyqtSlot(int)
-    def onIndexChanged(self, sender, delegate):
+    def onIndexChanged(self, text, sender):
         print(sender)
-        delegate.commitData.emit(sender)
+        #delegate.commitData.emit(sender)
         #self.commitData.emit(self.sender())  

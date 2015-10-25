@@ -62,16 +62,19 @@ class BlockGenusTreeModel(QPropertyModel):
         familyName = tmpGenus.familyName
         for name in BlockGenus.families:
             familyNameList.append(name)
+            
         if(familyName == ''):
             familyName = 'n/a'
             
         self.properties['familyName'] = Property('Family Name', familyName, parents[-1], Property.ADVANCED_COMBO_BOX,familyNameList)             
         self.properties['familyName'].onAdvBtnClick = self.onShowFamilyInfo
+        self.properties['familyName'].onIndexChanged = self.onFamilyChanged
+        
         labelList= []
         if familyName in BlockGenus.families:            
             family = BlockGenus.families[familyName]
-            for name in family:
-                labelList.append(family[name])  
+            for varName in family:
+                labelList.append(varName)  
         if(labelList != []):
             self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1], Property.COMBO_BOX_EDITOR,labelList)
         else:
@@ -130,11 +133,21 @@ class BlockGenusTreeModel(QPropertyModel):
         
         if retCode == QDialog.Accepted:
             BlockGenus.families = {}
+            editor.comboBox.clear()
+            editor.comboBox.addItem('n/a')
             for familyName in dlg.allFamilyNames():
                 editor.comboBox.addItem(familyName)
                 BlockGenus.families[familyName] = []
                 for variName in dlg.families[familyName]:
                     BlockGenus.families[familyName].append(variName)
+    
+    def onFamilyChanged(self, familyName, sender):
+        if familyName != 'n/a' and familyName in BlockGenus.families:            
+            self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
+            self.properties['initLabel'].obj_data = BlockGenus.families[familyName]
+        else:
+            self.properties['initLabel'].editorType = None
+            self.properties['initLabel'].obj_data = None           
     
     def addImages(self,  imgs_root, genus):
         for img_index in range(len(self.tmpGenus.blockImages)):           
@@ -267,14 +280,14 @@ class BlockGenusTreeModel(QPropertyModel):
             property_name = item.objectName()
 
             if(property_name == 'Family Name'):
+                print(value)
                 self.tmpGenus.familyName = value
                 labelList= []
                 if value in BlockGenus.families:            
                     family = BlockGenus.families[value]
                     for name in family:
-                        labelList.append(family[name])  
-
-                if(labelList != []):
+                        labelList.append(name)  
+  
                     self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
                     self.properties['initLabel'].propertyData = labelList
                 else:

@@ -117,13 +117,22 @@ class GenusListWidget(QListWidget):
     
     def getSaveString(self):
         import json
-        items = []
+        from blocks.BlockGenus import BlockGenus
+        
+        BlockGenusesInfo = {}
+        
+        familyList = BlockGenus.families
+        BlockGenusesInfo['Families'] = familyList
+        
+        genusList = []     
         for index in range(self.count()):
             item= self.item(index)
             item_info = item.data(Qt.UserRole).getGenusInfo()
-            items.append(item_info)
+            genusList.append(item_info)
+            
+        BlockGenusesInfo['BlockGenuses'] = genusList
         
-        return json.dumps(items, sort_keys=True, indent=2)
+        return json.dumps(BlockGenusesInfo, sort_keys=True, indent=2)
     '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus

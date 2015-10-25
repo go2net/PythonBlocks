@@ -257,6 +257,7 @@ class BlockGenus():
         if(other == None): return
         self.color = other.color
         self._kind = other._kind
+        self.familyName = other.familyName
         self.initLabel = other.initLabel
         self.labelPrefix = other.labelPrefix
         self.labelSuffix = other.labelSuffix
@@ -695,8 +696,10 @@ class BlockGenus():
         '''      
         import json
         f=open('./support/block_genuses.jason')
-        data=json.load(f)
-        for genus_info in data:
+        blockGenusesInfo = json.load(f)
+        BlockGenus.families = blockGenusesInfo['Families']
+        blockGenuses = blockGenusesInfo['BlockGenuses']
+        for genus_info in blockGenuses:
             BlockGenus.loadGenusInfo(genus_info)
         return
         # # # # # # # # # # # # # # # # # # /
