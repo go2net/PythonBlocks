@@ -178,7 +178,7 @@ class BlockShape():
         # System.out.println("returned heightSum: "+heightSum);
 
         if(self.block.isInfix()):
-             heightSum += BlockShape.BOTTOM_SOCKET_UPPER_SPACER;
+            heightSum += BlockShape.BOTTOM_SOCKET_UPPER_SPACER;
 
         heightSum = max(heightSum, self.rb.getBlockWidgetDimension().height());
 
@@ -428,29 +428,26 @@ class BlockShape():
 
              #if the socket has been assigned a dimension...
              if(socketDimension != None):
-                    heightSum += socketDimension.height();
 
+                    heightSum += socketDimension.height();
                     # if command, then add other command parts
                     if(BlockConnectorShape.isCommandConnector(socket)):
-                         heightSum += BlockConnectorShape.COMMAND_INPUT_BAR_HEIGHT + 2 * BlockShape.CORNER_RADIUS;
-
+                        heightSum += BlockConnectorShape.COMMAND_INPUT_BAR_HEIGHT + 2 * BlockShape.CORNER_RADIUS;
                     continue;
 
 
              # else use default dimension
              if(BlockConnectorShape.isCommandConnector(socket)):
                     heightSum += BlockConnectorShape.DEFAULT_COMMAND_INPUT_HEIGHT + BlockConnectorShape.COMMAND_INPUT_BAR_HEIGHT + 2 * BlockShape.CORNER_RADIUS;
-
+                    #print("3：  heightSum {0}", heightSum)
              #else normal data connector, so add height
              else:
                     heightSum += BlockConnectorShape.DATA_PLUG_HEIGHT;
 
 
-
         # if it has bottom sockets, add extra height
         if(hasBottomSocket):
-             heightSum += maxBottomSocketHeight;
-
+            heightSum += maxBottomSocketHeight;
         return heightSum;
 
 

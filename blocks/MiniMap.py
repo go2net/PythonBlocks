@@ -24,11 +24,11 @@ class MiniMapEnlargerTimer():
       self.count = 0;
       #**absolute value of width growth*/
 
-      self.step = 10
-      self.dx = MiniMap.DEFAULT_WIDTH / self.step;
+      self.step = 20
+      self.dx = 1.5*MiniMap.DEFAULT_WIDTH / self.step;
 
       #**absolute value of height Growth*/
-      self.dy = MiniMap.DEFAULT_HEIGHT / self.step;
+      self.dy = 1.5*MiniMap.DEFAULT_HEIGHT / self.step;
       self._expand = True;
       self.scheduler = sched.scheduler(
          time.time,  # timefunc
@@ -37,23 +37,26 @@ class MiniMapEnlargerTimer():
       self._running = False
 
    def _perform(self):
-      if (self.count <= 0 or self.count > self.step*2):
-         self.scheduler.cancel(self.event_perform)
-         print("cancel")
-      else:
-         if (self._expand):
-            self.count += 1;
-         else:
-            self.count -= 1;
 
-      self.mini_map.MAPWIDTH = MiniMap.DEFAULT_WIDTH + self.count * self.dx;
-      self.mini_map.MAPHEIGHT = MiniMap.DEFAULT_HEIGHT + self.count * self.dy;
-      print("Width: {0], Height: [1]",(self.mini_map.MAPWIDTH,self.mini_map.MAPHEIGHT))
-      self.mini_map.repositionMiniMap();
+        if (self._expand):
+            self.count += 1;
+        else:
+            self.count -= 1;
+                
+        if (self.count < 0 or self.count > self.step):
+            self.scheduler.cancel(self.event_perform)
+            if(self.count < 0): self.count = 0
+            if(self.count > self.step): self.count = self.step
+            return
+        else:
+            self.mini_map.MAPWIDTH = MiniMap.DEFAULT_WIDTH + self.count * self.dx;
+            self.mini_map.MAPHEIGHT = MiniMap.DEFAULT_HEIGHT + self.count * self.dy;
+           
+        self.mini_map.repositionMiniMap();
 
    def periodic(self, action, actionargs=()):
       if self._running:
-         self.event_perform = self.scheduler.enter(0.002, 2, self.periodic, (action, actionargs))
+         self.event_perform = self.scheduler.enter(0.005, 2, self.periodic, (action, actionargs))
          action(*actionargs)
 
    def stop_func(self,string1):
@@ -64,7 +67,7 @@ class MiniMapEnlargerTimer():
    def expand(self):
       # enlargest this minimap
       self._expand = True;
-      self.count+=1;
+      #self.count+=1;
       self._running = True
       #self.event_stop = self.scheduler.enter(0.5, 1, self.stop_func, ("Large event.",))
       self.periodic(self._perform)
@@ -74,7 +77,7 @@ class MiniMapEnlargerTimer():
    def shrink(self):
       # enlargest this minimap
       self._expand = False;
-      self.count-=1;
+      #self.count-=1;
       self._running = True
       #self.event_stop = self.scheduler.enter(1, 1, self.stop_func, ("Large event.",))
       self.periodic(self._perform)
@@ -94,7 +97,6 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       QtGui.QWidget.__init__(self,blockCanvas)
       #print(blockCanvas)
       self.blockCanvas = blockCanvas;
-
       self.setAttribute(QtCore.Qt.WA_Hover);
       #**this.width*/
       self.MAPWIDTH = 150;
@@ -104,6 +106,9 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       self.setStyleSheet("background-color: rgb(240, 240, 240,200);")
       self.enlarger = MiniMapEnlargerTimer(self);
       self.resize(self.MAPWIDTH, self.MAPHEIGHT);
+      
+      self.expand = False      
+      
       pass
 
    def repositionMiniMap(self):
@@ -117,30 +122,32 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
          self.mouseDragged(event)
 
    def enterEvent(self,event):
-      if self.expand: return
+      #if self.expand: return
       
       print(type(self).__name__ + ":enterEvent")
-      self.expand = True;
+      #self.expand = True;
       self.enlarger.expand();
 
    def leaveEvent(self,event):
-      if not self.expand: return
+      #if not self.expand: return
       
       print(type(self).__name__ + ":leaveEvent")
-      self.expand = False;
+      #self.expand = False;
       self.enlarger.shrink();
 
    def contains(self,point):
       return self.rect().contains(point)
 
    def blockEntered(self,block):
+      #if self.expand: return 
       print ("blockEntered")
-      self.expand = True;
+      #self.expand = True;
       self.enlarger.expand();
 
    def blockExited(self,block):
+      #if not self.expand: return 
       print ("blockExited")
-      self.expand = False;
+      #self.expand = False;
       self.enlarger.shrink();
 
    def rescaleRect(self, rec):

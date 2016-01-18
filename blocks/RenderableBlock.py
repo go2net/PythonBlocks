@@ -555,12 +555,14 @@ class RenderableBlock(QtGui.QWidget):
         if(socket == (self.plugTag.getSocket())): return self.plugTag;
         if(socket == (self.afterTag.getSocket())): return self.afterTag;
         if(socket == (self.beforeTag.getSocket())): return self.beforeTag;
+
         for  tag in self.socketTags:
             if(socket == tag.getSocket()) :return tag;
 
         return None;
 
     def getSocketSpaceDimension(self,socket):
+        
         if(self.getConnectorTag(socket)==None):
             return None;
         else:
@@ -797,9 +799,9 @@ class RenderableBlock(QtGui.QWidget):
         # if no before block, then no recursion
         # if command connector with position type bottom (just a control connector socket)
         #  and we have a before, then skip and recurse up
-            if(self.getBlock().getBeforeBlockID() != Block.NULL
-             and BlockConnectorShape.isCommandConnector(connectedSocket)
-             and connectedSocket.getPositionType() == BlockConnector.PositionType.BOTTOM):
+            if(self.getBlock().getBeforeBlockID() != Block.NULL and
+                BlockConnectorShape.isCommandConnector(connectedSocket) and
+                connectedSocket.getPositionType() == BlockConnector.PositionType.BOTTOM):
 
                 # get before connector
                 beforeID = self.getBlock().getBeforeBlockID();
@@ -811,8 +813,8 @@ class RenderableBlock(QtGui.QWidget):
             # if empty before socket, then return
             # if(getBlock().hasBeforeConnector() && getBlock().getBeforeBlockID() == Block.NULL) return;
 
-        # add dimension to the mapping
-        self.getConnectorTag(connectedSocket).setDimension(self.calcDimensionOfSocket(connectedSocket));
+            # add dimension to the mapping
+            self.getConnectorTag(connectedSocket).setDimension(self.calcDimensionOfSocket(connectedSocket));
 
 
         # reform shape with new socket dimension
