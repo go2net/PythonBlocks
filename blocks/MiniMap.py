@@ -30,7 +30,10 @@ class MiniMapEnlargerTimer():
       #**absolute value of height Growth*/
       self.dy = MiniMap.DEFAULT_HEIGHT / self.step;
       self._expand = True;
-      self.scheduler = sched.scheduler(time.time, time.sleep)
+      self.scheduler = sched.scheduler(
+         time.time,  # timefunc
+         time.sleep  # delayfunc
+         )
       self._running = False
 
    def _perform(self):
@@ -45,7 +48,7 @@ class MiniMapEnlargerTimer():
 
       self.mini_map.MAPWIDTH = MiniMap.DEFAULT_WIDTH + self.count * self.dx;
       self.mini_map.MAPHEIGHT = MiniMap.DEFAULT_HEIGHT + self.count * self.dy;
-      #print("Width: {0], Height: [1]",(self.mini_map.MAPWIDTH,self.mini_map.MAPHEIGHT))
+      print("Width: {0], Height: [1]",(self.mini_map.MAPWIDTH,self.mini_map.MAPHEIGHT))
       self.mini_map.repositionMiniMap();
 
    def periodic(self, action, actionargs=()):
@@ -114,12 +117,16 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
          self.mouseDragged(event)
 
    def enterEvent(self,event):
-      print("enterEvent")
+      if self.expand: return
+      
+      print(type(self).__name__ + ":enterEvent")
       self.expand = True;
       self.enlarger.expand();
 
    def leaveEvent(self,event):
-      print("enterEvent")
+      if not self.expand: return
+      
+      print(type(self).__name__ + ":leaveEvent")
       self.expand = False;
       self.enlarger.shrink();
 
