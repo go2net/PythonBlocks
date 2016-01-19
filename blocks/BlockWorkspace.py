@@ -85,7 +85,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
     @focusedBlock.setter
     def focusedBlock(self, value):
         self._focusedBlock = value
-        
+    
+    def getCanvas(self):
+        return self.canvas
     
     def getWidgetAt(self,point):
       pos = self.ws.factory.getNavigator().mapFromGlobal(point)

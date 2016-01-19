@@ -13,13 +13,13 @@ from PyQt4 import QtGui, QtCore
 from blocks.WorkspaceWidget import WorkspaceWidget
 
 class MiniMapEnlargerTimer():
-   '''
-   * This animator is responsible for enlarging or shrinking the
-   * size of the MiniMap when expand() or shrink() is called,
-   * respectively.
-   '''
-   # Constuctors an animator that can enlarge or skrink the miniMap
-   def __init__(self,mini_map):
+    '''
+    * This animator is responsible for enlarging or shrinking the
+    * size of the MiniMap when expand() or shrink() is called,
+    * respectively.
+    '''
+    # Constuctors an animator that can enlarge or skrink the miniMap
+    def __init__(self,mini_map):
       self.mini_map = mini_map
       self.count = 0;
       #**absolute value of width growth*/
@@ -36,7 +36,7 @@ class MiniMapEnlargerTimer():
          )
       self._running = False
 
-   def _perform(self):
+    def _perform(self):
 
         if (self._expand):
             self.count += 1;
@@ -54,17 +54,17 @@ class MiniMapEnlargerTimer():
            
         self.mini_map.repositionMiniMap();
 
-   def periodic(self, action, actionargs=()):
+    def periodic(self, action, actionargs=()):
       if self._running:
          self.event_perform = self.scheduler.enter(0.005, 2, self.periodic, (action, actionargs))
          action(*actionargs)
 
-   def stop_func(self,string1):
+    def stop_func(self,string1):
       print("stop_func")
       self._running = False
       pass
 
-   def expand(self):
+    def expand(self):
       # enlargest this minimap
       self._expand = True;
       #self.count+=1;
@@ -74,7 +74,7 @@ class MiniMapEnlargerTimer():
       self.scheduler.run( )
 
 
-   def shrink(self):
+    def shrink(self):
       # enlargest this minimap
       self._expand = False;
       #self.count-=1;
@@ -93,10 +93,14 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
    DEFAULT_HEIGHT = 75;
 
 
-   def __init__(self,blockCanvas):
-      QtGui.QWidget.__init__(self,blockCanvas)
+   def __init__(self,blockWorkSpace):
+      QtGui.QWidget.__init__(self,blockWorkSpace)
       #print(blockCanvas)
-      self.blockCanvas = blockCanvas;
+      
+      self.blockCanvas = blockWorkSpace.getCanvas()
+      self.blockWorkSpace = blockWorkSpace
+      
+      #print("blockCanvas.w:{0},blockCanvas.h:{1}", (blockWorkSpace.getCanvas().width(), blockWorkSpace.getCanvas().height()))
       self.setAttribute(QtCore.Qt.WA_Hover);
       #**this.width*/
       self.MAPWIDTH = 150;
@@ -124,14 +128,14 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
    def enterEvent(self,event):
       #if self.expand: return
       
-      print(type(self).__name__ + ":enterEvent")
+      #print(type(self).__name__ + ":enterEvent")
       #self.expand = True;
       self.enlarger.expand();
 
    def leaveEvent(self,event):
       #if not self.expand: return
       
-      print(type(self).__name__ + ":leaveEvent")
+      #print(type(self).__name__ + ":leaveEvent")
       #self.expand = False;
       self.enlarger.shrink();
 
@@ -140,13 +144,13 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
    def blockEntered(self,block):
       #if self.expand: return 
-      print ("blockEntered")
+      #print ("blockEntered")
       #self.expand = True;
       self.enlarger.expand();
 
    def blockExited(self,block):
       #if not self.expand: return 
-      print ("blockExited")
+      #print ("blockExited")
       #self.expand = False;
       self.enlarger.shrink();
 
@@ -181,8 +185,8 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
    def scrollToPoint(self, p):
       transform = self.rescaleToWorld(p);
-      self.blockCanvas.horizontalScrollBar().setValue(transform.x() - 0.5 * self.blockCanvas.width());
-      self.blockCanvas.verticalScrollBar().setValue(transform.y() - 0.5 * self.blockCanvas.height());
+      self.blockWorkSpace.horizontalScrollBar().setValue(transform.x() - 0.5 * self.blockWorkSpace.width());
+      self.blockWorkSpace.verticalScrollBar().setValue(transform.y() - 0.5 * self.blockWorkSpace.height());
       self.repaint();
 
    def mousePressEvent(self, e):
@@ -201,11 +205,11 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       '''
         * @modifies this.bounds && this.blockCanvas && this.blocks && this.comments
         * @effects 1] Point this.blockCanvas to whatever current block
-        * 			   canvas is in Workspace
-        * 			2] Reset this.bounds to maintain aspect ratio and be
-        * 			   16 pixels away from upper-right edge corner &&
-        * 			3] Rerender this.blocks and this.comment toreflect
-        * 			   real-time relative positions and dimension
+        *              canvas is in Workspace
+        *           2] Reset this.bounds to maintain aspect ratio and be
+        *              16 pixels away from upper-right edge corner &&
+        *           3] Rerender this.blocks and this.comment toreflect
+        *              real-time relative positions and dimension
       '''
       #should paint super first then reset canvas.
       #using new canvas, find new height and ratio.
@@ -219,8 +223,8 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
       # Aspect-Ratio Logic
       #self.blockCanvas = self.workspace;
-      self.transformX = self.MAPWIDTH / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
-      self.transformY = self.MAPHEIGHT / self.getCanvas().height();
+      self.transformX = 1.0*self.MAPWIDTH / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
+      self.transformY = 1.0*self.MAPHEIGHT / self.getCanvas().height();
 
       p.translate(5, 5);
 
@@ -243,11 +247,11 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
          # re-render this.blocks and this.comments
          if component != None and component.isVisible():
             if (component.isSearchResult()):
-               p.setColor(Color.yellow);
+               p.setColor(QtGui.QColor.YELLOW);
             else:
                p.setColor(component.getBLockColor());
 
-            self.drawBoundingBox(g, component);
+            self.drawBoundingBox(p, component);
       '''
       for component in self.findChildren(Comment):
          if component.isVisible():
@@ -290,9 +294,9 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
       p.setPen(QtGui.QColor(255,0,0));
       p.drawRect(
-             self.rescaleX(self.blockCanvas.horizontalScrollBar().value()),
-             self.rescaleY(self.blockCanvas.verticalScrollBar().value()),
-             self.rescaleX(self.blockCanvas.width()),
-             self.rescaleY(self.blockCanvas.height()));
+             self.rescaleX(self.blockWorkSpace.horizontalScrollBar().value()),
+             self.rescaleY(self.blockWorkSpace.verticalScrollBar().value()),
+             self.rescaleX(self.blockWorkSpace.width()),
+             self.rescaleY(self.blockWorkSpace.height()));
 
       p.end()
