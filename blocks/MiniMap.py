@@ -83,6 +83,7 @@ class MiniMapEnlargerTimer():
       self.periodic(self._perform)
       self.scheduler.run( )
 
+
 class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
    #**the border width of the this mini map*/
@@ -110,8 +111,8 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       self.setStyleSheet("background-color: rgb(240, 240, 240,200);")
       self.enlarger = MiniMapEnlargerTimer(self);
       self.resize(self.MAPWIDTH, self.MAPHEIGHT);
-      
-      self.expand = False      
+      self.expand = False 
+      self.block_entered = False     
       
       pass
 
@@ -126,32 +127,20 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
          self.mouseDragged(event)
 
    def enterEvent(self,event):
-      #if self.expand: return
-      
-      #print(type(self).__name__ + ":enterEvent")
-      #self.expand = True;
       self.enlarger.expand();
 
    def leaveEvent(self,event):
-      #if not self.expand: return
-      
-      #print(type(self).__name__ + ":leaveEvent")
-      #self.expand = False;
       self.enlarger.shrink();
 
    def contains(self,point):
       return self.rect().contains(point)
 
-   def blockEntered(self,block):
-      #if self.expand: return 
-      #print ("blockEntered")
-      #self.expand = True;
+   def blockEntered(self,block):  
+      self.block_entered = True    
       self.enlarger.expand();
-
+      
    def blockExited(self,block):
-      #if not self.expand: return 
-      #print ("blockExited")
-      #self.expand = False;
+      self.block_entered = False    
       self.enlarger.shrink();
 
    def rescaleRect(self, rec):

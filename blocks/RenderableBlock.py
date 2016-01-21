@@ -1079,7 +1079,6 @@ class RenderableBlock(QtGui.QWidget):
             rb = self
         else:
             rb = self.getUnderRB(event.globalPos())
-    
         if(rb != None): 
             rb.onMousePress(event)         
   
@@ -1089,7 +1088,7 @@ class RenderableBlock(QtGui.QWidget):
                 RenderableBlock.getRenderableBlock(socket.blockID).raise_()
 
         self.raise_()
-        #print('self.pickedUp = True')
+        print('self.pickedUp = True')
         self.pickedUp = True; # mark this block as currently being picked up
         self.pressedPos = self.mapFromGlobal(event.globalPos())
         self.last_peer_socket = None

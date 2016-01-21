@@ -91,7 +91,7 @@ class BlockShapeUtil():
             deltaX -= last_p3.x()
             deltaY -= last_p3.y()
          else:
-         	print("Incorrect type")
+            print("Incorrect type")
 
          j = len(type_index_list)-1
          while(j>0):
@@ -202,10 +202,10 @@ class BlockShapeUtil():
         #end at:
         endCurvePoint.x(), endCurvePoint.y());
 
-      #    		System.out.println("StartCurve at: " + startCurvePoint);
-      #    		System.out.println("Corner at: " + cornerPoint);
-      #    		System.out.println("EndCurve at: " + endCurvePoint);
-      #    		System.out.println("NextCorner at: " + nextCornerPoint);
+      #         System.out.println("StartCurve at: " + startCurvePoint);
+      #         System.out.println("Corner at: " + cornerPoint);
+      #         System.out.println("EndCurve at: " + endCurvePoint);
+      #         System.out.println("NextCorner at: " + nextCornerPoint);
 
 
 

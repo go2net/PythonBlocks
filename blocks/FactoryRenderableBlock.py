@@ -40,14 +40,16 @@ class FactoryRenderableBlock(RenderableBlock):
 
 
     def mousePressEvent(self, event):
+
         if(self.workspaceWidget == None): return
 
-        self.workspace.factory.OnPressed(self.workspace.factory.active_button)
-
+        self.workspace.factory.OnPressed(self.workspace.factory.active_button)        
         self.createdRB = self.createNewInstance()
         self.createdRB.setParent(self.createdRB.workspaceWidget.canvas)
-        self.createdRB.move(self.x(), self.y());
-        self.createdRB.mousePressEvent(event);
+        self.createdRB.move(
+            self.x()+self.workspace.getActiveCanvas().horizontalScrollBar().value(), 
+            self.y()+self.workspace.getActiveCanvas().verticalScrollBar().value());
+        self.createdRB.onMousePress(event);
         self.mouseDragged(event); # immediately make the RB appear under the mouse cursor
 
     def mouseReleaseEvent(self, event):
