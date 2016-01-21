@@ -149,7 +149,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         #block.initFinished = True
         new_pos  = self.mapFromGlobal(old_pos)
 
-        block.move(new_pos.x()+self.horizontalScrollBar().value(),new_pos.y()+self.verticalScrollBar().value());
+        block.move(
+            new_pos.x()+self.horizontalScrollBar().value()-1,
+            new_pos.y()+self.verticalScrollBar().value()-1);
         block.show()
 
         width = max(new_pos.x()+self.horizontalScrollBar().value()+50,self.canvas.width())

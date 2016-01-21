@@ -169,8 +169,8 @@ class InfixBlockShape(BlockShape):
             # just draw an empty socket placeholder
             # if its the first socket, draw a top side
             painterPath.lineTo(
-            			painterPath.currentPosition().x() + BlockShape.BOTTOM_SOCKET_SIDE_SPACER,
-            			painterPath.currentPosition().y());
+                        painterPath.currentPosition().x() + BlockShape.BOTTOM_SOCKET_SIDE_SPACER,
+                        painterPath.currentPosition().y());
 
             # now draw the empty right socket side
             # draw first socket - down right side

@@ -47,8 +47,8 @@ class FactoryRenderableBlock(RenderableBlock):
         self.createdRB = self.createNewInstance()
         self.createdRB.setParent(self.createdRB.workspaceWidget.canvas)
         self.createdRB.move(
-            self.x()+self.workspace.getActiveCanvas().horizontalScrollBar().value(), 
-            self.y()+self.workspace.getActiveCanvas().verticalScrollBar().value());
+            self.x()+self.workspace.getActiveCanvas().horizontalScrollBar().value()-5, 
+            self.y()+self.workspace.getActiveCanvas().verticalScrollBar().value()+2);
         self.createdRB.onMousePress(event);
         self.mouseDragged(event); # immediately make the RB appear under the mouse cursor
 
