@@ -24,7 +24,7 @@ class MiniMapEnlargerTimer():
       self.count = 0;
       #**absolute value of width growth*/
 
-      self.step = 20
+      self.step = 15
       self.dx = 1.5*MiniMap.DEFAULT_WIDTH / self.step;
 
       #**absolute value of height Growth*/
@@ -43,7 +43,7 @@ class MiniMapEnlargerTimer():
         else:
             self.count -= 1;
                 
-        if (self.count < 0 or self.count > self.step):
+        if (self.count <= 0 or self.count > self.step):
             self.scheduler.cancel(self.event_perform)
             if(self.count < 0): self.count = 0
             if(self.count > self.step): self.count = self.step
@@ -118,7 +118,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
 
    def repositionMiniMap(self):
       if (self.parent() != None):
-         self.resize(self.MAPWIDTH + 2 * MiniMap.BORDER_WIDTH, self.MAPHEIGHT + 2 * MiniMap.BORDER_WIDTH)
+         self.resize(self.MAPWIDTH + 2 * MiniMap.BORDER_WIDTH +1, self.MAPHEIGHT + 2 * MiniMap.BORDER_WIDTH+1)
          self.move(self.parent().width() - self.MAPWIDTH - 2*self.BORDER_WIDTH-26, 0)
       self.repaint()
 
@@ -209,13 +209,25 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       for i in range(0,self.BORDER_WIDTH):
          p.setPen(QtGui.QColor(200, 200, 150, 50 * (i + 1)));
          p.drawRect(i, i, self.width() - 1 - 2 * i, self.height() - 1 - 2 * i);
+      
+      #p.setPen(QtGui.QColor(0, 200, 0, 255));
+      #p.drawRect(0, 0, 
+      #  self.MAPWIDTH +2*self.BORDER_WIDTH, 
+      #  self.MAPHEIGHT+2*self.BORDER_WIDTH)
+
+      #p.setPen(QtGui.QColor(0, 200, 255, 255));
+      #p.drawRect(self.BORDER_WIDTH, self.BORDER_WIDTH, 
+      #  self.MAPWIDTH , 
+      #  self.MAPHEIGHT)
 
       # Aspect-Ratio Logic
       #self.blockCanvas = self.workspace;
-      self.transformX = 1.0*self.MAPWIDTH / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
-      self.transformY = 1.0*self.MAPHEIGHT / self.getCanvas().height();
+      self.transformX = (1.0*self.MAPWIDTH) / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
+      self.transformY = (1.0*self.MAPHEIGHT) / self.getCanvas().height();
 
-      p.translate(5, 5);
+      print("W:%d -- %d H:%d - %d}"%(self.MAPWIDTH, self.width() ,self.MAPHEIGHT, self.height() ))
+
+      p.translate(self.BORDER_WIDTH, self.BORDER_WIDTH);
 
       #for page in self.blockCanvas.getPages():
          #pageColor = page.getPageColor();
@@ -285,7 +297,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       p.drawRect(
              self.rescaleX(self.blockWorkSpace.horizontalScrollBar().value()),
              self.rescaleY(self.blockWorkSpace.verticalScrollBar().value()),
-             self.rescaleX(self.blockWorkSpace.width()),
-             self.rescaleY(self.blockWorkSpace.height()));
+             self.rescaleX(self.blockWorkSpace.width())-3,
+             self.rescaleY(self.blockWorkSpace.height())-3);
 
       p.end()
