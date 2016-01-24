@@ -9,6 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 from PyQt4 import QtCore,QtGui
+from blocks.Block import Block
 class LabelWidget(QtGui.QWidget):
     DROP_DOWN_MENU_WIDTH = 7;
     def __init__(self,parent,  blockID,  initLabelText, prefix, suffix,  fieldColor, tooltipBackground):
@@ -57,6 +58,8 @@ class LabelWidget(QtGui.QWidget):
       #self.menu.installEventFilter(self); 
       #self.installEventFilter(self.parent()); 
   
+    def getBlock(self):
+        return Block.getBlock(self.blockID)
  
     def mousePressEvent(self, event):
         self.isPressed = True
@@ -87,13 +90,15 @@ class LabelWidget(QtGui.QWidget):
         # propagate mouse move event to parent
         #self.parent().mouseReleaseEvent(event)
         
-    def setMenu(self, hasSiblings, siblings, isVariable):
-
-        self.isVariable = isVariable
-        self.hasMenu = hasSiblings or self.isVariable
+    def setMenu(self):
+        block = self.getBlock()
+        hasSiblings = block.hasSiblings()
+        isVariable = block.isVariable()
+        #siblings = block.getSiblingsList();
+        self.hasMenu = hasSiblings or isVariable        
         
         if(self.hasMenu):
-          self.menu.setMenu(siblings, self.isVariable);
+          self.menu.setMenu(block);
           self.textField.hide()
           self.textLabel.hide() 
           self.menu.show()     
@@ -478,11 +483,15 @@ class LabelMenu(ShadowLabel):
     def newVariable(self, sender):
         pass      
     
-    def setMenu(self, familyMap, isVariable):
+    def setMenu(self, block):
+        isVariable = block.isVariable()
+        familyMap = block.getSiblingsList();
         self.familyMap = familyMap
         self.isVariable = isVariable
         self.popupmenu = QtGui.QMenu();
         self.lastSelectedItem = None
+        
+        isEditable = True
         
         if(familyMap == None): return
 
@@ -491,6 +500,7 @@ class LabelMenu(ShadowLabel):
           entry = self.popupmenu.addAction(text)
           entry.setCheckable (True)
           if(text == self.text()):
+            isEditable = False  
             entry.setChecked(True)
             self.lastSelectedItem = entry
           self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, name=key: self.doStuff(sender, name))    
@@ -498,8 +508,13 @@ class LabelMenu(ShadowLabel):
         if(isVariable):
           if(len(familyMap) > 0):
              self.popupmenu.addSeparator()
-          entry = self.popupmenu.addAction('Rename variable')  
+          entry = self.popupmenu.addAction('Rename variable')
           self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry, item=self.lastSelectedItem: self.renameVariable(sender, item)) 
+          
+          #block_label = block.getBlockLabel()
+          #var_name = block_label.getText()
+          
+          entry.setEnabled(isEditable)
           
           entry = self.popupmenu.addAction('New variable')  
           self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry: self.newVariable(sender)) 

@@ -60,16 +60,18 @@ class BlockLabel():
       # add and show the textLabel initially
       self.widget.setEditingState(False);
       
-      famList = {}
-      if (Block.getBlock(blockID).hasSiblings()) :
-        famList = Block.getBlock(blockID).getSiblingsList();      
+      #famList = {}
+      #if (Block.getBlock(blockID).hasSiblings()) :
+      #  famList = Block.getBlock(blockID).getSiblingsList();      
 
-      self.widget.setMenu(hasComboPopup and Block.getBlock(blockID).hasSiblings(), famList, Block.getBlock(blockID).isVariable());
+      self.widget.setMenu();
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
       self.widget.fireMenuChanged = self.menuChanged
-      
+  
+  def menuEnabled(self):
+      return self.hasComboPopup and Block.getBlock(self.blockID).hasSiblings()
 
   def labelChanged(self, label):
     from blocks.RenderableBlock import RenderableBlock
@@ -117,6 +119,7 @@ class BlockLabel():
     
     block = Block.getBlock(self.blockID)
     familyMap = block.getSiblingsList();
+
     for key in familyMap:
       if(familyMap[key] == old_name):
         familyMap[key] = new_name
@@ -124,11 +127,11 @@ class BlockLabel():
     factoryBlock = FactoryRenderableBlock.factoryRBs[block.getGenusName()]
     for rb in factoryBlock.child_list:
       blockLabel = rb.blockLabel
-      blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
-      if(blockLabel.getText() == old_name):
-        blockLabel.labelChanged(new_name)
+      blockLabel.widget.setMenu();
+      if(blockLabel.getText() == old_name):            
+            blockLabel.labelChanged(new_name)
     
-    factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+    factoryBlock.blockLabel.widget.setMenu()
     if(factoryBlock.blockLabel.getText() == old_name):
       factoryBlock.blockLabel.labelChanged(new_name)
     
@@ -139,11 +142,11 @@ class BlockLabel():
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
           for rb in factoryBlock.child_list:
             blockLabel = rb.blockLabel
-            blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+            blockLabel.widget.setMenu();
             if(blockLabel.getText() == old_name):
               blockLabel.labelChanged(new_name)
           
-          factoryBlock.blockLabel.widget.setMenu(self.hasComboPopup and block.hasSiblings(), familyMap, block.isVariable());
+          factoryBlock.blockLabel.widget.setMenu();
           if(factoryBlock.blockLabel.getText() == old_name):
             #print(factoryBlock)
             factoryBlock.blockLabel.labelChanged(new_name)

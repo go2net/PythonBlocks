@@ -120,7 +120,7 @@ class WorkspaceController():
         if(self.langDefDirty):
              self.loadBlockLanguage(self.langDefRoot)
 
-        self.workspace.loadWorkspaceFrom(None, self.langDefRoot, "Untitled")
+        self.workspace.loadFreshWorkspace()
 
         self.workspaceLoaded = True
 
@@ -310,60 +310,18 @@ class WorkspaceController():
 
 
     def getSaveString(self):
-             '''
-             * Returns the save string for the entire workspace.    This includes the block workspace, any
-             * custom factories, canvas view state and position, pages
-             * @return the save string for the entire workspace.
-        '''
-        #try:
-             doc = self.getSaveNode();
-
-             #writer = StringWriter();
-             #transformerFactory = TransformerFactory.newInstance();
-             #transformer = transformerFactory.newTransformer();
-             #transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-             #transformer.transform(DOMSource(node), StreamResult(writer));
-             return doc.toprettyxml(indent='\t');
-        #except:
-        #     pass
-
-
-    def getSaveNode(self,validate=True):
-
-         '''
-         * Returns a DOM node for the entire workspace. This includes the block
-         * workspace, any custom factories, canvas view state and position, pages
-         *
-         * @param validate If {@code true}, perform a validation of the output
-         * against the code blocks schema
-         * @return the DOM node for the entire workspace.
-         '''
-        #try:
-         doc = Document()
-         documentElement = doc.createElement("CODEBLOCKS");
-         # schema reference
-         #documentElement.setAttributeNS(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI, "xsi:schemaLocation", Constants.XML_CODEBLOCKS_NS+" "+Constants.XML_CODEBLOCKS_SCHEMA_URI);
-
-         workspaceNode = WorkspaceController.workspace.getSaveNode(doc);
-         if (workspaceNode != None):
-                documentElement.appendChild(workspaceNode);
-
-
-         doc.appendChild(documentElement);
-
-         return doc;
-        #except:
-        #     pass
-
+        import json       
+        return json.dumps(WorkspaceController.workspace.getWorkspaceInfo(), sort_keys=True, indent=2) 
+        
     def loadProjectFromPath(self, path):
         # XXX here, we could be strict and only allow valid documents...
         # validate(doc);
-        projectRoot = etree.parse(path).getroot()
+        #projectRoot = etree.parse(path).getroot()
         # load the canvas (or pages and page blocks if any) blocks from the save file
         # also load drawers, or any custom drawers from file.    if no custom drawers
         # are present in root, then the default set of drawers is loaded from
         # langDefRoot
-        WorkspaceController.workspace.loadWorkspaceFrom(projectRoot, self.langDefRoot, path);
+        WorkspaceController.workspace.loadWorkspaceFrom(path);
         self.workspaceLoaded = True;
 
 

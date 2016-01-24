@@ -159,7 +159,7 @@ class BlockGenus():
             self._isStarterInConfig = value
           
         if (not self._isStarter):
-            self.before = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, -1);      
+            self.before = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(), BlockConnector.PositionType.TOP, "", False, False, "");      
         else:
             self.before = None
           
@@ -183,7 +183,7 @@ class BlockGenus():
             self._isTerminatorInConfig = value
           
         if (not self._isTerminator):
-            self.after = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(),  BlockConnector.PositionType.BOTTOM, "", False, False, -1);
+            self.after = BlockConnector('' ,BlockConnectorShape.getCommandShapeName(),  BlockConnector.PositionType.BOTTOM, "", False, False, "");
         else:
             self.after = None
           
@@ -475,7 +475,7 @@ class BlockGenus():
                 label,
                 isLabelEditable,
                 isExpandable,
-                -1,
+                "",
                 expandGroup);
 
             # add def args if any
@@ -702,6 +702,7 @@ class BlockGenus():
         for genus_info in blockGenuses:
             BlockGenus.loadGenusInfo(genus_info)
         return
+        
         # # # # # # # # # # # # # # # # # # /
         # / LOAD BLOCK FAMILY INFORMATION # /
         # # # # # # # # # # # # # # # # # # /
@@ -1020,8 +1021,11 @@ class BlockGenus():
 
         #if (not newGenus.isTerminator):
         #  newGenus.after = BlockConnector(BlockConnectorShape.getCommandShapeName(), '' , BlockConnector.PositionType.BOTTOM, "", False, False, -1);
-
-
+        
+        #if(newGenus.before != None): print("before:" + newGenus.before.connBlockID)
+        #if(newGenus.after != None): print("after:" +newGenus.after.connBlockID)
+        
+        
         return newGenus
 
 

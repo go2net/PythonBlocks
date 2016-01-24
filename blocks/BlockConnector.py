@@ -43,6 +43,9 @@ class BlockConnector():
         self.positionType = positionType
         self.label = label
         self.isLabelEditable = isLabelEditable
+        if(connBlockID == -1):
+            raise Exception("connBlockID == -1")
+            connBlockID = ""
         self.connBlockID = connBlockID
         self.isExpandable = isExpandable
 
@@ -52,7 +55,8 @@ class BlockConnector():
         self.expandGroup = "" if expandGroup == None else expandGroup
         self.hasDefArg = False
   
-    
+        #print(connBlockID)
+        
     @property
     def kind(self):
         return self._kind
@@ -114,7 +118,7 @@ class BlockConnector():
         return self.positionType
 
     def hasBlock(self):
-        return self.connBlockID != -1
+        return self.connBlockID != "" and self.connBlockID != -1
 
     def getLabel(self):
         return self.label;
@@ -122,7 +126,7 @@ class BlockConnector():
     def linkDefArgument(self):
         from Block import Block
         # checks if connector has a def arg or if connector already has a block
-        if(self.hasDefArg and self.connBlockID == -1):
+        if(self.hasDefArg and self.connBlockID == ""):
             block = Block(self.arg.getGenusName(), self.arg.label);
             connBlockID = block.blockID;
             return connBlockID;
@@ -132,67 +136,52 @@ class BlockConnector():
     def setConnectorBlockID(self, id):
         self.connBlockID = id;
 
-    def loadBlockConnector(node):
-     con = None;
-     initKind = None;
-     kind = None;
-     idConnected = -1
-     label = "";
-     isExpandable = False;
-     isLabelEditable = False;
-     expandGroup = "";
-     positionType = "single";
-
-     if (node.tag == ("BlockConnector")):
+    def loadBlockConnector(conn_info):
+        con = None;
+        initKind = None;
+        kind = None;
+        idConnected = ""
+        label = "";
+        isExpandable = False;
+        isLabelEditable = False;
+        expandGroup = "";
+        position = 0
         # load attributes
-         if("init-type" in node.attrib):
-             initType = node.attrib["init-type"]
+        if("type" in conn_info):
+            initType = conn_info["type"]
+
+        if("kind"  in conn_info):
+            kind = conn_info["kind"]
          
-         if("init-kind" in node.attrib):
-             initKind = node.attrib["init-kind"]
-             
-         if("connector-type" in node.attrib):
-             kind = node.attrib["connector-type"]
-             
-         if("label" in node.attrib):
-             label = node.attrib["label"]
-             
-         if("con-block-id" in node.attrib):
-             idConnected = node.attrib["con-block-id"] # + Block.MAX_RESERVED_ID
-
-         if("label-editable" in node.attrib):
-             isLabelEditable = node.attrib["label-editable"] == ("true");
-             
-         if("is-expandable" in node.attrib):
-             isExpandable = node.attrib["is-expandable"] == ("true");
-
-         if("expand-group" in node.attrib):
-             
-             expandGroup = node.attrib["expand-group"]
-         if("position-type" in node.attrib):
-             positionType = node.attrib["position-type"]
-
-         #assert initKind != None : "BlockConnector was not specified a initial connection kind";
-
-         if (positionType == ("single")):
-            position = BlockConnector.PositionType.SINGLE
-         elif (positionType == ("bottom")):
-             position = BlockConnector.PositionType.BOTTOM
-         elif (positionType == ("mirror")):
-             position = BlockConnector.PositionType.MIRROR
-         elif (positionType == ("top")):
-             position = BlockConnector.PositionType.TOP
-
-         con = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
+        if("connector-type" in conn_info):
+            kind = conn_info["connector-type"]
          
-         con.expandGroup = expandGroup;
-         if (initKind != kind):
+        if("label" in conn_info):
+            label = conn_info["label"]
+         
+        if("con-block-id" in conn_info):
+            idConnected = conn_info["con-block-id"] # + Block.MAX_RESERVED_ID
+
+        if("editable" in conn_info):
+            isLabelEditable = conn_info["editable"] 
+         
+        if("expandable" in conn_info):
+            isExpandable = conn_info["expandable"] 
+
+        if("expand-group" in conn_info):         
+            expandGroup = conn_info["expand-group"]
+        if("position" in conn_info):
+            position = conn_info["position"]
+
+        con = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
+
+        con.expandGroup = expandGroup;
+        if (initKind != kind):
             con.kind = kind;
 
-     #assert con != None : "BlockConnector was not loaded " + node;
+        #assert con != None : "BlockConnector was not loaded " + node;
 
-     return con;
-
+        return con;
 
     def getSaveNode(self, document, conKind):
       connectorElement = document.createElement("BlockConnector");

@@ -112,7 +112,6 @@ class RenderableBlock(QtGui.QWidget):
         
         #if(isinstance(obj,FactoryRenderableBlock)):
         #  Block.MAX_RESERVED_ID = max(Block.MAX_RESERVED_ID, obj.blockID)
-          
         return obj
         
     
@@ -122,7 +121,6 @@ class RenderableBlock(QtGui.QWidget):
 
     @property
     def blockID(self):
-        """I'm the 'x' property."""
         return self._blockID
 
     @blockID.setter
@@ -946,6 +944,16 @@ class RenderableBlock(QtGui.QWidget):
     def descale(self,x):
         return x / self.zoom
 
+    def getRenderableBlockInfo(self):
+        renderableBlockInfo = {}
+        renderableBlockInfo['X'] = self.descale(self.x())
+        renderableBlockInfo['Y'] = self.descale(self.y())
+        renderableBlockInfo['is_collapsed'] = self.isCollapsed()
+        renderableBlockInfo['block_info'] = self.getBlock().getBlockInfo()
+        if self.comment != None:
+            renderableBlockInfo['comment'] = self.comment.getCommentInfo()
+        
+        return renderableBlockInfo
 
     def getSaveNode(self, document):
         return self.getBlock().getSaveNode(document, self.descale(self.x()),
@@ -1014,7 +1022,48 @@ class RenderableBlock(QtGui.QWidget):
         self.clearBufferedImage();
 
 
-    def loadBlockNode(blockNode, canvas):
+    def loadBlockNode(rb_info, canvas):
+        rb = RenderableBlock.from_blockID(
+            canvas,
+            Block.loadBlockFrom(rb_info['block_info'], canvas).blockID, 
+            True);
+        isBlockStub = False
+        if (isBlockStub):
+            # need to get actual block node
+            stubchildren = blockNode.getchildren();
+            for j in range(0,len(stubchildren)):
+                node = stubchildren[j];
+                if (node.tag == ("Block")):
+                    blockNode = node;
+                    break;
+
+
+        if (rb.getBlock().labelMustBeUnique()):
+         # TODO check the instance number of this block
+            # and update instance checker
+            pass
+
+        blockLoc = QtCore.QPoint(0, 0);
+        blockLoc.setX(rb_info['X'])
+        blockLoc.setX(rb_info['Y'])
+
+        if( 'Comment' in rb_info):
+            pass
+            
+        #rb.setCollapsed(rb_info['Collapsed']); 
+
+        # set location from info
+        #rb.setParent(parent)
+        rb.move(blockLoc.x(), blockLoc.y());
+        #rb.show()
+        #print(blockLoc);
+        if (rb.comment != None):
+            rb.comment.getArrow().updateArrow();          
+
+        return rb;        
+        
+        
+        
         isBlock = blockNode.tag == ("Block");
         isBlockStub = blockNode.tag == ("BlockStub");
 
@@ -1040,6 +1089,8 @@ class RenderableBlock(QtGui.QWidget):
                 pass
 
             blockLoc = QtCore.QPoint(0, 0);
+
+            
             children = blockNode.getchildren();
 
             for child in children:

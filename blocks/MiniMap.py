@@ -225,7 +225,7 @@ class MiniMap(QtGui.QFrame,WorkspaceWidget):
       self.transformX = (1.0*self.MAPWIDTH) / self.getCanvas().width(); # MUST CAST MAPHEIGHT TO DOUBLE!!
       self.transformY = (1.0*self.MAPHEIGHT) / self.getCanvas().height();
 
-      print("W:%d -- %d H:%d - %d}"%(self.MAPWIDTH, self.width() ,self.MAPHEIGHT, self.height() ))
+      #print("%f,%f: W:%d -- %d H:%d - %d}"%(self.transformX, self.transformY, self.MAPWIDTH, self.width() ,self.MAPHEIGHT, self.height() ))
 
       p.translate(self.BORDER_WIDTH, self.BORDER_WIDTH);
 

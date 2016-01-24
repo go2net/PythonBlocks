@@ -195,16 +195,19 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
     def setHeight(self, height):
       self.canvasHeight = height;
 
-    def getSaveNode(self, document):
+    def getBlockWorkspaceInfo(self):
 
-      blocks = self.getBlocks();
-      if (len(blocks) > 0):
-         blocksElement = document.createElement("Blocks");
-         for rb in blocks:
-            blocksElement.appendChild(rb.getSaveNode(document));
-         return blocksElement;
-      else:
-         return None
+        workspace_info = {}
+
+        blocks = self.getBlocks();
+        if (len(blocks) > 0):
+            rb_list = []
+            for rb in blocks:
+                rb_list.append(rb.getRenderableBlockInfo());
+            
+            workspace_info['rb_list'] = rb_list
+
+        return workspace_info
 
     def reformBlockCanvas(self):
       self.canvas.resize(self.canvasWidth,self.canvasHeight);
@@ -256,23 +259,24 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.layout.addWidget(pd)
 
 
-    def loadBlocksFrom(self,blocksNode):
-        blocks = blocksNode.getchildren();
-        loadedBlocks = []
+    def loadBlocksFrom(self,blockWorkspaceInfo):
+          
+        loadedBlocks = []      
+        if('rb_list' in blockWorkspaceInfo):
+            rb_info_list = blockWorkspaceInfo['rb_list']
+            for rb_info in rb_info_list:
+                rb = RenderableBlock.loadBlockNode(rb_info, self);
+                rb.setParent(self.canvas)
+                self.blockDropped(rb)
+             
+                loadedBlocks.append(rb)
+             
+            for rb in loadedBlocks:  
+                rb.reformBlockShape()
+                rb.show()
 
-        for blockNode in blocks:
-            rb = RenderableBlock.loadBlockNode(blockNode, self);
-            rb.setParent(self.canvas)
-            self.blockDropped(rb)
-         
-            loadedBlocks.append(rb)
-         
-        for rb in loadedBlocks:  
-            rb.reformBlockShape()
-            rb.show()
-
-        for rb in self.getTopLevelBlocks():  
-            rb.redrawFromTop()
+            for rb in self.getTopLevelBlocks():  
+                rb.redrawFromTop()
 
         return loadedBlocks
 
@@ -282,19 +286,20 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
             block = renderable.getBlock()
             if (block.getPlug() == None or 
                 block.getPlugBlockID() == None or 
-                block.getPlugBlockID()  == -1):
+                block.getPlugBlockID()  == ""):
             
                 if (block.getBeforeConnector() == None or 
                     block.getBeforeBlockID() == None or 
-                    block.getBeforeBlockID() == -1):
+                    block.getBeforeBlockID() == ""):
                     topBlocks.append(renderable);
 
         return topBlocks
 
-    def loadSaveString(self,root):
-        blocksRoot = root.findall("Blocks");
-        if(blocksRoot != None and len(blocksRoot) == 1):
-            self.loadBlocksFrom(blocksRoot[0]);
+    def loadSaveString(self,path):
+        import json
+        f=open(path)
+        blockWorkspaceInfo = json.load(f)
+        self.loadBlocksFrom(blockWorkspaceInfo);
 
     def blockEntered(self,block):
         pass

@@ -1,0 +1,52 @@
+{
+  "rb_list": [
+    {
+      "X": 143.0,
+      "Y": 71.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "setup",
+        "has-focus": false,
+        "id": "bee1645c-c2b5-11e5-a7b8-f0def1dc27fb",
+        "socket_list": [
+          {
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "cmd"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 196.0,
+      "Y": 79.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "bee1645c-c2b5-11e5-a7b8-f0def1dc27fb",
+        "PageLabel": "",
+        "genus-name": "fd",
+        "has-focus": false,
+        "id": "bf9dc09e-c2b5-11e5-a3ce-f0def1dc27fb",
+        "socket_list": [
+          {
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "steps",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    }
+  ]
+}

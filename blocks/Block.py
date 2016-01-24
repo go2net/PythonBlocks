@@ -10,7 +10,7 @@ class Block():
     MAX_RESERVED_ID = -1
 
     # Defines a NULL id for a Block
-    NULL = -1
+    NULL = ""
 
     # A universal hashmap of all the Block instances
     ALL_BLOCKS= {}
@@ -109,7 +109,7 @@ class Block():
 
       obj.expandGroups = []
      
-      if(obj.blockID != None and obj.blockID != -1):
+      if(obj.blockID != None and obj.blockID != -1 and obj.blockID != ""):
         Block.ALL_BLOCKS[obj.blockID] = obj
 
       Block.tmpObj = obj
@@ -144,7 +144,7 @@ class Block():
           return None
           
         blockID = socket.blockID
-        if(blockID == -1):
+        if(blockID == ""):
           return None
         else:
           return Block.getBlock(blockID)
@@ -152,7 +152,7 @@ class Block():
     def getBlock(blockID):
      
       if(blockID == -1): return Block.tmpObj 
-
+      if(blockID == ""): return None       
       if(blockID in Block.ALL_BLOCKS):
          return Block.ALL_BLOCKS[blockID]
       else:
@@ -322,17 +322,20 @@ class Block():
 
     def getBeforeBlockID(self):
       if (self.before == None):
-         return Block.NULL;
+         return '' ;
       return self.before.blockID;
 
     def getAfterBlockID(self):
       if (self.after == None):
-         return Block.NULL;
+         return '';
+         
+      print(self.after.blockID)         
       return self.after.blockID;
 
     def getPlugBlockID(self):
       if(self.plug == None):
-         return Block.NULL;
+         return '';
+
       return self.plug.blockID;
 
 
@@ -469,6 +472,43 @@ class Block():
       '''
       return self.genusName
 
+    def getBlockInfo(self):
+        blockInfo = {}
+        blockInfo['id'] = self.blockID
+        blockInfo['genus-name'] = self.getGenusName()
+        blockInfo['has-focus'] =self.hasFocus
+        
+        if (not self.label == (self.getInitialLabel())):
+            blockInfo['Label'] = self.label    
+    
+        blockInfo['PageLabel'] = self.pageLabel    
+        
+        if (self.isBad):
+            blockInfo['CompilerErrorMsg'] = self.badMsg    
+
+        blockInfo['BeforeBlockId'] = self.getBeforeBlockID()    
+        blockInfo['AfterBlockId'] = self.getAfterBlockID()    
+
+        if (self.plug != None):
+            blockInfo['plug'] = self.plug.getConnectorInfo();
+
+        if (len(self.sockets) > 0) :
+            socket_list = []
+            for con in self.getSockets():
+                socket_list.append(con.getConnectorInfo())
+            blockInfo['socket_list'] = socket_list
+
+        # save block properties that are not specified within genus
+        # i.e. properties that were created/specified during runtime 
+        if (len(self.properties) > 0):
+            prop_list = []
+            for key in self.properties:
+                prop_info = {}
+                prop_info['key']=  key
+                prop_info['value']=  self.properties[key]
+                prop_list.append(prop_info)
+            blockInfo['prop_list'] = prop_list
+        return blockInfo
 
     def getSaveNode(self, document, x, y, commentNode, isCollapsed):
       blockElement = document.createElement("Block");
@@ -568,7 +608,7 @@ class Block():
 
 
 
-    def loadBlockFrom(node, canvas):
+    def loadBlockFrom(block_info, canvas):
         '''
         * Loads Block information from the specified node and return a Block
         * instance with the loaded information
@@ -596,6 +636,7 @@ class Block():
         stubParentName = None;
         stubParentGenus = None;
       
+        '''
         if (node.tag == ("BlockStub")):
             isStubBlock = True;
             blockNode = None;
@@ -609,109 +650,92 @@ class Block():
                    blockNode = infoNode;
 
             node = blockNode;
+        '''
 
+        #if (node.tag == ("Block")):
+        # load attributes
+        if("id" in block_info):
+            id = block_info["id"]  #+ canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
 
-        if (node.tag == ("Block")):
-            # load attributes
-            if("id" in node.attrib):
-                id = node.attrib["id"]  #+ canvas.getMaxReservedID() #translateLong(workspace, long(nameMatcher.group(1)), idMapping);
+        if("genus-name" in block_info):
+            genusName = block_info["genus-name"]
 
-            if("genus-name" in node.attrib):
-                genusName = node.attrib["genus-name"]
+        # load optional items
+        if("has-focus" in block_info):
+            hasFocus = block_info['has-focus']
 
-            # load optional items
-            if("has-focus" in node.attrib):
-                hasFocus = True if node.attrib["has-focus"] == ("yes") else False
+        if('Label' in block_info):
+            label = block_info['Label']
+        if('PageLabel' in block_info):   
+            pagelabel = block_info['PageLabel']
+            
+        if('CompilerErrorMsg' in block_info):
+            badMsg = block_info['CompilerErrorMsg']
+        beforeID = block_info['BeforeBlockId']
+        afterID = block_info['AfterBlockId']
+        
+        if  ('plug' in block_info):
+            plug_info = block_info['plug']
+            plug = BlockConnector.loadBlockConnector(plug_info,);
 
-            # load elements
-            children = node.getchildren()
+        if  ('socket_list' in block_info) :
+            for  socket_info in block_info['socket_list']:
+                sockets.append(BlockConnector.loadBlockConnector(socket_info));
 
-            for child in children:
-                if (child.tag == ("Label")):
-                    label = child.text;
-                elif (child.tag == ("PageLabel")):
-                    pagelabel = child.getTextContent;
-                elif (child.tag == ("CompilerErrorMsg")):
-                    badMsg = child.text;
-                elif  (child.tag == ("BeforeBlockId")):
-                    beforeID = child.text
-                elif  (child.tag == ("AfterBlockId")):
-                    afterID = child.text
-                elif  (child.tag == ("Plug")):
-                    plugs = child.getchildren(); #there should only one child
+        if  ('prop_list' in block_info):
+            prop_list = block_info['prop_list']
 
-                    for plugNode in plugs:
-                        if (plugNode.tag == ("BlockConnector")):
-                            plug = BlockConnector.loadBlockConnector(plugNode,);
+            for prop_info in prop_list:
+                key = prop_info['key']                
+                value = prop_info['value']               ;                  
+                if(key != None and value != None):
+                    blockLangProperties[key] = value
 
-                elif  (child.tag == ("Sockets")) :
-                    socketNodes = child.getchildren();
-                    for  socketNode in socketNodes:
-                        if (socketNode.tag == ("BlockConnector")) :
-                            sockets.append(BlockConnector.loadBlockConnector(socketNode));
-
-                elif  (child.tag == ("LangSpecProperties")):
-                    blockLangProperties = {}
-                    propertyNodes = child.getchildren();
-
-                    for prop in propertyNodes:
-                        key = None;
-                        value = None;                  
-                        if(prop.tag == ("LangSpecProperty")):
-                            if("key" in prop.attrib):
-                               key = prop.attrib["key"]
-                            if("value" in prop.attrib):
-                               value = prop.attrib["value"]
-                            else:
-                               value = prop.text
-
-                            if(key != None and value != None):
-                               blockLangProperties[key] = value
-
-             #create block or block stub instance
-            if (not isStubBlock):
-                if (label == None):
-                   block = Block.createBlockFromID(canvas, genusName, True, id);
-                else:
-                   block = Block.createBlockFromID(canvas,  genusName,True, id,label);
-
+         #create block or block stub instance
+        if (not isStubBlock):
+            if (label == None):
+               block = Block.createBlockFromID(canvas, genusName, True, id);
             else:
-                #assert label != null : "Loading a block stub, but has a null label!";
-                block = BlockStub(node.workspace, id, genusName, label, stubParentName, stubParentGenus);
+               block = Block.createBlockFromID(canvas,  genusName,True, id,label);
+
+        else:
+            #assert label != null : "Loading a block stub, but has a null label!";
+            block = BlockStub(node.workspace, id, genusName, label, stubParentName, stubParentGenus);
 
 
-            if (plug != None):
-                # Some callers can change before/after/plug types. We have
-                # to synchronize so that we never have both.
-                # assert beforeID == null && afterID == null;
-                block.plug = plug;
-                block.removeBeforeAndAfter();
+        if (plug != None):
+            # Some callers can change before/after/plug types. We have
+            # to synchronize so that we never have both.
+            # assert beforeID == null && afterID == null;
+            block.plug = plug;
+            block.removeBeforeAndAfter();
 
-            if (len(sockets) > 0):
-                block.sockets = sockets;
+        if (len(sockets) > 0):
+            block.sockets = sockets;
 
-            if (beforeID != None):
-                block.before.setConnectorBlockID(beforeID);
+        if (beforeID != ''):
+            print(beforeID)
+            block.before.setConnectorBlockID(beforeID);
 
-            if (afterID != None):
-                block.after.setConnectorBlockID(afterID);
+        if (afterID != ''):
+            block.after.setConnectorBlockID(afterID);
 
-            if (pagelabel != None):
-                block.pageLabel = pagelabel;
+        if (pagelabel != None):
+            block.pageLabel = pagelabel;
 
-            if (badMsg != None):
-                block.isBad = True;
-                block.badMsg = badMsg;
+        if (badMsg != None):
+            block.isBad = True;
+            block.badMsg = badMsg;
 
-            block.hasFocus = hasFocus;
+        block.hasFocus = hasFocus;
 
-            #load language dependent properties
-            if (blockLangProperties != None and len(blockLangProperties) > 0):
-                block.properties = blockLangProperties;
+        #load language dependent properties
+        if (blockLangProperties != None and len(blockLangProperties) > 0):
+            block.properties = blockLangProperties;
 
-            return block;
+        return block;
 
-        return None
+        #return None
 
     def removeBeforeAndAfter(self):
         self.before = None;

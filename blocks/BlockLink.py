@@ -45,7 +45,7 @@ class BlockLink():
       BlockLink.lastSocketID = self.socketBlockID;
       BlockLink.lastPlug = self.plug;
       BlockLink.lastSocket = self.socket;
-      BlockLink.lastPlugBlockID = Block.NULL;
+      BlockLink.lastPlugBlockID = "";
 
     def equal(self,link):
       if(link == None): return False
@@ -127,7 +127,7 @@ class BlockLink():
 
          # For safety: if either the top stack is terminated, or
          # the bottom stack is not a starter, don't try to force a link
-         if (not top.hasAfterConnector() or not bottom.hasBeforeConnector()):
+         if (top == None or bottom == None  or not top.hasAfterConnector() or not bottom.hasBeforeConnector()):
             return;
 
          link = BlockLink.getBlockLink(top, bottom, top.getAfterConnector(), bottom.getBeforeConnector());

@@ -55,7 +55,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
         assert(isinstance(self.blockTab.currentWidget(), BlockWorkspace))
         return self.blockTab.currentWidget()
 
-    def loadWorkspaceFrom(self, newRoot, originalLangRoot,  fileName):
+    def loadWorkspaceFrom(self, fileName):
         '''
         * Loads the workspace with the following content:
         * - RenderableBlocks and their associated Block instances that reside
@@ -71,22 +71,15 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
         self.blockTab.addTab(blockWorkspace, fileName)
         self.blockTab.setCurrentWidget(blockWorkspace) 
 
-        if(newRoot != None):
-            # load pages, page drawers, and their blocks from save file
-            blockWorkspace.loadSaveString(newRoot);
-            # load the block drawers specified in the file (may contain
-            # custom drawers) and/or the lang def file if the contents specify
-            #PageDrawerLoadingUtils.loadBlockDrawerSets(originalLangRoot, self.factory);
-            PageDrawerLoadingUtils.loadBlockDrawerSets("", self.factory);
-            #self.loadWorkspaceSettings(newRoot);
-        else:
-            # load from original language/workspace root specification
-            blockWorkspace.loadSaveString(originalLangRoot);
-            # load block drawers and their content
-            PageDrawerLoadingUtils.loadBlockDrawerSets("support\\block_drawersets.jason", self.factory);
-            #loadWorkspaceSettings(originalLangRoot);
-            pass
+        # load pages, page drawers, and their blocks from save file
+        blockWorkspace.loadSaveString(fileName);
+        PageDrawerLoadingUtils.loadBlockDrawerSets("", self.factory);
 
+    def loadFreshWorkspace(self):
+        blockWorkspace = BlockWorkspace() 
+        self.blockTab.addTab(blockWorkspace, 'Untitled')
+        self.blockTab.setCurrentWidget(blockWorkspace)         
+        PageDrawerLoadingUtils.loadBlockDrawerSets("support\\block_drawersets.jason", self.factory);
 
     def addWidget(self,widget, addGraphically, floatOverCanvas):
         '''
@@ -214,8 +207,8 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
 
       return None; # hopefully we never get here
 
-    def getSaveNode(self,document):
-        return self.getActiveCanvas().getSaveNode(document);
+    def getWorkspaceInfo(self):
+        return self.getActiveCanvas().getBlockWorkspaceInfo();
 
     def resizeEvent(self, event):
         #self.trash.rePosition()
