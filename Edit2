@@ -1,0 +1,52 @@
+{
+  "rb_list": [
+    {
+      "X": 218.0,
+      "Y": 73.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "setup",
+        "has-focus": false,
+        "id": "1698bc88-c325-11e5-bd26-e4115b280f9b",
+        "socket_list": [
+          {
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "cmd"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 213.0,
+      "Y": 174.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "1698bc88-c325-11e5-bd26-e4115b280f9b",
+        "PageLabel": "",
+        "genus-name": "stomp",
+        "has-focus": false,
+        "id": "19e3cd4c-c325-11e5-b8a0-e4115b280f9b",
+        "socket_list": [
+          {
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "height",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    }
+  ]
+}

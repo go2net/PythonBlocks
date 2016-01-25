@@ -714,7 +714,6 @@ class Block():
             block.sockets = sockets;
 
         if (beforeID != ''):
-            print(beforeID)
             block.before.setConnectorBlockID(beforeID);
 
         if (afterID != ''):

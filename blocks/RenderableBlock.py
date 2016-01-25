@@ -133,8 +133,6 @@ class RenderableBlock(QtGui.QWidget):
 
     @property
     def workspaceWidget(self):
-        """I'm the 'x' property."""
-        #print(self._workspaceWidget)
         return self._workspaceWidget
 
     @workspaceWidget.setter

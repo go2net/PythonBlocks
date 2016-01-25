@@ -1,41 +1,18 @@
 {
   "rb_list": [
     {
-      "X": 143.0,
-      "Y": 71.0,
+      "X": 124.0,
+      "Y": 89.0,
       "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "",
-        "PageLabel": "",
-        "genus-name": "setup",
-        "has-focus": false,
-        "id": "bee1645c-c2b5-11e5-a7b8-f0def1dc27fb",
-        "socket_list": [
-          {
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "",
-            "position": 0,
-            "type": "cmd"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 196.0,
-      "Y": 79.0,
-      "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "bee1645c-c2b5-11e5-a7b8-f0def1dc27fb",
+        "AfterBlockId": "2fba2466-c327-11e5-a12f-e4115b280f9b",
+        "BeforeBlockId": "31631bba-c327-11e5-a030-e4115b280f9b",
         "PageLabel": "",
         "genus-name": "fd",
         "has-focus": false,
-        "id": "bf9dc09e-c2b5-11e5-a3ce-f0def1dc27fb",
+        "id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
         "socket_list": [
           {
+            "con-block-id": "",
             "editable": false,
             "expand-group": "",
             "expandable": false,
@@ -43,6 +20,56 @@
             "label": "steps",
             "position": 0,
             "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 124.0,
+      "Y": 119.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
+        "PageLabel": "",
+        "genus-name": "bk",
+        "has-focus": false,
+        "id": "2fba2466-c327-11e5-a12f-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "steps",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 71.0,
+      "Y": 81.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "setup",
+        "has-focus": false,
+        "id": "31631bba-c327-11e5-a030-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "cmd"
           }
         ]
       },
