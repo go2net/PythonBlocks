@@ -11,6 +11,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         self.blockWorkspace = blockWorkspace
         self.focusBlock = None
         self.setMouseTracking(True);
+        self.family = {}
         pass
     
     def getBlocks(self):

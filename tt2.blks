@@ -12,7 +12,8 @@
         "has-focus": false,
         "id": "11",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -35,7 +36,8 @@
         "id": "2",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -59,7 +61,8 @@
         "has-focus": false,
         "id": "3",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -82,7 +85,8 @@
         "has-focus": false,
         "id": "5",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -105,7 +109,8 @@
         "id": "4",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -129,7 +134,8 @@
         "has-focus": false,
         "id": "13",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -152,7 +158,8 @@
         "id": "12",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -176,7 +183,8 @@
         "has-focus": false,
         "id": "7",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -198,7 +206,8 @@
         "has-focus": false,
         "id": "9",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -221,7 +230,8 @@
         "id": "6",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -245,7 +255,8 @@
         "id": "eb0a263a-403a-11e5-a616-f0def1dc27fb",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -254,7 +265,8 @@
             "type": "boolean"
           },
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -278,7 +290,8 @@
         "id": "8",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -287,7 +300,8 @@
             "type": "boolean"
           },
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -310,7 +324,8 @@
         "has-focus": false,
         "id": "16",
         "plug": {
-          "editable": false,
+          "con-block-id": "",
+"editable": false,
           "expand-group": "",
           "expandable": false,
           "kind": "plug",
@@ -333,7 +348,8 @@
         "id": "10",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -357,7 +373,8 @@
         "id": "0",
         "socket_list": [
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",
@@ -366,7 +383,8 @@
             "type": "boolean"
           },
           {
-            "editable": false,
+            "con-block-id": "",
+"editable": false,
             "expand-group": "",
             "expandable": false,
             "kind": "socket",

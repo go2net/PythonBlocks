@@ -188,6 +188,8 @@ class Block():
     def getSiblingsList(self):
       return self.getGenus().getSiblingsList()
 
+    def getCustomerFamily(self):
+        return self.canvas.family
 
     def hasBeforeConnector(self):
       return self.before != None;

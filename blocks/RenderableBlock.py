@@ -1041,27 +1041,16 @@ class RenderableBlock(QtGui.QWidget):
             # and update instance checker
             pass
 
-        blockLoc = QtCore.QPoint(0, 0);
-        blockLoc.setX(rb_info['X'])
-        blockLoc.setX(rb_info['Y'])
-
         if( 'Comment' in rb_info):
             pass
-            
-        #rb.setCollapsed(rb_info['Collapsed']); 
 
-        # set location from info
-        #rb.setParent(parent)
-        rb.move(blockLoc.x(), blockLoc.y());
-        #rb.show()
-        #print(blockLoc);
+        rb.move(rb_info['X'], rb_info['Y']);
+
         if (rb.comment != None):
             rb.comment.getArrow().updateArrow();          
 
         return rb;        
-        
-        
-        
+
         isBlock = blockNode.tag == ("Block");
         isBlockStub = blockNode.tag == ("BlockStub");
 
@@ -1137,7 +1126,6 @@ class RenderableBlock(QtGui.QWidget):
                 RenderableBlock.getRenderableBlock(socket.blockID).raise_()
 
         self.raise_()
-        print('self.pickedUp = True')
         self.pickedUp = True; # mark this block as currently being picked up
         self.pressedPos = self.mapFromGlobal(event.globalPos())
         self.last_peer_socket = None

@@ -1,33 +1,8 @@
 {
   "rb_list": [
     {
-      "X": 124.0,
-      "Y": 89.0,
-      "block_info": {
-        "AfterBlockId": "2fba2466-c327-11e5-a12f-e4115b280f9b",
-        "BeforeBlockId": "31631bba-c327-11e5-a030-e4115b280f9b",
-        "PageLabel": "",
-        "genus-name": "fd",
-        "has-focus": false,
-        "id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "steps",
-            "position": 0,
-            "type": "number"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 124.0,
-      "Y": 119.0,
+      "X": 805.0,
+      "Y": 649.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
@@ -51,8 +26,33 @@
       "is_collapsed": false
     },
     {
-      "X": 71.0,
-      "Y": 81.0,
+      "X": 805.0,
+      "Y": 619.0,
+      "block_info": {
+        "AfterBlockId": "2fba2466-c327-11e5-a12f-e4115b280f9b",
+        "BeforeBlockId": "31631bba-c327-11e5-a030-e4115b280f9b",
+        "PageLabel": "",
+        "genus-name": "fd",
+        "has-focus": false,
+        "id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "steps",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 752.0,
+      "Y": 611.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",

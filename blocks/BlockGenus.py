@@ -698,6 +698,7 @@ class BlockGenus():
         f=open('./support/block_genuses.jason')
         blockGenusesInfo = json.load(f)
         BlockGenus.families = blockGenusesInfo['Families']
+        #print(BlockGenus.families)
         blockGenuses = blockGenusesInfo['BlockGenuses']
         for genus_info in blockGenuses:
             BlockGenus.loadGenusInfo(genus_info)
@@ -932,7 +933,8 @@ class BlockGenus():
         if 'family_name' in genus_info:
             newGenus.familyName = genus_info["family_name"]
          
-            #newGenus.family = BlockGenus.families[newGenus.familyName]
+            if(newGenus.familyName in BlockGenus.families):                
+                newGenus.family = BlockGenus.families[newGenus.familyName]
           
             #if(newGenus.familyName not in BlockGenus.familyBlocks):
             #    BlockGenus.familyBlocks[newGenus.familyName] = []

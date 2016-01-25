@@ -2955,7 +2955,7 @@
         "r": 15
       },
       "editable-label": false,
-      "family_name": "",
+      "family_name": "math_arithmetic",
       "initlabel": "+",
       "is-label-value": false,
       "is-starter": true,
@@ -6368,15 +6368,21 @@
     }
   ],
   "Families": {
-    "num_var": [
-      "a",
-      "b",
-      "c"
-    ],
-    "str_var": [
-      "text1",
-      "text2",
-      "text3"
-    ]
+    "num_var": {
+      "a":"a",
+      "b":"b",
+      "c":"c"
+    },
+    "str_var": {
+			"text1":"text1",
+      "text2":"text2",
+      "text3":"text3"
+    },
+    "math_arithmetic": {
+			"sum":"+",
+      "difference":"-",
+      "quotient":"¡Á",
+      "product":"¡Â"
+    }    
   }
 }
