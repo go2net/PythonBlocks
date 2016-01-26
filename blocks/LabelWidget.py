@@ -57,6 +57,9 @@ class LabelWidget(QtGui.QWidget):
       self.menu.setMouseTracking(True);  
       #self.menu.installEventFilter(self); 
       #self.installEventFilter(self.parent()); 
+      
+      self.init_widget()
+
   
     def getBlock(self):
         return Block.getBlock(self.blockID)
@@ -90,7 +93,7 @@ class LabelWidget(QtGui.QWidget):
         # propagate mouse move event to parent
         #self.parent().mouseReleaseEvent(event)
         
-    def setMenu(self):
+    def init_widget(self):
         block = self.getBlock()
         hasSiblings = block.hasSiblings()
         isVariable = block.isVariable()
@@ -98,10 +101,10 @@ class LabelWidget(QtGui.QWidget):
         self.hasMenu = hasSiblings or isVariable        
         
         if(self.hasMenu):
-          self.menu.setMenu(block);
+          #self.menu.setMenu(block)
           self.textField.hide()
-          self.textLabel.hide() 
-          self.menu.show()     
+          self.textLabel.hide()
+          self.menu.show()
         else:
           self.textField.hide()
           self.textLabel.show()   
@@ -329,8 +332,8 @@ class BlockLabelTextField(QtGui.QTextEdit):
 
 class ShadowLabel(QtGui.QLabel):
 
-    shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
-    shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
+    shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],    [-1,1], [1,1],  [0,2],  [1,0],  [0,1]];
+    shadowColorArray =  [0.5,   0.5,    0.5,    0.5,    0.5,    0.5,    0.5,    0,      0];
 
     def __init__(self, parent, isEditable=False):
         QtGui.QLabel.__init__(self, parent)
@@ -430,25 +433,25 @@ class ShadowLabel(QtGui.QLabel):
       
 class LabelMenu(ShadowLabel):
 
-    shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],	[-1,1], [1,1],  [0,2], 	[1,0],  [0,1]];
-    shadowColorArray =	[0.5,	0.5,	0.5, 	0.5, 	0.5, 	0.5,	0.5,	0,		0];
+    shadowPositionArray = [[0,-1],[1,-1], [-1,0], [2,0],    [-1,1], [1,1],  [0,2],  [1,0],  [0,1]];
+    shadowColorArray =  [0.5,   0.5,    0.5,    0.5,    0.5,    0.5,    0.5,    0,      0];
 
-    def __init__(self, parent=None):
+    def __init__(self, parent):
+      from blocks.RenderableBlock import RenderableBlock
       ShadowLabel.__init__(self, parent)
       self.labelWidget = parent
+      self.block = self.labelWidget.getBlock()
+      self.rb = RenderableBlock.getRenderableBlock(self.block.blockID)
       self.setStyleSheet("border-radius: 3px; border:1px solid rgb(255, 255, 255,150); background-color : rgb(200, 200, 200,150);")
       self.lastSelectedItem = None
       self.isVariable = False
       self.familyMap = {}
   
     def mouseReleaseEvent(self, event):
-        from blocks.RenderableBlock import RenderableBlock
         from blocks.FactoryRenderableBlock import FactoryRenderableBlock
-        blockID = self.labelWidget.blockID
-        rb = RenderableBlock.getRenderableBlock(blockID)
-        if(isinstance(rb, FactoryRenderableBlock)): return
-        
-        self.popupmenu.popup(event.globalPos())       
+        if(isinstance(self.rb, FactoryRenderableBlock)): return
+        self.setMenu()
+        self.popupmenu.popup(event.globalPos())
         event.ignore();  
         # propagate mouse move event to parent
         self.parent().mouseReleaseEvent(event)
@@ -473,19 +476,19 @@ class LabelMenu(ShadowLabel):
         pass    
     
     def renameVariable(self, sender, item):
+        block_label = self.rb.blockLabel
         old_name = self.text()
         new_name, ok = QtGui.QInputDialog.getText(self.window(), 'Rename variable','Change variable name from "{0}" to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
         if(ok and new_name != self.text()):
           self.popupmenu = None
-          #self.labelWidget.fireGenusChanged(new_name)  
-          self.labelWidget.fireMenuChanged(old_name, new_name)
-      
+          block_label.onRenameVariable(old_name, new_name)
+          
     def newVariable(self, sender):
         pass      
     
-    def setMenu(self, block):
-        isVariable = block.isVariable()
-        familyMap = block.getSiblingsList();
+    def setMenu(self): 
+        isVariable = self.block.isVariable()
+        familyMap = self.block.getSiblingsList();
         self.familyMap = familyMap
         self.isVariable = isVariable
         self.popupmenu = QtGui.QMenu();

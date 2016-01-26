@@ -11,7 +11,7 @@ class Canvas(QtGui.QWidget,WorkspaceWidget):
         self.blockWorkspace = blockWorkspace
         self.focusBlock = None
         self.setMouseTracking(True);
-        self.family = {}
+
         pass
     
     def getBlocks(self):
@@ -69,6 +69,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.pages = []
         self.dividers = []
         self.block_list = {}
+        self.family = {}
 
         screen = QtGui.QDesktopWidget().availableGeometry()
         self.canvas.resize(screen.width(),screen.height());

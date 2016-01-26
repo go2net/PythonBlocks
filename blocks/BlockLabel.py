@@ -64,11 +64,11 @@ class BlockLabel():
       #if (Block.getBlock(blockID).hasSiblings()) :
       #  famList = Block.getBlock(blockID).getSiblingsList();      
 
-      self.widget.setMenu();
+      #self.widget.setMenu();
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
-      self.widget.fireMenuChanged = self.menuChanged
+      #self.widget.fireMenuChanged = self.menuChanged
   
   def menuEnabled(self):
       return self.hasComboPopup and Block.getBlock(self.blockID).hasSiblings()
@@ -113,25 +113,31 @@ class BlockLabel():
         pass
           #workspace.notifyListeners(new WorkspaceEvent(workspace, rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_RENAMED));
 
-  def menuChanged(self, old_name, new_name):
+  def onRenameVariable(self, old_name, new_name):
     from blocks.FactoryRenderableBlock import FactoryRenderableBlock
     from blocks.BlockGenus import BlockGenus
     
     block = Block.getBlock(self.blockID)
-    familyMap = block.getSiblingsList();
-
+    familyMap = block.getCustomerFamily();
+    
+    findVar = False
     for key in familyMap:
       if(familyMap[key] == old_name):
         familyMap[key] = new_name
+        findVar = True 
+        
+    if(not findVar):
+        familyMap[new_name] = new_name
+    
 
     factoryBlock = FactoryRenderableBlock.factoryRBs[block.getGenusName()]
     for rb in factoryBlock.child_list:
       blockLabel = rb.blockLabel
-      blockLabel.widget.setMenu();
+      #blockLabel.widget.setMenu();
       if(blockLabel.getText() == old_name):            
             blockLabel.labelChanged(new_name)
     
-    factoryBlock.blockLabel.widget.setMenu()
+    #factoryBlock.blockLabel.widget.setMenu()
     if(factoryBlock.blockLabel.getText() == old_name):
       factoryBlock.blockLabel.labelChanged(new_name)
     
@@ -142,11 +148,11 @@ class BlockLabel():
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
           for rb in factoryBlock.child_list:
             blockLabel = rb.blockLabel
-            blockLabel.widget.setMenu();
+            #blockLabel.widget.setMenu();
             if(blockLabel.getText() == old_name):
               blockLabel.labelChanged(new_name)
           
-          factoryBlock.blockLabel.widget.setMenu();
+          #factoryBlock.blockLabel.widget.setMenu();
           if(factoryBlock.blockLabel.getText() == old_name):
             #print(factoryBlock)
             factoryBlock.blockLabel.labelChanged(new_name)
