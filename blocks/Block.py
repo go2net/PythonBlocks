@@ -190,10 +190,10 @@ class Block():
 
     def getCustomerFamily(self):
         familyName = self.getGenus().familyName
-        if familyName not in self.canvas.family:
-            self.canvas.family[familyName] = {}
+        if familyName not in self.canvas.families:
+            self.canvas.families[familyName] = {}
             
-        return self.canvas.family[familyName]
+        return self.canvas.families[familyName]
 
     def hasBeforeConnector(self):
       return self.before != None;

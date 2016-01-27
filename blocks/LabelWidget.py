@@ -466,14 +466,21 @@ class LabelMenu(ShadowLabel):
        
         
     def doStuff(self, sender, name):
+        block_label = self.rb.blockLabel
         if(sender != self.lastSelectedItem):
           if(self.lastSelectedItem != None):
             self.lastSelectedItem.setChecked(False)      
           self.lastSelectedItem = sender
   
         sender.setChecked(True)
-        self.labelWidget.fireGenusChanged(self.familyMap[name])    
-        pass    
+        
+        familyMap = self.block.getSiblingsList()
+        customerFamilyMap = self.block.getCustomerFamily()
+        
+        if( name in familyMap):
+            block_label.labelChanged(familyMap[name]) 
+        elif(name in customerFamilyMap):
+            block_label.labelChanged(customerFamilyMap[name]) 
     
     def renameVariable(self, sender, item):
         block_label = self.rb.blockLabel
@@ -484,11 +491,22 @@ class LabelMenu(ShadowLabel):
           block_label.onRenameVariable(old_name, new_name)
           
     def newVariable(self, sender):
-        pass      
+        block_label = self.rb.blockLabel
+        #old_name = self.text()
+        new_name, ok = QtGui.QInputDialog.getText(self.window(), 'Create new variable','', QtGui.QLineEdit.Normal)     
+        if(ok and new_name != self.text()):
+            self.popupmenu = None
+            familyMap = self.block.getSiblingsList()
+            customerFamilyMap = self.block.getCustomerFamily()          
+            if(new_name not in familyMap and new_name not in customerFamilyMap):
+                customerFamilyMap[new_name] = new_name
+                block_label.labelChanged(new_name)  
     
     def setMenu(self): 
         isVariable = self.block.isVariable()
-        familyMap = self.block.getSiblingsList();
+        familyMap = self.block.getSiblingsList()
+
+        customerFamilyMap = self.block.getCustomerFamily()
         self.familyMap = familyMap
         self.isVariable = isVariable
         self.popupmenu = QtGui.QMenu();
@@ -498,25 +516,35 @@ class LabelMenu(ShadowLabel):
         
         if(familyMap == None): return
 
-        for key  in familyMap:
-          text = familyMap[key]
+        for key in familyMap:
+            text = familyMap[key]
+            entry = self.popupmenu.addAction(text)
+            entry.setCheckable (True)
+            if(text == self.text()):
+                isEditable = False
+                entry.setChecked(True)
+                self.lastSelectedItem = entry
+            self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, name=key: self.doStuff(sender, name))    
+
+        if(len(customerFamilyMap) > 0):
+            self.popupmenu.addSeparator()
+        
+        for key  in customerFamilyMap:
+          text = customerFamilyMap[key]
           entry = self.popupmenu.addAction(text)
           entry.setCheckable (True)
           if(text == self.text()):
-            isEditable = False  
             entry.setChecked(True)
             self.lastSelectedItem = entry
           self.connect(entry,QtCore.SIGNAL('triggered()'), lambda sender=entry, name=key: self.doStuff(sender, name))    
+               
         
         if(isVariable):
           if(len(familyMap) > 0):
              self.popupmenu.addSeparator()
           entry = self.popupmenu.addAction('Rename variable')
           self.connect(entry,QtCore.SIGNAL('triggered()'),  lambda sender=entry, item=self.lastSelectedItem: self.renameVariable(sender, item)) 
-          
-          #block_label = block.getBlockLabel()
-          #var_name = block_label.getText()
-          
+
           entry.setEnabled(isEditable)
           
           entry = self.popupmenu.addAction('New variable')  

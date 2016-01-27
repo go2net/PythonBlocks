@@ -102,7 +102,7 @@ class FactoryManager(WorkspaceWidget):
       * @param position
       *
       * @requires name != null &&
-      * 			 drawer to not already exist in BOTH static and dynamic set
+      *              drawer to not already exist in BOTH static and dynamic set
       '''
       if(self.isValidDrawer(True, False, name, position)):
          canvas = FactoryCanvas(self.canvas,name, color)
@@ -117,17 +117,17 @@ class FactoryManager(WorkspaceWidget):
 
    def isValidDrawer(self,sta, dyn, name, position):
       '''
-   	 * may not two draers with the same name
-   	 * @param sta
-   	 * @param dyn
-   	 * @param name
-   	 * @param position
-   	 * @return true if and only if the following conditions are met:
-   	 * 			-specified name is not null,
-   	 * 			-if "sta" is true, then 0<=position<staticdrawers.size
-   	 * 			-if "dyn" is true, then 0<=position<static drawers.size
-   	 * 			-there is NO other drawers with the same name as the
-   	 * 			 specified name (in oth static or dynamic sets)
+     * may not two draers with the same name
+     * @param sta
+     * @param dyn
+     * @param name
+     * @param position
+     * @return true if and only if the following conditions are met:
+     *          -specified name is not null,
+     *          -if "sta" is true, then 0<=position<staticdrawers.size
+     *          -if "dyn" is true, then 0<=position<static drawers.size
+     *          -there is NO other drawers with the same name as the
+     *           specified name (in oth static or dynamic sets)
       '''
       if(sta):
          if (position < 0): return False

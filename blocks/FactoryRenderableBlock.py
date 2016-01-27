@@ -14,7 +14,6 @@ from blocks.BlockUtilities import BlockUtilities
 from blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
-    factoryRBs = {}
     def __init__(self,workspaceWidget ):
         RenderableBlock.__init__(self, workspaceWidget)
 
@@ -25,17 +24,17 @@ class FactoryRenderableBlock(RenderableBlock):
         obj.createdRB = None
         obj.createdRB_dragged = False
         obj.child_list = []
-        FactoryRenderableBlock.factoryRBs[block.getGenusName()] = obj
         return  obj
      
     @classmethod     
     def from_blockID(cls, workspaceWidget, blockID, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
-        return  FactoryRenderableBlock.from_block(workspaceWidget,Block.getBlock(blockID),False, back_color)
+        return FactoryRenderableBlock.from_block(workspaceWidget,Block.getBlock(blockID),False, back_color)
      
      
     def createNewInstance(self):
         rb = BlockUtilities.cloneBlock(Block.getBlock(self.blockID), self.workspace.getActiveCanvas() )
         self.child_list.append(rb)
+        rb.factoryRB = self
         return rb
 
 

@@ -68,7 +68,7 @@ class BlockLabel():
       
       self.widget.fireTextChanged = self.textChanged
       self.widget.fireGenusChanged = self.labelChanged
-      #self.widget.fireMenuChanged = self.menuChanged
+      self.widget.fireMenuChanged = self.onRenameVariable
   
   def menuEnabled(self):
       return self.hasComboPopup and Block.getBlock(self.blockID).hasSiblings()
@@ -114,9 +114,10 @@ class BlockLabel():
           #workspace.notifyListeners(new WorkspaceEvent(workspace, rb.getParentWidget(), blockID, WorkspaceEvent.BLOCK_RENAMED));
 
   def onRenameVariable(self, old_name, new_name):
-    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
+    from blocks.RenderableBlock import RenderableBlock
     from blocks.BlockGenus import BlockGenus
     
+    rb = RenderableBlock.getRenderableBlock(self.blockID);
     block = Block.getBlock(self.blockID)
     familyMap = block.getCustomerFamily();
     
@@ -128,18 +129,18 @@ class BlockLabel():
         
     if(not findVar):
         familyMap[new_name] = new_name
-    
 
-    factoryBlock = FactoryRenderableBlock.factoryRBs[block.getGenusName()]
+    factoryBlock = rb.factoryRB
+
     for rb in factoryBlock.child_list:
-      blockLabel = rb.blockLabel
-      #blockLabel.widget.setMenu();
-      if(blockLabel.getText() == old_name):            
+        blockLabel = rb.blockLabel
+        #blockLabel.widget.setMenu();
+        if(blockLabel.getText() == old_name):   
             blockLabel.labelChanged(new_name)
     
     #factoryBlock.blockLabel.widget.setMenu()
     if(factoryBlock.blockLabel.getText() == old_name):
-      factoryBlock.blockLabel.labelChanged(new_name)
+        factoryBlock.blockLabel.labelChanged(new_name)
     
     if(block.getGenus().familyName in BlockGenus.familyBlocks):
       for genus in  BlockGenus.familyBlocks[block.getGenus().familyName]:

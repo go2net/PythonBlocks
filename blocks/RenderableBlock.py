@@ -27,6 +27,8 @@ class RenderableBlock(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         self._workspaceWidget = _workspaceWidget
         self.setMouseTracking(True);
+        self.factory_block = None
+
         
     def __del__(self):
         pass
@@ -130,6 +132,18 @@ class RenderableBlock(QtGui.QWidget):
     @blockID.deleter
     def blockID(self):
         del self._blockID 
+
+    @property
+    def factoryRB(self):
+        return self.factory_block
+        
+    @factoryRB.setter
+    def factoryRB(self, value):
+        self.factory_block = value
+
+    @factoryRB.deleter
+    def factoryRB(self):
+        del self.factory_block 
 
     @property
     def workspaceWidget(self):
@@ -754,17 +768,15 @@ class RenderableBlock(QtGui.QWidget):
             curBlockID = Block.getBlock(curBlockID).getAfterBlockID();
 
         return finalDimension;
+        
     def repaintBlock(self):
         self.clearBufferedImage();
-
         if(self.isVisible()):
           # NOTE: If it's not visible, this will throw an exception.
           # as during the redraw, it will try to access location information
           # of this
-          self.repaint();
+            self.repaint();
           #self.highlighter.repaint();
-
-
 
     #
     # Clears the BufferedImage of this
@@ -1132,7 +1144,6 @@ class RenderableBlock(QtGui.QWidget):
         self.focusedBlock = self
         
     def mouseMoveEvent(self, event): 
-        
         if(self.focusedBlock != None and self.focusedBlock.pickedUp):
             self.focusedBlock.mouseDragged(event)
             return            

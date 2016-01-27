@@ -1,77 +1,31 @@
 {
+  "Families": {
+    "num_var": {
+      "item1": "item1"
+    }
+  },
   "rb_list": [
     {
-      "X": 805.0,
-      "Y": 649.0,
-      "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
-        "PageLabel": "",
-        "genus-name": "bk",
-        "has-focus": false,
-        "id": "2fba2466-c327-11e5-a12f-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "steps",
-            "position": 0,
-            "type": "number"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 805.0,
-      "Y": 619.0,
-      "block_info": {
-        "AfterBlockId": "2fba2466-c327-11e5-a12f-e4115b280f9b",
-        "BeforeBlockId": "31631bba-c327-11e5-a030-e4115b280f9b",
-        "PageLabel": "",
-        "genus-name": "fd",
-        "has-focus": false,
-        "id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "steps",
-            "position": 0,
-            "type": "number"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 752.0,
-      "Y": 611.0,
+      "X": 171.0,
+      "Y": 112.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",
+        "Label": "item1",
         "PageLabel": "",
-        "genus-name": "setup",
+        "genus-name": "num_var",
         "has-focus": false,
-        "id": "31631bba-c327-11e5-a030-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "2e76cd18-c327-11e5-bd27-e4115b280f9b",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "",
-            "position": 0,
-            "type": "cmd"
-          }
-        ]
+        "id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
+        "plug": {
+          "con-block-id": "",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "number"
+        }
       },
       "is_collapsed": false
     }

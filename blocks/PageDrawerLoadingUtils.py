@@ -15,6 +15,7 @@ class PageDrawerLoadingUtils():
         if(block_drawersets == ''): return
         f=open(block_drawersets)
         data=json.load(f)
+
         if 'block_drawer_sets' in data:
             block_drawer_sets = data['block_drawer_sets']
             for drawerElement in block_drawer_sets:
@@ -29,31 +30,6 @@ class PageDrawerLoadingUtils():
                         drawerRBs.append(rb);
                     manager.addStaticBlocks(drawerRBs, drawerName) 
         return
-        
-        drawerSetNodes = root.findall("BlockDrawerSets/BlockDrawerSet")
-
-        for drawerSetNode in drawerSetNodes:
-         drawerNodes=drawerSetNode.getchildren()
-         # retreive drawer information of this bar
-         for drawerNode in drawerNodes:
-            if(drawerNode.tag == "BlockDrawer"):
-               drawerName = None
-               if("name" in drawerNode.attrib):
-                drawerName = drawerNode.attrib["name"]
-
-               canvas = manager.addStaticDrawerNoPos(drawerName, QtGui.QColor(100,100,100,0));
-
-               drawerBlocks = drawerNode.getchildren()
-               blockNode = None
-               drawerRBs = []
-               for blockNode in drawerBlocks:
-                  if(blockNode.tag == "BlockGenusMember"):
-                     genusName = blockNode.text
-                     newBlock = Block.createBlock(canvas, genusName, False)
-                     drawerRBs.append(FactoryRenderableBlock.from_block(canvas, newBlock,False, QtGui.QColor(225,225,225,100)));
-
-               manager.addStaticBlocks(drawerRBs, drawerName);
-
 
    def getNodeValue(node, nodeKey):
       pattern = "(.*)"

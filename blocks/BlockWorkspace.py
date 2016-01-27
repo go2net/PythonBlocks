@@ -69,7 +69,7 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
         self.pages = []
         self.dividers = []
         self.block_list = {}
-        self.family = {}
+        self.families = {}
 
         screen = QtGui.QDesktopWidget().availableGeometry()
         self.canvas.resize(screen.width(),screen.height());
@@ -208,7 +208,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
                 rb_list.append(rb.getRenderableBlockInfo());
             
             workspace_info['rb_list'] = rb_list
-
+        
+        workspace_info['Families'] = self.families
+        
         return workspace_info
 
     def reformBlockCanvas(self):
@@ -279,7 +281,9 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
             for rb in self.getTopLevelBlocks():  
                 rb.redrawFromTop()
-
+        if('Families' in blockWorkspaceInfo):
+            self.families = blockWorkspaceInfo['Families']
+            
         return loadedBlocks
 
     def getTopLevelBlocks(self):
