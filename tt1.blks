@@ -6,8 +6,8 @@
   },
   "rb_list": [
     {
-      "X": 171.0,
-      "Y": 112.0,
+      "X": 295.0,
+      "Y": 129.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",
@@ -17,7 +17,7 @@
         "has-focus": false,
         "id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
         "plug": {
-          "con-block-id": "",
+          "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -26,6 +26,56 @@
           "position": 0,
           "type": "number"
         }
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 185.0,
+      "Y": 126.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "af48b776-c587-11e5-b099-e4115b280f9b",
+        "PageLabel": "",
+        "genus-name": "fd",
+        "has-focus": false,
+        "id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "steps",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 132.0,
+      "Y": 118.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "setup",
+        "has-focus": false,
+        "id": "af48b776-c587-11e5-b099-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "cmd"
+          }
+        ]
       },
       "is_collapsed": false
     }

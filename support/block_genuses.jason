@@ -3,6 +3,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -12,6 +13,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -33,7 +35,7 @@
         },
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABAJJREFUWIXNV01sG0UU/t7Mrhs7cZBKSkhaEFRw4E8ciiqE1EMlUqBFXLiASGnzV36uLVKrkKIiOFQglQM9BIqo4ADqASGQQKhpQKWoEagSFVUDKlA1JLXj2OTHduzdnZnHwbHjpLvyJg6C7zbzvt337fvmzcwC/zEoDKn1m48ahXSeJdAAtGIjrGEL4th4R/cv9QqwwpCkcN704LxkoyECaUEAXcaYrQDur1dAzQqs/+rj5oaIM+sXY6ZtiY6ec/UIELUIUctrDYqx4DvrSR5KACZThaCQSWbW/+sCtKsdLhR9AgYouql6BchahNwXw/OxHY+0Ipd9iJrjBADseHAT01fTPf199QqobQEAKDqCxuhIechuxpNQR+tNDoRsQ+uOTYrJy1QExG+9asf5/FoIuKEN7z11KpK5eeZuYskgzpOno7DkW4S5J4DmKsv0JbDcpw2yUiDOZCx7nbo0tu3l6VULaB86cRnAPav8mBIU0tcf790Qlr64Bpip7uQAYKEF374WytolAm4bfm9z3ckX0Kba21csQBuq2ZJhoTzYKxYgSOfXSoDt6tAWVIguLBX6qRowTcuqyUwbz5x4gIEOYlyY6Oj7rhyqdMGmoZMbDdT4Wghggx8FROfEju4rm08P3lTU8ndYaKkIZHxJlu5ObH8hXbGApRvqchIGJLCVyXzSdvr9gwWSn1cnBwBB2AVtdQJVFmgjZK19mV2vlCASYo0RthBoS0BUaMP7AbwTznatYXLzMLnSySyaYhBNMaCm5GBIKh2EixYo4/82Brzx1JiZmz/AUSdOZDeZbP5FlUj+Cg5OwEUXOj0Dk/e/TvBcloAqC1hIgs8bWSmwxO6pvf1nq6YHN3zw+ggr9TPZNxaRHRd6ehYo6CQXnBbRELEgFxuD54sw+eJvSyogBGtfpUxX0nsHzi6fn+o5fJGE+MnvGT0z+z2rYltq36ttqa5+202kzqjRv1hPTUMn09CZ2XcJ1q4lAsho34KqCAVeu5QQd/nNE+jDqa4jycqY13Uibh/lnDvBnj7Hje6hyedfyZe4C7j968E2Zcvrfi9kxvGIJQ9c295VBEr/CVI6gwA958c3oPuSj/ZcDhJejUoFHKF9LQAAInQp7T1ZHluWuzOfzT0dxJdqFWeBKmQDb78AYlrzzvLAaH64MR5vCCJ7k5OxFQuI/pFU5Y1mOdhT4Om5ylrQmZlgruNCeNrXSj9Uemh8/7HCLSff+AxMT0EKC0QgAtgwjDEjFulDZa509XE9+feDEPQYxMI3MAPGwAAj6d6Ba2EFLNl8HFv2MrgPRl9U2vvTuHrUaDNkKfNMcs/h0TIvsefgmDDYzaw/hfZ+gFYXjFLnwfw2wXSGTf6/wD/G2MDyJ2gYdQAAAABJRU5ErkJggg==",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABAJJREFUWIXNV01sVFUU/s699w39G2qw2LSgUaIL/+ICQ4wJCxKLCsaNG41FmP7gzxZMILUYjC6IJriQRRUj0YWGhTGaaAylGsTQaEgkImhQCbVlptOp/Z3OvPfuvcfFdKbT8l7mtVOj3+7e8713vne+e+69D/iPQVFIzV9/WC+k+wyBemE0W6EGFMTR4baOn6sVoKKQpHDf8OG+6KAmBqkggIS1dguA+6oVULEC6778aG1NzJ0KijHT1mRb59lqBIhKhFrlN4fFWPAd1SSPJACj6VxYyKbG1/3rAoxnXM7lAwIWyHvpagXISoTZzwfm6rY/3IzpqQepcS0BALs+vOTE1UxnT3e1AipbAACaDiNeP1gcsjfmS+gj1SYHIrahun2jZvLHSwLirVedOJ9bDQE3tOE9J0/Gxm+evItYMoiz5JtaKPkmYfJx4KYyy8xFsNxrLGakQJzJKmeNvji09aWJFQto7T9+CcDdK/yYAjQy1x/rWh+VvrAGmKnq5ACg0IRvXo1k7SIBtw68u6nq5PNo0a2tyxZgLFVsyajQPpxlCxBksqslwPFMZAtKRA9KR36qAmzDkmoy04bTx+9noI0Y50faur8thkpdsLH/xAYLPbwaAtjiBwHRPrK948qmU32NeSN/h0JTSSDjC1KmI7nt+UzJApZepMtJFJDAFib7ccup9w7kSH5WnhwABGEnjGoHyiwwVshK+zJ7fiFBLMIaI2wm0OaQqDCW9wF4O5rtxsDOzsHOFk5m0VAH0VAHVJQcDkmFg3DBAm2D38aAP5westNz+7nWjRM5DXYm+4JOpn4FhyfgvAeTmYTNBl8neHqGgDILWEhCwBtZa7DErrE9PWfKpvvWv//aIGv9Ezk3FpFdD2ZiCsiZFOfcJlETU5ALjcFzedhs/rdFFRCCTaBSpiuZPb1nls6PdR66QEL8GPSMmZz6jnW+Jb33lZZ0osfxkunT+pe/2IxNwKQyMONT7xDUzkUCyJrAguoYhV67tBB3Bs0T6IOxxOFUacxr2tHoHOFZb4R9c5brvYOjz72cLXDncdtXfS3akdeDXsiMYzEl91/blsgDhf8EKd0+gJ4N4lvQvalHOi+FCS9HqQKuMIEWAAAREtr4TxTHSnk7sjOzT4XxpV7BWaBzM6G3XwB1xvCO4sAafqg+Hq8JI/ujo3XLFlD7R0oXN5qlYF+DJ6ZLa8GMT4ZzXQ/CN4FWBqHUQ8P7juZuOfH6p2B6ElIoEIEIYMuw1g4qMgeLXOmZY2b07wcg6FGI+W9gBqyFBQYzXb3XogpYtPm4juxicDesuaCN/6f1zGVrbL/S9unU7kOXi7zk7gNDwmIXs/kExv8eRp+3Wp8D81sE2x41+f8C/wDbncD0fnUzvwAAAABJRU5ErkJggg==",
           "isEditable": false,
           "location": "CENTER",
           "url": "",
@@ -73,6 +75,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -82,6 +85,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -94,7 +98,7 @@
       "Images": [
         {
           "height": 48,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTUtMDMtMDVUMDg6MTc6MDQrMDg6MDCgVeiYAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE1LTAzLTA1VDA4OjE3OjA0KzA4OjAw0QhQJAAAB7lJREFUaIHdWWtsnmUZvu7ned9+h7Zf2brSwxhMkYiixoTgATXIJuKGkRhjExXmTvwAjU7REJyjqYkjJApqZqSDQZwaXUOIpxi2SooTTDHwYwqJm0PY7NbT2q3f6T0993P7o7Tp9/Xrd+wW9Ur6o897P/d7XXmf5z59wP84qFEHHcP7WrSNtwOAmNCbaJqYwc39pnFq1aFuAZ2HDzYrHXyORO4EqfVgI9BO3gpGHKhHRm/Z/veVJLoc6hLQ/duBJCXU3oiCu13Em5YYWLwqjnxxbMNdLzfMsAJUXbuS6vPLkp/zep0w9XUM72tphFw1qFnA6j/8LEWWtixLft4x2Zsck3hv/dSqQ80CEk7UaVV0dUXDsYlWUfKWuljVgJoFGDFGwa0cZbq7ScJI18WqBtQswJmcicTPVxQgYQSZSbfVR6t61CyAQw7C6UxOPL+MkYX9xzjDDycbIVcNahYwvv1b5zTbZ+xs1orhpQYC2HQWfJnzV5amP60EyXKoPYwSSUBmr0RmQP51VoofSxghygSvK6KvT++87+yKsCyDuvLA7Lb+CzDUj8tbRyCFGiQcjzTMQ5Pbvj2yIgwroL5EBmDyrt0TlEj+HlSYzElffszR+qmGmVUJp96NPUM/bReKPli8bpOxlJPsWAtguiFmVWLZWuidg4NNF1LZTnZNikSLSyaIoA1FnICjrwWwgzC2CeguEev5FRG9n4CX2CKjFVwAcSHrECPjJM2p0x+55/xFE9A1NHCDgv4aiN8Po1NwImHjhNohRohY1OSvqlRKALCwXg42ERgN7QRwEYeKAF/DHtfAw2f+fOZp9PfbFRWw9o+PvUdAvwLwjkYcV4TBOXHxhbGNO4804qbwEouQFdyNi00eABysEcF2DPfVfQ+BIgHdz+1vF0s3NsashpdbvKvLu3JVQz4W/+NYtIlIe2O0agBJM7km0YiLgs/HlrRyqO7cUCuY4VoLtxEfBWTZIjLgS9aQayWu9k2laFYWBQJczaHDOmyMVg0QWKWooTBacIRCOAbExsFF70PmoJWyLVT6ZSK09tnH320FHyWCS4KXqbntxdEbe73FZgVfIB5ZpZS6ZHcAY1gNcq9fst7Xp7qGHv+0CH5DRD8E6HsS0O84P/to99DAlYtNC8haN6aIL90lRjccYnx57ZEnrplfeuvQQFvPh9ftUpYGQLR+wTaOFgJtEeh93cMDa+aXC46Q6JAIQrhURwgAKbxPxP6ye+ixpwDAI7oVeXyIkqWjkyLcJuzcAeAHQFEp0fPME+ug+WiB8v9GCF7wo9jmmc13pouOkFWwXNu0jnmugQ8jgEu0mBcBRnCVq712oFQ/oJ3qBDDDZvMQL4DwXCQkrUCJOFRLEtAX7yppglZgByi+A0pTxCG5Fe6AGIY9n4a8kWXpbjpLwL8BKyaUHh3l1kkYOXp1CtA13iVBVdNak/dj8DLJJQIQRkSkqWyjKYBkcrB5/zR1Nf0IsL+WpJlQfou4xl9jHfUJCbxdNq2vVZelqiIkfgib8wARUCIGlYyjuFVdDG2iMMpG/hIBojQVN+lLXmYMrB+cFI0dU1t3Hy16nAMw0HHgOyPWCw5Qi7me3PLVsgQh+PwskOUL0PDFC9ZIEDq6raXkF5S8D5vzjwOxs0BRHiDLIorLK4jGImHZe27rnmLyC5ja8cAxEd6NyJ8t6wuAPTkhMPw04thkY+omIXxF8v4/eXoW4oeAyNwfM2wmB3M6E1rDB6d33pcBir4AOcq6grICxOl5g5PZil1UMtX8YhRLngBww7JGzJA18ecl9L80ta1//M3VEx0HHvyLDYPvyyu5DXRlM4FoztZ4ETU37Vc6dmjexZIvADZlBZgmWh1rS62vJCBoafmAUept5WzEiiXQk4vIAwCmdtx/jCR2B7rch8TzT0g2PCMRPy9o+qo0h/dPbPlmboHz4o1rh/dfIayOAqg0Fj/MHG6ZuPWekrPPdc8OXM1WHwJhaZ2zCGFgp1U+v2Hys7v+VtJgcFC3p1/v1GTjLGpq/tgsRsER0r5w6IpRlULH2NjHVVf3A1cNP/mNUzdvK5jydh4+2MwS9FciDwBNMbY21rp8/9Hby9NA2fFkwREKFLMCVTX7J8I2w9Enix85Trg5l8l+pqIPABFcrc0KdmSuuIaBoMq9SQY2FS9axsbm1tZ4NQ5c9lyTSVdluxwKBHj+TKSisFoBAEuJsya5pWulYT2PJO81VHMUbE68Nm7MhUxOwqj8LgIkMpDz6dXoK5zr8PQFU3E/5hKYzNpJFXFDI/gCAaP3PuIhMC/YmVnYdBbih3NEDQNsAbaQyMBmPdiZWYgfjKK/8Fd58YNzPD0Lm87NVamG34zhPOcrCGEzOfBMGix8ZDz19tFGBCzJ86LlJ2LMdTKb+xRU3gERQLRQmogVwFpYYMQh++MlDpVziA1vtMdnPoaemIZSIJpLpgtZVQQWGIHlh9Hb21ANXjJetv3iwVVNId9OwG0gXGMgrQQoZZUnhDMK8pxi+fn4zj2nSu3vOvDdDqvldoFsJGAdoBKAiLUSklIBibwkJI9Obd3zWiPklxWwgOE+54qTSOXjiWQ8iogdE7jxVGa0916v7L55DA7qTv9U3Oesq8KEOKs8jiHFo6+mg0an0v83+A8F/LzHLIOcUwAAAABJRU5ErkJggg==",
+          "icon": "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",
           "isEditable": false,
           "location": "CENTER",
           "url": "file:///F:/projects/PythonBlocks/resource/117-puzzle.png",
@@ -136,7 +140,7 @@
       "Images": [
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABAJJREFUWIXNV01sVFUU/s697w3tdEYTLDYtaJTowr+4wBBjwoLEooJx40ZjEfqHP1swgdRiMLogmuBCFlWMRBcaFsZoojGUahBDoyGRSACDSqgtM53OMG1npjPvvXvvcTGd6bS8l3nt1Oi3u/d8753vne+ee+8D/mNQGFLbd5+0COk8T6BBaMVGWCMWxJHxzp7fGhVghSFJ4bztwXnFRlME0oIAuo0xmwE82KiAuhVY+82ntzRFnBm/GDNtSXT2nmlEgKhHaLa8tqAYC767keShBGAyVQwKmWRm7b8uQLva4WLJJ2CAkptqVICsR8h/NTIX3fZYGwr5RygeIwBgx4ObyF5N9w70NyqgvgUAoOgQok2jlSG7NzwJdbjR5EDINrTu2qCYvExVQLztqh3ns6sh4KY2vP/EiUjmtul7iSWDuECeboYl3yHkngLiNZbpC2C5RxvkpECcyVj2GnVhbMur2RUL6Bg+dhHAfSv8mDIU0tef7FsXlr6wBpip4eQAYKEV378RytpFAu4Y+WBjw8nn0a46OpYtQBuq25JhoTzYyxYgSBdWS4Dt6tAWVIkuLBX6qTowsSXVZKb1p449xEAnMc5NdPb/UAlVu2DD8PH1Bmp8NQSwwc8ComtiW8+VjSeHbi1p+QcstFYFMr4mS/cktr6UrlrA0g11OQkDEtjMZD5rP/nh/iLJL2uTA4Ag7IC2uoAaC7QRst6+zK5XThAJscYImwi0KSAqtOG9AN4LZ7vWMPk5mHz5ZBaxKEQsCtSVHAxJ5YNwwQJl/N/GgDeeGjOzc/u42YkT2TGTK7ysEsnL4OAEXHKh09MwBf/rBM/mCKixgIUk+LyRlQJL7JzaPXC6Znpo3UdvjrJSv5J9cxHZcaGzM0BRJ7notIqmiAW50Bg8V4IplH5fVAEhWPsqZbqS3j14eun8VO/B8yTEL37P6OmZH1mV2lN7Xm9PdQ/YbiJ1Sl3+m/VUFjqZhs7MvE+wdiwSQEb7FlRFKPDapYS4x2+eQB9PdR9KVse8pgsx+zDn3Qn29BlucQ9Mvvhaocydx53fDrUrW173eyEzjkYsue/a1u4SUP5PkNIZAugFP74BPZB8vPdikPBaVCvgCO1rAQAQoVtp7+nK2LLc7YVc/tkgvlQrOAtUMRd4+wUQ1Zq3VwZG86Mt8XhTENmbnIwuW0Dzn0lV2WiWgj0Fzs5W14LOTAdzHRfC075W+qHaQ+N7jxRvP/7WF2B6BlJYIAIRwIZhjBm1SB+ocKWrj+rJGw9D0BMQ89/ADBgDA4ym+wavhRWwaPNxbNnH4H4YfV5p7y/j6ktGm2FLmeeSuw5eqvASu/aPCYOdzPpzaO8naHXOKHUWzO8STFfY5P8L/AOwC8DwUGXbHAAAAABJRU5ErkJggg==",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABAJJREFUWIXNV01sVFUU/s697w3tdKYkWGymoFGiC//iAkOMCQsSiwrGjRuNRegf/mzBBFKLweiCaIILWVQxEl1oWBijicZQqkEMjYZEIikaVEJtmZ9O7c90OvPeu/ceF9OZTst7mddOjX67e8/33vne+e659z7gPwaFIbV+81GTkM6zBOqHVmyENWRBHB9r7/qlXgFWGJIUzpsenJdsNEQgLQig0xizDcD99QqoWYENX33c3BBxZvxizLQ92d59vh4Bohah0fJag2Is+M56kocSgHSmEBQyqckN/7oA7WqHC0WfgAGKbqZeAbIWYe6LofnozkdakZt9iJrjBADseHCTU9ey3X299QqobQEAKDqKWHS4PGQ360moY/UmB0K2oXXHZsXkTVYExBPX7DhfWAsBN7XhvadPRyZvmb6bWDKI8+TpRljyLcLME8D6Ksv0ZbDcrw1yUiDOZCx7nbo8uv3lqVULaBs8OQLgnlV+TAkK2RuP92wMS19cA8xUd3IAsNCCb18LZe0SAbcNvbel7uQLSKi2thUL0IZqtmRYKA/2igUI0vm1EmC7OrQFFaILS4V+qgZMbFk1mWnT2ZMPMNBOjIvj7b3flUOVLtg8eGqTgRpbCwFs8KOA6Bjf2XV1y5mB9UUtf4eFlopAxpdk6a7kjheyFQtYuqEuJ2FAAtuYzCeJM+8fKpD8vDo5AAjCbmirA6iyQBsha+3L7HqlBJEQa4ywlUBbA6JCGz4A4J1wtmsNMzcPM1c6mUUsChGLAjUlB0NS6SBctEAZ/7cx4I1lRs3s/EFudOJEdszk8i+qZOpXcHACLrrQ2WmYvP91gmdzBFRZwEISfN7ISoEl9kzs6ztXNT2w8YPXh1mpn8m+uYjsuNBTM0BBp7jgtIiGiAW52Bg8X4TJF39bUgEhWPsqZbqa3dd/bvn8RPeRSyTET37P6OmZ71kVE5n9ryYynX22m8ycVSN/sZ6Ygk5loSdn3iVYu5cIIKN9C6oiFHjtUkLc5TdPoA8nOo+mKmNe14Fm+xjPuePs6fPc5B5OP/9KvsRdwO1fDySULW/4vZAZJyKWPHh9R2cRKP0nSOkMAPScH9+A7ks92j0SJLwalQo4QvtaAABE6FTae7I8tix3Vz4393QQX6pVnAWqkAu8/QKIas27ygOj+eGmeLwhiOyl09EVC2j8I6XKG81ysKfAU7OVtaAnp4O5jgvhaV8r/VDpobEDxwu3nnrjMzA9BSksEIEIYMMwxgxbpA+XudLVJ3T67wch6DGIhW9gBoyBAYazPf3XwwpYsvk4tuxhcC+MvqS096dx9RWjzaClzDOpvUeulHnJvYdGhcEeZv0ptPcDtLpolLoA5rcJpiNs8v8F/gHE0MDyWZ46zAAAAABJRU5ErkJggg==",
           "isEditable": false,
           "location": "CENTER",
           "url": "",
@@ -176,6 +180,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -228,6 +233,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -237,6 +243,7 @@
           "type": "poly"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -311,6 +318,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -353,6 +361,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -405,6 +414,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -414,6 +424,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -456,6 +467,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -465,6 +477,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -474,6 +487,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -516,6 +530,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -558,6 +573,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -600,6 +616,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -613,11 +630,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.logic"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "boolean"
+          "value": ""
         }
       ],
       "color": {
@@ -642,6 +659,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -684,6 +702,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -726,6 +745,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -970,6 +990,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -979,6 +1000,7 @@
           "type": "cmd"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1021,6 +1043,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1063,6 +1086,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1072,6 +1096,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1114,6 +1139,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1156,6 +1182,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1165,6 +1192,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1207,6 +1235,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1249,6 +1278,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1258,6 +1288,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1300,6 +1331,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1342,6 +1374,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1351,6 +1384,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1393,6 +1427,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1435,6 +1470,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1477,6 +1513,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1519,6 +1556,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1561,6 +1599,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1603,6 +1642,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1645,6 +1685,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1687,6 +1728,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1729,6 +1771,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1771,6 +1814,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1813,6 +1857,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1855,6 +1900,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1864,6 +1910,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1877,11 +1924,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.logic"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "ifBlock"
+          "value": ""
         }
       ],
       "color": {
@@ -1906,6 +1953,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1915,6 +1963,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1924,6 +1973,7 @@
           "type": "cmd"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -1966,6 +2016,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2008,6 +2059,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2017,6 +2069,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2059,6 +2112,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2101,6 +2155,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2143,6 +2198,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2185,6 +2241,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2227,6 +2284,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2269,6 +2327,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2311,6 +2370,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2353,6 +2413,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2395,6 +2456,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2437,6 +2499,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2479,6 +2542,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2521,6 +2585,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2563,6 +2628,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2605,6 +2671,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2647,6 +2714,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2656,6 +2724,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2698,6 +2767,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2707,6 +2777,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2749,6 +2820,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2758,6 +2830,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2767,6 +2840,7 @@
           "type": "poly"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2809,6 +2883,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2818,6 +2893,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2827,6 +2903,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2869,6 +2946,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2911,6 +2989,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2920,6 +2999,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2929,6 +3009,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -2971,6 +3052,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3013,6 +3095,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3022,6 +3105,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3031,6 +3115,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3073,6 +3158,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3082,6 +3168,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3091,6 +3178,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3133,6 +3221,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3175,6 +3264,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3184,6 +3274,7 @@
           "type": "boolean"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3226,6 +3317,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3300,6 +3392,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3406,6 +3499,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3448,6 +3542,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3490,6 +3585,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3564,6 +3660,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3638,6 +3735,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3680,6 +3778,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3722,6 +3821,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3731,6 +3831,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3740,6 +3841,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3782,6 +3884,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3824,6 +3927,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3866,6 +3970,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3908,6 +4013,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3950,6 +4056,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -3992,6 +4099,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4001,6 +4109,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4010,6 +4119,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4052,6 +4162,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4061,6 +4172,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4103,6 +4215,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4145,6 +4258,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4187,6 +4301,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4196,6 +4311,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4205,6 +4321,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4247,6 +4364,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4256,6 +4374,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4298,6 +4417,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4307,6 +4427,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4349,6 +4470,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4391,6 +4513,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4400,6 +4523,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4442,6 +4566,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4772,6 +4897,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4814,6 +4940,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4920,6 +5047,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -4962,6 +5090,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5004,6 +5133,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5046,6 +5176,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5088,6 +5219,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5130,6 +5262,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5143,11 +5276,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.variables"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "set_str_var"
+          "value": ""
         }
       ],
       "color": {
@@ -5172,6 +5305,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5214,6 +5348,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5256,6 +5391,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5298,6 +5434,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5340,6 +5477,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5382,6 +5520,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5424,6 +5563,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5466,6 +5606,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5475,6 +5616,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5517,6 +5659,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5559,6 +5702,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5568,6 +5712,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5610,6 +5755,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5652,6 +5798,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5661,6 +5808,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5703,6 +5851,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5745,6 +5894,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5787,6 +5937,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5800,11 +5951,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.variables"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "str_var"
+          "value": ""
         }
       ],
       "color": {
@@ -5829,6 +5980,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5838,6 +5990,7 @@
           "type": "string"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5847,6 +6000,7 @@
           "type": "string"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5889,6 +6043,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5931,6 +6086,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5940,6 +6096,7 @@
           "type": "number"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5982,6 +6139,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -5995,11 +6153,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.text"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "text_const"
+          "value": ""
         }
       ],
       "color": {
@@ -6024,6 +6182,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6037,11 +6196,11 @@
       "LangSpecProperties": [
         {
           "key": "module_name",
-          "value": "generators.python.text"
+          "value": ""
         },
         {
           "key": "function_name",
-          "value": "text_print"
+          "value": ""
         }
       ],
       "color": {
@@ -6066,6 +6225,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6075,6 +6235,7 @@
           "type": "string"
         },
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6117,6 +6278,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6159,6 +6321,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6201,6 +6364,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6243,6 +6407,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6285,6 +6450,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6327,6 +6493,7 @@
     {
       "BlockConnectors": [
         {
+          "con-block-id": "",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -6368,21 +6535,21 @@
     }
   ],
   "Families": {
+    "math_arithmetic": {
+      "difference": "-",
+      "product": "\u00f7",
+      "quotient": "\u00d7",
+      "sum": "+"
+    },
     "num_var": {
-      "a":"a",
-      "b":"b",
-      "c":"c"
+      "a": "a",
+      "b": "b",
+      "c": "c"
     },
     "str_var": {
-			"text1":"text1",
-      "text2":"text2",
-      "text3":"text3"
-    },
-    "math_arithmetic": {
-			"sum":"+",
-      "difference":"-",
-      "quotient":"¡Á",
-      "product":"¡Â"
-    }    
+      "text1": "text1",
+      "text2": "text2",
+      "text3": "text3"
+    }
   }
 }

@@ -59,7 +59,8 @@ class MainWnd(QtGui.QMainWindow):
         self.wndApplyGenus.hide()
         self.lwBlockGenus.setMainWnd(self)
         #self.blockPreviewWnd.resizeEvent = self.onResize
-
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
+        
     def getInstance():
         print(MainWnd.instance)
         if(MainWnd.instance == None): 

@@ -62,12 +62,17 @@ class DrawerSetsTreeView (QtGui.QTreeView):
                 rename_nodes_action.triggered.connect(lambda: self.onRenameNode(focusedItem))
                 remove_nodes_action = self.popMenu.addAction('Remove - ' + focusedItem.obj)
                 remove_nodes_action.triggered.connect(lambda: self.onRemoveNodes(focusedItem))
+                #self.popMenu.addSeparator()            
             else:
                 remove_node_action = self.popMenu.addAction('Remove - ' + focusedItem.obj.getBlock().genusName)
-                remove_node_action.triggered.connect(lambda: self.onRemoveNode(focusedItem))        
+                remove_node_action.triggered.connect(lambda: self.onRemoveNode(focusedItem))
+                #self.popMenu.addSeparator()             
+        else:
+            add_nodes_action = self.popMenu.addAction('Add new drawset')
+            add_nodes_action.triggered.connect(self.onAddNewDrawset)    
         
-            self.popMenu.addSeparator()    
-            
+        self.popMenu.addSeparator()
+        
         expand_all_action = self.popMenu.addAction('Expand all')
         self.connect(expand_all_action,QtCore.SIGNAL("triggered()"),self.expandAll)    
         
@@ -81,12 +86,17 @@ class DrawerSetsTreeView (QtGui.QTreeView):
     def onRenameNode(self, node):        
         old_name = node.obj
         new_name, ok = QtGui.QInputDialog.getText(self.window(), 'Rename variable','Change variable name from "{0}" to'.format(old_name), QtGui.QLineEdit.Normal, old_name)     
-        node.obj = new_name
-        index = self.model.getIndexForNode(node)
-        self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+        if(ok):
+            node.obj = new_name
+            index = self.model.getIndexForNode(node)
+            self.model.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
         
     def onRemoveNode(self,  node):
         self.model.removeNode(node)
+        
+    def onAddNewDrawset(self):
+        drawer_name, ok = QtGui.QInputDialog.getText(self.window(), 'Add new Drawer Set','', QtGui.QLineEdit.Normal)     
+        self.model.addNode(drawer_name)        
         
     def onRemoveNodes(self,  rootNode):
         
@@ -459,6 +469,12 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
         node.parent().remove(node)
         self.removeRow(row, parent_index)
         self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), parent_index, parent_index) 
+        
+    def addNode(self, drawerName):
+        node = DrawerSetsTreeNode(self.rootNode, drawerName, False)
+        self.rootNode.children.append(node)  
+        index = self.getIndexForNode(node)        
+        self.insertRow(index.row(), index.parent())
         
 class DrawerSetsDelegate(QtGui.QItemDelegate):
     def __init__(self, treeModel):

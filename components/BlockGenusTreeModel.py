@@ -73,8 +73,8 @@ class BlockGenusTreeModel(QPropertyModel):
         labelList= []
         if familyName in BlockGenus.families:            
             family = BlockGenus.families[familyName]
-            for varName in family:
-                labelList.append(varName)  
+            for varName in family:                
+                labelList.append(family[varName])  
         if(labelList != []):
             self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1], Property.COMBO_BOX_EDITOR,labelList)
         else:
@@ -144,7 +144,12 @@ class BlockGenusTreeModel(QPropertyModel):
     def onFamilyChanged(self, familyName, sender):
         if familyName != 'n/a' and familyName in BlockGenus.families:            
             self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
-            self.properties['initLabel'].obj_data = BlockGenus.families[familyName]
+            
+            var_list = []
+            for key in BlockGenus.families[familyName]:
+                var_list.append(BlockGenus.families[familyName][key])
+            #print(var_list)
+            self.properties['initLabel'].obj_data = var_list
         else:
             self.properties['initLabel'].editorType = None
             self.properties['initLabel'].obj_data = None           
@@ -286,7 +291,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 if value in BlockGenus.families:            
                     family = BlockGenus.families[value]
                     for name in family:
-                        labelList.append(name)  
+                        labelList.append(family[name])  
   
                     self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
                     self.properties['initLabel'].propertyData = labelList

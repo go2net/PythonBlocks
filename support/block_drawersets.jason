@@ -153,6 +153,13 @@
         "set_str_var"
       ],
       "drawer": "variables"
+    },
+    {
+      "genus-list": [
+        "bar-graph",
+        "asin"
+      ],
+      "drawer": "VISA Library"
     }
   ]
 }
