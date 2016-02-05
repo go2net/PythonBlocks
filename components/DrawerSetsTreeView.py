@@ -58,13 +58,13 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         if(focusedItem != None): 
             if not focusedItem.isLeafNode():
                 #action = self.popMenu.addAction('Rename')
-                rename_nodes_action = self.popMenu.addAction('Rename - ' + focusedItem.obj)
+                rename_nodes_action = self.popMenu.addAction('Rename - "' + focusedItem.obj +'"')
                 rename_nodes_action.triggered.connect(lambda: self.onRenameNode(focusedItem))
-                remove_nodes_action = self.popMenu.addAction('Remove - ' + focusedItem.obj)
+                remove_nodes_action = self.popMenu.addAction('Delete - "' + focusedItem.obj + '"')
                 remove_nodes_action.triggered.connect(lambda: self.onRemoveNodes(focusedItem))
                 #self.popMenu.addSeparator()            
             else:
-                remove_node_action = self.popMenu.addAction('Remove - ' + focusedItem.obj.getBlock().genusName)
+                remove_node_action = self.popMenu.addAction('Delete - "' + focusedItem.obj.getBlock().genusName+'"')
                 remove_node_action.triggered.connect(lambda: self.onRemoveNode(focusedItem))
                 #self.popMenu.addSeparator()             
         else:

@@ -8,6 +8,7 @@ class GenusListWidget(QListWidget):
         #self.itemChanged.connect(self.onItemChanged)
         self.viewport().installEventFilter(self); 
         self.installEventFilter(self); 
+        self.popMenu = QMenu(self)
         #self.setMouseTracking(True);
     def setMainWnd(self, mainWnd):
         self.mainWnd = mainWnd
@@ -133,6 +134,21 @@ class GenusListWidget(QListWidget):
         BlockGenusesInfo['BlockGenuses'] = genusList
         
         return json.dumps(BlockGenusesInfo, sort_keys=True, indent=2)
+        
+    def contextMenuEvent(self, event):
+        self.popMenu.clear() 
+        genusName =  self.currentItem().text()
+        remove_node_action = self.popMenu.addAction('Delete - "' + genusName+'"')
+        remove_node_action.triggered.connect(lambda: self.onRemoveNode(self.currentItem()))
+        add_node_action = self.popMenu.addAction('Add new item')
+        add_node_action.triggered.connect(self.onAddNewNode) 
+        self.popMenu.exec_(self.mapToGlobal(event.pos()))
+        
+    def onRemoveNode(self,  item):
+        pass
+ 
+    def onAddNewNode(self):
+        pass 
     '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus
