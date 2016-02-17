@@ -746,6 +746,29 @@ class BlockGenus():
         color_info['b'] = color.blue()
         return color_info     
 
+    def createDefaultGenus():
+        genusInfo = {}
+        genusInfo['name'] = 'Notitle'
+        genusInfo['color'] = BlockGenus.getColorInfo(QtGui.QColor(0, 0, 0))
+        genusInfo['kind'] = "function"
+        genusInfo['family_name'] = ""
+        genusInfo['initlabel'] = ""
+        genusInfo['editable-label'] = False
+        genusInfo['var-label'] = False
+        genusInfo['label-unique'] = False
+        genusInfo['is-starter'] = False
+        genusInfo['is-terminator'] = False       
+        genusInfo['is-label-value'] = False
+        genusInfo['label-prefix'] = ""
+        genusInfo['label-suffix'] = ""
+        genusInfo['page-label-enabled'] = False
+        
+        genusInfo['LangSpecProperties'] = {}
+        genusInfo['BlockConnectors'] = []
+        genusInfo['Images'] = []
+        BlockGenus.loadGenusInfo(genusInfo)
+        return genusInfo
+        
     def getGenusInfo(self):
         genusInfo = {}
         genusInfo['name'] = self.genusName
@@ -925,7 +948,7 @@ class BlockGenus():
             col = genus_info["color"]
             newGenus.color = QtGui.QColor(int(col['r']), int(col['g']), int(col['b']));
         else:
-            newGenus.color = QtCore.Qt.BLACK;
+            newGenus.color = QtCore.Qt.black;
 
         if 'kind' in genus_info:
             newGenus.kind = genus_info["kind"]

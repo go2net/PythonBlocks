@@ -148,6 +148,9 @@ class GenusListWidget(QListWidget):
         pass
  
     def onAddNewNode(self):
+        from blocks.BlockGenus import BlockGenus
+        genus_info = BlockGenus.createDefaultGenus()
+        self.mainWnd.InitBlockGenusListWidget()
         pass 
     '''
     def onItemChanged(self, item):

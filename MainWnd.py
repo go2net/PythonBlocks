@@ -62,7 +62,7 @@ class MainWnd(QtGui.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         
     def getInstance():
-        print(MainWnd.instance)
+        #print(MainWnd.instance)
         if(MainWnd.instance == None): 
             MainWnd.instance = MainWnd()
             print()
@@ -155,6 +155,7 @@ class MainWnd(QtGui.QMainWindow):
     def InitBlockGenusListWidget(self):
         from blocks.BlockGenus import BlockGenus
         
+        self.lwBlockGenus.clear()
         for name in sorted(BlockGenus.nameToGenus):
           item = QtGui.QListWidgetItem()
           item.setText(name)
