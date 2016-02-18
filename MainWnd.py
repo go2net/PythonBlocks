@@ -157,6 +157,7 @@ class MainWnd(QtGui.QMainWindow):
         
         self.lwBlockGenus.clear()
         for name in sorted(BlockGenus.nameToGenus):
+          if name == '__previewGenus__': continue
           item = QtGui.QListWidgetItem()
           item.setText(name)
           item.setData(QtCore.Qt.UserRole, BlockGenus.nameToGenus[name])
