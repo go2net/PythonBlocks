@@ -17,6 +17,7 @@ class Property(QtCore.QObject):
     COLOR_EDITOR = 5
     CHECKBOX_EDITOR = 6
     IMAGE_EDITOR = 7
+    EDITOR_NONE = 9
   
     def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
         super(Property, self).__init__(parent)

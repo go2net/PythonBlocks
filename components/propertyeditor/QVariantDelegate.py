@@ -22,8 +22,8 @@ class QVariantDelegate(QtGui.QItemDelegate):
                     self.connect(editor, QtCore.SIGNAL("editFinished()"), self.m_finishedMapper, QtCore.SLOT("map()"));
                     self.m_finishedMapper.setMapping(editor, editor);
 
-            if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
-                self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
+                if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
+                    self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
 
         else:
             editor = super(QVariantDelegate, self).createEditor(parent, option, index)

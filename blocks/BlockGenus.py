@@ -231,7 +231,7 @@ class BlockGenus():
         
         for key in self.properties:
             if(key in other.properties):
-                print(self.properties[key])
+                #print(self.properties[key])
                 if(self.properties[key] != other.properties[key]):
                     return False
             else:
@@ -746,9 +746,9 @@ class BlockGenus():
         color_info['b'] = color.blue()
         return color_info     
 
-    def createDefaultGenus():
+    def createNewGenus(genus_name):
         genusInfo = {}
-        genusInfo['name'] = 'Notitle'
+        genusInfo['name'] = genus_name
         genusInfo['color'] = BlockGenus.getColorInfo(QtGui.QColor(0, 0, 0))
         genusInfo['kind'] = "function"
         genusInfo['family_name'] = ""

@@ -47,7 +47,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 if not img.lockRatio:                
                     return Qt.ItemIsEnabled | Qt.ItemIsEditable;
                 else:
-                    return Qt.NoItemFlags
+                    return Qt.ItemIsEnabled
 
         return QPropertyModel.flags(self, index)
        
@@ -103,7 +103,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.all_connectors = []
         
         if tmpGenus.plug != None:
-            self.properties['Left #'+str(plug_index)]  = Property('Left #'+str(plug_index), '',  self.properties['connectors'])
+            self.properties['Left #'+str(plug_index)]  = Property('Left #'+str(plug_index), '',  self.properties['connectors'], Property.EDITOR_NONE)
             self.fillConnectInfo(tmpGenus.plug,self.properties['Left #'+str(plug_index)] )
             
         for connector in tmpGenus.sockets:
@@ -275,8 +275,10 @@ class BlockGenusTreeModel(QPropertyModel):
         
     def onShowConnectorsInfo(self,  editor):
         dlg = ConnectorsInfoWnd(self, self.tmpGenus)
-        dlg.exec_()
-
+        retCode = dlg.exec_()
+        if retCode == QDialog.Accepted:
+            pass
+            
     def setData(self, index, value, role):
 
         ret = super(BlockGenusTreeModel, self).setData(index, value, role)
@@ -285,7 +287,6 @@ class BlockGenusTreeModel(QPropertyModel):
             property_name = item.objectName()
 
             if(property_name == 'Family Name'):
-                print(value)
                 self.tmpGenus.familyName = value
                 labelList= []
                 if value in BlockGenus.families:            
@@ -349,23 +350,23 @@ class BlockGenusTreeModel(QPropertyModel):
                     
                 if(property_name == 'lock ratio'):
                     if(value==True and img.lockRatio != value):
-                        img.lockRatio = value
                         if (height_item != None):
                             height = img.width()*img.icon.height()/img.icon.width()
                             height_item.setValue(height)                        
-                        img.setSize(img.width(), height, True)
-                        
+                        img.setSize(img.width(), height, False)
                     else:
                         img.lockRatio = value
-                        
+                    img.lockRatio = value
+                    self.tmpGenus.properties['height'] = img.height
+                    
                 if(property_name == 'width'):
                     if (img.lockRatio == True and height_item != None):
                         height = img.width()*img.icon.height()/img.icon.width()
                         height_item.setValue(height)
                     else:
-                        height = img.height()
-                        
-                    img.setSize(value, height, True)
+                        height = img.height()                        
+                    img.setSize(value, height, False)                                            
+                    self.tmpGenus.properties['height'] = img.height
                     
                 if(property_name == 'height'):
                     img.setSize(img.width(),  value)
@@ -381,7 +382,6 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket_index += 1
 
             if 'Properties' in item.parent().objectName():
-                print(property_name)
                 if(property_name=='module'):
                     self.tmpGenus.properties['module_name'] = value                    
                 elif(property_name=='function'):    
@@ -405,7 +405,6 @@ class BlockGenusTreeModel(QPropertyModel):
         return ret    
     def setConnectorProp(self, connector, property_name, value):
         tt = 'connector.'+property_name+'=\'' + str(value)+'\''
-        print(tt)
         exec(tt)
 
     def onApply(self):

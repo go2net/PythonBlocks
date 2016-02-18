@@ -12,6 +12,10 @@ class ConnectorsInfoWnd(QDialog):
         dirname, filename = os.path.split(os.path.abspath(__file__))
         loadUi(dirname+'\\connector_info.ui', self)   
 
+        self.btnAdd.clicked.connect(self.onAddConnector)
+        self.btnOk.clicked.connect(self.accept)
+        self.btnCancel.clicked.connect(self.reject)
+
         self.header = ['Label', 'Kind', 'Type'] 
 
         connectors = []
@@ -32,7 +36,10 @@ class ConnectorsInfoWnd(QDialog):
 
         self.tableView.setItemDelegate(MyDelegate(self.tableView));
         self.tableView.setEditTriggers(QAbstractItemView.AllEditTriggers)
-      
+        
+    def onAddConnector(self):
+        self.tableView.model().addConnector()
+        
 class ConnectorTableModel(QAbstractTableModel):    
     def __init__(self, parent, connectors, header, *args):
         QAbstractTableModel.__init__(self, parent, *args)
@@ -51,6 +58,16 @@ class ConnectorTableModel(QAbstractTableModel):
         return Qt.ItemIsEnabled;
 
       return Qt.ItemIsDragEnabled |  Qt.ItemIsEnabled |  Qt.ItemIsEditable;
+
+    def addConnector(self):
+        return
+        from blocks.BlockImageIcon import BlockImageIcon
+        icon = QPixmap(os.getcwd() + "\\" + 'resource\\117-puzzle.png')
+        img = BlockImageIcon('', 'CENTER', icon, 32, 32, False, False)
+        self.blockImages.append(img)
+        index = QModelIndex ()
+        self.insertRow(len(self.blockImages), index)
+        self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
       
     def setData(self, index, value, role=Qt.DisplayRole):
       if (index.isValid() and role == Qt.EditRole):
@@ -115,7 +132,7 @@ class MyDelegate(QItemDelegate):
       
         if(index.column() == 2):
             combobox = QComboBox(parent)
-            combobox.addItems(['boolean','number', 'string'])
+            combobox.addItems(['boolean','cmd','number','poly', 'poly-list', 'string'])
             #combobox.currentIndexChanged[int].connect(self.currentIndexChanged)
             return combobox   
 
