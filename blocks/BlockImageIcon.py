@@ -104,10 +104,10 @@ class BlockImageIcon(QLabel):
                     icon.loadFromData(self.imgCtrl.downloadedData())
                 
                     if self.lockRatio:
-                        print('icon w:%d,h:%d'%(icon.width(), icon.height()))
+                        #print('icon w:%d,h:%d'%(icon.width(), icon.height()))
                         height = width * icon.height()/icon.width()
                     
-                    print('w:%d,h:%d'%(width, height))
+                    #print('w:%d,h:%d'%(width, height))
                     self._imgIcon = icon.scaled(width, height)
                     self.setPixmap(self._imgIcon)
                     
@@ -128,6 +128,7 @@ class BlockImageIcon(QLabel):
         ImageInfo['url'] = self.url
         ImageInfo['width'] = self.width()
         ImageInfo['height'] = self.height()
+        ImageInfo['lockRatio'] = self.lockRatio
         
         # Save QPixmap to QByteArray via QBuffer.
         byte_array = QByteArray()
@@ -165,8 +166,8 @@ class BlockImageIcon(QLabel):
             self.resize(self.width(), height)
             self._imgIcon = _icon.scaled(self.width(), height)  
             self.setPixmap(self._imgIcon)        
-        else:
-            print(self.width())
+        #else:
+        #    print(self.width())
     
     @property
     def location(self):
@@ -202,7 +203,7 @@ class BlockImageIcon(QLabel):
         if self._lockRatio:
             height = self.width() * self._imgIcon.height()/self._imgIcon.width()  
             self.resize(QSize(self.width(),height )) 
-            print('w:%d,h:%d'%(self.width(), self.height()))
+            #print('w:%d,h:%d'%(self.width(), self.height()))
         
     @property
     def url(self):

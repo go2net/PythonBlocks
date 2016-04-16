@@ -138,20 +138,29 @@ class GenusListWidget(QListWidget):
     def contextMenuEvent(self, event):
         self.popMenu.clear() 
         genusName =  self.currentItem().text()
-        remove_node_action = self.popMenu.addAction('Delete - "' + genusName+'"')
-        remove_node_action.triggered.connect(lambda: self.onRemoveNode(self.currentItem()))
-        add_node_action = self.popMenu.addAction('Add new item')
-        add_node_action.triggered.connect(self.onAddNewNode) 
+        
+        remove_genus_action = self.popMenu.addAction('Delete - "' + genusName+'"')
+        remove_genus_action.triggered.connect(lambda: self.onRemoveGenus(self.currentItem()))
+        
+        clone_genus_action = self.popMenu.addAction('Clone - "' + genusName+'"')
+        clone_genus_action.triggered.connect(lambda: self.onCloneGenus(self.currentItem()))
+        
+        add_genus_action = self.popMenu.addAction('Add new item')
+        add_genus_action.triggered.connect(self.onAddNewGenus)
         self.popMenu.exec_(self.mapToGlobal(event.pos()))
         
-    def onRemoveNode(self,  item):
+    def onRemoveGenus(self, item):
         pass
  
-    def onAddNewNode(self):
+    def onAddNewGenus(self):
         from blocks.BlockGenus import BlockGenus
-        genus_info = BlockGenus.createDefaultGenus()
-        self.mainWnd.InitBlockGenusListWidget()
-        pass 
+        new_name, ok = QInputDialog.getText(self.window(), 'Create New Genus','', QLineEdit.Normal)     
+        if(ok and new_name not in BlockGenus.nameToGenus):                
+            genus_info = BlockGenus.createNewGenus(new_name)
+            self.mainWnd.InitBlockGenusListWidget()
+    
+    def onCloneGenus(self, item):
+        pass
     '''
     def onItemChanged(self, item):
         from blocks.BlockGenus import BlockGenus
