@@ -14,8 +14,11 @@ from blocks.BlockUtilities import BlockUtilities
 from blocks.Block import Block
 
 class FactoryRenderableBlock(RenderableBlock):
+    factoryRBs = {}
+    
     def __init__(self,workspaceWidget ):
         RenderableBlock.__init__(self, workspaceWidget)
+        
 
     @classmethod
     def from_block(cls, workspaceWidget, block, isLoading=False,back_color=QtGui.QColor(225,225,225,255)):
@@ -24,6 +27,7 @@ class FactoryRenderableBlock(RenderableBlock):
         obj.createdRB = None
         obj.createdRB_dragged = False
         obj.child_list = []
+
         return  obj
      
     @classmethod     

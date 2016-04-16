@@ -1,34 +1,16 @@
 {
   "Families": {
     "num_var": {
-      "item1": "item1"
+      "item1": "\u5927\u5bb6",
+      "qq": "qq",
+      "qqw": "qqw"
+    },
+    "str_var": {
+      "ee": "ee",
+      "\u53bb\u53bb\u53bb": "333"
     }
   },
   "rb_list": [
-    {
-      "X": 295.0,
-      "Y": 129.0,
-      "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "",
-        "Label": "item1",
-        "PageLabel": "",
-        "genus-name": "num_var",
-        "has-focus": false,
-        "id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
-        "plug": {
-          "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
-          "editable": false,
-          "expand-group": "",
-          "expandable": false,
-          "kind": "plug",
-          "label": "",
-          "position": 0,
-          "type": "number"
-        }
-      },
-      "is_collapsed": false
-    },
     {
       "X": 185.0,
       "Y": 126.0,
@@ -74,6 +56,105 @@
             "label": "",
             "position": 0,
             "type": "cmd"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 295.0,
+      "Y": 129.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "Label": "qq",
+        "PageLabel": "",
+        "genus-name": "num_var",
+        "has-focus": false,
+        "id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
+        "plug": {
+          "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "number"
+        }
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 95.0,
+      "Y": 268.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "Label": "ee",
+        "PageLabel": "",
+        "genus-name": "str_var",
+        "has-focus": false,
+        "id": "ae5f904a-feb3-11e5-9e92-f0def1dc27fb",
+        "plug": {
+          "con-block-id": "",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "string"
+        }
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 262.0,
+      "Y": 247.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "Label": "333",
+        "PageLabel": "",
+        "genus-name": "set_str_var",
+        "has-focus": false,
+        "id": "b431a254-feb3-11e5-9465-f0def1dc27fb",
+        "socket_list": [
+          {
+            "con-block-id": "",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "string"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 85.0,
+      "Y": 184.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "set_num_var",
+        "has-focus": false,
+        "id": "8d0b9e38-ff22-11e5-903f-f0def1dc27fb",
+        "socket_list": [
+          {
+            "con-block-id": "",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "number"
           }
         ]
       },

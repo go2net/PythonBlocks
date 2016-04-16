@@ -28,6 +28,7 @@ class PageDrawerLoadingUtils():
                         newBlock = Block.createBlock(canvas, genusName, False)                            
                         rb = FactoryRenderableBlock.from_block(canvas, newBlock,False, QtGui.QColor(225,225,225,100))
                         drawerRBs.append(rb);
+                        FactoryRenderableBlock.factoryRBs[genusName] = rb
                     manager.addStaticBlocks(drawerRBs, drawerName) 
         return
 

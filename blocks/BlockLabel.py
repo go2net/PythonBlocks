@@ -115,6 +115,7 @@ class BlockLabel():
 
   def onRenameVariable(self, old_name, new_name):
     from blocks.RenderableBlock import RenderableBlock
+    from blocks.FactoryRenderableBlock import FactoryRenderableBlock
     from blocks.BlockGenus import BlockGenus
     
     rb = RenderableBlock.getRenderableBlock(self.blockID);
@@ -130,23 +131,29 @@ class BlockLabel():
     if(not findVar):
         familyMap[new_name] = new_name
 
-    factoryBlock = rb.factoryRB
+    #self.labelChanged(new_name)
+    
+    #return
+    #factoryBlock = rb.factoryRB
 
-    for rb in factoryBlock.child_list:
-        blockLabel = rb.blockLabel
-        #blockLabel.widget.setMenu();
-        if(blockLabel.getText() == old_name):   
-            blockLabel.labelChanged(new_name)
+    #for rb in factoryBlock.child_list:
+    #    blockLabel = rb.blockLabel
+    #    #blockLabel.widget.setMenu();
+    #    if(blockLabel.getText() == old_name):   
+    #        blockLabel.labelChanged(new_name)
     
     #factoryBlock.blockLabel.widget.setMenu()
-    if(factoryBlock.blockLabel.getText() == old_name):
-        factoryBlock.blockLabel.labelChanged(new_name)
-    
+    #if(factoryBlock.blockLabel.getText() == old_name):
+    #    factoryBlock.blockLabel.labelChanged(new_name)
+    #print(block.getGenus().familyName)
+    #print(BlockGenus.familyBlocks)
     if(block.getGenus().familyName in BlockGenus.familyBlocks):
       for genus in  BlockGenus.familyBlocks[block.getGenus().familyName]:
           genusName = genus.genusName
+
           if genusName not in FactoryRenderableBlock.factoryRBs: continue
           factoryBlock = FactoryRenderableBlock.factoryRBs[genusName]
+
           for rb in factoryBlock.child_list:
             blockLabel = rb.blockLabel
             #blockLabel.widget.setMenu();

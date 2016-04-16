@@ -819,6 +819,8 @@ class BlockGenus():
             newGenus.familyName = genusNode.attrib["family_name"]
          
             newGenus.family = BlockGenus.families[newGenus.familyName]
+            
+            print(newGenus.familyName)
           
             if(newGenus.familyName not in BlockGenus.familyBlocks):
                 BlockGenus.familyBlocks[newGenus.familyName] = []
@@ -958,11 +960,11 @@ class BlockGenus():
          
             if(newGenus.familyName in BlockGenus.families):                
                 newGenus.family = BlockGenus.families[newGenus.familyName]
-          
-            #if(newGenus.familyName not in BlockGenus.familyBlocks):
-            #    BlockGenus.familyBlocks[newGenus.familyName] = []
+            
+            if(newGenus.familyName not in BlockGenus.familyBlocks):
+                BlockGenus.familyBlocks[newGenus.familyName] = []
               
-            #BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
+            BlockGenus.familyBlocks[newGenus.familyName].append(newGenus)
 
         if 'initlabel' in genus_info:
             newGenus.initLabel =genus_info["initlabel"]

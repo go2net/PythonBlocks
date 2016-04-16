@@ -264,12 +264,14 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
 
     def loadBlocksFrom(self,blockWorkspaceInfo):
-          
+        from blocks.FactoryRenderableBlock import FactoryRenderableBlock  
         loadedBlocks = []      
         if('rb_list' in blockWorkspaceInfo):
             rb_info_list = blockWorkspaceInfo['rb_list']
             for rb_info in rb_info_list:
                 rb = RenderableBlock.loadBlockNode(rb_info, self);
+                factoryBlock = FactoryRenderableBlock.factoryRBs[rb.getBlock().getGenusName()]
+                factoryBlock.child_list.append(rb)
                 rb.setParent(self.canvas)
                 self.blockDropped(rb)
              
