@@ -210,7 +210,6 @@ class BlockGenus():
 
     @property
     def genusName(self):
-        """I'm the 'x' property."""
         return self._genusName
 
     @genusName.setter
@@ -218,6 +217,9 @@ class BlockGenus():
         self._genusName = value
         if(self._genusName not in BlockGenus.nameToGenus):
             BlockGenus.nameToGenus[self._genusName] = self          
+  
+    def __ne__(self, other):
+        return not self .__eq__(other)
   
     def __eq__(self, other):
         if(other == None): return False
@@ -239,18 +241,18 @@ class BlockGenus():
 
         if(len(self.blockImages) != len(other.blockImages)):
             return False
-            
+
         for img_index in range(len(self.blockImages)): 
             img1 = self.blockImages[img_index]
             img2 = other.blockImages[img_index]
             if(img1.location != img2.location) or \
               (img1.width() != img2.width()) or \
               (img1.height() != img2.height()) or \
-              (img1.icon != img2.icon):                  
+              (img1.icon != img2.icon): 
                 return False
             else:
-                return False                  
-    
+                return True
+
         return True
     
     def copyDataFrom(self,  other):

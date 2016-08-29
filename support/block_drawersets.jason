@@ -158,7 +158,9 @@
       "drawer": "VISA Library",
       "genus-list": [
         "bar-graph",
-        "asin"
+        "asin",
+        "joy-button1?",
+        "qq"
       ]
     }
   ]

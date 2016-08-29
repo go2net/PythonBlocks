@@ -6,64 +6,14 @@
       "qqw": "qqw"
     },
     "str_var": {
-      "ee": "ee",
+      "ee": "456346",
       "\u53bb\u53bb\u53bb": "333"
     }
   },
   "rb_list": [
     {
-      "X": 185.0,
-      "Y": 126.0,
-      "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "af48b776-c587-11e5-b099-e4115b280f9b",
-        "PageLabel": "",
-        "genus-name": "fd",
-        "has-focus": false,
-        "id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "steps",
-            "position": 0,
-            "type": "number"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 132.0,
-      "Y": 118.0,
-      "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "",
-        "PageLabel": "",
-        "genus-name": "setup",
-        "has-focus": false,
-        "id": "af48b776-c587-11e5-b099-e4115b280f9b",
-        "socket_list": [
-          {
-            "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
-            "editable": false,
-            "expand-group": "",
-            "expandable": false,
-            "kind": "socket",
-            "label": "",
-            "position": 0,
-            "type": "cmd"
-          }
-        ]
-      },
-      "is_collapsed": false
-    },
-    {
-      "X": 295.0,
-      "Y": 129.0,
+      "X": 251.0,
+      "Y": 185.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",
@@ -73,7 +23,7 @@
         "has-focus": false,
         "id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
         "plug": {
-          "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+          "con-block-id": "04d22c0a-043c-11e6-9488-7ce9d3b7e702",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -86,18 +36,53 @@
       "is_collapsed": false
     },
     {
-      "X": 95.0,
-      "Y": 268.0,
+      "X": 175.0,
+      "Y": 26.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",
-        "Label": "ee",
+        "PageLabel": "",
+        "genus-name": "asin",
+        "has-focus": false,
+        "id": "5826d5ee-043d-11e6-aa48-7ce9d3b7e702",
+        "plug": {
+          "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "number"
+        },
+        "socket_list": [
+          {
+            "con-block-id": "",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 175.0,
+      "Y": 305.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "Label": "456346",
         "PageLabel": "",
         "genus-name": "str_var",
         "has-focus": false,
         "id": "ae5f904a-feb3-11e5-9e92-f0def1dc27fb",
         "plug": {
-          "con-block-id": "",
+          "con-block-id": "e4d79748-043b-11e6-bf04-7ce9d3b7e702",
           "editable": false,
           "expand-group": "",
           "expandable": false,
@@ -110,12 +95,74 @@
       "is_collapsed": false
     },
     {
-      "X": 262.0,
-      "Y": 247.0,
+      "X": 65.0,
+      "Y": 302.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "b431a254-feb3-11e5-9465-f0def1dc27fb",
+        "Label": "456346",
+        "PageLabel": "",
+        "genus-name": "set_str_var",
+        "has-focus": false,
+        "id": "e4d79748-043b-11e6-bf04-7ce9d3b7e702",
+        "socket_list": [
+          {
+            "con-block-id": "ae5f904a-feb3-11e5-9e92-f0def1dc27fb",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "string"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 161.0,
+      "Y": 185.0,
       "block_info": {
         "AfterBlockId": "",
         "BeforeBlockId": "",
-        "Label": "333",
+        "Label": "456346",
+        "PageLabel": "",
+        "genus-name": "abs",
+        "has-focus": false,
+        "id": "04d22c0a-043c-11e6-9488-7ce9d3b7e702",
+        "plug": {
+          "con-block-id": "8d0b9e38-ff22-11e5-903f-f0def1dc27fb",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "number"
+        },
+        "socket_list": [
+          {
+            "con-block-id": "b33b8138-c4ba-11e5-9d1a-e4115b280f9b",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 65.0,
+      "Y": 272.0,
+      "block_info": {
+        "AfterBlockId": "e4d79748-043b-11e6-bf04-7ce9d3b7e702",
+        "BeforeBlockId": "8d0b9e38-ff22-11e5-903f-f0def1dc27fb",
+        "Label": "456346",
         "PageLabel": "",
         "genus-name": "set_str_var",
         "has-focus": false,
@@ -136,18 +183,18 @@
       "is_collapsed": false
     },
     {
-      "X": 85.0,
-      "Y": 184.0,
+      "X": 65.0,
+      "Y": 182.0,
       "block_info": {
-        "AfterBlockId": "",
-        "BeforeBlockId": "",
+        "AfterBlockId": "b431a254-feb3-11e5-9465-f0def1dc27fb",
+        "BeforeBlockId": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
         "PageLabel": "",
         "genus-name": "set_num_var",
         "has-focus": false,
         "id": "8d0b9e38-ff22-11e5-903f-f0def1dc27fb",
         "socket_list": [
           {
-            "con-block-id": "",
+            "con-block-id": "04d22c0a-043c-11e6-9488-7ce9d3b7e702",
             "editable": false,
             "expand-group": "",
             "expandable": false,
@@ -155,6 +202,56 @@
             "label": "",
             "position": 0,
             "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 65.0,
+      "Y": 23.0,
+      "block_info": {
+        "AfterBlockId": "8d0b9e38-ff22-11e5-903f-f0def1dc27fb",
+        "BeforeBlockId": "af48b776-c587-11e5-b099-e4115b280f9b",
+        "PageLabel": "",
+        "genus-name": "fd",
+        "has-focus": false,
+        "id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "5826d5ee-043d-11e6-aa48-7ce9d3b7e702",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "steps",
+            "position": 0,
+            "type": "number"
+          }
+        ]
+      },
+      "is_collapsed": false
+    },
+    {
+      "X": 12.0,
+      "Y": 15.0,
+      "block_info": {
+        "AfterBlockId": "",
+        "BeforeBlockId": "",
+        "PageLabel": "",
+        "genus-name": "setup",
+        "has-focus": false,
+        "id": "af48b776-c587-11e5-b099-e4115b280f9b",
+        "socket_list": [
+          {
+            "con-block-id": "b094a0e8-c587-11e5-bcf9-e4115b280f9b",
+            "editable": false,
+            "expand-group": "",
+            "expandable": false,
+            "kind": "socket",
+            "label": "",
+            "position": 0,
+            "type": "cmd"
           }
         ]
       },

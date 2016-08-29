@@ -3,6 +3,29 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 import os
 
+class CustomerEditor(QWidget):
+    def __init__(self, property, parent):
+        super(CustomerEditor, self).__init__(parent)
+
+        layout = QHBoxLayout(self)
+        layout.setSpacing(0)    
+        
+        self.txtEditor = QTextEdit(self)
+        self.txtEditor.setReadOnly(True)
+        self.txtEditor.document().setDocumentMargin(0)
+        self.txtEditor.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.txtEditor.setVerticalScrollBarPolicy (Qt.ScrollBarAlwaysOff) 
+        self.txtEditor.setFrameStyle(QFrame.NoFrame);
+        
+        layout.addWidget(self.txtEditor)
+                
+        layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(layout)
+
+    def addWidget(self,  widget):
+        widget.setParent(self)
+        self.layout().addWidget(widget)        
+
 class AdvanceEditor(QWidget):
     def __init__(self, property, parent, showMenuButton=False):
         super(AdvanceEditor, self).__init__(parent)

@@ -46,6 +46,7 @@ class ConnectorTableModel(QAbstractTableModel):
         self.connectors = connectors
         self.header = header
         self.InfoWnd = parent
+        self.blockImages = []
         
     def rowCount(self, parent):
         return len(self.connectors)
@@ -60,7 +61,7 @@ class ConnectorTableModel(QAbstractTableModel):
       return Qt.ItemIsDragEnabled |  Qt.ItemIsEnabled |  Qt.ItemIsEditable;
 
     def addConnector(self):
-        return
+        #return
         from blocks.BlockImageIcon import BlockImageIcon
         icon = QPixmap(os.getcwd() + "\\" + 'resource\\117-puzzle.png')
         img = BlockImageIcon('', 'CENTER', icon, 32, 32, False, False)
@@ -102,7 +103,6 @@ class ConnectorTableModel(QAbstractTableModel):
 
         if(index.column() == 2):
             return connector.type       
-
           
         return None
 
@@ -117,12 +117,12 @@ class ConnectorTableModel(QAbstractTableModel):
         
 class MyDelegate(QItemDelegate):
     def __init__(self, parent):
-        print('MyDelegate init')
         super(MyDelegate, self).__init__(parent)
     
     def createEditor(self, parent, option, index):
         if(index.column() == 0):
-            return QItemDelegate.createEditor(self, parent, option, index);
+            editor = super(MyDelegate, self).createEditor(parent, option, index)
+            return editor
       
         if(index.column() == 1):       
             combobox = QComboBox(parent)
@@ -137,16 +137,19 @@ class MyDelegate(QItemDelegate):
             return combobox   
 
         return None   
-      
+        
+    def setModelData(self, editor, model, index) :
+        super(MyDelegate, self).setModelData(editor, model, index)      
  
     def setEditorData (self, editor, index):
-
 
         #self.m_finishedMapper.blockSignals(True);
         text = index.model().data(index, Qt.DisplayRole)    
 
         if index.column() == 0:
-            QItemDelegate.setEditorData(self, editor, index);
+            #print('setEditorData')
+            editor.setText(text);
+            #super(MyDelegate, self).setEditorData(editor, index)
 
         if index.column() == 1:
             _ind = editor.findText(text)

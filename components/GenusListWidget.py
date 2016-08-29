@@ -112,10 +112,11 @@ class GenusListWidget(QListWidget):
         # start the drag operation
         # exec_ will return the accepted action from dropEvent
         if drag.exec_(Qt.CopyAction | Qt.MoveAction) == Qt.MoveAction:
-            print ('moved')
+            #print ('moved')
+            pass
         else:
-            print ('copied')
-    
+            #print ('copied')
+            pass
     def getSaveString(self):
         import json
         from blocks.BlockGenus import BlockGenus

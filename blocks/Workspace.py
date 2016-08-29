@@ -119,7 +119,7 @@ class Workspace(QtGui.QWidget,WorkspaceWidget):
       from blocks.RenderableBlock import RenderableBlock
       from blocks.FactoryRenderableBlock import FactoryRenderableBlock
 
-      print("reset")
+      #print("reset")
       # we can't iterate and remove widgets at the same time so
       # we remove widgets after we've collected all the widgets we want to remove
       # TreeSet.remove() doesn't always work on the TreeSet, so instead,

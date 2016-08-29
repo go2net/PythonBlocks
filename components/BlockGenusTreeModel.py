@@ -94,7 +94,18 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      Connector     #
         ############
-        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.ADVANCED_EDITOR)   
+        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.CUSTOMER_EDITOR)
+        
+        self.add_left_button = QPushButton('+L')
+        #add_left_button.setText('+L')
+        self.properties['connectors'].addWidget(self.add_left_button) 
+        
+        self.add_right_button = QPushButton('+R')
+        #add_right_button.setText('+R')
+        self.properties['connectors'].addWidget(self.add_right_button) 
+        
+        #self.properties['connectors'] = prop
+        
         self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, self.properties['connectors'] )
         self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, self.properties['connectors'] ) 
         plug_index = 0
@@ -396,7 +407,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.showBlock(self.tmpGenus)
 
         #self.isDirty = self.tmpGenus != self.genus
-        self.genus.isDirty = self.tmpGenus != self.genus
+        self.genus.isDirty = (self.genus != self.tmpGenus)
+        
         if(not self.genus.isDirty): 
             self.mainWnd.wndApplyGenus.hide()
         else:

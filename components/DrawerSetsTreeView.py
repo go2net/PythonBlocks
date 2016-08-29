@@ -26,14 +26,17 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         self.setModel(self.model)
         self.setItemDelegate(DrawerSetsDelegate(self.model));    
         self.connect(self, QtCore.SIGNAL("itemClicked(QModelIndex)"), self.itemClicked)
-        self.connect(self, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.onContentMenu)
+        self.connect(self, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.onContentMenu)   
         self.setExpandsOnDoubleClick(False)
         self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
         #self.setStyleSheet("QTreeView::item:hover{background-color:#999966;}")
         #self.layout().setContentsMargins(5, 5, 5, 5)        
         self.setDefaultDropAction(Qt.MoveAction)
         self.setMouseTracking(True);
-        
+    
+    def onSelectionChanged(self):
+        print('onSelectionChanged')
+    
     def mouseReleaseEvent (self, event):
         #if (event.button() & Qt.RightButton):
         #    self.emit(SIGNAL("customContextMenuRequested(QPoint)"), event.pos())
@@ -106,7 +109,7 @@ class DrawerSetsTreeView (QtGui.QTreeView):
         
     def itemClicked (self, index):
 
-        item = index.internalPointer(); 
+        item = index.internalPointer()       
             
         if (item != None and not item.isLeafNode()):
             if self.isExpanded(index):

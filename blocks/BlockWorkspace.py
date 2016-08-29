@@ -1,4 +1,5 @@
 
+import sys, os
 from PyQt4 import QtGui,QtCore
 from blocks.RenderableBlock import RenderableBlock
 from blocks.WorkspaceWidget import WorkspaceWidget
@@ -305,9 +306,14 @@ class BlockWorkspace(QtGui.QScrollArea, WorkspaceWidget):
 
     def loadSaveString(self,path):
         import json
-        f=open(path)
-        blockWorkspaceInfo = json.load(f)
-        self.loadBlocksFrom(blockWorkspaceInfo);
+        try:        
+            f=open(path)
+            blockWorkspaceInfo = json.load(f)
+            self.loadBlocksFrom(blockWorkspaceInfo);
+        except:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno,exc_obj)       
 
     def blockEntered(self,block):
         pass

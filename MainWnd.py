@@ -20,28 +20,27 @@ class MainWnd(QtGui.QMainWindow):
         self.filename = None
 
         uic.loadUi('main.ui', self)    
-
-        self.connect(self.actionNew, QtCore.SIGNAL('triggered()'), self.onNew)
-        self.connect(self.actionOpen, QtCore.SIGNAL('triggered()'), self.onOpen)
-        self.connect(self.actionSave, QtCore.SIGNAL('triggered()'), self.onSave)
-        self.connect(self.actionSaveAs, QtCore.SIGNAL('triggered()'), self.onSaveAs)
-        self.connect(self.actionRun, QtCore.SIGNAL('triggered()'), self.onRun)
-        self.actionSaveAll.triggered.connect(self.onSaveAll)
-
-        #self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
-
-        self.actionStop.setEnabled(False)
-
+        
         self.viewGroup = QtGui.QActionGroup(self)
         self.viewGroup.addAction(self.actionTestBench)
         self.viewGroup.addAction(self.actionBlockEditor)
         self.viewGroup.addAction(self.actionDrawersets)
-        self.actionBlockEditor.setChecked(True)
+        self.actionBlockEditor.setChecked(True)     
+        
+        self.viewGroup.triggered.connect(self.onActionTriggered)
 
-        self.connect(self.viewGroup,QtCore.SIGNAL("triggered(QAction*)"),self.onActionTriggered)               
-
+        self.actionNew.triggered.connect(self.onNew)
+        self.actionOpen.triggered.connect(self.onOpen)
+        self.actionSave.triggered.connect(self.onSave)
+        self.actionSaveAs.triggered.connect(self.onSaveAs)
+        self.actionRun.triggered.connect(self.onRun)
+        self.actionSaveAll.triggered.connect(self.onSaveAll) 
         self.actionQuit.triggered.connect(self.close)
-       
+        
+        #self.connect(self.tabWidget,QtCore.SIGNAL("currentChanged(int)"),self.currentChanged)
+
+        self.actionStop.setEnabled(False)
+        
         # Create a new WorkspaceController
         self.wc = WorkspaceController(self.pgBlockEditor)
         
@@ -52,15 +51,15 @@ class MainWnd(QtGui.QMainWindow):
         self.InitBlockDrawerSetsTreeWidget()
         self.setActiveWidget(self.pgBlockEditor)
 
-        self.show()
-
         layout  = QtGui.QHBoxLayout()
         self.wndPreview.setLayout(layout);
         self.wndApplyGenus.hide()
         self.lwBlockGenus.setMainWnd(self)
         #self.blockPreviewWnd.resizeEvent = self.onResize
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-        
+                
+        self.show()
+    
     def getInstance():
         #print(MainWnd.instance)
         if(MainWnd.instance == None): 
@@ -165,15 +164,17 @@ class MainWnd(QtGui.QMainWindow):
 
         self.lwBlockGenus.itemSelectionChanged.connect(self.onBlockGenusItemChanged)
 
-    def onBlockGenusItemChanged(self):
-        from components.BlockGenusTreeModel import BlockGenusTreeModel
-        from components.propertyeditor.QVariantDelegate import QVariantDelegate
+    def onBlockGenusItemChanged(self):        
         #print('onBlockGenusItemChanged')
         items = self.lwBlockGenus.selectedItems()    
         if(len(items) != 1): return
         item = items[0]
-
         genus = item.data(QtCore.Qt.UserRole)
+        self.showBlockGenusInfo(genus)
+
+    def showBlockGenusInfo(self,  genus):        
+        from components.BlockGenusTreeModel import BlockGenusTreeModel
+        from components.propertyeditor.QVariantDelegate import QVariantDelegate        
         drawerSetsFile = os.getcwd() + "\\"+ "support\\block_drawersets.xml"
         self.genusTreeModel = BlockGenusTreeModel(self.tvBlockGenusView, self, genus, drawerSetsFile)
         self.tvBlockGenusView.init()
@@ -191,6 +192,7 @@ class MainWnd(QtGui.QMainWindow):
         #root = self.wc.setLangDefFilePath("support\\lang_def.xml")
         #self.wc.loadFreshWorkspace();
         self.tvDrawerSets.init("support\\block_drawersets.jason")
+        self.tvDrawerSets.selectionModel().selectionChanged.connect(self.onBlockDrawerSetsItemChanged)
         #self.drawerSetsModel = DrawerSetsTreeModel(self.tvDrawerSets, self, langDefLocation)
         #self.tvDrawerSets.setModel(self.drawerSetsModel)
         #self.tvDrawerSets.expandAll()
@@ -200,6 +202,24 @@ class MainWnd(QtGui.QMainWindow):
         #    print(canvas.name)
         return    
         pass
+    
+    def onBlockDrawerSetsItemChanged(self, selects,  deselects):        
+        if(len(selects.indexes()) != 1): return
+        index = selects.indexes()[0]
+        item = index.internalPointer()
+        rb = item.obj
+        genus = rb.getBlock().getGenus()
+        
+        for index in range(self.lwBlockGenus.count()):
+            item = self.lwBlockGenus.item(index)
+            tmp_genus = item.data(QtCore.Qt.UserRole)
+            #if(genus.genusName == tmp_genus.genusName):
+            #    pass
+            if(genus == tmp_genus):
+                self.lwBlockGenus.setCurrentItem(item)
+                break
+        
+        #self.showBlockGenusInfo(genus)
     
     def onBlockClick(self, block):
         from components.BlockPropTreeModel import BlockPropTreeModel

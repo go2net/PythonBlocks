@@ -17,31 +17,32 @@ from xml.dom.minidom import Document
 try:
     from lxml import etree
     from lxml import ElementInclude
-    print("running with lxml.etree")
+    #print("running with lxml.etree")
 except ImportError:
     try:
         # Python 2.5
         import xml.etree.cElementTree as etree
         from xml.etree import ElementInclude
-        print("running with cElementTree on Python 2.5+")
+        #print("running with cElementTree on Python 2.5+")
     except ImportError:
         try:
             # Python 2.5
             import xml.etree.ElementTree as etree
             from xml.etree import ElementInclude
-            print("running with ElementTree on Python 2.5+")
+            #print("running with ElementTree on Python 2.5+")
         except ImportError:
             try:
                 # normal cElementTree install
                 import cElementTree as etree                
-                print("running with cElementTree")
+                #print("running with cElementTree")
             except ImportError:
                 try:
                     # normal ElementTree install
                     import elementtree.ElementTree as etree
-                    print("running with ElementTree")
+                    #print("running with ElementTree")
                 except ImportError:
-                    print("Failed to import ElementTree from any known place")
+                    pass
+                    #print("Failed to import ElementTree from any known place")
 
 
 from PyQt4 import QtGui

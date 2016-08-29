@@ -5,18 +5,19 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 from components.propertyeditor.ColorCombo import  ColorCombo
-from components.propertyeditor.AdvanceEditor import  AdvanceEditor,AdvancedComboBox, ImageEditor
+from components.propertyeditor.AdvanceEditor import  AdvanceEditor,AdvancedComboBox, ImageEditor, CustomerEditor
 
 
 class Property(QtCore.QObject):
     ROOT_NODE = 0
     ADVANCED_EDITOR = 1    
     ADVANCED_EDITOR_WITH_MENU = 2
-    COMBO_BOX_EDITOR = 3
-    ADVANCED_COMBO_BOX = 4
-    COLOR_EDITOR = 5
-    CHECKBOX_EDITOR = 6
-    IMAGE_EDITOR = 7
+    CUSTOMER_EDITOR = 3
+    COMBO_BOX_EDITOR = 4
+    ADVANCED_COMBO_BOX = 5
+    COLOR_EDITOR = 6
+    CHECKBOX_EDITOR = 7
+    IMAGE_EDITOR = 8
     EDITOR_NONE = 9
   
     def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
@@ -27,6 +28,11 @@ class Property(QtCore.QObject):
         self.obj_data = obj_data
         self.setObjectName(name);
         
+        self.widgets = []
+    
+    def addWidget(self,  widget):
+        self.widgets.append(widget)
+    
     def row(self):
         if self.parent():
             #print('children:')
@@ -80,6 +86,13 @@ class Property(QtCore.QObject):
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
             return advancedEditor        
+        if(self.obj_type == Property.CUSTOMER_EDITOR):
+            customerEditor = CustomerEditor(self, parent)
+            for widget in self.widgets:
+                customerEditor.addWidget(widget)
+            
+            return customerEditor 
+            
         if(self.obj_type == Property.IMAGE_EDITOR):
             imageEditor = ImageEditor(self, delegate, parent, True)            
             imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
