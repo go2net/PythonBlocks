@@ -9,6 +9,7 @@ from components.FamilyInfoWnd import FamilyInfoWnd
 from blocks.BlockGenus import BlockGenus
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+import os
 
 class BlockGenusTreeView(QTreeView):
     def __init__(self, parent):
@@ -95,15 +96,10 @@ class BlockGenusTreeModel(QPropertyModel):
         #      Connector     #
         ############
         self.properties['connectors'] = Property('Connectors','', parents[-1],Property.CUSTOMER_EDITOR)
-        
-        self.add_left_button = QPushButton('+L')
-        #add_left_button.setText('+L')
-        self.properties['connectors'].addWidget(self.add_left_button) 
-        
-        self.add_right_button = QPushButton('+R')
-        #add_right_button.setText('+R')
-        self.properties['connectors'].addWidget(self.add_right_button) 
-        
+        self.properties['connectors'].ui_file = os.path.dirname(os.path.realpath(__file__))+'/connector_prop.ui'
+        self.properties['connectors'].signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug]
+        self.properties['connectors'].signal_slot_maps['btnAddSocket'] = ['clicked', self.onAddSocket]
+         
         #self.properties['connectors'] = prop
         
         self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, self.properties['connectors'] )
@@ -138,6 +134,12 @@ class BlockGenusTreeModel(QPropertyModel):
             if(key != 'module_name' and key != 'function_name'):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
     
+    def onAddPlug(self,  editor):
+        print('onAddPlug')
+        
+    def onAddSocket(self,  editor):
+        print('onAddSocket')   
+        
     def onShowFamilyInfo(self,  editor):
         dlg = FamilyInfoWnd(self, self.tmpGenus)
         retCode = dlg.exec_()

@@ -9,7 +9,6 @@ class QVariantDelegate(QtGui.QItemDelegate):
         self.m_finishedMapper =  QtCore.QSignalMapper(self);
         self.connect(self.m_finishedMapper, QtCore.SIGNAL("mapped(QtGui.QWidget*)"), self, QtCore.SIGNAL("commitData(QtGui.QWidget*)"));
         self.connect(self.m_finishedMapper, QtCore.SIGNAL("mapped(QWidget*)"), self, QtCore.SIGNAL("closeEditor(QWidget*)"));
-    
     def createEditor(self, parent, option , index ):
         editor = None
         p = index.internalPointer()

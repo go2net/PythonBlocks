@@ -1,12 +1,10 @@
 
 from PyQt4 import QtCore, QtGui
-
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
-
+import functools
 from components.propertyeditor.ColorCombo import  ColorCombo
 from components.propertyeditor.AdvanceEditor import  AdvanceEditor,AdvancedComboBox, ImageEditor, CustomerEditor
-
 
 class Property(QtCore.QObject):
     ROOT_NODE = 0
@@ -28,7 +26,9 @@ class Property(QtCore.QObject):
         self.obj_data = obj_data
         self.setObjectName(name);
         
-        self.widgets = []
+        self.ui_file = ''
+    
+        self.signal_slot_maps = {}
     
     def addWidget(self,  widget):
         self.widgets.append(widget)
@@ -85,14 +85,22 @@ class Property(QtCore.QObject):
             advancedEditor = AdvanceEditor(self, parent, True)
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
-            return advancedEditor        
+            return advancedEditor
+            
         if(self.obj_type == Property.CUSTOMER_EDITOR):
             customerEditor = CustomerEditor(self, parent)
-            for widget in self.widgets:
-                customerEditor.addWidget(widget)
+            if(self.ui_file != ''):
+                customerEditor.loadUi(self.ui_file)
             
+            for obj_str in self.signal_slot_maps:
+                __obj = getattr(customerEditor, obj_str)
+                __signal = getattr(__obj, self.signal_slot_maps[obj_str][0])
+                __slot = self.signal_slot_maps[obj_str][1]
+                __signal.connect(functools.partial(__slot, customerEditor))      
+                
             return customerEditor 
-            
+        
+    
         if(self.obj_type == Property.IMAGE_EDITOR):
             imageEditor = ImageEditor(self, delegate, parent, True)            
             imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
