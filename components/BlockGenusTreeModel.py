@@ -7,6 +7,7 @@ from components.ImagesInfoWnd import ImagesInfoWnd
 from components.FamilyInfoWnd import FamilyInfoWnd
 
 from blocks.BlockGenus import BlockGenus
+from blocks.BlockConnector import BlockConnector
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import os
@@ -54,7 +55,7 @@ class BlockGenusTreeModel(QPropertyModel):
        
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
-        self.showBlock(tmpGenus)       
+        self.showBlock(tmpGenus)
     
         self.properties['genusName'] = Property('Genus Name', self.genus.genusName, parents[-1])         
         self.properties['kind'] = Property('Genus Kind', tmpGenus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
@@ -104,18 +105,24 @@ class BlockGenusTreeModel(QPropertyModel):
         
         self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, self.properties['connectors'] )
         self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, self.properties['connectors'] ) 
-        plug_index = 0
+
         socket_index = 0
         
         self.all_connectors = []
         
         if tmpGenus.plug != None:
-            self.properties['Left #'+str(plug_index)]  = Property('Left #'+str(plug_index), '',  self.properties['connectors'], Property.EDITOR_NONE)
-            self.fillConnectInfo(tmpGenus.plug,self.properties['Left #'+str(plug_index)] )
+            item  = Property('Plug', '',  self.properties['connectors'], Property.CUSTOMER_EDITOR)
+            self.fillConnectInfo(tmpGenus.plug, item)
+            item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]            
+            self.properties['Plug'] = item
             
         for connector in tmpGenus.sockets:
-            self.properties['Right #'+str(socket_index)] = Property('Right #'+str(socket_index), '', self.properties['connectors'] ) 
-            self.fillConnectInfo(connector, self.properties['Right #'+str(socket_index)] )
+            item = Property('Right #'+str(socket_index), '', self.properties['connectors'] , Property.CUSTOMER_EDITOR)
+            self.fillConnectInfo(connector, item)
+            item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]              
+            self.properties['Right #'+str(socket_index)] = item
             socket_index += 1
             
         self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
@@ -134,11 +141,55 @@ class BlockGenusTreeModel(QPropertyModel):
             if(key != 'module_name' and key != 'function_name'):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
     
-    def onAddPlug(self,  editor):
-        print('onAddPlug')
+    def onAddPlug(self,  editor,  item):
+        initKind = None;
+        initType = None;
+        idConnected = ""
+        label = "";
+        isExpandable = False;
+        isLabelEditable = False;
+        position = 0        
+        plug = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected)
+        tmpGenus.plug = plug
+    
+    def onDelPlug(self,  editor,  item):
+        pass
+
+    
+    def onAddSocket(self,  editor,  item):
+        initKind = 'socket'
+        initType = 'string'
+        idConnected = ""
+        label = "";
+        isExpandable = False;
+        isLabelEditable = True;
+        position = 0        
+        socket = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
+        self.tmpGenus.sockets.append(socket)
+        socket_index = len(self.tmpGenus.sockets) - 1
+        item = Property('Right #'+str(socket_index), '', self.properties['connectors'] ) 
+        self.fillConnectInfo(socket, item)  
+        index = self.getIndexForNode(item)
+        self.properties['Right #'+str(socket_index)] = item
+        #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+        self.insertRow(index.row(), index.parent())
+        #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+        self.showBlock(self.tmpGenus)
+    
+    def onDelSocket(self,  editor,  item):
+        index = self.getIndexForNode(item)
         
-    def onAddSocket(self,  editor):
-        print('onAddSocket')   
+        # item.row() is index row index in connector node
+        # in order to get index in self.tmpGenus.sockets list, need minus 2 for before and after connector
+        row = item.row() -2
+        
+        # if there has plug, we need minus 1
+        if(self.tmpGenus.getInitPlug() != None):
+            row -= 1
+            
+        self.tmpGenus.sockets.pop(row)
+        self.removeNode(item)
+        self.showBlock(self.tmpGenus)
         
     def onShowFamilyInfo(self,  editor):
         dlg = FamilyInfoWnd(self, self.tmpGenus)
@@ -199,7 +250,7 @@ class BlockGenusTreeModel(QPropertyModel):
         
     def fillConnectInfo(self,  socket,  parent):
         Property('label', socket.label,parent)
-        Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
+        #Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
         Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
 
     def onLoadImageFromFile(self,  editor):        
@@ -245,6 +296,14 @@ class BlockGenusTreeModel(QPropertyModel):
             self.addImages(self.imgs_root, self.tmpGenus)
 
             #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
+
+    def insertRow(self, row, parent): 
+        return self.insertRows(row, 1, parent) 
+
+    def insertRows(self, row, count, parent): 
+        self.beginInsertRows(parent, row, (row + (count - 1))) 
+        self.endInsertRows() 
+        return True
     
     def removeRow(self, row, parentIndex): 
         return self.removeRows(row, 1, parentIndex) 
@@ -253,6 +312,14 @@ class BlockGenusTreeModel(QPropertyModel):
         self.beginRemoveRows(parentIndex, row, row+count) 
         self.endRemoveRows() 
         return True 
+
+    def removeNode(self, node):
+        row = node.row()
+        parent_index =  self.getIndexForNode(node.parent())
+        print(node.objectName())
+        self.removeRow(row, parent_index)
+        node.setParent(None)
+        self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), parent_index, parent_index) 
     
     def onShowImgSelMenu(self,  editor):
         
@@ -384,7 +451,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'height'):
                     img.setSize(img.width(),  value)
                 
-            if(self.tmpGenus.plug != None and item.parent()  == self.properties['Left #0'] ):
+            if(self.tmpGenus.plug != None and item.parent()  == self.properties['Plug'] ):
                 self.setConnectorProp(self.tmpGenus.plug,property_name, value )
             
             socket_index = 0

@@ -46,7 +46,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="btnAddPlug">
+    <widget class="QPushButton" name="btnRemoveConn">
      <property name="minimumSize">
       <size>
        <width>20</width>
@@ -60,7 +60,7 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Add new plug (left) connector</string>
+      <string>Remove plug connector</string>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton { 
@@ -83,52 +83,7 @@ QPushButton:pressed{
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../resource/1472539793_plug.png</normaloff>../resource/1472539793_plug.png</iconset>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnAddSocket">
-     <property name="minimumSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Add new socket (right) connector</string>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton { 
-	border:0px;
-}
-
-QPushButton:hover {
-	border: 1px;
-	border-style: solid ;
-	border-color:rgb(170, 170, 255);
-	border-radius: 2px;
- }
-
-QPushButton:pressed{
-	background-color: rgb(170, 170, 255);
-}</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../resource/1472495033_socket--plus.png</normaloff>../resource/1472495033_socket--plus.png</iconset>
+       <normaloff>../resource/1472540246_Erase.png</normaloff>../resource/1472540246_Erase.png</iconset>
      </property>
      <property name="flat">
       <bool>true</bool>

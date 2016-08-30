@@ -73,6 +73,9 @@ class Property(QtCore.QObject):
     def propertyData(self, value):
         self.obj_data = value
 
+    #def remove(self, node):
+    #    return self.children().remove(node)   
+
     def createEditor(self, delegate, parent, option):
         editor = None
         if(self.obj_type == None or self.obj_type == Property.ROOT_NODE): return None
@@ -96,7 +99,7 @@ class Property(QtCore.QObject):
                 __obj = getattr(customerEditor, obj_str)
                 __signal = getattr(__obj, self.signal_slot_maps[obj_str][0])
                 __slot = self.signal_slot_maps[obj_str][1]
-                __signal.connect(functools.partial(__slot, customerEditor))      
+                __signal.connect(functools.partial(__slot, customerEditor, self))      
                 
             return customerEditor 
         
