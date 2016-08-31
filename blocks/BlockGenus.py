@@ -253,6 +253,18 @@ class BlockGenus():
             else:
                 return True
 
+        if(self.getInitPlug() != other.getInitPlug()):
+            return False
+        
+        print('self:%d'%(len(self.sockets)))
+        print('other:%d'%(len(other.sockets)))
+
+        if(len(self.sockets) != len(other.sockets)): return False  
+        
+        for socket_index in range(len(self.sockets)):
+            if(self.sockets[socket_index] != other.sockets[socket_index]):
+                return False
+
         return True
     
     def copyDataFrom(self,  other):

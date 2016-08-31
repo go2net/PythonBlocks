@@ -89,6 +89,15 @@ class BlockConnector():
     def blockID(self, value):
         self.connBlockID = value
 
+    def __ne__(self, other):
+        return not self .__eq__(other)
+  
+    def __eq__(self, other):
+        if(other == None): return False
+        if self.type != other.type: return False
+        if self.label != other.label: return False
+        return True
+
     def getConnectorInfo(self):
         conn_info = {}
         conn_info['position'] = self.positionType

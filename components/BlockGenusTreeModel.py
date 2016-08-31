@@ -26,6 +26,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.genus = genus
         self.tmpGenus = BlockGenus(genus.genusName, '__previewGenus__')
         self.properties = {}
+        self.properties['sockets'] = []
         self.mainWnd = mainWnd
         self.mainWnd.btnApply.clicked.connect(self.onApply)
         self.langDefLocation = langDefLocation
@@ -112,17 +113,17 @@ class BlockGenusTreeModel(QPropertyModel):
         
         if tmpGenus.plug != None:
             item  = Property('Plug', '',  self.properties['connectors'], Property.CUSTOMER_EDITOR)
-            self.fillConnectInfo(tmpGenus.plug, item)
+            self.fillConnectInfo(0, tmpGenus.plug, item)
             item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
             item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]            
             self.properties['Plug'] = item
             
         for connector in tmpGenus.sockets:
-            item = Property('Right #'+str(socket_index), '', self.properties['connectors'] , Property.CUSTOMER_EDITOR)
-            self.fillConnectInfo(connector, item)
+            item = Property('Socket', '', self.properties['connectors'] , Property.CUSTOMER_EDITOR)
+            self.fillConnectInfo(socket_index, connector, item)
             item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
-            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]              
-            self.properties['Right #'+str(socket_index)] = item
+            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]
+            self.properties['sockets'].append(item)
             socket_index += 1
             
         self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
@@ -142,6 +143,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
     
     def onAddPlug(self,  editor,  item):
+        return
         initKind = None;
         initType = None;
         idConnected = ""
@@ -150,11 +152,10 @@ class BlockGenusTreeModel(QPropertyModel):
         isLabelEditable = False;
         position = 0        
         plug = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected)
-        tmpGenus.plug = plug
+        self.tmpGenus.plug = plug
     
     def onDelPlug(self,  editor,  item):
         pass
-
     
     def onAddSocket(self,  editor,  item):
         initKind = 'socket'
@@ -166,15 +167,16 @@ class BlockGenusTreeModel(QPropertyModel):
         position = 0        
         socket = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
         self.tmpGenus.sockets.append(socket)
-        socket_index = len(self.tmpGenus.sockets) - 1
-        item = Property('Right #'+str(socket_index), '', self.properties['connectors'] ) 
-        self.fillConnectInfo(socket, item)  
+        item = Property('socket', '', self.properties['connectors'], Property.CUSTOMER_EDITOR)
+        item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+        item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]
+        self.fillConnectInfo(len(self.properties['sockets']),  socket, item)  
         index = self.getIndexForNode(item)
-        self.properties['Right #'+str(socket_index)] = item
+        self.properties['sockets'].append(item)
         #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
         self.insertRow(index.row(), index.parent())
-        #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
-        self.showBlock(self.tmpGenus)
+        self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), index, index) 
+        #self.showBlock(self.tmpGenus)
     
     def onDelSocket(self,  editor,  item):
         index = self.getIndexForNode(item)
@@ -187,8 +189,9 @@ class BlockGenusTreeModel(QPropertyModel):
         if(self.tmpGenus.getInitPlug() != None):
             row -= 1
             
-        self.tmpGenus.sockets.pop(row)
+        self.tmpGenus.sockets.pop(row)        
         self.removeNode(item)
+        self.properties['sockets'].pop(row)
         self.showBlock(self.tmpGenus)
         
     def onShowFamilyInfo(self,  editor):
@@ -248,7 +251,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['editable'] = Property('editable', img.isEditable, img_root )
         self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )
         
-    def fillConnectInfo(self,  socket,  parent):
+    def fillConnectInfo(self,  index,  socket,  parent):
+        #Property('index', str(index), parent)
         Property('label', socket.label,parent)
         #Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
         Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
@@ -349,8 +353,8 @@ class BlockGenusTreeModel(QPropertyModel):
         input, ok = QInputDialog.getText(self.mainWnd, 'URL', 'Enter url:')
         if ok:  
             url = QUrl(input)
-            #url = QUrl.fromLocalFile(filename)    
-            editor.text = url.toString()    
+            #url = QUrl.fromLocalFile(filename)
+            editor.text = url.toString()
             editor.icon = self.loadImage(url)
         
     def onShowConnectorsInfo(self,  editor):
@@ -360,8 +364,9 @@ class BlockGenusTreeModel(QPropertyModel):
             pass
             
     def setData(self, index, value, role):
-
-        ret = super(BlockGenusTreeModel, self).setData(index, value, role)
+        print('setData')
+        #ret = super(BlockGenusTreeModel, self).setData(index, value, role)
+        ret = True
         if(ret == True):
             item = index.internalPointer()
             property_name = item.objectName()
@@ -456,7 +461,7 @@ class BlockGenusTreeModel(QPropertyModel):
             
             socket_index = 0
             for socket in self.tmpGenus.sockets:
-                if(item.parent() == self.properties['Right #'+str(socket_index)] ):
+                if(item.parent() == self.properties['sockets'] [socket_index]):
                     self.setConnectorProp(socket,property_name, value )
                     break
                 socket_index += 1
@@ -471,11 +476,16 @@ class BlockGenusTreeModel(QPropertyModel):
                         if(key == property_name):
                             self.tmpGenus.properties[property_name] = value
                             break
-
                 
         self.showBlock(self.tmpGenus)
 
         #self.isDirty = self.tmpGenus != self.genus
+
+        self.chkDirty()    
+        self.dataChanged.emit(index, index)     
+        return ret    
+        
+    def chkDirty(self):
         self.genus.isDirty = (self.genus != self.tmpGenus)
         
         if(not self.genus.isDirty): 
@@ -483,7 +493,6 @@ class BlockGenusTreeModel(QPropertyModel):
         else:
             self.mainWnd.wndApplyGenus.show()
             
-        return ret    
     def setConnectorProp(self, connector, property_name, value):
         tt = 'connector.'+property_name+'=\'' + str(value)+'\''
         exec(tt)
