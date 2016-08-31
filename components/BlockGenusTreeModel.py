@@ -142,6 +142,22 @@ class BlockGenusTreeModel(QPropertyModel):
             if(key != 'module_name' and key != 'function_name'):
                 self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
     
+    def insertChild(self,  index,  prop_name,  value):
+
+        if not model.insertRow(0, index):
+            return
+
+        for column in range(model.columnCount(index)):
+            child = model.index(0, column, index)
+            model.setData(child, "[No data]", QtCore.Qt.EditRole)
+            if model.headerData(column, QtCore.Qt.Horizontal) is None:
+                model.setHeaderData(column, QtCore.Qt.Horizontal,
+                        "[No header]", QtCore.Qt.EditRole)
+
+        self.view.selectionModel().setCurrentIndex(model.index(0, 0, index),
+                QtGui.QItemSelectionModel.ClearAndSelect)
+        self.updateActions()
+    
     def onAddPlug(self,  editor,  item):
         '''
         index = self.view.selectionModel().currentIndex()
@@ -156,8 +172,14 @@ class BlockGenusTreeModel(QPropertyModel):
             child = model.index(index.row()+1, column, index.parent())
             model.setData(child, "[No data]", QtCore.Qt.EditRole)
         '''        
+        isTerminator_item_ = self.properties['isTerminator']
+        index = self.getIndexForNode(isTerminator_item_)
+
+        if not model.insertRow(index.row()+1, index.parent()):
+            return
         
         
+
         initKind = None;
         initType = None;
         idConnected = ""
