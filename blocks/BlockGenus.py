@@ -65,79 +65,8 @@ class BlockGenus():
         #assert !genusName.equals(newGenusName)  : "BlockGenuses must have unique names: "+genusName;
 
         genusToCopy = BlockGenus.getGenusWithName(genusName)
-        
-        self.familyName = genusToCopy.familyName
-        
-        self.expandGroups = genusToCopy.expandGroups    # doesn't change
-        self.areSocketsExpandable = genusToCopy.areSocketsExpandable
-        self.color = QtGui.QColor(genusToCopy.color.red(), genusToCopy.color.green(), genusToCopy.color.blue())        
-        self.hasDefArgs = genusToCopy.hasDefArgs
-        
-        
-        self.initLabel = genusToCopy.initLabel
-        
-        self._isLabelEditable = genusToCopy._isLabelEditable;
-        #self._isVarLabel = genusToCopy._isVarLabel;
-        self.isLabelValue = genusToCopy.isLabelValue;
-        self.isStarter = genusToCopy.isStarter;
-        self.isTerminator = genusToCopy.isTerminator;
-        self.__isInfix = genusToCopy.__isInfix;
-        self.kind = genusToCopy.kind;
-        self.labelPrefix = genusToCopy.labelPrefix;
-        self.labelSuffix = genusToCopy.labelSuffix;
-
-        if(genusToCopy.plug != None):
-            self.plug = BlockConnector(
-                genusToCopy.plug.kind,
-                genusToCopy.plug.type,
-                genusToCopy.plug.positionType,
-                genusToCopy.plug.label,
-                genusToCopy.plug.isLabelEditable,
-                genusToCopy.plug.isExpandable,
-                genusToCopy.plug.connBlockID,
-                genusToCopy.plug.expandGroup)
-
-        if(genusToCopy.before != None):
-            self.before = BlockConnector(
-                genusToCopy.before.kind,
-                genusToCopy.before.type,
-                genusToCopy.before.positionType,
-                genusToCopy.before.label,
-                genusToCopy.before.isLabelEditable,
-                genusToCopy.before.isExpandable,
-                genusToCopy.before.connBlockID,
-                genusToCopy.before.expandGroup)
-
-        if(genusToCopy.after != None):
-            self.after = BlockConnector(
-                genusToCopy.after.kind,
-                genusToCopy.after.type,
-                genusToCopy.after.positionType,
-                genusToCopy.after.label,
-                genusToCopy.after.isLabelEditable,
-                genusToCopy.after.isExpandable,
-                genusToCopy.after.connBlockID,
-                genusToCopy.after.expandGroup)
-                
-        
-        for socketToCopy in genusToCopy.sockets:
-            socket = BlockConnector(
-                socketToCopy.kind,
-                socketToCopy.type,
-                socketToCopy.positionType,
-                socketToCopy.label,
-                socketToCopy.isLabelEditable,
-                socketToCopy.isExpandable,
-                socketToCopy.connBlockID,
-                socketToCopy.expandGroup) 
-            self.sockets.append(socket)
-        
-        for img in genusToCopy.blockImages:
-            self.blockImages.append(img)    
-
     
-        for key in genusToCopy.properties:
-            self.properties[key] = genusToCopy.properties[key]
+        self.copyDataFrom(genusToCopy)
 
         self._genusName = newGenusName
         
@@ -250,44 +179,106 @@ class BlockGenus():
               (img1.height() != img2.height()) or \
               (img1.icon != img2.icon): 
                 return False
-            else:
-                return True
 
-        if(self.getInitPlug() != other.getInitPlug()):
+        if(self.getInitPlug() == None and other.getInitPlug() != None):
+            return False
+            
+        if(self.getInitPlug() != None and not self.getInitPlug().sameAs(other.getInitPlug())):
             return False
         
-        print('self:%d'%(len(self.sockets)))
-        print('other:%d'%(len(other.sockets)))
+        #print('self:%d'%(len(self.sockets)))
+        #print('other:%d'%(len(other.sockets)))
 
         if(len(self.sockets) != len(other.sockets)): return False  
         
         for socket_index in range(len(self.sockets)):
-            if(self.sockets[socket_index] != other.sockets[socket_index]):
+            if(not self.sockets[socket_index].sameAs(other.sockets[socket_index])):
                 return False
 
         return True
     
-    def copyDataFrom(self,  other):
-        if(other == None): return
-        self.color = other.color
-        self._kind = other._kind
-        self.familyName = other.familyName
-        self.initLabel = other.initLabel
-        self.labelPrefix = other.labelPrefix
-        self.labelSuffix = other.labelSuffix
-        self.isStarter = other.isStarter
-        self.isTerminator = other.isTerminator
+    def copyDataFrom(self,  genusToCopy):
         
-        self.blockImages = []
-        for img in other.blockImages:
-            self.blockImages.append(img)
+        if(genusToCopy == None): return
         
-        if('module_name' in other.properties):
-            self.properties['module_name'] = other.properties['module_name']
+        self.familyName = genusToCopy.familyName
+        
+        self.expandGroups = genusToCopy.expandGroups    # doesn't change
+        self.areSocketsExpandable = genusToCopy.areSocketsExpandable
+        self.color = QtGui.QColor(genusToCopy.color.red(), genusToCopy.color.green(), genusToCopy.color.blue())        
+        self.hasDefArgs = genusToCopy.hasDefArgs        
+        
+        self.initLabel = genusToCopy.initLabel
+        
+        self._isLabelEditable = genusToCopy._isLabelEditable;
+        #self._isVarLabel = genusToCopy._isVarLabel;
+        self.isLabelValue = genusToCopy.isLabelValue;
+        self.isStarter = genusToCopy.isStarter;
+        self.isTerminator = genusToCopy.isTerminator;
+        self.__isInfix = genusToCopy.__isInfix;
+        self.kind = genusToCopy.kind;
+        self.labelPrefix = genusToCopy.labelPrefix;
+        self.labelSuffix = genusToCopy.labelSuffix;
+
+        if(genusToCopy.plug != None):
+            self.plug = BlockConnector(
+                genusToCopy.plug.kind,
+                genusToCopy.plug.type,
+                genusToCopy.plug.positionType,
+                genusToCopy.plug.label,
+                genusToCopy.plug.isLabelEditable,
+                genusToCopy.plug.isExpandable,
+                genusToCopy.plug.connBlockID,
+                genusToCopy.plug.expandGroup)
         else:
-            self.properties['module_name'] = ''
-        if('function_name' in other.properties):    
-            self.properties['function_name'] = other.properties['function_name']    
+            self.plug = None
+            
+        if(genusToCopy.before != None):
+            self.before = BlockConnector(
+                genusToCopy.before.kind,
+                genusToCopy.before.type,
+                genusToCopy.before.positionType,
+                genusToCopy.before.label,
+                genusToCopy.before.isLabelEditable,
+                genusToCopy.before.isExpandable,
+                genusToCopy.before.connBlockID,
+                genusToCopy.before.expandGroup)
+        else:
+            self.before = None
+            
+        if(genusToCopy.after != None):
+            self.after = BlockConnector(
+                genusToCopy.after.kind,
+                genusToCopy.after.type,
+                genusToCopy.after.positionType,
+                genusToCopy.after.label,
+                genusToCopy.after.isLabelEditable,
+                genusToCopy.after.isExpandable,
+                genusToCopy.after.connBlockID,
+                genusToCopy.after.expandGroup)
+        else:
+            self.after = None  
+            
+        self.sockets.clear()
+        for socketToCopy in genusToCopy.sockets:
+            socket = BlockConnector(
+                socketToCopy.kind,
+                socketToCopy.type,
+                socketToCopy.positionType,
+                socketToCopy.label,
+                socketToCopy.isLabelEditable,
+                socketToCopy.isExpandable,
+                socketToCopy.connBlockID,
+                socketToCopy.expandGroup) 
+            self.sockets.append(socket)
+        
+        self.blockImages.clear()
+        for img in genusToCopy.blockImages:
+            self.blockImages.append(img)    
+
+    
+        for key in genusToCopy.properties:
+            self.properties[key] = genusToCopy.properties[key] 
     
     def getGenusWithName(name):
         if(name in BlockGenus.nameToGenus):

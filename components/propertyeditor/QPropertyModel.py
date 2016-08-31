@@ -53,8 +53,12 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         if (not index.isValid()):
             return QtCore.QModelIndex()
 
-        childItem = index.internalPointer();
-        parentItem = childItem.parent();
+        childItem = index.internalPointer()
+        if(childItem == None): return QtCore.QModelIndex()
+        
+        parentItem = childItem.parent()
+        if(parentItem == None): return QtCore.QModelIndex()
+        
         if (not parentItem or parentItem == self.m_rootItem):
             return QtCore.QModelIndex()
 

@@ -97,6 +97,10 @@ class Property(QtCore.QObject):
             
             for obj_str in self.signal_slot_maps:
                 __obj = getattr(customerEditor, obj_str)
+                print(len(self.signal_slot_maps[obj_str]))
+                if(len(self.signal_slot_maps[obj_str]) == 3):
+                    print(self.signal_slot_maps[obj_str][2])
+                    __obj.setEnabled(self.signal_slot_maps[obj_str][2])
                 __signal = getattr(__obj, self.signal_slot_maps[obj_str][0])
                 __slot = self.signal_slot_maps[obj_str][1]
                 __signal.connect(functools.partial(__slot, customerEditor, self))      
