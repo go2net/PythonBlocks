@@ -7,12 +7,14 @@ from PyQt4.QtGui import *
 class QPropertyModel(QtCore.QAbstractItemModel):
     def __init__(self, parent):
         super(QPropertyModel, self).__init__(parent)
-        self.rootItem = Property("Root",0, None);   
+        self.rootItem = Property("Root", "Root", 0, None);   
   
     def index (self,  row, column, parent):
         parentItem = self.rootItem;
+        
         if (parent.isValid()):
-            parentItem = parent.internalPointer();    
+            parentItem = parent.internalPointer()
+            
         if (row >= parentItem.childCount() or row < 0):
             return QtCore.QModelIndex();      
 
@@ -20,6 +22,15 @@ class QPropertyModel(QtCore.QAbstractItemModel):
   
     def getIndexForNode(self, node):
         return self.createIndex(node.row(), 1, node)    
+  
+    def getPropItem(self,  name,  parent=None):
+        if(parent == None):
+            parent = self.rootItem
+        for item in parent.childItems:
+            if(item.name == name):
+                return item
+                
+        return None
   
     def headerData (self,  section, orientation, role) :
     
@@ -54,12 +65,12 @@ class QPropertyModel(QtCore.QAbstractItemModel):
 
         childItem = index.internalPointer()
 
-        parentItem = childItem.parent()
+        parentItem = childItem.parentItem
         
         if parentItem == None or parentItem == self.rootItem:
             return QtCore.QModelIndex()
 
-        return self.createIndex(parentItem.childNumber(), 0, parentItem)
+        return self.createIndex(parentItem.childCount(), 0, parentItem)
 
     def rowCount ( self,  parent ):
         parentItem = self.rootItem;
@@ -82,7 +93,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
                 role == QtCore.Qt.DecorationRole or
                 role == QtCore.Qt.DisplayRole or
                 role == QtCore.Qt.EditRole):
-                return item.name.replace('_', ' ');            
+                return item.label.replace('_', ' ');            
             if (index.column() == 1):
                 if(role == QtCore.Qt.DecorationRole):
                     if(item.value(role)['icon'] != None and not item.value(role)['icon'].isNull()):
@@ -100,7 +111,7 @@ class QPropertyModel(QtCore.QAbstractItemModel):
                role == QtCore.Qt.DisplayRole or
                role == QtCore.Qt.EditRole):
                 if (index.column() == 0):
-                    return item.name.replace('_', ' ');
+                    return item.label.replace('_', ' ');
                 if (index.column() == 1):
                     return item.value
         
@@ -111,10 +122,17 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         return None
 
     def insertRows(self, row, count, parent): 
-        parentItem = index.internalPointer()
-        self.beginInsertRows(parent, position, position + rows - 1)
-        success = parentItem.insertChildren(position, rows)
+        parentItem = parent.internalPointer()
+        self.beginInsertRows(parent, row, row + count - 1)
+        success = parentItem.insertChildren(row, count)
         self.endInsertRows()
+        return success
+
+    def removeRows(self, position, rows, parent=QtCore.QModelIndex()):
+        parentItem = parent.internalPointer()
+        self.beginRemoveRows(parent, position, position + rows - 1)
+        success = parentItem.removeChildren(position, rows)
+        self.endRemoveRows()
 
         return success
 

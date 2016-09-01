@@ -65,7 +65,8 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############        
         parent.insertChildren(parent.childCount(), 1)        
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Genus Name'
+        prop.name = 'genusName'
+        prop.label = 'Genus Name'
         prop.value = self.genus.genusName
 
         ###############
@@ -73,10 +74,11 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############           
         parent.insertChildren(parent.childCount(), 1)
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Genus Kind'
+        prop.name = 'kind'
+        prop.label = 'Genus Kind'
         prop.value = tmpGenus.kind
         prop.editor_type = Property.COMBO_BOX_EDITOR
-        prop.data =  ['command', 'data', 'function', 'param','procedure','variable']
+        prop.editor_data =  ['command', 'data', 'function', 'param','procedure','variable']
 
         ###############
         #      Family Name         #
@@ -91,10 +93,11 @@ class BlockGenusTreeModel(QPropertyModel):
 
         parent.insertChildren(parent.childCount(), 1)
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Family Name'
+        prop.name = 'familyName'
+        prop.label = 'Family Name'
         prop.value = familyName
         prop.editor_type = Property.ADVANCED_COMBO_BOX
-        prop.data =  familyNameList
+        prop.editor_data =  familyNameList
         prop.onAdvBtnClick = self.onShowFamilyInfo
         prop.onIndexChanged = self.onFamilyChanged 
 
@@ -109,19 +112,21 @@ class BlockGenusTreeModel(QPropertyModel):
 
         parent.insertChildren(parent.childCount(), 1)
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Init Label'
+        prop.name = 'initLabel'
+        prop.label = 'Init Label'
         prop.value = tmpGenus.initLabel        
         
         if(labelList != []):
             prop.editor_type = Property.COMBO_BOX_EDITOR
-            prop.data =  labelList
+            prop.editor_data =  labelList
 
         ###############
         #      Label Prefix          #
         ###############  
         parent.insertChildren(parent.childCount(), 1)        
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Label Prefix'
+        prop.name = 'labelPrefix'
+        prop.label = 'Label Prefix'
         prop.value = tmpGenus.labelPrefix
         
         ###############
@@ -129,7 +134,8 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############  
         parent.insertChildren(parent.childCount(), 1)        
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Label Suffix'
+        prop.name = 'labelSuffix'
+        prop.label = 'Label Suffix'
         prop.value = tmpGenus.labelSuffix
         
         ###############
@@ -137,8 +143,9 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############  
         parent.insertChildren(parent.childCount(), 1)        
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Color'
-        prop.value = tmpGenus.labelSuffix
+        prop.name = 'color'
+        prop.label = 'Color'
+        prop.value = tmpGenus.color
         prop.editor_type = Property.COLOR_EDITOR
           
         ############
@@ -146,7 +153,8 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         parent.insertChildren(parent.childCount(), 1)        
         prop = parent.child(parent.childCount() -1)
-        prop.name = 'Images'
+        prop.name = 'images'
+        prop.label = 'Images'
         prop.value = ''
         prop.editor_type = Property.ADVANCED_EDITOR     
         prop.onAdvBtnClick = self.onShowImagesInfo   
@@ -156,194 +164,233 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      Connector     #
         ############
-        self.properties['connectors'] = Property('Connectors','', parents[-1],Property.CUSTOMER_EDITOR)
-        self.properties['connectors'].ui_file = os.path.dirname(os.path.realpath(__file__))+'/connector_prop.ui'
-        self.properties['connectors'].signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, tmpGenus.getInitPlug()==None]
-        self.properties['connectors'].signal_slot_maps['btnAddSocket'] = ['clicked', self.onAddSocket]
-         
-        #self.properties['connectors'] = prop
-        
-        self.properties['isStarter'] = Property('Starter', tmpGenus.isStarter, self.properties['connectors'] )
-        self.properties['isTerminator'] = Property('Terminator', tmpGenus.isTerminator, self.properties['connectors'] ) 
+        parent.insertChildren(parent.childCount(), 1)        
+        connectors_prop = parent.child(parent.childCount() -1)
+        connectors_prop.name = 'connectors'
+        connectors_prop.label = 'Connectors'
+        connectors_prop.value = ''
+        connectors_prop.editor_type = Property.CUSTOMER_EDITOR    
+        connectors_prop.ui_file = os.path.dirname(os.path.realpath(__file__))+'/connector_prop.ui'
+        connectors_prop.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, tmpGenus.getInitPlug()==None]
+        connectors_prop.signal_slot_maps['btnAddSocket'] = ['clicked', self.onAddSocket]
 
-        socket_index = 0
-        
-        self.all_connectors = []
-        
+     
+        ############
+        #      Starter       #
+        ############ 
+        connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
+        prop = connectors_prop.child(connectors_prop.childCount() -1)
+        prop.name = 'isStarter'
+        prop.label = 'Starter'
+        prop.value = tmpGenus.isStarter
+
+        ############
+        #      Terminator   #
+        ############ 
+        connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
+        prop = connectors_prop.child(connectors_prop.childCount() -1)
+        prop.name = 'isTerminator'
+        prop.label = 'Terminator'
+        prop.value = tmpGenus.isTerminator
+
+        ############
+        #      Plug             #
+        ############         
         if tmpGenus.plug != None:
-            item  = Property('Plug', '',  self.properties['connectors'], Property.CUSTOMER_EDITOR, self.tmpGenus.plug)
-            self.fillConnectInfo(0, tmpGenus.plug, item)
-            item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
-            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]            
-            self.properties['Plug'] = item
-            
+            connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
+            prop = connectors_prop.child(connectors_prop.childCount() -1)
+            prop.name = 'plug'
+            prop.label = 'Plug'
+            prop.value = ''
+            prop.data = tmpGenus.plug
+            prop.editor_type = Property.CUSTOMER_EDITOR    
+            prop.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+            prop.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]
+
+            self.fillConnectInfo(prop, tmpGenus.plug)
+
+        ############
+        #      socket      #
+        ############         
         for connector in tmpGenus.sockets:
-            item = Property('Socket', '', self.properties['connectors'] , Property.CUSTOMER_EDITOR, connector)
-            self.fillConnectInfo(socket_index, connector, item)
-            item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
-            item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]
-            self.properties['sockets'].append(item)
-            socket_index += 1
+            connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
+            prop = connectors_prop.child(connectors_prop.childCount() -1)
+            prop.name = 'socket'
+            prop.label = 'Socket'
+            prop.value = ''
+            prop.data = connector
+            prop.editor_type = Property.CUSTOMER_EDITOR    
+            prop.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+            prop.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]            
             
-        self.properties['connectors'].onAdvBtnClick = self.onShowConnectorsInfo
+            self.fillConnectInfo(prop, connector)
 
         ###########
-        # Properties #
+        # Properties       #
         ###########
-        self.prop_root = Property('Properties','', parents[-1],Property.ADVANCED_EDITOR) 
+        parent.insertChildren(parent.childCount(), 1)        
+        props_root = parent.child(parent.childCount() -1)
+        props_root.name = 'properties'
+        props_root.label = 'Properties'
+        props_root.value = ''
+        props_root.editor_type = Property.ADVANCED_EDITOR    
         
+        ###########
+        #      module       #
+        ###########       
         module_name= tmpGenus.properties['module_name']
-        self.properties['module_name'] = Property('module',module_name, self.prop_root,Property.ADVANCED_EDITOR)
-        self.properties['module_name'].onAdvBtnClick = self.getModuleName
-        self.properties['function_name'] = Property('function',tmpGenus.properties['function_name'] , self.prop_root,Property.COMBO_BOX_EDITOR , self.getModuleFuncList(module_name))
+        props_root.insertChildren(props_root.childCount(), 1)        
+        prop = props_root.child(props_root.childCount() -1)
+        prop.name = 'module_name'
+        prop.label = 'module'
+        prop.value = module_name
+        prop.editor_type = Property.ADVANCED_EDITOR           
+        prop.onAdvBtnClick = self.getModuleName   
+        
+        ###########
+        #      function       #
+        ###########       
+        props_root.insertChildren(props_root.childCount(), 1)        
+        prop = props_root.child(props_root.childCount() -1)
+        prop.name = 'function_name'
+        prop.label = 'function'
+        prop.value = tmpGenus.properties['function_name']
+        prop.editor_type = Property.ADVANCED_EDITOR           
+        prop.onAdvBtnClick = self.getModuleName  
+        prop.editor_data = self.getModuleFuncList(module_name)
 
+        ###########
+        #      misc  prop   #
+        ###########   
         for key in tmpGenus.properties:
             if(key != 'module_name' and key != 'function_name'):
-                self.properties[key] = Property(key,tmpGenus.properties[key], self.prop_root)
+                props_root.insertChildren(props_root.childCount(), 1)        
+                prop = props_root.child(props_root.childCount() -1)
+                prop.name = key
+                prop.label = key
+                prop.value = tmpGenus.properties[key]
     
-    def insertChild(self,  index,  prop_name,  value):
+    def insertChild(self,  index, name,  label,  value):
+        
+        item = index.internalPointer()        
+        row = item.childCount()
 
-        if not model.insertRow(0, index):
-            return
+        if not self.insertRow(row, index):
+            return None
 
-        for column in range(model.columnCount(index)):
-            child = model.index(0, column, index)
-            model.setData(child, "[No data]", QtCore.Qt.EditRole)
-            if model.headerData(column, QtCore.Qt.Horizontal) is None:
-                model.setHeaderData(column, QtCore.Qt.Horizontal,
-                        "[No header]", QtCore.Qt.EditRole)
+        child = item.child(row)
+        child.name = name
+        child.label = label
+        child.value = value
+        
+        label_index = self.index(row, 0, index)
+        self.setData(label_index, label, Qt.EditRole)
 
-        self.view.selectionModel().setCurrentIndex(model.index(0, 0, index),
-                QtGui.QItemSelectionModel.ClearAndSelect)
-        self.updateActions()
+        val_index = self.index(row, 1, index)
+        self.setData(val_index, value, Qt.EditRole)
+
+        return child
     
     def onAddPlug(self,  editor,  item):
-        '''
-        index = self.view.selectionModel().currentIndex()
-        model = self.view.model()
-
-        if not model.insertRow(index.row()+1, index.parent()):
-            return
-
-        self.updateActions()
-
-        for column in range(model.columnCount(index.parent())):
-            child = model.index(index.row()+1, column, index.parent())
-            model.setData(child, "[No data]", QtCore.Qt.EditRole)
-        '''        
-        isTerminator_item_ = self.properties['isTerminator']
-        index = self.getIndexForNode(isTerminator_item_)
-
-        if not model.insertRow(index.row()+1, index.parent()):
-            return
-
-        initKind = None;
-        initType = None;
-        idConnected = ""
-        label = "";
-        isExpandable = False;
-        isLabelEditable = False;
-        position = 0  
-            
-        plug = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected)
-        item = Property('Plug', '', self.properties['connectors'], Property.CUSTOMER_EDITOR,  plug)
-        new_index = model.index(index.row()+1, 0, index.parent())
-        model.setData(new_index, "", QtCore.Qt.EditRole)
-        
-        initKind = None;
-        initType = None;
-        idConnected = ""
-        label = "";
-        isExpandable = False;
-        isLabelEditable = False;
-        position = 0        
-        plug = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected)
-        #self.tmpGenus.sockets.append(socket)
-        item = Property('Plug', '', self.properties['connectors'], Property.CUSTOMER_EDITOR,  plug)
-        item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
-        item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]
-        self.fillConnectInfo(0,  plug, item)
-       
         index = self.getIndexForNode(item)
+        isTerminator_item = self.getPropItem('isTerminator', item)
+        row = isTerminator_item.row()+1
         
-        self.beginInsertRows(index.parent(), 2, 2) 
-        self.properties['plug'] = item
-        self.setData(index, plug,  Qt.EditRole)       
-        self.sender().setEnabled(False)
-        self.properties['connectors'].signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, False]
-        self.endInsertRows()   
-        
-    def onDelPlug(self,  editor,  item):
-        index = self.getIndexForNode(item)             
-        self.removeNode(item)        
-        self.chkDirty()    
-        self.dataChanged.emit(index, index)
-        self.showBlock(self.tmpGenus)
-        self.properties['connectors'].signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, True]
-    
-    def onAddSocket(self,  editor,  item):
-        '''
-        index = self.view.selectionModel().currentIndex()
-        model = self.view.model()
-
-        if model.columnCount(index) == 0:
-            if not model.insertColumn(0, index):
-                return
-
-        if not model.insertRow(0, index):
-            return
-
-        for column in range(model.columnCount(index)):
-            child = model.index(0, column, index)
-            model.setData(child, "[No data]", QtCore.Qt.EditRole)
-            if model.headerData(column, QtCore.Qt.Horizontal) is None:
-                model.setHeaderData(column, QtCore.Qt.Horizontal,
-                        "[No header]", QtCore.Qt.EditRole)
-
-        self.view.selectionModel().setCurrentIndex(model.index(0, 0, index),
-                QtGui.QItemSelectionModel.ClearAndSelect)
-        self.updateActions()
-        '''
-        index = self.getIndexForNode(item)
-        row = len(item.childItems)
-        if not model.insertRow(row, parent_index):
+        if not self.insertRow(row, index):
             return 
             
-        prop_name_index = model.index(row, 0, index)
-        model.setData(prop_name_index, 'Socket', QtCore.Qt.EditRole)
+        initKind = 'plug'
+        initType = 'string'
+        idConnected = ""
+        label = "";
+        isExpandable = False;
+        isLabelEditable = True;
+        position = 0  
         
-        prop_val_index = model.index(row, 1, index)
-        model.setData(prop_val_index, '', QtCore.Qt.EditRole)        
+        plug = BlockConnector(
+            initKind,
+            initType,
+            position, 
+            label, 
+            isLabelEditable,
+            isExpandable,
+            idConnected);    
+            
+        plug_item = item.child(row)
+        plug_item.name = 'plug'
+        plug_item.label = 'Plug'
+        plug_item.value = plug
+        plug_item.editor_type = Property.CUSTOMER_EDITOR
+        plug_item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+        plug_item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelPlug]  
+        plug_item.data = plug
+        prop_label_index = self.index(row, 0, index)
+        self.setData(prop_label_index, plug_item.label, Qt.EditRole)
         
-        self.insertChild(prop_name_index,  'label',  '')
-        self.insertChild(prop_name_index,  'type',  'string')
+        prop_val_index = self.index(row, 1, index)
+        self.setData(prop_val_index, plug_item.value, Qt.EditRole)        
         
-        ''''    
+        prop = self.insertChild(prop_label_index,  'label', 'label',  '')
+        prop = self.insertChild(prop_label_index,  'type', 'type',  'string')   
+        prop.editor_type = Property.COMBO_BOX_EDITOR   
+        prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string'] 
+        prop.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, False]
+        
+    def onDelPlug(self,  editor,  item):
+        index = self.getIndexForNode(item)
+        self.removeRow(index.row(), index.parent())
+        self.tmpGenus.plug = None
+        self.chkDirty()    
+        self.showBlock(self.tmpGenus)        
+        item.parentItem.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, True]
+        
+    def onAddSocket(self,  editor,  item):
+        index = self.getIndexForNode(item)
+        row = item.childCount()
+        if not self.insertRow(row, index):
+            return 
+            
         initKind = 'socket'
         initType = 'string'
         idConnected = ""
         label = "";
         isExpandable = False;
         isLabelEditable = True;
-        position = 0        
-        socket = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected);
-        item = Property('Socket', '', self.properties['connectors'], Property.CUSTOMER_EDITOR,  socket)
-        item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
-        item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]
-        self.fillConnectInfo(len(self.properties['sockets']),  socket, item)  
-        index = self.getIndexForNode(item)
-        self.properties['sockets'].append(item)
-        self.insertRow(index.row(), index.parent())
-        self.setData(index, socket,  Qt.EditRole)
-        '''
+        position = 0  
+        
+        socket = BlockConnector(
+            initKind,
+            initType,
+            position, 
+            label, 
+            isLabelEditable,
+            isExpandable,
+            idConnected);    
+            
+        socket_item = item.child(row)
+        socket_item.name = 'socket'
+        socket_item.label = 'Socket'
+        socket_item.value = socket
+        socket_item.editor_type = Property.CUSTOMER_EDITOR
+        socket_item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
+        socket_item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]  
+        socket_item.data = socket
+        prop_label_index = self.index(row, 0, index)
+        self.setData(prop_label_index, socket_item.label, Qt.EditRole)
+        
+        prop_val_index = self.index(row, 1, index)
+        self.setData(prop_val_index, socket_item.value, Qt.EditRole)        
+        
+        prop = self.insertChild(prop_label_index,  'label', 'label',  '')
+        prop = self.insertChild(prop_label_index,  'type', 'type',  'string')   
+        prop.editor_type = Property.COMBO_BOX_EDITOR   
+        prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string'] 
         
     def onDelSocket(self,  editor,  item):
-        index = self.getIndexForNode(item) 
-            
-        self.removeNode(item)
-        
+        index = self.getIndexForNode(item)
+        self.removeRow(index.row(), index.parent())
+        self.tmpGenus.sockets.remove(item.data)
         self.chkDirty()    
-        self.dataChanged.emit(index, index)
         self.showBlock(self.tmpGenus)
         
     def onShowFamilyInfo(self,  editor):
@@ -358,20 +405,22 @@ class BlockGenusTreeModel(QPropertyModel):
                 editor.comboBox.addItem(familyName)
                 BlockGenus.families[familyName] = []
                 for variName in dlg.families[familyName]:
-                    BlockGenus.families[familyName].append(variName)
-    
-    def onFamilyChanged(self, familyName, sender):
-        if familyName != 'n/a' and familyName in BlockGenus.families:            
-            self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
-            
+                    BlockGenus.families[familyName].append(variName)    
+   
+    def onFamilyChanged(self, familyName, sender,  item):
+        initLabel_Item = self.getPropItem('initLabel')
+        print(initLabel_Item)
+        if(initLabel_Item == None): return        
+        if familyName != 'n/a' and familyName in BlockGenus.families:
+            initLabel_Item.editor_type = Property.COMBO_BOX_EDITOR        
             var_list = []
             for key in BlockGenus.families[familyName]:
                 var_list.append(BlockGenus.families[familyName][key])
             #print(var_list)
-            self.properties['initLabel'].obj_data = var_list
+            initLabel_Item.editor_data = var_list
         else:
-            self.properties['initLabel'].editorType = None
-            self.properties['initLabel'].obj_data = None           
+            initLabel_Item.editor_type = None
+            initLabel_Item.editor_data = None           
     
     def addImages(self,  imgs_root, genus):
         for img_index in range(len(self.tmpGenus.blockImages)):           
@@ -403,12 +452,27 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['editable'] = Property('editable', img.isEditable, img_root )
         self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )    
     
-    def fillConnectInfo(self,  index,  socket,  parent):
-        #Property('index', str(index), parent)
-        Property('label', socket.label,parent)
-        #Property('kind', socket.kind,parent,  Property.COMBO_BOX_EDITOR, ['socket', 'plug'])
-        Property('type', socket.type,parent, Property.COMBO_BOX_EDITOR, ['boolean','cmd','number','poly', 'poly-list', 'string'])
-
+    def fillConnectInfo(self, parent,  connector):
+        ###############
+        #             label             #
+        ###############             
+        parent.insertChildren(parent.childCount(), 1)
+        props = parent.child(parent.childCount() -1)
+        props.name = 'label'
+        props.label = 'label'
+        props.value = connector.label
+        
+        ###############
+        #             label             #
+        ###############             
+        parent.insertChildren(parent.childCount(), 1)
+        props = parent.child(parent.childCount() -1)
+        props.name = 'type'
+        props.label = 'type'
+        props.value = connector.type               
+        props.editor_type = Property.COMBO_BOX_EDITOR   
+        props.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string']
+        
     def onLoadImageFromFile(self,  editor):        
         editor.text = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
 
@@ -452,39 +516,7 @@ class BlockGenusTreeModel(QPropertyModel):
             self.addImages(self.imgs_root, self.tmpGenus)
 
             #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
-    
-    def removeRow(self, row, parentIndex): 
-        return self.removeRows(row, 1, parentIndex) 
-
-    def removeRows(self, row, count, parentIndex): 
-        self.beginRemoveRows(parentIndex, row, row+count) 
-        self.endRemoveRows() 
-        return True 
-
-    def removeNode(self, node):
-        row = node.row()
-        #print(node)
-        #print(row)
-        # item.row() is index row index in connector node
-        # in order to get index in self.tmpGenus.sockets list, need minus 2 for before and after connector
-        prop_row = row -2
-        
-        # if there has plug, we need minus 1
-        if(self.tmpGenus.getInitPlug() != None):
-            prop_row -= 1           
-        
-        index =  self.getIndexForNode(node)
-        self.beginRemoveRows(index.parent(), row, row) 
-        node.setParent(None)
-        #print(prop_row)
-        #print(self.properties['sockets'])
-        self.properties['sockets'].pop(prop_row)
-        #print(self.properties['sockets'])
-        self.tmpGenus.sockets.pop(prop_row)         
-        self.endRemoveRows()
-        
-        #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), parent_index, parent_index) 
-    
+     
     def onShowImgSelMenu(self,  editor):
         
         self.popMenu.clear() 
@@ -524,50 +556,47 @@ class BlockGenusTreeModel(QPropertyModel):
             pass
             
     def setData(self, index, value, role):
-        ret = super(BlockGenusTreeModel, self).setData(index, value, role)
-        if(ret == True):
+        
+        if role != Qt.EditRole:
+            return False
+
+        item = index.internalPointer()
+        result = item.setData(index.column(), value) 
+        
+        if(result == True):
             item = index.internalPointer()
             property_name = item.name
-
-            if(property_name == 'Family Name'):
-                self.tmpGenus.familyName = value
+            
+            if(item.parent() == self.rootItem and hasattr(self.tmpGenus, property_name)):
+                setattr(self.tmpGenus,property_name, value )
+            
+            if(property_name == 'familyName'):
                 labelList= []
-                if value in BlockGenus.families:            
-                    family = BlockGenus.families[value]
-                    for name in family:
-                        labelList.append(family[name])    
-                    self.properties['initLabel'].editorType = Property.COMBO_BOX_EDITOR
-                    self.properties['initLabel'].propertyData = labelList
-                else:
-                    self.properties['initLabel'].editorType = None
-            elif(property_name == 'Color'):
-                self.tmpGenus.color = value            
-            elif(property_name == 'Genus Kind'):
-                self.tmpGenus.kind = value
-            elif(property_name == 'Init Label'):
-                self.tmpGenus.initLabel = value
-            elif(property_name == 'Label Prefix'):
-                self.tmpGenus.labelPrefix = value
-            elif(property_name == 'Label Suffix'):
-                self.tmpGenus.labelSuffix = value
-            elif(property_name == 'Starter'):
-                self.tmpGenus.isStarter = value
-            elif(property_name == 'Terminator'):
-                self.tmpGenus.isTerminator = value            
+                initLabel_Item = self.getPropItem('initLabel')
+                if(initLabel_Item != None):
+                    if value in BlockGenus.families:            
+                        family = BlockGenus.families[value]
+                        for name in family:
+                            labelList.append(family[name])    
+                        initLabel_Item.editorType = Property.COMBO_BOX_EDITOR
+                        initLabel_Item.propertyData = labelList
+                    else:
+                        initLabel_Item.editorType = None
             elif (property_name == 'Img') :
                 img = value['img']
                 img.icon = value['icon']
                 img.url = value['url']
-            elif (property_name == 'Plug') :
-                plug = value
+                
+            elif (property_name == 'plug') :
+                plug = item.data
                 self.tmpGenus.plug = plug
-            elif (property_name == 'Socket') :
-                socket = value
+                
+            elif (property_name == 'socket') :
+                socket = item.data
                 if(socket not in self.tmpGenus.sockets):
                     self.tmpGenus.sockets.append(socket)                    
             elif (item.parent() != None and item.parent().name == 'Img'):
-                img = item.parent().value()['img']  
-                
+                img = item.parent().value()['img'] 
                 items = item.parent().children()
                 height_item = None
                 for item in items:
@@ -602,12 +631,12 @@ class BlockGenusTreeModel(QPropertyModel):
                     
                 elif(property_name == 'height'):
                     img.setSize(img.width(),  value)
-            elif (item.parent() != None and item.parent().name == 'Plug'):    
-                if(self.tmpGenus.plug != None and item.parent()  == self.properties['Plug'] ):
-                    plug = item.parent().obj_data
+            elif (item.parent() != None and item.parent().name == 'plug'):    
+                if(self.tmpGenus.plug != None):
+                    plug = item.parent().data
                     setattr(plug, property_name,  value)
-            elif (item.parent() != None and item.parent().name == 'Socket'):             
-                socket = item.parent().obj_data
+            elif (item.parent() != None and item.parent().name == 'socket'):             
+                socket = item.parent().data
                 setattr(socket, property_name,  value)
                 
             elif (item.parent() != None and item.parent().name == 'Properties'):    
@@ -624,8 +653,10 @@ class BlockGenusTreeModel(QPropertyModel):
         self.showBlock(self.tmpGenus)
 
         self.chkDirty()    
-  
-        return ret    
+        
+        self.dataChanged.emit(index, index) 
+
+        return result    
         
     def chkDirty(self):
         self.genus.isDirty = (self.genus != self.tmpGenus)

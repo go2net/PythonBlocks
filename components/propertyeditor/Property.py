@@ -18,11 +18,13 @@ class Property(object):
     IMAGE_EDITOR = 8
     EDITOR_NONE = 9
   
-    def __init__(self, name='', value=None, parent=None, editor_type = None,  data=None):
+    def __init__(self, name='', label='', value=None, parent=None, editor_type = None,  editor_data=None,  data=None):
+        self.label = label
         self.parentItem = parent
         self._readOnly = False
         self.editor_type = editor_type
         self.value = value
+        self.editor_data = editor_data
         self.data = data
         self.name = name
         self.childItems = []
@@ -34,17 +36,14 @@ class Property(object):
         return self.childItems[row]
         
     def parent(self):
-        print('hello')
         return self.parentItem
     
     def addWidget(self,  widget):
         self.widgets.append(widget)
     
     def row(self):
-        if self.parent():
-            #print('children:')
-            #print(self.parent().children())
-            return self.parent().children().index(self)
+        if self.parentItem:
+            return self.parentItem.childItems.index(self)
         return 0
 
     def childCount(self):
@@ -64,8 +63,17 @@ class Property(object):
             return False
             
         for row in range(count):
-            item = Property()
+            item = Property('', '', None,  self)
             self.childItems.insert(position, item)
+        return True
+
+    def removeChildren(self, position, count):
+        if position < 0 or position + count > len(self.childItems):
+            return False
+
+        for row in range(count):
+            self.childItems.pop(position)
+
         return True
 
     @property
@@ -95,6 +103,15 @@ class Property(object):
     #def remove(self, node):
     #    return self.children().remove(node)   
 
+    def setData(self, column, value):
+        if(column == 0):
+            self.label = value
+        elif (column == 1):
+            self.value = value
+        else:
+            return False
+        return True
+
     def createEditor(self, delegate, parent, option):
         editor = None
         if(self.editor_type == None or self.editor_type == Property.ROOT_NODE): return None
@@ -116,9 +133,7 @@ class Property(object):
             
             for obj_str in self.signal_slot_maps:
                 __obj = getattr(customerEditor, obj_str)
-                print(len(self.signal_slot_maps[obj_str]))
                 if(len(self.signal_slot_maps[obj_str]) == 3):
-                    print(self.signal_slot_maps[obj_str][2])
                     __obj.setEnabled(self.signal_slot_maps[obj_str][2])
                 __signal = getattr(__obj, self.signal_slot_maps[obj_str][0])
                 __slot = self.signal_slot_maps[obj_str][1]
@@ -141,7 +156,7 @@ class Property(object):
             return chkBox
             
         if(self.editor_type == Property.COMBO_BOX_EDITOR):
-            confiningChoices = self.data
+            confiningChoices = self.editor_data
           
             confineCombo = QtGui.QComboBox(parent)
             confineCombo.addItems(confiningChoices)
@@ -150,12 +165,12 @@ class Property(object):
             return confineCombo
             
         if(self.editor_type == Property.ADVANCED_COMBO_BOX):
-            confiningChoices = self.data
+            confiningChoices = self.editor_data
           
             advComboBox = AdvancedComboBox(self, parent)
             advComboBox.comboBox.addItems(confiningChoices)
             advComboBox.button.clicked.connect(lambda: self.onAdvBtnClick(advComboBox))
-            advComboBox.comboBox.currentIndexChanged['QString'].connect( lambda val, sender=advComboBox:self.onIndexChanged(val, sender)) 
+            advComboBox.comboBox.currentIndexChanged['QString'].connect( lambda val, sender=advComboBox:self.onIndexChanged(val, sender,  self)) 
             return advComboBox            
             
         if(self.editor_type == Property.COLOR_EDITOR):
@@ -169,7 +184,6 @@ class Property(object):
         print('onAdvBtnClick')        
        
     def editTextChanged(self,  text):
-        print(text)
         pass
     
     def onMenuBtnClick(self, editor):
