@@ -336,6 +336,8 @@ class BlockGenusTreeModel(QPropertyModel):
         prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string'] 
         prop.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, False]
         
+        self.layoutChanged.emit()
+        
     def onDelPlug(self,  editor,  item):
         index = self.getIndexForNode(item)
         self.removeRow(index.row(), index.parent())
@@ -398,7 +400,8 @@ class BlockGenusTreeModel(QPropertyModel):
         prop.value = 'string'
         prop.editor_type = Property.COMBO_BOX_EDITOR   
         prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string']
-
+        
+        self.layoutChanged.emit()
 
     def onDelSocket(self,  editor,  item):
         index = self.getIndexForNode(item)
@@ -423,7 +426,7 @@ class BlockGenusTreeModel(QPropertyModel):
    
     def onFamilyChanged(self, familyName, sender,  item):
         initLabel_Item = self.getPropItem('initLabel')
-        print(initLabel_Item)
+
         if(initLabel_Item == None): return        
         if familyName != 'n/a' and familyName in BlockGenus.families:
             initLabel_Item.editor_type = Property.COMBO_BOX_EDITOR        
@@ -446,7 +449,7 @@ class BlockGenusTreeModel(QPropertyModel):
             icon = img.icon
         else:
             icon = self.loadImage(url)
-            img.icon = icon
+            img.icon = icon        
             
         image_data = {}
         image_data['icon'] = icon
@@ -454,17 +457,75 @@ class BlockGenusTreeModel(QPropertyModel):
         image_data['img'] = img
  
         img_root = Property('Img',image_data, imgs_root,Property.IMAGE_EDITOR) 
+
+
+        ############
+        #      Image Root       #
+        ############ 
+        imgs_root.insertChildren(imgs_root.childCount(), 1)        
+        img_root = imgs_root.child(imgs_root.childCount() -1)
+        img_root.name = 'image'
+        img_root.label = 'Image'
+        img_root.editor_type = Property.IMAGE_EDITOR
+        img_root.value = image_data
         img_root.onAdvBtnClick = self.loadFromFile
         img_root.onMenuBtnClick = self.onShowImgSelMenu
-
-        self.properties['Img #'+str(img_index)] = img_root
-        self.properties['location'] = Property('location', img.location, img_root,Property.COMBO_BOX_EDITOR, ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] )
-        self.properties['lock_ratio'] = Property('lock ratio',img.lockRatio, img_root  )
-        self.properties['width'] = Property('width',img.width(), img_root  )
-        self.properties['height'] = Property('height',img.height(),img_root)
         
-        self.properties['editable'] = Property('editable', img.isEditable, img_root )
-        self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )    
+        ############
+        #      location       #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'location'
+        prop.label = 'location'
+        prop.value = img.location
+        prop.editor_type = Property.COMBO_BOX_EDITOR
+        prop.editor_data = ['CENTER', 'EAST', 'WEST', 'NORTH', 'SOUTH', 'SOUTHEAST', 'SOUTHWEST', 'NORTHEAST', 'NORTHWEST'] 
+
+        ############
+        #      lock_ratio    #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'lock_ratio'
+        prop.label = 'lock ratio'
+        prop.value = img.lockRatio
+  
+        ############
+        #        width         #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'width'
+        prop.label = 'width'
+        prop.value = img.width()
+        
+        ############
+        #        height         #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'height'
+        prop.label = 'height'
+        prop.value = img.height()     
+
+        ############
+        #        editable       #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'isEditable'
+        prop.label = 'editable'
+        prop.value = img.isEditable
+
+        ############
+        #        editable       #
+        ############ 
+        img_root.insertChildren(img_root.childCount(), 1)        
+        prop = img_root.child(img_root.childCount() -1)
+        prop.name = 'wrapText'
+        prop.label = 'wraptext'
+        prop.value = img.wrapText  
     
     def fillConnectInfo(self, parent,  connector):
         ###############
@@ -477,7 +538,7 @@ class BlockGenusTreeModel(QPropertyModel):
         prop.value = connector.label
         
         ###############
-        #             label             #
+        #             type             #
         ###############             
         parent.insertChildren(parent.childCount(), 1)
         prop = parent.child(parent.childCount() -1)
@@ -608,7 +669,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket = item.data
                 if(socket not in self.tmpGenus.sockets):
                     self.tmpGenus.sockets.append(socket)                    
-            elif (item.parent() != None and item.parent().name == 'Img'):
+            elif (item.parent() != None and item.parent().name == 'Image'):
                 img = item.parent().value()['img'] 
                 items = item.parent().children()
                 height_item = None
@@ -618,11 +679,11 @@ class BlockGenusTreeModel(QPropertyModel):
                         break            
                 if(property_name == 'location'):
                     img.location = value                    
-                elif(property_name == 'editable'):
+                elif(property_name == 'isEditable'):
                     img.isEditable = value                    
-                elif(property_name == 'wraptext'):
+                elif(property_name == 'wrapText'):
                     img.wrapText = value                    
-                elif(property_name == 'lock ratio'):
+                elif(property_name == 'lockRatio'):
                     if(value==True and img.lockRatio != value):
                         if (height_item != None):
                             height = img.width()*img.icon.height()/img.icon.width()
@@ -679,9 +740,6 @@ class BlockGenusTreeModel(QPropertyModel):
         else:
             self.mainWnd.wndApplyGenus.show()
             
-    def setConnectorProp(self, connector, property_name, value):
-        tt = 'connector.'+property_name+'=\'' + str(value)+'\''
-        exec(tt)
 
     def onApply(self):
         self.genus.copyDataFrom(self.tmpGenus)
