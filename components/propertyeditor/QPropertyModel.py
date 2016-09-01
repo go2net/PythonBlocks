@@ -7,16 +7,16 @@ from PyQt4.QtGui import *
 class QPropertyModel(QtCore.QAbstractItemModel):
     def __init__(self, parent):
         super(QPropertyModel, self).__init__(parent)
-        self.m_rootItem = Property("Root",0, None);   
+        self.rootItem = Property("Root",0, None);   
   
     def index (self,  row, column, parent):
-        parentItem = self.m_rootItem;
+        parentItem = self.rootItem;
         if (parent.isValid()):
             parentItem = parent.internalPointer();    
-        if (row >= len(parentItem.children()) or row < 0):
+        if (row >= parentItem.childCount() or row < 0):
             return QtCore.QModelIndex();      
 
-        return self.createIndex(row, column, parentItem.children()[row])    
+        return self.createIndex(row, column, parentItem.child(row)) 
   
     def getIndexForNode(self, node):
         return self.createIndex(node.row(), 1, node)    
@@ -48,28 +48,24 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         else:
             return  QtCore.Qt.ItemIsDragEnabled |  QtCore.Qt.ItemIsEnabled |  QtCore.Qt.ItemIsEditable;
 
-    def parent ( self,  index ) :
-
-        if (not index.isValid()):
+    def parent(self, index):
+        if not index.isValid():
             return QtCore.QModelIndex()
 
         childItem = index.internalPointer()
-        if(childItem == None): return QtCore.QModelIndex()
-        
+
         parentItem = childItem.parent()
-        if(parentItem == None): return QtCore.QModelIndex()
         
-        if (not parentItem or parentItem == self.m_rootItem):
+        if parentItem == None or parentItem == self.rootItem:
             return QtCore.QModelIndex()
 
-        return self.createIndex(parentItem.row(), 0, parentItem);
+        return self.createIndex(parentItem.childNumber(), 0, parentItem)
 
     def rowCount ( self,  parent ):
-        parentItem = self.m_rootItem;
+        parentItem = self.rootItem;
         if (parent.isValid()):
             parentItem = parent.internalPointer()
-        return len(parentItem.children())
-
+        return len(parentItem.childItems)
 
     def columnCount (self,  parent):
         return 2
@@ -80,13 +76,13 @@ class QPropertyModel(QtCore.QAbstractItemModel):
 
         item = index.internalPointer()
 
-        if(item.obj_type == Property.IMAGE_EDITOR):
+        if(item.editor_type == Property.IMAGE_EDITOR):
             if (index.column() == 0) and (
                 role == QtCore.Qt.ToolTipRole or
                 role == QtCore.Qt.DecorationRole or
                 role == QtCore.Qt.DisplayRole or
                 role == QtCore.Qt.EditRole):
-                return item.objectName().replace('_', ' ');            
+                return item.name.replace('_', ' ');            
             if (index.column() == 1):
                 if(role == QtCore.Qt.DecorationRole):
                     if(item.value(role)['icon'] != None and not item.value(role)['icon'].isNull()):
@@ -104,15 +100,23 @@ class QPropertyModel(QtCore.QAbstractItemModel):
                role == QtCore.Qt.DisplayRole or
                role == QtCore.Qt.EditRole):
                 if (index.column() == 0):
-                    return item.objectName().replace('_', ' ');
+                    return item.name.replace('_', ' ');
                 if (index.column() == 1):
-                    return item.value(role)            
+                    return item.value
         
         if(role == QtCore.Qt.BackgroundRole):
             if (item.isRoot()): 
                 return QtGui.QApplication.palette("QTreeView").brush(QtGui.QPalette.Normal, QtGui.QPalette.Button).color();
 
         return None
+
+    def insertRows(self, row, count, parent): 
+        parentItem = index.internalPointer()
+        self.beginInsertRows(parent, position, position + rows - 1)
+        success = parentItem.insertChildren(position, rows)
+        self.endInsertRows()
+
+        return success
 
     # edit methods
     def setData(self, index, value, role = QtCore.Qt.EditRole):

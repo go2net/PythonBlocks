@@ -13,8 +13,8 @@ class QVariantDelegate(QtGui.QItemDelegate):
         editor = None
         p = index.internalPointer()
     
-        obj_type = p.obj_type
-        if(obj_type != None):     
+        editor_type = p.editor_type
+        if(editor_type != None):     
             editor = p.createEditor(self, parent, option);
             if (editor != None):
                 if (editor.metaObject().indexOfSignal("editFinished()") != -1):
@@ -41,8 +41,8 @@ class QVariantDelegate(QtGui.QItemDelegate):
         
     def setModelData(self, editor, model, index) :
         data = index.model().data(index, Qt.EditRole);  
-        obj_type = index.internalPointer().obj_type
-        if(obj_type != None):  
+        editor_type = index.internalPointer().editor_type
+        if(editor_type != None):  
             data = index.internalPointer().editorData(editor);
             if (data != None):
                 model.setData(index, data , Qt.EditRole); 
@@ -54,8 +54,8 @@ class QVariantDelegate(QtGui.QItemDelegate):
         #self.m_finishedMapper.blockSignals(True);
         data = index.model().data(index, QtCore.Qt.EditRole);   
         
-        obj_type = index.internalPointer().obj_type
-        if(obj_type != None):              
+        editor_type = index.internalPointer().editor_type
+        if(editor_type != None):              
             index.internalPointer().setEditorData(editor, data)     
         else:
             super(QVariantDelegate, self).setEditorData(editor, index)

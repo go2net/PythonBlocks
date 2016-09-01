@@ -30,7 +30,7 @@ class BlockGenusTreeModel(QPropertyModel):
         self.mainWnd = mainWnd
         self.mainWnd.btnApply.clicked.connect(self.onApply)
         self.langDefLocation = langDefLocation
-        self.setupModelData(self.tmpGenus, self.m_rootItem)
+        self.setupModelData(self.tmpGenus, self.rootItem)
         self.isDirty = False
         self.popMenu = QMenu(self.view)
 
@@ -39,12 +39,12 @@ class BlockGenusTreeModel(QPropertyModel):
             return Qt.ItemIsEnabled;
         
         item = index.internalPointer()
-        property_name = item.objectName()
+        property_name = item.name
 
         if property_name == 'Genus Name':
             return Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
-        elif item.parent() != None and item.parent().objectName() == 'Img':
+        elif item.parent() != None and item.parent().name == 'Img':
             img = item.parent().value()['img']
             if(property_name == 'height'):
                 if not img.lockRatio:                
@@ -57,10 +57,30 @@ class BlockGenusTreeModel(QPropertyModel):
     def setupModelData(self, tmpGenus, parent):
         parents = [parent]
         self.showBlock(tmpGenus)
-    
-        self.properties['genusName'] = Property('Genus Name', self.genus.genusName, parents[-1])         
-        self.properties['kind'] = Property('Genus Kind', tmpGenus.kind, parents[-1], Property.COMBO_BOX_EDITOR, ['command', 'data', 'function', 'param','procedure','variable'])
         
+        parent = parents[-1]
+        
+        ###############
+        #      Genus Name          #
+        ###############        
+        parent.insertChildren(parent.childCount(), 1)        
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Genus Name'
+        prop.value = self.genus.genusName
+
+        ###############
+        #      Genus Kind           #
+        ###############           
+        parent.insertChildren(parent.childCount(), 1)
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Genus Kind'
+        prop.value = tmpGenus.kind
+        prop.editor_type = Property.COMBO_BOX_EDITOR
+        prop.data =  ['command', 'data', 'function', 'param','procedure','variable']
+
+        ###############
+        #      Family Name         #
+        ###############          
         familyNameList = ['n/a']
         familyName = tmpGenus.familyName
         for name in BlockGenus.families:
@@ -68,31 +88,70 @@ class BlockGenusTreeModel(QPropertyModel):
             
         if(familyName == ''):
             familyName = 'n/a'
-            
-        self.properties['familyName'] = Property('Family Name', familyName, parents[-1], Property.ADVANCED_COMBO_BOX,familyNameList)             
-        self.properties['familyName'].onAdvBtnClick = self.onShowFamilyInfo
-        self.properties['familyName'].onIndexChanged = self.onFamilyChanged
-        
+
+        parent.insertChildren(parent.childCount(), 1)
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Family Name'
+        prop.value = familyName
+        prop.editor_type = Property.ADVANCED_COMBO_BOX
+        prop.data =  familyNameList
+        prop.onAdvBtnClick = self.onShowFamilyInfo
+        prop.onIndexChanged = self.onFamilyChanged 
+
+        ###############
+        #      Init Label            #
+        ###############   
         labelList= []
         if familyName in BlockGenus.families:            
             family = BlockGenus.families[familyName]
             for varName in family:                
                 labelList.append(family[varName])  
-        if(labelList != []):
-            self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1], Property.COMBO_BOX_EDITOR,labelList)
-        else:
-            self.properties['initLabel'] = Property('Init Label', tmpGenus.initLabel, parents[-1])
+
+        parent.insertChildren(parent.childCount(), 1)
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Init Label'
+        prop.value = tmpGenus.initLabel        
         
-        self.properties['labelPrefix'] = Property('Label Prefix', tmpGenus.labelPrefix, parents[-1])
-        self.properties['labelSuffix'] = Property('Label Suffix', tmpGenus.labelSuffix, parents[-1])    
-        self.properties['color'] = Property('Color',tmpGenus.color , parents[-1], Property.COLOR_EDITOR)
+        if(labelList != []):
+            prop.editor_type = Property.COMBO_BOX_EDITOR
+            prop.data =  labelList
+
+        ###############
+        #      Label Prefix          #
+        ###############  
+        parent.insertChildren(parent.childCount(), 1)        
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Label Prefix'
+        prop.value = tmpGenus.labelPrefix
+        
+        ###############
+        #      Label Suffix         #
+        ###############  
+        parent.insertChildren(parent.childCount(), 1)        
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Label Suffix'
+        prop.value = tmpGenus.labelSuffix
+        
+        ###############
+        #      Color                   #
+        ###############  
+        parent.insertChildren(parent.childCount(), 1)        
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Color'
+        prop.value = tmpGenus.labelSuffix
+        prop.editor_type = Property.COLOR_EDITOR
           
         ############
-        #      Image          #
+        #      Images         #
         ############
-        self.imgs_root = Property('Images','',  parents[-1],Property.ADVANCED_EDITOR) 
-        self.imgs_root.onAdvBtnClick = self.onShowImagesInfo
-        self.addImages(self.imgs_root, tmpGenus)
+        parent.insertChildren(parent.childCount(), 1)        
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'Images'
+        prop.value = ''
+        prop.editor_type = Property.ADVANCED_EDITOR     
+        prop.onAdvBtnClick = self.onShowImagesInfo   
+        
+        self.addImages(prop, tmpGenus)
         
         ############
         #      Connector     #
@@ -177,9 +236,20 @@ class BlockGenusTreeModel(QPropertyModel):
 
         if not model.insertRow(index.row()+1, index.parent()):
             return
-        
-        
 
+        initKind = None;
+        initType = None;
+        idConnected = ""
+        label = "";
+        isExpandable = False;
+        isLabelEditable = False;
+        position = 0  
+            
+        plug = BlockConnector(initKind, initType,position, label, isLabelEditable, isExpandable, idConnected)
+        item = Property('Plug', '', self.properties['connectors'], Property.CUSTOMER_EDITOR,  plug)
+        new_index = model.index(index.row()+1, 0, index.parent())
+        model.setData(new_index, "", QtCore.Qt.EditRole)
+        
         initKind = None;
         initType = None;
         idConnected = ""
@@ -216,18 +286,39 @@ class BlockGenusTreeModel(QPropertyModel):
         index = self.view.selectionModel().currentIndex()
         model = self.view.model()
 
-        if not model.insertRow(index.row()+1, index.parent()):
+        if model.columnCount(index) == 0:
+            if not model.insertColumn(0, index):
+                return
+
+        if not model.insertRow(0, index):
             return
 
-        self.updateActions()
-
-        for column in range(model.columnCount(index.parent())):
-            child = model.index(index.row()+1, column, index.parent())
+        for column in range(model.columnCount(index)):
+            child = model.index(0, column, index)
             model.setData(child, "[No data]", QtCore.Qt.EditRole)
+            if model.headerData(column, QtCore.Qt.Horizontal) is None:
+                model.setHeaderData(column, QtCore.Qt.Horizontal,
+                        "[No header]", QtCore.Qt.EditRole)
+
+        self.view.selectionModel().setCurrentIndex(model.index(0, 0, index),
+                QtGui.QItemSelectionModel.ClearAndSelect)
+        self.updateActions()
         '''
+        index = self.getIndexForNode(item)
+        row = len(item.childItems)
+        if not model.insertRow(row, parent_index):
+            return 
+            
+        prop_name_index = model.index(row, 0, index)
+        model.setData(prop_name_index, 'Socket', QtCore.Qt.EditRole)
         
+        prop_val_index = model.index(row, 1, index)
+        model.setData(prop_val_index, '', QtCore.Qt.EditRole)        
         
+        self.insertChild(prop_name_index,  'label',  '')
+        self.insertChild(prop_name_index,  'type',  'string')
         
+        ''''    
         initKind = 'socket'
         initType = 'string'
         idConnected = ""
@@ -244,7 +335,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['sockets'].append(item)
         self.insertRow(index.row(), index.parent())
         self.setData(index, socket,  Qt.EditRole)
-    
+        '''
+        
     def onDelSocket(self,  editor,  item):
         index = self.getIndexForNode(item) 
             
@@ -309,8 +401,8 @@ class BlockGenusTreeModel(QPropertyModel):
         self.properties['height'] = Property('height',img.height(),img_root)
         
         self.properties['editable'] = Property('editable', img.isEditable, img_root )
-        self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )
-        
+        self.properties['wraptext'] = Property('wraptext', img.wrapText, img_root )    
+    
     def fillConnectInfo(self,  index,  socket,  parent):
         #Property('index', str(index), parent)
         Property('label', socket.label,parent)
@@ -360,15 +452,6 @@ class BlockGenusTreeModel(QPropertyModel):
             self.addImages(self.imgs_root, self.tmpGenus)
 
             #self.emit(SIGNAL("dataChanged(QModelIndex,QModelIndex)"), root_index, root_index) 
-
-    def insertRow(self, row, parent): 
-        print('insertRow')
-        return self.insertRows(row, 1, parent) 
-
-    def insertRows(self, row, count, parent): 
-        self.beginInsertRows(parent, row, (row + (count - 1)))
-        self.endInsertRows() 
-        return True
     
     def removeRow(self, row, parentIndex): 
         return self.removeRows(row, 1, parentIndex) 
@@ -444,7 +527,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ret = super(BlockGenusTreeModel, self).setData(index, value, role)
         if(ret == True):
             item = index.internalPointer()
-            property_name = item.objectName()
+            property_name = item.name
 
             if(property_name == 'Family Name'):
                 self.tmpGenus.familyName = value
@@ -482,13 +565,13 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket = value
                 if(socket not in self.tmpGenus.sockets):
                     self.tmpGenus.sockets.append(socket)                    
-            elif (item.parent() != None and item.parent().objectName() == 'Img'):
+            elif (item.parent() != None and item.parent().name == 'Img'):
                 img = item.parent().value()['img']  
                 
                 items = item.parent().children()
                 height_item = None
                 for item in items:
-                    if item.objectName() == 'height':
+                    if item.name == 'height':
                         height_item = item
                         break            
                 if(property_name == 'location'):
@@ -519,15 +602,15 @@ class BlockGenusTreeModel(QPropertyModel):
                     
                 elif(property_name == 'height'):
                     img.setSize(img.width(),  value)
-            elif (item.parent() != None and item.parent().objectName() == 'Plug'):    
+            elif (item.parent() != None and item.parent().name == 'Plug'):    
                 if(self.tmpGenus.plug != None and item.parent()  == self.properties['Plug'] ):
                     plug = item.parent().obj_data
                     setattr(plug, property_name,  value)
-            elif (item.parent() != None and item.parent().objectName() == 'Socket'):             
+            elif (item.parent() != None and item.parent().name == 'Socket'):             
                 socket = item.parent().obj_data
                 setattr(socket, property_name,  value)
                 
-            elif (item.parent() != None and item.parent().objectName() == 'Properties'):    
+            elif (item.parent() != None and item.parent().name == 'Properties'):    
                 if(property_name=='module'):
                     self.tmpGenus.properties['module_name'] = value                    
                 elif(property_name=='function'):    

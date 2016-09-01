@@ -6,7 +6,7 @@ import functools
 from components.propertyeditor.ColorCombo import  ColorCombo
 from components.propertyeditor.AdvanceEditor import  AdvanceEditor,AdvancedComboBox, ImageEditor, CustomerEditor
 
-class Property(QtCore.QObject):
+class Property(object):
     ROOT_NODE = 0
     ADVANCED_EDITOR = 1    
     ADVANCED_EDITOR_WITH_MENU = 2
@@ -18,17 +18,24 @@ class Property(QtCore.QObject):
     IMAGE_EDITOR = 8
     EDITOR_NONE = 9
   
-    def __init__(self, name, obj_value, parent=None, obj_type = None,  obj_data=None):
-        super(Property, self).__init__(parent)
+    def __init__(self, name='', value=None, parent=None, editor_type = None,  data=None):
+        self.parentItem = parent
         self._readOnly = False
-        self.obj_type = obj_type
-        self.obj_value = obj_value
-        self.obj_data = obj_data
-        self.setObjectName(name);
-        
+        self.editor_type = editor_type
+        self.value = value
+        self.data = data
+        self.name = name
+        self.childItems = []
         self.ui_file = ''
     
         self.signal_slot_maps = {}
+    
+    def child(self, row):
+        return self.childItems[row]
+        
+    def parent(self):
+        print('hello')
+        return self.parentItem
     
     def addWidget(self,  widget):
         self.widgets.append(widget)
@@ -40,14 +47,26 @@ class Property(QtCore.QObject):
             return self.parent().children().index(self)
         return 0
 
+    def childCount(self):
+        return len(self.childItems)        
+
     def isRoot(self):
-        return self.obj_value == None
+        return self.value == None
         
     def value(self, role=None):
-        return self.obj_value
+        return self.value
 
     def setValue(self, val):
-        self.obj_value = val
+        self.value = val
+
+    def insertChildren(self, position, count):
+        if position < 0 or position > len(self.childItems):
+            return False
+            
+        for row in range(count):
+            item = Property()
+            self.childItems.insert(position, item)
+        return True
 
     @property
     def readOnly(self):
@@ -59,38 +78,38 @@ class Property(QtCore.QObject):
 
     @property
     def editorType(self):
-        return self.obj_type
+        return self.editor_type
 
     @editorType.setter
     def editorType(self, value):
-        self.obj_type = value
+        self.editor_type = value
 
     @property
     def propertyData(self):
-        return self.obj_data
+        return self.data
 
     @propertyData.setter
     def propertyData(self, value):
-        self.obj_data = value
+        self.data = value
 
     #def remove(self, node):
     #    return self.children().remove(node)   
 
     def createEditor(self, delegate, parent, option):
         editor = None
-        if(self.obj_type == None or self.obj_type == Property.ROOT_NODE): return None
+        if(self.editor_type == None or self.editor_type == Property.ROOT_NODE): return None
 
-        if(self.obj_type == Property.ADVANCED_EDITOR):
+        if(self.editor_type == Property.ADVANCED_EDITOR):
             advancedEditor = AdvanceEditor(self, parent)
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             return advancedEditor
-        if(self.obj_type == Property.ADVANCED_EDITOR_WITH_MENU):
+        if(self.editor_type == Property.ADVANCED_EDITOR_WITH_MENU):
             advancedEditor = AdvanceEditor(self, parent, True)
             advancedEditor.button.clicked.connect(lambda: self.onAdvBtnClick(advancedEditor))
             advancedEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(advancedEditor))
             return advancedEditor
             
-        if(self.obj_type == Property.CUSTOMER_EDITOR):
+        if(self.editor_type == Property.CUSTOMER_EDITOR):
             customerEditor = CustomerEditor(self, parent)
             if(self.ui_file != ''):
                 customerEditor.loadUi(self.ui_file)
@@ -108,21 +127,21 @@ class Property(QtCore.QObject):
             return customerEditor 
         
     
-        if(self.obj_type == Property.IMAGE_EDITOR):
+        if(self.editor_type == Property.IMAGE_EDITOR):
             imageEditor = ImageEditor(self, delegate, parent, True)            
             imageEditor.button.clicked.connect(lambda: self.onAdvBtnClick(imageEditor))
             imageEditor.menuButton.clicked.connect(lambda: self.onMenuBtnClick(imageEditor))
             return imageEditor
         
-        if(self.obj_type == Property.CHECKBOX_EDITOR):
-            #checked = self.obj_data
+        if(self.editor_type == Property.CHECKBOX_EDITOR):
+            #checked = self.data
             chkBox = QCheckBox(parent)
             #chkBox.setChecked(checked)
             #QObject.connect(advancedEditor.button, SIGNAL('clicked()'),self.onAdvBtnClick);
             return chkBox
             
-        if(self.obj_type == Property.COMBO_BOX_EDITOR):
-            confiningChoices = self.obj_data
+        if(self.editor_type == Property.COMBO_BOX_EDITOR):
+            confiningChoices = self.data
           
             confineCombo = QtGui.QComboBox(parent)
             confineCombo.addItems(confiningChoices)
@@ -130,8 +149,8 @@ class Property(QtCore.QObject):
             #confineCombo.currentIndexChanged.connect( lambda sender=confineCombo, _delegate=delegate: self.onIndexChanged(sender, _delegate)) 
             return confineCombo
             
-        if(self.obj_type == Property.ADVANCED_COMBO_BOX):
-            confiningChoices = self.obj_data
+        if(self.editor_type == Property.ADVANCED_COMBO_BOX):
+            confiningChoices = self.data
           
             advComboBox = AdvancedComboBox(self, parent)
             advComboBox.comboBox.addItems(confiningChoices)
@@ -139,7 +158,7 @@ class Property(QtCore.QObject):
             advComboBox.comboBox.currentIndexChanged['QString'].connect( lambda val, sender=advComboBox:self.onIndexChanged(val, sender)) 
             return advComboBox            
             
-        if(self.obj_type == Property.COLOR_EDITOR):
+        if(self.editor_type == Property.COLOR_EDITOR):
             editor = ColorCombo(self, parent);
             return editor
         
@@ -158,27 +177,27 @@ class Property(QtCore.QObject):
         
  
     def setEditorData(self, editor, val):
-        if(self.obj_type == None): return False
+        if(self.editor_type == None): return False
         
-        if(self.obj_type == Property.COMBO_BOX_EDITOR):      
+        if(self.editor_type == Property.COMBO_BOX_EDITOR):      
             index = editor.findText(val)
             editor.setCurrentIndex(index)
             return True
             
-        if(self.obj_type == Property.ADVANCED_COMBO_BOX):      
+        if(self.editor_type == Property.ADVANCED_COMBO_BOX):      
             index = editor.comboBox.findText(val)
             editor.comboBox.setCurrentIndex(index)
             return True
             
-        if(self.obj_type == Property.ADVANCED_EDITOR): 
+        if(self.editor_type == Property.ADVANCED_EDITOR): 
             editor.text = val
             return True
             
-        if(self.obj_type == Property.COLOR_EDITOR):
+        if(self.editor_type == Property.COLOR_EDITOR):
             editor.color = val
             return True; 
 
-        if(self.obj_type == Property.IMAGE_EDITOR):
+        if(self.editor_type == Property.IMAGE_EDITOR):
             if(val != None):
                 editor.icon = val['icon']
                 editor.text = val['url']
@@ -189,24 +208,24 @@ class Property(QtCore.QObject):
             
     def editorData(self, editor):
 
-        if(self.obj_type == None): return False
+        if(self.editor_type == None): return False
 
-        if(self.obj_type == Property.ADVANCED_EDITOR):
+        if(self.editor_type == Property.ADVANCED_EDITOR):
             return editor.text
             
-        if(self.obj_type == Property.CHECKBOX_EDITOR):
+        if(self.editor_type == Property.CHECKBOX_EDITOR):
             return True  
             
-        if(self.obj_type == Property.COMBO_BOX_EDITOR):
+        if(self.editor_type == Property.COMBO_BOX_EDITOR):
             return editor.currentText()
             
-        if(self.obj_type == Property.ADVANCED_COMBO_BOX):
+        if(self.editor_type == Property.ADVANCED_COMBO_BOX):
             return editor.comboBox.currentText()   
             
-        if(self.obj_type == Property.COLOR_EDITOR):  
+        if(self.editor_type == Property.COLOR_EDITOR):  
             return editor.color
             
-        if(self.obj_type == Property.IMAGE_EDITOR):  
+        if(self.editor_type == Property.IMAGE_EDITOR):  
             image_data = {}
             image_data['url'] = editor.text
             image_data['icon'] = editor.icon
