@@ -375,17 +375,31 @@ class BlockGenusTreeModel(QPropertyModel):
         socket_item.ui_file = os.path.dirname(os.path.realpath(__file__))+'/remove_connector.ui'
         socket_item.signal_slot_maps['btnRemoveConn'] = ['clicked', self.onDelSocket]  
         socket_item.data = socket
-        prop_label_index = self.index(row, 0, index)
-        self.setData(prop_label_index, socket_item.label, Qt.EditRole)
         
-        prop_val_index = self.index(row, 1, index)
-        self.setData(prop_val_index, socket_item.value, Qt.EditRole)        
+        socket_index = self.getIndexForNode(socket_item)
+        self.setData(socket_index, socket_item.data, Qt.EditRole)
         
-        prop = self.insertChild(prop_label_index,  'label', 'label',  '')
-        prop = self.insertChild(prop_label_index,  'type', 'type',  'string')   
+        #prop_label_index = self.index(row, 0, index)
+        #self.setData(prop_label_index, socket_item.label, Qt.EditRole)
+        
+        #prop_val_index = self.index(row, 1, index)
+        #self.setData(prop_val_index, socket_item.value, Qt.EditRole) 
+        
+        socket_item.insertChildren(socket_item.childCount(), 1)
+        prop = socket_item.child(socket_item.childCount() -1)
+        prop.name = 'label'
+        prop.label = 'label'
+        prop.value = ''
+   
+        socket_item.insertChildren(socket_item.childCount(), 1)
+        prop = socket_item.child(socket_item.childCount() -1)
+        prop.name = 'type'
+        prop.label = 'type'
+        prop.value = 'string'
         prop.editor_type = Property.COMBO_BOX_EDITOR   
-        prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string'] 
-        
+        prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string']
+
+
     def onDelSocket(self,  editor,  item):
         index = self.getIndexForNode(item)
         self.removeRow(index.row(), index.parent())
@@ -457,21 +471,21 @@ class BlockGenusTreeModel(QPropertyModel):
         #             label             #
         ###############             
         parent.insertChildren(parent.childCount(), 1)
-        props = parent.child(parent.childCount() -1)
-        props.name = 'label'
-        props.label = 'label'
-        props.value = connector.label
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'label'
+        prop.label = 'label'
+        prop.value = connector.label
         
         ###############
         #             label             #
         ###############             
         parent.insertChildren(parent.childCount(), 1)
-        props = parent.child(parent.childCount() -1)
-        props.name = 'type'
-        props.label = 'type'
-        props.value = connector.type               
-        props.editor_type = Property.COMBO_BOX_EDITOR   
-        props.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string']
+        prop = parent.child(parent.childCount() -1)
+        prop.name = 'type'
+        prop.label = 'type'
+        prop.value = connector.type               
+        prop.editor_type = Property.COMBO_BOX_EDITOR   
+        prop.editor_data = ['boolean','cmd','number','poly', 'poly-list', 'string']
         
     def onLoadImageFromFile(self,  editor):        
         editor.text = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")
@@ -528,7 +542,6 @@ class BlockGenusTreeModel(QPropertyModel):
         from_url_action.triggered.connect(lambda: self.loadFromURL(editor))
         
         self.popMenu.exec_(QCursor().pos())
-   
     
     def loadFromFile(self, editor):
         filename = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;JPG (*.jpg);;PNG(*.png);;GIF(*.gif);;BMP(*.bmp)")

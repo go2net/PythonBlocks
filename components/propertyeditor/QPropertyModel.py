@@ -121,15 +121,25 @@ class QPropertyModel(QtCore.QAbstractItemModel):
 
         return None
 
-    def insertRows(self, row, count, parent): 
-        parentItem = parent.internalPointer()
-        self.beginInsertRows(parent, row, row + count - 1)
-        success = parentItem.insertChildren(row, count)
+    def getItem(self, index):
+        if index.isValid():
+            item = index.internalPointer()
+            if item:
+                return item
+
+        return self.rootItem
+
+    def insertRows(self, position, rows, parent=QtCore.QModelIndex()):
+        parentItem = self.getItem(parent)
+        self.beginInsertRows(parent, position, position + rows - 1)
+        success = parentItem.insertChildren(position, rows)
         self.endInsertRows()
+
         return success
 
     def removeRows(self, position, rows, parent=QtCore.QModelIndex()):
-        parentItem = parent.internalPointer()
+        parentItem = self.getItem(parent)
+
         self.beginRemoveRows(parent, position, position + rows - 1)
         success = parentItem.removeChildren(position, rows)
         self.endRemoveRows()
