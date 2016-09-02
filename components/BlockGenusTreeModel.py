@@ -669,15 +669,16 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket = item.data
                 if(socket not in self.tmpGenus.sockets):
                     self.tmpGenus.sockets.append(socket)                    
-            elif (item.parent() != None and item.parent().name == 'Image'):
-                img = item.parent().value()['img'] 
-                items = item.parent().children()
+            elif (item.parent() != None and item.parent().name == 'image'):
+                img = item.parent().value['img'] 
+                items = item.parentItem.childItems
                 height_item = None
                 for item in items:
                     if item.name == 'height':
                         height_item = item
                         break            
                 if(property_name == 'location'):
+                    print(value)
                     img.location = value                    
                 elif(property_name == 'isEditable'):
                     img.isEditable = value                    
