@@ -2,6 +2,7 @@ import os,sys
 from PyQt4 import QtCore,QtGui
 from blocks.BlockConnector import BlockConnector
 from blocks.BlockConnectorShape import BlockConnectorShape
+from blocks.BlockImageIcon import BlockImageIcon
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -174,10 +175,13 @@ class BlockGenus():
         for img_index in range(len(self.blockImages)): 
             img1 = self.blockImages[img_index]
             img2 = other.blockImages[img_index]
-            if(img1.location != img2.location) or \
-              (img1.width() != img2.width()) or \
-              (img1.height() != img2.height()) or \
-              (img1.icon != img2.icon): 
+            if (img1.location != img2.location) or \
+               (img1.width() != img2.width()) or \
+               (img1.height() != img2.height()) or \
+               (img1.height() != img2.height()) or \
+               (img1.wrapText != img2.wrapText) or \
+               (img1.isEditable != img2.isEditable) or \
+               (img1.lockRatio != img2.lockRatio): 
                 return False
 
         if(self.getInitPlug() == None and other.getInitPlug() != None):
@@ -274,7 +278,16 @@ class BlockGenus():
         
         self.blockImages.clear()
         for img in genusToCopy.blockImages:
-            self.blockImages.append(img)    
+            new_img = BlockImageIcon(
+                img.url, 
+                img.img_loc, 
+                img.icon, 
+                img.width(), 
+                img.height(), 
+                img.isEditable, 
+                img.wrapText, 
+                img.lockRatio)
+            self.blockImages.append(new_img)    
 
     
         for key in genusToCopy.properties:

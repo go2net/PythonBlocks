@@ -9,6 +9,7 @@ class QVariantDelegate(QtGui.QItemDelegate):
         self.m_finishedMapper =  QtCore.QSignalMapper(self);
         self.connect(self.m_finishedMapper, QtCore.SIGNAL("mapped(QtGui.QWidget*)"), self, QtCore.SIGNAL("commitData(QtGui.QWidget*)"));
         self.connect(self.m_finishedMapper, QtCore.SIGNAL("mapped(QWidget*)"), self, QtCore.SIGNAL("closeEditor(QWidget*)"));
+    
     def createEditor(self, parent, option , index ):
         editor = None
         p = index.internalPointer()
@@ -20,16 +21,14 @@ class QVariantDelegate(QtGui.QItemDelegate):
                 if (editor.metaObject().indexOfSignal("editFinished()") != -1):
                     self.connect(editor, QtCore.SIGNAL("editFinished()"), self.m_finishedMapper, QtCore.SLOT("map()"));
                     self.m_finishedMapper.setMapping(editor, editor);
-
-                if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
-                    self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
-
         else:
             editor = super(QVariantDelegate, self).createEditor(parent, option, index)
 
+        if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
+            self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
+
         #self.parseEditorHints(editor, p.editorHints());
-        return editor;
-  
+        return editor  
   
     @QtCore.pyqtSlot()
     def currentIndexChanged(self):

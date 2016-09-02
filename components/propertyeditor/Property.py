@@ -135,6 +135,10 @@ class Property(object):
                 __obj = getattr(customerEditor, obj_str)
                 if(len(self.signal_slot_maps[obj_str]) == 3):
                     __obj.setEnabled(self.signal_slot_maps[obj_str][2])
+                    
+                if(len(self.signal_slot_maps[obj_str]) == 4):
+                    __obj.setMenu(self.signal_slot_maps[obj_str][3])     
+                    
                 __signal = getattr(__obj, self.signal_slot_maps[obj_str][0])
                 __slot = self.signal_slot_maps[obj_str][1]
                 __signal.connect(functools.partial(__slot, customerEditor, self))      

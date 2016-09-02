@@ -173,7 +173,6 @@ class BlockGenusTreeModel(QPropertyModel):
         connectors_prop.ui_file = os.path.dirname(os.path.realpath(__file__))+'/connector_prop.ui'
         connectors_prop.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, tmpGenus.getInitPlug()==None]
         connectors_prop.signal_slot_maps['btnAddSocket'] = ['clicked', self.onAddSocket]
-
      
         ############
         #      Starter       #
@@ -454,10 +453,8 @@ class BlockGenusTreeModel(QPropertyModel):
         image_data = {}
         image_data['icon'] = icon
         image_data['url'] = url.toString()
-        image_data['img'] = img
- 
+        image_data['img'] = img 
         img_root = Property('Img',image_data, imgs_root,Property.IMAGE_EDITOR) 
-
 
         ############
         #      Image Root       #
@@ -487,7 +484,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############ 
         img_root.insertChildren(img_root.childCount(), 1)        
         prop = img_root.child(img_root.childCount() -1)
-        prop.name = 'lock_ratio'
+        prop.name = 'lockRatio'
         prop.label = 'lock ratio'
         prop.value = img.lockRatio
   
@@ -525,7 +522,7 @@ class BlockGenusTreeModel(QPropertyModel):
         prop = img_root.child(img_root.childCount() -1)
         prop.name = 'wrapText'
         prop.label = 'wraptext'
-        prop.value = img.wrapText  
+        prop.value = img.wrapText
     
     def fillConnectInfo(self, parent,  connector):
         ###############
@@ -539,7 +536,7 @@ class BlockGenusTreeModel(QPropertyModel):
         
         ###############
         #             type             #
-        ###############             
+        ###############
         parent.insertChildren(parent.childCount(), 1)
         prop = parent.child(parent.childCount() -1)
         prop.name = 'type'
@@ -676,11 +673,12 @@ class BlockGenusTreeModel(QPropertyModel):
                 for item in items:
                     if item.name == 'height':
                         height_item = item
-                        break            
+                        break 
+                print(property_name)
                 if(property_name == 'location'):
-                    print(value)
                     img.location = value                    
                 elif(property_name == 'isEditable'):
+                    print(value)
                     img.isEditable = value                    
                 elif(property_name == 'wrapText'):
                     img.wrapText = value                    
