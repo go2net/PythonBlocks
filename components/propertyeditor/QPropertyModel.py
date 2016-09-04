@@ -132,7 +132,8 @@ class QPropertyModel(QtCore.QAbstractItemModel):
     def insertRows(self, position, rows, parent=QtCore.QModelIndex()):
         parentItem = self.getItem(parent)
         self.beginInsertRows(parent, position, position + rows - 1)
-        success = parentItem.insertChildren(position, rows)
+        for row in range(rows):
+            success = parentItem.insertChild(position+row) != None
         self.endInsertRows()
 
         return success
