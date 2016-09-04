@@ -63,8 +63,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #      Genus Name          #
         ###############        
-        parent.insertChildren(parent.childCount(), 1)        
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())       
         prop.name = 'genusName'
         prop.label = 'Genus Name'
         prop.value = self.genus.genusName
@@ -72,8 +71,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #      Genus Kind           #
         ###############           
-        parent.insertChildren(parent.childCount(), 1)
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())
         prop.name = 'kind'
         prop.label = 'Genus Kind'
         prop.value = tmpGenus.kind
@@ -91,8 +89,7 @@ class BlockGenusTreeModel(QPropertyModel):
         if(familyName == ''):
             familyName = 'n/a'
 
-        parent.insertChildren(parent.childCount(), 1)
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())
         prop.name = 'familyName'
         prop.label = 'Family Name'
         prop.value = familyName
@@ -110,8 +107,7 @@ class BlockGenusTreeModel(QPropertyModel):
             for varName in family:                
                 labelList.append(family[varName])  
 
-        parent.insertChildren(parent.childCount(), 1)
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())
         prop.name = 'initLabel'
         prop.label = 'Init Label'
         prop.value = tmpGenus.initLabel        
@@ -123,8 +119,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #      Label Prefix          #
         ###############  
-        parent.insertChildren(parent.childCount(), 1)        
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())       
         prop.name = 'labelPrefix'
         prop.label = 'Label Prefix'
         prop.value = tmpGenus.labelPrefix
@@ -132,8 +127,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #      Label Suffix         #
         ###############  
-        parent.insertChildren(parent.childCount(), 1)        
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())       
         prop.name = 'labelSuffix'
         prop.label = 'Label Suffix'
         prop.value = tmpGenus.labelSuffix
@@ -141,31 +135,58 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #      Color                   #
         ###############  
-        parent.insertChildren(parent.childCount(), 1)        
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())       
         prop.name = 'color'
         prop.label = 'Color'
         prop.value = tmpGenus.color
         prop.editor_type = Property.COLOR_EDITOR
-          
+ 
+        ############
+        #      Starter       #
+        ############ 
+        prop = parent.insertChild(parent.childCount())       
+        prop.name = 'isStarter'
+        prop.label = 'Starter'
+        prop.value = tmpGenus.isStarter
+        if (tmpGenus._kind == 'data' or
+            tmpGenus._kind == 'variable' or
+            tmpGenus._kind == 'function'): 
+            prop.editor_enable = False
+            prop.value = True
+        else:
+            prop.editor_enable = True
+            
+        ############
+        #      Terminator   #
+        ############ 
+        prop = parent.insertChild(parent.childCount())       
+        prop.name = 'isTerminator'
+        prop.label = 'Terminator'
+        prop.value = tmpGenus.isTerminator
+        if (tmpGenus._kind == 'data' or
+            tmpGenus._kind == 'variable' or
+            tmpGenus._kind == 'function'): 
+            prop.editor_enable = False
+            prop.value = True
+        else:
+            prop.editor_enable = True
+ 
         ############
         #      Images         #
         ############
-        parent.insertChildren(parent.childCount(), 1)        
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())       
         prop.name = 'images'
         prop.label = 'Images'
         prop.value = ''
         prop.editor_type = Property.ADVANCED_EDITOR     
         prop.onAdvBtnClick = self.onShowImagesInfo   
         
-        self.addImages(prop, tmpGenus)
-        
+        self.addImages(prop, tmpGenus)     
+
         ############
         #      Connector     #
         ############
-        parent.insertChildren(parent.childCount(), 1)        
-        connectors_prop = parent.child(parent.childCount() -1)
+        connectors_prop = parent.insertChild(parent.childCount())       
         connectors_prop.name = 'connectors'
         connectors_prop.label = 'Connectors'
         connectors_prop.value = ''
@@ -173,31 +194,12 @@ class BlockGenusTreeModel(QPropertyModel):
         connectors_prop.ui_file = os.path.dirname(os.path.realpath(__file__))+'/connector_prop.ui'
         connectors_prop.signal_slot_maps['btnAddPlug'] = ['clicked', self.onAddPlug, tmpGenus.getInitPlug()==None]
         connectors_prop.signal_slot_maps['btnAddSocket'] = ['clicked', self.onAddSocket]
-     
-        ############
-        #      Starter       #
-        ############ 
-        connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
-        prop = connectors_prop.child(connectors_prop.childCount() -1)
-        prop.name = 'isStarter'
-        prop.label = 'Starter'
-        prop.value = tmpGenus.isStarter
-
-        ############
-        #      Terminator   #
-        ############ 
-        connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
-        prop = connectors_prop.child(connectors_prop.childCount() -1)
-        prop.name = 'isTerminator'
-        prop.label = 'Terminator'
-        prop.value = tmpGenus.isTerminator
 
         ############
         #      Plug             #
         ############         
         if tmpGenus.plug != None:
-            connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
-            prop = connectors_prop.child(connectors_prop.childCount() -1)
+            prop = connectors_prop.insertChild(connectors_prop.childCount())       
             prop.name = 'plug'
             prop.label = 'Plug'
             prop.value = ''
@@ -212,8 +214,7 @@ class BlockGenusTreeModel(QPropertyModel):
         #      socket      #
         ############         
         for connector in tmpGenus.sockets:
-            connectors_prop.insertChildren(connectors_prop.childCount(), 1)        
-            prop = connectors_prop.child(connectors_prop.childCount() -1)
+            prop= connectors_prop.insertChild(connectors_prop.childCount())       
             prop.name = 'socket'
             prop.label = 'Socket'
             prop.value = ''
@@ -227,8 +228,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###########
         # Properties       #
         ###########
-        parent.insertChildren(parent.childCount(), 1)        
-        props_root = parent.child(parent.childCount() -1)
+        props_root = parent.insertChild(parent.childCount())       
         props_root.name = 'properties'
         props_root.label = 'Properties'
         props_root.value = ''
@@ -238,8 +238,7 @@ class BlockGenusTreeModel(QPropertyModel):
         #      module       #
         ###########       
         module_name= tmpGenus.properties['module_name']
-        props_root.insertChildren(props_root.childCount(), 1)        
-        prop = props_root.child(props_root.childCount() -1)
+        prop = props_root.insertChild(props_root.childCount())       
         prop.name = 'module_name'
         prop.label = 'module'
         prop.value = module_name
@@ -249,12 +248,11 @@ class BlockGenusTreeModel(QPropertyModel):
         ###########
         #      function       #
         ###########       
-        props_root.insertChildren(props_root.childCount(), 1)        
-        prop = props_root.child(props_root.childCount() -1)
+        prop = props_root.insertChild(props_root.childCount())       
         prop.name = 'function_name'
         prop.label = 'function'
         prop.value = tmpGenus.properties['function_name']
-        prop.editor_type = Property.ADVANCED_EDITOR           
+        prop.editor_type = Property.COMBO_BOX_EDITOR           
         prop.onAdvBtnClick = self.getModuleName  
         prop.editor_data = self.getModuleFuncList(module_name)
 
@@ -263,8 +261,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###########   
         for key in tmpGenus.properties:
             if(key != 'module_name' and key != 'function_name'):
-                props_root.insertChildren(props_root.childCount(), 1)        
-                prop = props_root.child(props_root.childCount() -1)
+                prop = props_root.insertChild(props_root.childCount())       
                 prop.name = key
                 prop.label = key
                 prop.value = tmpGenus.properties[key]
@@ -292,8 +289,7 @@ class BlockGenusTreeModel(QPropertyModel):
     
     def onAddPlug(self,  editor,  item):
         index = self.getIndexForNode(item)
-        isTerminator_item = self.getPropItem('isTerminator', item)
-        row = isTerminator_item.row()+1
+        row = 0
         
         if not self.insertRow(row, index):
             return 
@@ -378,22 +374,14 @@ class BlockGenusTreeModel(QPropertyModel):
         socket_item.data = socket
         
         socket_index = self.getIndexForNode(socket_item)
-        self.setData(socket_index, socket_item.data, Qt.EditRole)
+        self.setData(socket_index, socket_item.data, Qt.EditRole)        
         
-        #prop_label_index = self.index(row, 0, index)
-        #self.setData(prop_label_index, socket_item.label, Qt.EditRole)
-        
-        #prop_val_index = self.index(row, 1, index)
-        #self.setData(prop_val_index, socket_item.value, Qt.EditRole) 
-        
-        socket_item.insertChildren(socket_item.childCount(), 1)
-        prop = socket_item.child(socket_item.childCount() -1)
+        prop = socket_item.insertChild(socket_item.childCount())
         prop.name = 'label'
         prop.label = 'label'
         prop.value = ''
    
-        socket_item.insertChildren(socket_item.childCount(), 1)
-        prop = socket_item.child(socket_item.childCount() -1)
+        prop = socket_item.insertChild(socket_item.childCount())
         prop.name = 'type'
         prop.label = 'type'
         prop.value = 'string'
@@ -459,8 +447,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      Image Root       #
         ############ 
-        imgs_root.insertChildren(imgs_root.childCount(), 1)        
-        img_root = imgs_root.child(imgs_root.childCount() -1)
+        img_root = imgs_root.insertChild(imgs_root.childCount())       
         img_root.name = 'image'
         img_root.label = 'Image'
         img_root.editor_type = Property.IMAGE_EDITOR
@@ -471,8 +458,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      location       #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'location'
         prop.label = 'location'
         prop.value = img.location
@@ -482,8 +468,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #      lock_ratio    #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'lockRatio'
         prop.label = 'lock ratio'
         prop.value = img.lockRatio
@@ -491,8 +476,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #        width         #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'width'
         prop.label = 'width'
         prop.value = img.width()
@@ -500,8 +484,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #        height         #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'height'
         prop.label = 'height'
         prop.value = img.height()     
@@ -509,8 +492,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #        editable       #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'isEditable'
         prop.label = 'editable'
         prop.value = img.isEditable
@@ -518,8 +500,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ############
         #        editable       #
         ############ 
-        img_root.insertChildren(img_root.childCount(), 1)        
-        prop = img_root.child(img_root.childCount() -1)
+        prop = img_root.insertChild(img_root.childCount())       
         prop.name = 'wrapText'
         prop.label = 'wraptext'
         prop.value = img.wrapText
@@ -528,8 +509,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #             label             #
         ###############             
-        parent.insertChildren(parent.childCount(), 1)
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())
         prop.name = 'label'
         prop.label = 'label'
         prop.value = connector.label
@@ -537,8 +517,7 @@ class BlockGenusTreeModel(QPropertyModel):
         ###############
         #             type             #
         ###############
-        parent.insertChildren(parent.childCount(), 1)
-        prop = parent.child(parent.childCount() -1)
+        prop = parent.insertChild(parent.childCount())
         prop.name = 'type'
         prop.label = 'type'
         prop.value = connector.type               
@@ -637,11 +616,26 @@ class BlockGenusTreeModel(QPropertyModel):
         if(result == True):
             item = index.internalPointer()
             property_name = item.name
-            
             if(item.parent() == self.rootItem and hasattr(self.tmpGenus, property_name)):
-                setattr(self.tmpGenus,property_name, value )
+                setattr(self.tmpGenus,property_name, value)
             
-            if(property_name == 'familyName'):
+            if(property_name == 'kind'):
+                isTerminatorItem = self.getPropItem('isTerminator')
+                isStarterItem = self.getPropItem('isStarter')
+                if (value == 'data' or
+                    value == 'variable' or
+                    value == 'function'):
+                    isStarterItem.value = True
+                    isStarterItem.editor_enable = False
+                    isTerminatorItem.value = True
+                    isTerminatorItem.editor_enable = False                    
+                else:
+                    isStarterItem.editor_enable = True
+                    isStarterItem.value = self.tmpGenus._isStarterInConfig
+                    isTerminatorItem.editor_enable = True
+                    isTerminatorItem.value = self.tmpGenus._isTerminatorInConfig
+                    
+            elif(property_name == 'familyName'):
                 labelList= []
                 initLabel_Item = self.getPropItem('initLabel')
                 if(initLabel_Item != None):
@@ -678,8 +672,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 if(property_name == 'location'):
                     img.location = value                    
                 elif(property_name == 'isEditable'):
-                    print(value)
-                    img.isEditable = value                    
+                    img.isEditable = e                    
                 elif(property_name == 'wrapText'):
                     img.wrapText = value                    
                 elif(property_name == 'lockRatio'):
@@ -703,7 +696,7 @@ class BlockGenusTreeModel(QPropertyModel):
                     self.tmpGenus.properties['height'] = img.height
                     
                 elif(property_name == 'height'):
-                    img.setSize(img.width(),  value)
+                    img.setSize(img.width(),  value)            
             elif (item.parent() != None and item.parent().name == 'plug'):    
                 if(self.tmpGenus.plug != None):
                     plug = item.parent().data

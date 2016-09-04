@@ -27,6 +27,8 @@ class QVariantDelegate(QtGui.QItemDelegate):
         if (editor.metaObject().indexOfSignal("currentIndexChanged(int)") != -1):
             self.connect(editor, QtCore.SIGNAL("currentIndexChanged(int)"), self.currentIndexChanged)
 
+        if(editor != None):
+            editor.setEnabled(p.editor_enable)
         #self.parseEditorHints(editor, p.editorHints());
         return editor  
   

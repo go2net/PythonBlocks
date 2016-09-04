@@ -29,7 +29,7 @@ class Property(object):
         self.name = name
         self.childItems = []
         self.ui_file = ''
-    
+        self.editor_enable = True
         self.signal_slot_maps = {}
     
     def child(self, row):
@@ -58,14 +58,14 @@ class Property(object):
     def setValue(self, val):
         self.value = val
 
-    def insertChildren(self, position, count):
+
+    def insertChild(self, position):
         if position < 0 or position > len(self.childItems):
-            return False
+            return None
             
-        for row in range(count):
-            item = Property('', '', None,  self)
-            self.childItems.insert(position, item)
-        return True
+        item = Property('', '', None,  self)
+        self.childItems.insert(position, item)
+        return item
 
     def removeChildren(self, position, count):
         if position < 0 or position + count > len(self.childItems):
