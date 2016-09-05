@@ -651,23 +651,17 @@ class BlockGenus():
          * @param properties NodeList of properties to load from file
          * @param genus BlockGenus to load the properties onto
         '''
-        return
         key = None
         value = None
 
-        for l in range(0,len(properties)):
-            prop = properties[l]
-            if(prop.tag == ("LangSpecProperty")):
+        for prop in properties:
+            if("key" in prop):
+                key = prop["key"]
+            if("value" in prop):
+                value = prop["value"]
 
-                if("key" in prop.attrib):
-                    key = prop.attrib["key"]
-                if("value" in prop.attrib):
-                    value = prop.attrib["value"]
-                else:
-                    value = prop.text
-
-                if(key != None and value != None):
-                    genus.properties[key] = value
+            if(key != None):
+                genus.properties[key] = value
 
     def getProperty(self, property) :
         if(property in self.properties):
