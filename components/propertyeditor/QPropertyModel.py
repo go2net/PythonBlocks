@@ -156,15 +156,14 @@ class QPropertyModel(QtCore.QAbstractItemModel):
             self.dataChanged.emit(index, index) 
             return True;
 
-        return False;
-
+        return False
+        
     def getModuleFuncList(self, module_name):
         import inspect
         from importlib import import_module
         func_list = []
-        
         if(module_name != ''):            
-            all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction)       
+            all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction) 
             for function in all_functions:
                 func_list.append(function[0])        
     
@@ -185,11 +184,15 @@ class QPropertyModel(QtCore.QAbstractItemModel):
             fileName = fileName.replace('.py', '')
             module_name = fileName.replace('/', '.')
             
-            self.properties['module_name'].setValue(module_name)            
-            module_name_index = self.getIndexForNode(self.properties['module_name']) 
+            prop_root = self.getPropItem('properties')
+            module_name_prop= self.getPropItem('module_name', prop_root)
+            
+            module_name_prop.setValue(module_name)            
+            module_name_index = self.getIndexForNode(module_name_prop) 
             self.dataChanged.emit(module_name_index, module_name_index) 
             
-            self.properties['function_name'].editorType = Property.COMBO_BOX_EDITOR
-            self.properties['function_name'].propertyData = self.getModuleFuncList(module_name)
-            function_name_index = self.getIndexForNode(self.properties['function_name'])            
+            function_name_prop= self.getPropItem('function_name', prop_root)
+            function_name_prop.editor_type = Property.COMBO_BOX_EDITOR
+            function_name_prop.editor_data = self.getModuleFuncList(module_name)
+            function_name_index = self.getIndexForNode(function_name_prop)            
             self.dataChanged.emit(function_name_index, function_name_index) 

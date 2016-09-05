@@ -13,7 +13,7 @@ class BlockPropTreeModel(QPropertyModel):
         self.block = rb.getBlock()
         self.properties = {}
         self.mainWnd = mainWnd
-        self.setupModelData(rb, self.m_rootItem)
+        self.setupModelData(rb, self.rootItem)
         self.lang_root = None
         
     def setupModelData(self, rb, parent):

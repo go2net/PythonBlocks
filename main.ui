@@ -65,6 +65,9 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="cursor" stdset="0">
+                 <cursorShape>ArrowCursor</cursorShape>
+                </property>
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>
                 </property>
@@ -343,7 +346,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>false</bool>
+    <bool>true</bool>
    </attribute>
    <addaction name="actionStop"/>
    <addaction name="actionRun"/>
@@ -556,7 +559,10 @@
  </customwidgets>
  <tabstops>
   <tabstop>lwBlockGenus</tabstop>
+  <tabstop>tvBlockGenusView</tabstop>
   <tabstop>tvBlockPropView</tabstop>
+  <tabstop>btnApply</tabstop>
+  <tabstop>tvDrawerSets</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -571,7 +577,7 @@
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>246</x>
+     <x>178</x>
      <y>54</y>
     </hint>
    </hints>

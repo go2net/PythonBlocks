@@ -643,10 +643,10 @@ class BlockGenusTreeModel(QPropertyModel):
                         family = BlockGenus.families[value]
                         for name in family:
                             labelList.append(family[name])    
-                        initLabel_Item.editorType = Property.COMBO_BOX_EDITOR
+                        initLabel_Item.editor_type = Property.COMBO_BOX_EDITOR
                         initLabel_Item.propertyData = labelList
                     else:
-                        initLabel_Item.editorType = None
+                        initLabel_Item.editor_type = None
             elif (property_name == 'Img') :
                 img = value['img']
                 img.icon = value['icon']
@@ -705,16 +705,8 @@ class BlockGenusTreeModel(QPropertyModel):
                 socket = item.parent().data
                 setattr(socket, property_name,  value)
                 
-            elif (item.parent() != None and item.parent().name == 'Properties'):    
-                if(property_name=='module'):
-                    self.tmpGenus.properties['module_name'] = value                    
-                elif(property_name=='function'):    
-                    self.tmpGenus.properties['function_name'] = value
-                else:        
-                    for key, value in self.tmpGenus.properties.items():
-                        if(key == property_name):
-                            self.tmpGenus.properties[property_name] = value
-                            break
+            elif (item.parent() != None and item.parent().name == 'properties'): 
+               self.tmpGenus.properties[property_name] = value
                 
         self.showBlock(self.tmpGenus)
 
