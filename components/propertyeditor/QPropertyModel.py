@@ -170,29 +170,21 @@ class QPropertyModel(QtCore.QAbstractItemModel):
         return func_list
     
     def getModuleName(self, editor):
-            
-        dlg = RestrictFileDialog(None)
-        dlg.setDirectory('.')
-        dlg.setWindowTitle( 'Choose module file' )
-        dlg.setViewMode( QFileDialog.Detail )
-        dlg.setNameFilters( [self.tr('All python files(*.py)'), self.tr('All Files (*)')] )
-        dlg.setDefaultSuffix( '.py' ) 
-        dlg.setTopDir('.')
         
-        if (dlg.exec_()):
-            fileName = dlg.getRelatedPath()
-            fileName = fileName.replace('.py', '')
-            module_name = fileName.replace('/', '.')
-            
-            prop_root = self.getPropItem('properties')
-            module_name_prop= self.getPropItem('module_name', prop_root)
-            
-            module_name_prop.setValue(module_name)            
-            module_name_index = self.getIndexForNode(module_name_prop) 
-            self.dataChanged.emit(module_name_index, module_name_index) 
-            
-            function_name_prop= self.getPropItem('function_name', prop_root)
-            function_name_prop.editor_type = Property.COMBO_BOX_EDITOR
-            function_name_prop.editor_data = self.getModuleFuncList(module_name)
-            function_name_index = self.getIndexForNode(function_name_prop)            
-            self.dataChanged.emit(function_name_index, function_name_index) 
+        module_name = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;Python (*.py)")
+        
+        if (module_name == ''): return
+        
+        prop_root = self.getPropItem('properties')
+        module_name_prop= self.getPropItem('module_name', prop_root)
+        
+        module_name_prop.setValue(module_name)
+        module_name_index = self.getIndexForNode(module_name_prop) 
+        self.dataChanged.emit(module_name_index, module_name_index)
+        
+        function_name_prop= self.getPropItem('function_name', prop_root)
+        function_name_prop.editor_type = Property.COMBO_BOX_EDITOR
+        
+        function_name_prop.editor_data = self.getModuleFuncList(module_name)
+        function_name_index = self.getIndexForNode(function_name_prop)            
+        self.dataChanged.emit(function_name_index, function_name_index) 
