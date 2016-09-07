@@ -616,7 +616,9 @@ class BlockGenusTreeModel(QPropertyModel):
         if(result == True):
             item = index.internalPointer()
             property_name = item.name
-            if(item.parent() == self.rootItem and hasattr(self.tmpGenus, property_name)):
+            if (item.parent() == self.rootItem and 
+                hasattr(self.tmpGenus, property_name) and
+                property_name != 'properties'):
                 setattr(self.tmpGenus,property_name, value)
             
             if(property_name == 'kind'):
@@ -706,6 +708,7 @@ class BlockGenusTreeModel(QPropertyModel):
                 setattr(socket, property_name,  value)
                 
             elif (item.parent() != None and item.parent().name == 'properties'): 
+                
                self.tmpGenus.properties[property_name] = value
                 
         self.showBlock(self.tmpGenus)

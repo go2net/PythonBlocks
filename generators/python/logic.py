@@ -5,18 +5,19 @@ def controls_if(pythonGen, block):
   n = 0;
   argument = pythonGen.valueToCode(
     block, 
-    'IF' + n, 
+    'IF' + str(n), 
     PythonGen.ORDER_NONE) or 'False';
 
-  branch = pythonGen.statementToCode(block, 'DO' + n) or PythonGen.PASS;
+  branch = pythonGen.statementToCode(block, 'DO' + str(n)) or PythonGen.PASS;
   code = 'if ' + argument + ':\n' + branch;
-  for n in range(1, block.elseifCount+1):
-    argument = pythonGen.valueToCode(block, 'IF' + n,
+  elseifCount = 0 #block.elseifCount
+  for n in range(1, elseifCount+1):
+    argument = pythonGen.valueToCode(block, 'IF' + str(n),
         PythonGen.ORDER_NONE) or 'False';
-    branch = pythonGen.statementToCode(block, 'DO' + n) or PythonGen.PASS;
+    branch = pythonGen.statementToCode(block, 'DO' + str(n)) or PythonGen.PASS;
     code += 'elif ' + argument + ':\n' + branch;
-
-  if (block.elseCount_):
+  elseCount_ = 1 #block.elseCount_
+  if (elseCount_):
     branch = pythonGen.statementToCode(block, 'ELSE') or PythonGen.PASS;
     code += 'else:\n' + branch;
   return code;

@@ -3,6 +3,7 @@ from components.propertyeditor.Property import Property
 from components.RestrictFileDialog import RestrictFileDialog
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+import sys,  os
 
 class QPropertyModel(QtCore.QAbstractItemModel):
     def __init__(self, parent):
@@ -157,22 +158,51 @@ class QPropertyModel(QtCore.QAbstractItemModel):
             return True;
 
         return False
+
+    def import_module_from_file(self, full_path_to_module):
+        """
+        Import a module given the full path/filename of the .py file
+
+        Python 3.4
+
+        """
+        module = None
+
+        # Get module name and path from full path
+        module_dir, module_file = os.path.split(full_path_to_module)
+        module_name, module_ext = os.path.splitext(module_file)
+            
+        if(sys.version_info >= (3,4)):    
+            import importlib
+            # Get module "spec" from filename
+            spec = importlib.util.spec_from_file_location(module_name,full_path_to_module)
+            module = spec.loader.load_module()
+        else:
+            import imp
+            module = imp.load_source(module_name,full_path_to_module)
+            
+        return module
         
     def getModuleFuncList(self, module_name):
         import inspect
-        from importlib import import_module
         func_list = []
-        if(module_name != ''):            
-            all_functions = inspect.getmembers(import_module(module_name), inspect.isfunction) 
-            for function in all_functions:
-                func_list.append(function[0])        
+        if(module_name != ''): 
+            try:
+                module_name = os.getcwd() + '\\' + module_name
+                module = self.import_module_from_file(module_name)
+                all_functions = inspect.getmembers(module, inspect.isfunction) 
+                for function in all_functions:
+                    func_list.append(function[0]) 
+            except:
+                pass
     
         return func_list
     
     def getModuleName(self, editor):
         
         module_name = QFileDialog.getOpenFileName(None, 'Open File', '.', "All file(*.*);;Python (*.py)")
-        
+        module_name = os.path.relpath(module_name, os.getcwd())
+
         if (module_name == ''): return
         
         prop_root = self.getPropItem('properties')

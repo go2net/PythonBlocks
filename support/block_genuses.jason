@@ -36,7 +36,7 @@
         },
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w3ttCMJFmsLVSG68C8uMMSYsCCxqGDcuNFYhP7hzxZMILUYjC6IJriQRRUj0YWGhTGaaAylGsDQaEgkEtCgIqVlfjp1+jPTmffevfe4mM50Wt7LvHZq9Nvde773zvfOd8+99wH/MSgMqfnbjxuEdJ4jUD+0YiOsIQviyGh71y+1CrDCkKRw3vLgvGyjLgJpQQCdxpjNAB6oVUDVCqz5+pNb6iLOlF+MmbbE27vP1iJAVCPUW15zUIwFb6gleSgBSKbyQSGTmFjzrwvQrnY4X/AJGKDgpmoVIKsRsl8OzUa3PdqMvzIP0+2rCQDY8eDGM1fT3X29tQqobgEAKDqEO2PDpSG7CU9CHa41ORCyDa271ismb6IsINZ21Y7xuZUQcFMb3nfiRGTi1sl7iCWDOEeerocl3yZcfxJoq7BMXwTLPdpgRgrEmIxlr1IXR7a8klm2gNbBY5cA3LvMjylCIX3jiZ61Yenza4CZak4OABaa8N3roaxdIKBt6P2NNSefQ4tqbV2yAG2oakuGhfJgL1mAIJ1bKQG2q0NbUCa6sFTop6rANC6qJjOtO3XsQQbaiXF+rL33+1Ko3AXrB4+vM1CjKyGADX4UEB1j27qubDw5sLqg5e+w0FQWyPiKLN0V3/piumwBSzfU5SQMSGAzk/m05eQH+/Mkv6hMDgCCsAPa6gAqLNBGyGr7MrteMUEkxBojbCLQpoCo0Ib3Ang3nO1aw2RnYbLFk1k0RiEao0BVycGQVDwI5y1Qxv9tDHijqREzPbuP650Ykd1oZnIvqXjiV3BwAi640OlJmJz/dYKnZwiosICFJPi8kZUCS+wc3913umJ6YO2HbwyzUj+TfXMR2XGhM1NAXic47zSJuogFOd8YPFuAyRV+W1ABIVj7KmW6kt7df3rx/Hj3wQskxE9+z+jJqTOsCi2pPa+1pDr7bDeeOqXOXGc9noFOpKEnpt4jWDsWCCCjfQuqIhR47VJC3O03T6CPxjsPJcpjXtWBDfZhzrpj7Omz3OAeSL7waq7IncMd3wy0KFve8HshM45GLLnv2tbOAlD8T5DSGQDoeT++Ad2feKz7UpDwSpQr4AjtawEAEKFTae+p0tiy3O25mewzQXyplnEWqPxM4O0XQFRr3l4aGM2PNMRidUFkL5mMLllA/R8JVdpoFoM9Bc5Ml9eCnpgM5jouhKd9rfRDuYdG9x7J33b8zc/B9DSksEAEIoANwxgzbJE+UOJKVx/Vyb8fgqDHIea+gRkwBgYYTvf0XwsrYMHm49iyh8G9MPqC0t6fxtWXjTaDljLPJnYdvFzixXftHxEGO5n1Z9DeD9DqvFHqHJjfIZiOsMn/F/gHQvzA/jArG1IAAAAASUVORK5CYII=",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w39G0mw2LRQI6gL/+ICQ4wJCxKLCsaNG41FmP7gzxZMILUYjC6IJriQRRUj0YWGhTGaaAylGsDQYEgkEtCAEkrL/HTqtJ1OZ957997jYjrTaXkv89qp0W937/neO9873z333gf8x6AwpJYfPmsU0nmRQP3Qio2whiyII6MdXb/VKsAKQ5LCedeD85qNugikBQHEjDGbATxcq4CqFVjz3ed31EWcKb8YM22Jd3SfrUWAqEaot7yWoBgL3lBL8lACkEzlg0ImMbHmXxegXe1wvuATMEDBTdUqQFYjzHwzNNuw7YkWXMs8Rm2rCQDY8eDGM9fT3X29tQqobgEAKDqEe6PDpSG7CU9CHa41ORCyDa171ismb6IsINp+3Y7yuZUQcFsbPnjiRGTizsn7iSWDOEeerocl3yPcfAZor7BMXwLLPdogKwWiTMayV6lLI1tezyxbQNvgscsAHljmxxShkL71dM/asPT5NcBMNScHAAvN+PGtUNYuENA+9NHGmpPPoVW1tS1ZgDZUtSXDQnmwlyxAkM6tlADb1aEtKBNdWCr0U1VgmhZVk5nWnTr2CAMdxLgw1tH7UylU7oL1g8fXGajRlRDABucFROfYtq6rG08OrC5oeQ0WmssCGd+SpbviW19Jly1g6Ya6nIQBCWxmMl+0nvx4f57k15XJAUAQdkBbnUCFBdoIWW1fZtcrJoiEWGOETQTaFBAV2vBeAB+Es11rmJlZmJniySyaGiCaGoCqkoMhqXgQzlugjP/bGPBGUyNmenYf1ztRIrvJZHOvqnjid3BwAi640OlJmJz/dYKnswRUWMBCEnzeyEqBJXaO7+47XTE9sPaTt4dZqV/Jvr2I7LjQmSkgrxOcd5pFXcSCnG8Mni3A5Ap/LKiAEKx9lTJdTe/uP714frz74EUS4he/Z/Tk1BlWhdbUnjdbU7E+242nTqkzN1mPZ6ATaeiJqQ8J1o4FAsho34KqCAVeu5QQ9/nNE+jT8dihRHnMqzqxwT7MM+4Ye/osN7oHki+/kSty53D39wOtypa3/F7IjKMRS+67sTVWAIr/CVI6AwC95Mc3oIcST3ZfDhJeiXIFHKF9LQAAIsSU9p4tjS3L3Z7LzjwfxJdqGWeBymcDb78AGrTm7aWB0fx4YzRaF0T2ksmGJQuo/zOhShvNYrCnwJnp8lrQE5PBXMeF8LSvlX4o99Do3iP5u46/8xWYnoMUFohABLBhGGOGLdIHSlzp6qM6+fejEPQUxNw3MAPGwADD6Z7+G2EFLNh8HFv2MLgXRl9U2vvLuPqK0WbQUuaFxK6DV0q8+K79I8JgJ7P+Etr7GVpdMEqdA/P7BNMZNvn/Av8AWc7BAKkmmjcAAAAASUVORK5CYII=",
           "isEditable": false,
           "location": "CENTER",
           "lockRatio": false,
@@ -56,7 +56,7 @@
         },
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w3ttCMJFmsLVSG68C8uMMSYsCCxqGDcuNFYhP7hzxZMILUYjC6IJriQRRUj0YWGhTGaaAylGsDQaEgkEtCgIqVlfjp1+jPTmffevfe4mM50Wt7LvHZq9Nvde773zvfOd8+99wH/MSgMqfnbjxuEdJ4jUD+0YiOsIQviyGh71y+1CrDCkKRw3vLgvGyjLgJpQQCdxpjNAB6oVUDVCqz5+pNb6iLOlF+MmbbE27vP1iJAVCPUW15zUIwFb6gleSgBSKbyQSGTmFjzrwvQrnY4X/AJGKDgpmoVIKsRsl8OzUa3PdqMvzIP0+2rCQDY8eDGM1fT3X29tQqobgEAKDqEO2PDpSG7CU9CHa41ORCyDa271ismb6IsINZ21Y7xuZUQcFMb3nfiRGTi1sl7iCWDOEeerocl3yZcfxJoq7BMXwTLPdpgRgrEmIxlr1IXR7a8klm2gNbBY5cA3LvMjylCIX3jiZ61Yenza4CZak4OABaa8N3roaxdIKBt6P2NNSefQ4tqbV2yAG2oakuGhfJgL1mAIJ1bKQG2q0NbUCa6sFTop6rANC6qJjOtO3XsQQbaiXF+rL33+1Ko3AXrB4+vM1CjKyGADX4UEB1j27qubDw5sLqg5e+w0FQWyPiKLN0V3/piumwBSzfU5SQMSGAzk/m05eQH+/Mkv6hMDgCCsAPa6gAqLNBGyGr7MrteMUEkxBojbCLQpoCo0Ib3Ang3nO1aw2RnYbLFk1k0RiEao0BVycGQVDwI5y1Qxv9tDHijqREzPbuP650Ykd1oZnIvqXjiV3BwAi640OlJmJz/dYKnZwiosICFJPi8kZUCS+wc3913umJ6YO2HbwyzUj+TfXMR2XGhM1NAXic47zSJuogFOd8YPFuAyRV+W1ABIVj7KmW6kt7df3rx/Hj3wQskxE9+z+jJqTOsCi2pPa+1pDr7bDeeOqXOXGc9noFOpKEnpt4jWDsWCCCjfQuqIhR47VJC3O03T6CPxjsPJcpjXtWBDfZhzrpj7Omz3OAeSL7waq7IncMd3wy0KFve8HshM45GLLnv2tbOAlD8T5DSGQDoeT++Ad2feKz7UpDwSpQr4AjtawEAEKFTae+p0tiy3O25mewzQXyplnEWqPxM4O0XQFRr3l4aGM2PNMRidUFkL5mMLllA/R8JVdpoFoM9Bc5Ml9eCnpgM5jouhKd9rfRDuYdG9x7J33b8zc/B9DSksEAEIoANwxgzbJE+UOJKVx/Vyb8fgqDHIea+gRkwBgYYTvf0XwsrYMHm49iyh8G9MPqC0t6fxtWXjTaDljLPJnYdvFzixXftHxEGO5n1Z9DeD9DqvFHqHJjfIZiOsMn/F/gHQvzA/jArG1IAAAAASUVORK5CYII=",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w39G0mw2LRQI6gL/+ICQ4wJCxKLCsaNG41FmP7gzxZMILUYjC6IJriQRRUj0YWGhTGaaAylGsDQYEgkEtCAEkrL/HTqtJ1OZ957997jYjrTaXkv89qp0W937/neO9873z333gf8x6AwpJYfPmsU0nmRQP3Qio2whiyII6MdXb/VKsAKQ5LCedeD85qNugikBQHEjDGbATxcq4CqFVjz3ed31EWcKb8YM22Jd3SfrUWAqEaot7yWoBgL3lBL8lACkEzlg0ImMbHmXxegXe1wvuATMEDBTdUqQFYjzHwzNNuw7YkWXMs8Rm2rCQDY8eDGM9fT3X29tQqobgEAKDqEe6PDpSG7CU9CHa41ORCyDa171ismb6IsINp+3Y7yuZUQcFsbPnjiRGTizsn7iSWDOEeerocl3yPcfAZor7BMXwLLPdogKwWiTMayV6lLI1tezyxbQNvgscsAHljmxxShkL71dM/asPT5NcBMNScHAAvN+PGtUNYuENA+9NHGmpPPoVW1tS1ZgDZUtSXDQnmwlyxAkM6tlADb1aEtKBNdWCr0U1VgmhZVk5nWnTr2CAMdxLgw1tH7UylU7oL1g8fXGajRlRDABucFROfYtq6rG08OrC5oeQ0WmssCGd+SpbviW19Jly1g6Ya6nIQBCWxmMl+0nvx4f57k15XJAUAQdkBbnUCFBdoIWW1fZtcrJoiEWGOETQTaFBAV2vBeAB+Es11rmJlZmJniySyaGiCaGoCqkoMhqXgQzlugjP/bGPBGUyNmenYf1ztRIrvJZHOvqnjid3BwAi640OlJmJz/dYKnswRUWMBCEnzeyEqBJXaO7+47XTE9sPaTt4dZqV/Jvr2I7LjQmSkgrxOcd5pFXcSCnG8Mni3A5Ap/LKiAEKx9lTJdTe/uP714frz74EUS4he/Z/Tk1BlWhdbUnjdbU7E+242nTqkzN1mPZ6ATaeiJqQ8J1o4FAsho34KqCAVeu5QQ9/nNE+jT8dihRHnMqzqxwT7MM+4Ye/osN7oHki+/kSty53D39wOtypa3/F7IjKMRS+67sTVWAIr/CVI6AwC95Mc3oIcST3ZfDhJeiXIFHKF9LQAAIsSU9p4tjS3L3Z7LzjwfxJdqGWeBymcDb78AGrTm7aWB0fx4YzRaF0T2ksmGJQuo/zOhShvNYrCnwJnp8lrQE5PBXMeF8LSvlX4o99Do3iP5u46/8xWYnoMUFohABLBhGGOGLdIHSlzp6qM6+fejEPQUxNw3MAPGwADD6Z7+G2EFLNh8HFv2MLgXRl9U2vvLuPqK0WbQUuaFxK6DV0q8+K79I8JgJ7P+Etr7GVpdMEqdA/P7BNMZNvn/Av8AWc7BAKkmmjcAAAAASUVORK5CYII=",
           "isEditable": false,
           "location": "CENTER",
           "lockRatio": false,
@@ -67,12 +67,12 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
-          "value": "generators.python.loops"
-        },
-        {
           "key": "function_name",
           "value": "controls_repeat"
+        },
+        {
+          "key": "module_name",
+          "value": "generators\\python\\loops.py"
         }
       ],
       "color": {
@@ -120,7 +120,7 @@
       "Images": [
         {
           "height": 48,
-          "icon": "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",
+          "icon": "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",
           "isEditable": false,
           "location": "NORTH",
           "lockRatio": false,
@@ -130,7 +130,7 @@
         },
         {
           "height": 48,
-          "icon": "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",
+          "icon": "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",
           "isEditable": false,
           "location": "SOUTH",
           "lockRatio": false,
@@ -141,11 +141,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -173,7 +173,7 @@
       "Images": [
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w39G0mw2LRQgkQX+BMXGGJMWJBYVDBu3GgsQv/wZwsmkFoMRhdEE1zIooqR6ELDwhhNNIZSDdbQYEgkEpCgkpaWmU6nTtuZ6cx77957XExnOi3vZV47Nfrt7j3fe+d757vn3vuA/xgUhtT0/af1QjovEKgPWrER1qAFcWKsrfO3agVYYUhSOO94cF61UROBtCCADmPMdgAPVSugYgXWffvZXTURZ8Yvxkw7Ym1dQ9UIEJUItZbXFBRjwfdWkzyUAEwkckEhE59a968L0K52OJf3CRgg7yaqFSArETJfD87V7Xq8CSOpR6lpLQEAOx7cWOpmsqu3p1oBlS0AAEXHsCk6XByyG/ck1PFqkwMh29DavFExeVMlAdHWm3aUL6yGgDva8IEzZyJTd0/fTywZxFnydC0s+S7h1tNAa5ll+gpYHtAGaSkQZTKWvUZdGd3xWmrFAloGTl0FsHWFH1OAQvL2U93rw9IX1gAzVZ0cACw04oc3Q1m7SEDr4Idbqk4+j2bV0rJsAdpQxZYMC+XBXrYAQTq7WgJsV4e2oER0YanQT1WAaVhSTWbacO7Uwwy0EePSeFvPj8VQqQs2DpzeYKDGVkMAG1wUEO3juzpvbDnbvzav5R+w0FgSyPiGLN0Z2/lysmQBSzfU5SQMSGA7k/m8+exHh3MkvypPDgCCsAfaagfKLNBGyEr7MrteIUEkxBojbCPQtoCo0IYPAng/nO1aw2TmYDKFk1k01EE01AEVJQdDUuEgXLBAGf+3MeCNJUbN7NwhrnWiRHaDSWdfUbH47+DgBJx3oZPTMFn/6wTPpgkos4CFJPi8kZUCS+yd3N97vmy6f/3Hbw2zUr+SfWcR2XGhUzNATsc55zSKmogFudAYPJeHyeavL6qAEKx9lTLdSO7vO790frLr6GUS4he/Z/T0zE+s8s2JA280Jzp6bTeWOKeGbrGeTEHHk9BTMx8QrD2LBJDRvgVVEQq8dikh7vObJ9Ankx3H4qUxr2nHZvs4Z9xx9vQQ17tHJl56PVvgzmPTd/3Nypa3/V7IjJMRSx4a2dmRBwr/CVI6/QC96Mc3oAfjT3RdDRJejlIFHKF9LQAAInQo7T1THFuWuzubzjwXxJdqBWeByqUDb78A6rTm3cWB0fxYfTRaE0T2Jibqli2g9s+4Km40S8GeAqdmS2tBT00Hcx0XwtO+Vvqh1ENjB0/k7jn99pdgehZSWCACEcCGYYwZtkgfKXKlq0/qib8fgaAnIea/gRkwBgYYTnb3jYQVsGjzcWzZzeAeGH1Zae8v4+prRpsBS5nn4/uOXivyYvsOjwqDvcz6C2jvZ2h1ySh1AczvEUx72OT/C/wDN5PA/SPeuTwAAAAASUVORK5CYII=",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAJOjQACTo0BQHqWvAAABANJREFUWIXNV01sVFUU/s697w39G0mw2EyhRhpd+BcXGGJMWJBYVDBu3GgswvQHf7ZgAqnFYHRBNMGFLKoYiS40LIzRRGMo1QCGRkMikYAGkVBaZjqdOv2Z6cx77957XExnOi3vZV47Nfrt7j3fe+d757vn3vuA/xgUhtTy/aeNQjovEKgfWrER1pAFcXS0o+u3WgVYYUhSOO94cF61UReBtCCAuDFmC4CHahVQtQLrvv3sjrqIM+0XY6atiY7uc7UIENUI9ZbXEhRjwZtqSR5KAMZT+aCQSU6u+9cFaFc7nC/4BAxQcFO1CpDVCNmvh+Yatj/egmuZRym2lgCAHQ9uInM93d3XW6uA6hYAgKLDaI8Ol4bsJj0JdaTW5EDINrTu2aiYvMmygGjbdTvK51dDwG1t+MDJk5HJO6fuI5YM4hx5uh6WfJdw82mgrcIyfQks92qDWSkQZTKWvUZdGtn6WmbFAloHj18GcP8KP6YIhfStp3rWh6UvrAFmqjk5AFhoxg9vhrJ2kYC2oQ/ba04+j5hqbV22AG2oakuGhfJgL1uAIJ1bLQG2q0NbUCa6sFTop6rANC2pJjNtOH38YQY6iHFhrKP3x1Ko3AUbB09sMFCjqyGADX4WEJ1j27uutp8aWFvQ8k9YaC4LZHxDlu5KbHs5XbaApRvqchIGJLCFyXweO/XRgTzJryqTA4Ag7IS2OoEKC7QRstq+zK5XTBAJscYImwm0OSAqtOF9AN4PZ7vWMNk5mGzxZBZNDRBNDUBVycGQVDwIFyxQxv9tDHijqREzM7ef650okd1kZnOvqETyd3BwAi640OkpmJz/dYJnZgmosICFJPi8kZUCS+ya2NN3pmJ6YP3Hbw2zUr+SfXsR2XGhM9NAXic57zSLuogFudAYPFeAyRX+WFQBIVj7KmW6mt7Tf2bp/ET3oYskxC9+z+ip6bOsCrHU3jdiqXif7SZSp9XZm6wnMtDJNPTk9AcEa+ciAWS0b0FVhAKvXUqIe/3mCfTJRPxwsjzmNZ3YZB/hrDvGnj7Hje7B8ZdezxW587j7u4GYsuUtvxcy41jEkvtvbIsXgOJ/gpTOAEAv+vEN6MHkE92Xg4RXolwBR2hfCwCACHGlvWdKY8tyd+Rms88F8aVawVmg8rOBt18ADVrzjtLAaH6sMRqtCyJ74+MNyxZQfy2pShvNUrCnwJmZ8lrQk1PBXMeF8LSvlX4o99DovqP5u068/SWYnoUUFohABLBhGGOGLdIHS1zp6mN6/O9HIOhJiPlvYAaMgQGG0z39N8IKWLT5OLbsYXAvjL6otPeXcfUVo82gpczzyd2HrpR4id0HRoTBLmb9BbT3E7S6YJQ6D+b3CKYzbPL/Bf4BTeTA/xI/OKYAAAAASUVORK5CYII=",
           "isEditable": false,
           "location": "CENTER",
           "lockRatio": false,
@@ -184,11 +184,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -238,11 +238,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -291,11 +291,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -323,7 +323,7 @@
       "Images": [
         {
           "height": 32,
-          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAABAJJREFUWIXNV01sVFUU/s697w3tdEYTLDYtaJTowr+4wBBjwoLEooJx40ZjEfqHP1swgdRiMLogmuBCFlWMRBcaFsZoojGUahBDoyGRSACDSqgtM53OMG1npjPvvXvvcTGd6bS8l3nt1Oi3u/d8753vne+ee+8D/mNQGFLbd5+0COk8T6BBaMVGWCMWxJHxzp7fGhVghSFJ4bztwXnFRlME0oIAuo0xmwE82KiAuhVY+82ntzRFnBm/GDNtSXT2nmlEgKhHaLa8tqAYC767keShBGAyVQwKmWRm7b8uQLva4WLJJ2CAkptqVICsR8h/NTIX3fZYGwr5RygeIwBgx4ObyF5N9w70NyqgvgUAoOgQok2jlSG7NzwJdbjR5EDINrTu2qCYvExVQLztqh3ns6sh4KY2vP/EiUjmtul7iSWDuECeboYl3yHkngLiNZbpC2C5RxvkpECcyVj2GnVhbMur2RUL6Bg+dhHAfSv8mDIU0tef7FsXlr6wBpip4eQAYKEV378RytpFAu4Y+WBjw8nn0a46OpYtQBuq25JhoTzYyxYgSBdWS4Dt6tAWVIkuLBX6qTowsSXVZKb1p449xEAnMc5NdPb/UAlVu2DD8PH1Bmp8NQSwwc8ComtiW8+VjSeHbi1p+QcstFYFMr4mS/cktr6UrlrA0g11OQkDEtjMZD5rP/nh/iLJL2uTA4Ag7IC2uoAaC7QRst6+zK5XThAJscYImwi0KSAqtOG9AN4LZ7vWMPk5mHz5ZBaxKEQsCtSVHAxJ5YNwwQJl/N/GgDeeGjOzc/u42YkT2TGTK7ysEsnL4OAEXHKh09MwBf/rBM/mCKixgIUk+LyRlQJL7JzaPXC6Znpo3UdvjrJSv5J9cxHZcaGzM0BRJ7notIqmiAW50Bg8V4IplH5fVAEhWPsqZbqS3j14eun8VO/B8yTEL37P6OmZH1mV2lN7Xm9PdQ/YbiJ1Sl3+m/VUFjqZhs7MvE+wdiwSQEb7FlRFKPDapYS4x2+eQB9PdR9KVse8pgsx+zDn3Qn29BlucQ9Mvvhaocydx53fDrUrW173eyEzjkYsue/a1u4SUP5PkNIZAugFP74BPZB8vPdikPBaVCvgCO1rAQAQoVtp7+nK2LLc7YVc/tkgvlQrOAtUMRd4+wUQ1Zq3VwZG86Mt8XhTENmbnIwuW0Dzn0lV2WiWgj0Fzs5W14LOTAdzHRfC075W+qHaQ+N7jxRvP/7WF2B6BlJYIAIRwIZhjBm1SB+ocKWrj+rJGw9D0BMQ89/ADBgDA4ym+wavhRWwaPNxbNnH4H4YfV5p7y/j6ktGm2FLmeeSuw5eqvASu/aPCYOdzPpzaO8naHXOKHUWzO8STFfY5P8L/AOwC8DwUGXbHAAAAABJRU5ErkJggg==",
+          "icon": "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAABARJREFUWIXNV01sVFUU/s697w3ttFMUi01bNEp04V9cYIgxYUFiUcG4caOxCNMf/NmCCaQWg9EF0QQXsqhiJLrQsDBGE42hVIMYGg2JxAY0qITaMtPp1OnPTGfee/fe42I602l5L/PaqdFvd+/53jvfO989994H/MegMKSWbz5qENJ5lkD90IqNsIYsiGNjHV2/1CrACkOSwnnTg/OSjboIpAUBxI0xWwHcX6uAqhXY8NXHTXURZ8YvxkzbEh3d52oRIKoR6i2vJSjGgu+sJXkoAZhI5YNCJjm14V8XoF3tcL7gEzBAwU3VKkBWI2S/GJqP7nikBTPTD9H6JgIAdjy4iczVdHdfb60CqlsAAIqOoKlxuDRkN+VJqKO1JgdCtqF1xybF5E2VBcTar9oxPr8WAm5ow3tPnYpM3TJ9N7FkEOfI0/Ww5FuEzBPAzRWW6RGw3KcN5qRAjMlY9jo1Mrrt5cyqBbQNnrgE4J5VfkwRCunrj/dsDEtfXAPMVHNyALDQjG9fC2XtEgG3Db23uebkC2hVbW0rFqANVW3JsFAe7BULEKRzayXAdnVoC8pEF5YK/VQVmMZl1WSm9jMnHmCggxgXxjt6vyuFyl2wafBku4EaWwsBbPCjgOgc39F1ZfPpgfUFLX+HheayQMaXZOmuxPYX0mULWLqhLidhQAJbmcwnraffP5gn+XllcgAQhF3QVidQYYE2Qlbbl9n1igkiIdYYYQuBtgREhTa8H8A74WzXGiY7D5MtnsyiMQrRGAWqSg6GpOJBuGiBMv5vY8AbS42a2fkDXO/EiOxGM5d7USWSv4KDE3DBhU5Pw+T8rxM8O0dAhQUsJMHnjawUWGL35N6+sxXTAxs/eH2YlfqZ7BuLyI4LnZkB8jrJeadZ1EUsyMXG4PkCTK7w25IKCMHaVynTlfTe/rPL5ye7D18kIX7ye0ZPz3zPqtCa2vdqayreZ7uJ1Bk18hfryQx0Mg09NfMuwdq1RAAZ7VtQFaHAa5cS4i6/eQJ9OBk/kiyPeV0nbrKPctYdZ0+f4wb30MTzr+SK3AXc/vVAq7Lldb8XMuN4xJIHrm2PF4Dif4KUzgBAz/nxDei+5KPdl4KEV6JcAUdoXwsAgAhxpb0nS2PLcnfm5rJPB/GlWsVZoPJzgbdfAFGteWdpYDQ/3BCL1QWRvYmJ6IoF1P+RVKWNZjnYU+DMbHkt6KnpYK7jQnja10o/lHtobP+x/K0n3/gMTE9BCgtEIALYMIwxwxbpQyWudPVxPfH3gxD0GMTCNzADxsAAw+me/mthBSzZfBxb9jC4F0ZfVNr707j6stFm0FLmmeSew5dLvMSeg6PCYDez/hTa+wFaXTBKnQfz2wTTGTb5/wL/ANmVwPTCIvy4AAAAAElFTkSuQmCC",
           "isEditable": false,
           "location": "CENTER",
           "lockRatio": true,
@@ -334,11 +334,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -377,11 +377,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -431,11 +431,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -495,11 +495,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -558,11 +558,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -601,11 +601,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -644,11 +644,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -687,11 +687,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -730,11 +730,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -773,11 +773,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -827,11 +827,11 @@
       ],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -859,11 +859,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -891,11 +891,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -923,11 +923,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -955,11 +955,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -987,11 +987,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1019,11 +1019,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1072,11 +1072,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1115,11 +1115,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1168,11 +1168,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1211,11 +1211,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1264,11 +1264,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1307,11 +1307,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1360,11 +1360,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1403,11 +1403,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1456,11 +1456,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1499,11 +1499,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1542,11 +1542,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1585,11 +1585,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1628,11 +1628,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1671,11 +1671,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1714,11 +1714,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1757,11 +1757,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1800,11 +1800,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1843,11 +1843,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1886,11 +1886,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1929,11 +1929,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -1982,12 +1982,12 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
-          "value": ""
+          "key": "function_name",
+          "value": "ifBlock"
         },
         {
-          "key": "function_name",
-          "value": ""
+          "key": "module_name",
+          "value": "generators\\python\\logic.py"
         }
       ],
       "color": {
@@ -2045,12 +2045,12 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
-          "value": ""
+          "key": "function_name",
+          "value": "controls_if"
         },
         {
-          "key": "function_name",
-          "value": ""
+          "key": "module_name",
+          "value": "generators\\python\\logic.py"
         }
       ],
       "color": {
@@ -2088,11 +2088,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2141,11 +2141,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2184,11 +2184,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2227,11 +2227,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2270,11 +2270,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2313,11 +2313,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2356,11 +2356,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2399,11 +2399,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2442,11 +2442,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2485,11 +2485,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2528,11 +2528,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2571,11 +2571,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2614,11 +2614,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2657,11 +2657,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2700,11 +2700,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2743,11 +2743,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2796,11 +2796,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2849,11 +2849,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2912,11 +2912,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -2975,11 +2975,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3018,11 +3018,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3081,11 +3081,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3124,11 +3124,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3187,11 +3187,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3250,11 +3250,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3293,11 +3293,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3346,11 +3346,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3389,11 +3389,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3421,11 +3421,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3464,11 +3464,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3496,11 +3496,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3528,11 +3528,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3571,11 +3571,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3614,11 +3614,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3657,11 +3657,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3689,11 +3689,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3732,11 +3732,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3764,11 +3764,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3807,11 +3807,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3850,11 +3850,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3913,11 +3913,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3956,11 +3956,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -3999,11 +3999,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4042,11 +4042,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4085,11 +4085,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4128,11 +4128,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4181,11 +4181,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4244,11 +4244,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4297,11 +4297,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4340,11 +4340,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4383,11 +4383,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4446,11 +4446,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4499,12 +4499,12 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
-          "value": "generators.python.loops"
-        },
-        {
           "key": "function_name",
           "value": "controls_repeat"
+        },
+        {
+          "key": "module_name",
+          "value": "generators\\python\\loops.py"
         }
       ],
       "color": {
@@ -4552,11 +4552,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4595,11 +4595,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4648,11 +4648,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4691,11 +4691,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4723,11 +4723,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4755,11 +4755,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4787,11 +4787,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4819,11 +4819,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4851,11 +4851,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4883,11 +4883,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4915,11 +4915,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4947,11 +4947,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -4979,11 +4979,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5022,11 +5022,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5065,11 +5065,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5097,11 +5097,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5129,11 +5129,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5172,11 +5172,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5215,11 +5215,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5258,11 +5258,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5301,11 +5301,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5344,11 +5344,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5387,11 +5387,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5430,11 +5430,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5473,11 +5473,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5516,11 +5516,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5559,11 +5559,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5602,11 +5602,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5645,11 +5645,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5688,11 +5688,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5741,11 +5741,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5784,11 +5784,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5837,11 +5837,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5880,11 +5880,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5933,11 +5933,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -5976,11 +5976,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6019,11 +6019,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6062,11 +6062,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6125,11 +6125,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6168,11 +6168,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6221,11 +6221,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6264,11 +6264,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6307,11 +6307,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6360,11 +6360,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6403,11 +6403,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6446,11 +6446,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6489,11 +6489,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6532,11 +6532,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6575,11 +6575,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],
@@ -6618,11 +6618,11 @@
       "Images": [],
       "LangSpecProperties": [
         {
-          "key": "module_name",
+          "key": "function_name",
           "value": ""
         },
         {
-          "key": "function_name",
+          "key": "module_name",
           "value": ""
         }
       ],

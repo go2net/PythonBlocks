@@ -2,7 +2,8 @@
 import sip
 sip.setapi('QVariant', 2)
 
-import sys, os
+import os
+import traceback
 
 from blocks.WorkspaceController import WorkspaceController
 from generators.PythonGen import PythonGen
@@ -297,9 +298,10 @@ class MainWnd(QtGui.QMainWindow):
             print(code)
             exec(code)
         except:
-          exc_type, exc_obj, exc_tb = sys.exc_info()
-          fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-          print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
+          print(traceback.format_exc())
+          #exc_type, exc_obj, exc_tb = sys.exc_info()
+          #fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+          #print(exc_type, fname, exc_tb.tb_lineno,exc_obj)
         #pass
 
     def loadFile(self):

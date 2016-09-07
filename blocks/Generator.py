@@ -1,5 +1,5 @@
 #from Blocks.Workspace import Workspace
-import sys
+import os, sys
 class Generator():
     def __init__(self, workspace):
         self.STATEMENT_PREFIX = None
@@ -7,6 +7,30 @@ class Generator():
         self.INDENT = '    ';
         self.workspace = workspace
         self.functions = {}
+
+    def import_module_from_file(self, full_path_to_module):
+        """
+        Import a module given the full path/filename of the .py file
+
+        Python 3.4
+
+        """
+        module = None
+
+        # Get module name and path from full path
+        module_dir, module_file = os.path.split(full_path_to_module)
+        module_name, module_ext = os.path.splitext(module_file)
+            
+        if(sys.version_info >= (3,4)):    
+            import importlib
+            # Get module "spec" from filename
+            spec = importlib.util.spec_from_file_location(module_name,full_path_to_module)
+            module = spec.loader.load_module()
+        else:
+            import imp
+            module = imp.load_source(module_name,full_path_to_module)
+            
+        return module
 
     def blockToCode(self, block):
         '''
@@ -27,10 +51,11 @@ class Generator():
         genus = block.getGenus()
         
         module_name = block.getProperty('module_name')
-        print(module_name)
         if(module_name == ''):
             module_name = genus.getProperty('module_name')
 
+        module = self.import_module_from_file(os.getcwd()+'\\'+module_name)
+        
         function_name = block.getProperty('function_name')
         if(function_name == ''):
             function_name = genus.getProperty('function_name')            
@@ -38,13 +63,12 @@ class Generator():
         if(module_name == '' or function_name == ''): 
             raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
                     'for block type "' + block.getGenusName() + '".');
-                    
-        exec('import '+module_name)
-        code = eval(module_name+'.'+function_name+'(self,block)')
+
+        func = getattr(module, function_name)
+        code = func(self,block)
         
         # Release module
-        if module_name in sys.modules:    
-            del(sys.modules[module_name]) 
+        del(module) 
 
         #if ( block.getGenusName() not in self.functions):
         #    raise Exception('Language "' + self.name_ + '" does not know how to generate code ' +
@@ -69,8 +93,7 @@ class Generator():
             # Block has handled code generation itself.
             return '';
         else:
-            raise Exception('Invalid code generated: ' + code)
-            
+            raise Exception('Invalid code generated: ' + code)            
         
         
     def workspaceToCode(self):
