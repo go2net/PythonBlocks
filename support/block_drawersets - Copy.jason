@@ -1,0 +1,167 @@
+{
+  "block_drawer_sets": [
+    {
+      "drawer": "Setup and Run",
+      "genus-list": [
+        "setup",
+        "aerial-on",
+        "aerial?",
+        "abs",
+        "bshape",
+        "ashape",
+        "forever",
+        "runforsometime",
+        "runonce",
+        "clear-all",
+        "clear-everyone",
+        "clear-patches",
+        "set-score",
+        "score"
+      ]
+    },
+    {
+      "drawer": "Movement",
+      "genus-list": [
+        "fd",
+        "bk",
+        "lt",
+        "rt",
+        "up",
+        "down",
+        "setxy"
+      ]
+    },
+    {
+      "drawer": "Logic",
+      "genus-list": [
+        "if",
+        "ifelse",
+        "repeater",
+        "logic_operation",
+        "not",
+        "logic_compare",
+        "boolean"
+      ]
+    },
+    {
+      "drawer": "Controls",
+      "genus-list": [
+        "keyboard-up",
+        "keyboard-space",
+        "joy-xaxis",
+        "joy-yaxis",
+        "joy-radius",
+        "joy-angle",
+        "dpad-angle",
+        "joy-button1?",
+        "joy-button2?",
+        "joy-button3?",
+        "joy-button4?"
+      ]
+    },
+    {
+      "drawer": "Terrain",
+      "genus-list": [
+        "stomp",
+        "pc",
+        "yank",
+        "patch-height",
+        "stamp"
+      ]
+    },
+    {
+      "drawer": "Traits",
+      "genus-list": [
+        "who",
+        "setc",
+        "color",
+        "setshape",
+        "shape",
+        "setbreed",
+        "breed",
+        "seth",
+        "heading",
+        "penup",
+        "pendown",
+        "pendown?",
+        "setscale",
+        "scale"
+      ]
+    },
+    {
+      "drawer": "Text",
+      "genus-list": [
+        "text_const",
+        "say",
+        "text_print",
+        "set-status",
+        "to-string",
+        "string-append",
+        "logic_compare"
+      ]
+    },
+    {
+      "drawer": "Math",
+      "genus-list": [
+        "math_number",
+        "pi",
+        "e",
+        "math_arithmetic",
+        "logic_compare",
+        "atan",
+        "random",
+        "round",
+        "int",
+        "min",
+        "max",
+        "remainder",
+        "power",
+        "abs",
+        "sqrt",
+        "sin",
+        "cos",
+        "tan",
+        "asin",
+        "acos",
+        "log",
+        "ln"
+      ]
+    },
+    {
+      "drawer": "Procedure",
+      "genus-list": [
+        "procedure",
+        "proc-param-number",
+        "proc-param-string",
+        "proc-param-boolean",
+        "proc-param-list"
+      ]
+    },
+    {
+      "drawer": "Colors",
+      "genus-list": [
+        "color",
+        "setc",
+        "random-color"
+      ]
+    },
+    {
+      "drawer": "variables",
+      "genus-list": [
+        "num_var",
+        "str_var",
+        "set_num_var",
+        "set_str_var"
+      ]
+    },
+    {
+      "drawer": "VISA Library",
+      "genus-list": [
+        "bar-graph",
+        "asin",
+        "joy-button1?",
+        "qq"
+      ]
+    }
+  ]
+}

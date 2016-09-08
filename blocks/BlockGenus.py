@@ -707,13 +707,20 @@ class BlockGenus():
         * @param root the Element carrying the specifications of the BlockGenuses
         '''      
         import json
-        f=open('./support/block_genuses.jason')
-        blockGenusesInfo = json.load(f)
+        try:
+            f=open('./support/block_genuses.jason')
+            blockGenusesInfo = json.load(f)
+        except:
+            blockGenusesInfo = {}
+            blockGenusesInfo['Families'] = []
+            blockGenusesInfo['BlockGenuses'] = []
+            
         BlockGenus.families = blockGenusesInfo['Families']
         #print(BlockGenus.families)
         blockGenuses = blockGenusesInfo['BlockGenuses']
         for genus_info in blockGenuses:
             BlockGenus.loadGenusInfo(genus_info)
+            
         return
         
         # # # # # # # # # # # # # # # # # # /

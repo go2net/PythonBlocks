@@ -431,6 +431,8 @@ class DrawerSetsTreeMode(QtCore.QAbstractItemModel):
                     member = drawerElement['genus-list']
                     for genusName in member:
                         newBlock = Block.createBlock(None, genusName, False)
+                        if(newBlock == None): continue
+                        
                         rb = FactoryRenderableBlock.from_blockID(None, newBlock.blockID,False, QtGui.QColor(255,255,255,0))
                         sub_node = DrawerSetsTreeNode(node, rb)
                         node.children.append(sub_node)

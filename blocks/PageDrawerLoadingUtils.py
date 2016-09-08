@@ -25,7 +25,9 @@ class PageDrawerLoadingUtils():
                     drawerRBs = []
                     member = drawerElement['genus-list']
                     for genusName in member:
-                        newBlock = Block.createBlock(canvas, genusName, False)                            
+                        newBlock = Block.createBlock(canvas, genusName, False)
+                        if(newBlock == None): continue
+                        
                         rb = FactoryRenderableBlock.from_block(canvas, newBlock,False, QtGui.QColor(225,225,225,100))
                         drawerRBs.append(rb);
                         FactoryRenderableBlock.factoryRBs[genusName] = rb

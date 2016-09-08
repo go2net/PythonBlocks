@@ -19,6 +19,29 @@ from blocks.BlockShapeUtil import BlockShapeUtil
 from blocks.BlockLinkChecker import BlockLinkChecker
 from blocks.BlockImageIcon import BlockImageIcon
 
+
+def printPath(path):
+    for i in range(0, path.elementCount()):
+      cur = path.elementAt(i);
+
+      if(cur.type == QtGui.QPainterPath.MoveToElement):
+        print("M %d %d"%(cur.x,cur.y))
+      elif(cur.type == QtGui.QPainterPath.LineToElement):
+        print("L %d %d"%(cur.x,cur.y))
+      elif(cur.type == QtGui.QPainterPath.CurveToElement):
+        c1 = path.elementAt(i + 1);
+        c2 = path.elementAt(i + 2);
+
+        assert(c1.type == QtGui.QPainterPath.CurveToDataElement);
+        assert(c2.type == QtGui.QPainterPath.CurveToDataElement);
+
+
+        print("C (%d %d) (%d %d) (%d %d)"%(cur.x,cur.y,c1.x,c1.y,c2.x,c2.y));
+
+        i += 2;
+      elif(cur.type == QtGui.QPainterPath.CurveToDataElement):
+          pass
+
 class RenderableBlock(QtGui.QWidget):
 
     ALL_RENDERABLE_BLOCKS = {} 
@@ -28,7 +51,7 @@ class RenderableBlock(QtGui.QWidget):
         self._workspaceWidget = _workspaceWidget
         self.setMouseTracking(True);
         self.factory_block = None
-
+        self.mouse_enter = False
         
     def __del__(self):
         pass
@@ -434,8 +457,14 @@ class RenderableBlock(QtGui.QWidget):
         brush = QtGui.QBrush(blockColor);
         p.setPen(QtGui.QColor(blockColor.red(), blockColor.green(), blockColor.blue(), 180));
         p.fillPath(self.blockArea,brush)
-        #p.drawPath(self.blockArea);
-        p.drawImage(0,0,bevelImage);
+        printPath(self.blockArea)
+        if(self.mouse_enter == True):
+            pen = QtGui.QPen()
+            pen.setColor(QtGui.QColor(255,170,0,255))
+            pen.setWidth(3)
+            p.setPen(pen);            
+            p.drawPath(self.blockArea)
+        #p.drawImage(0,0,bevelImage);
         
         # DRAW BLOCK IMAGES
         self.repositionBlockImages(self.blockArea.controlPointRect().width(),
@@ -444,9 +473,8 @@ class RenderableBlock(QtGui.QWidget):
         p.end()
         del p
         
-        #self.buffImg.save("d:\\temp1.png")
-
-
+        self.buffImg.save("c:\\temp1.png")
+          
     def repositionBlockImages(self, width,  height):
         '''
         * Draws the BlockImageIcon instances of this onto itself
@@ -896,23 +924,33 @@ class RenderableBlock(QtGui.QWidget):
 
     def onMouseEnter(self):
         #print(self)
+
         self.mouse_enter = True
+        '''        
         painter = QtGui.QPainter();
         
         painter.begin(self.buffImg)
         pen = QtGui.QPen()
         pen.setColor(QtGui.QColor(255,170,0,255))
-        pen.setWidth(3)
+        pen.setWidth(1)
         painter.setPen(pen);
-        painter.drawPath(self.blockArea);
+        printPath(self.blockArea)        
+        #painter.drawPath(self.blockArea)
+        #print('%d:%d'%(self.width(), self.height()))
         painter.end()
-        
+        '''
+        #self.hover = True
+        self.updateBuffImg(False)
         self.repaint()
 
         #QtGui.QFrame.enterEvent(self,event);
 
     def onMouseLeave(self):
         self.mouse_enter = False
+        #self.updateBuffImg(False)
+        #self.repaint()
+        
+        #self.hover = True
         self.updateBuffImg(False)
         self.repaint()
 
@@ -1162,6 +1200,8 @@ class RenderableBlock(QtGui.QWidget):
                 
             self.focusedBlock = rb          
 
+        print('%d:%d'%(self.width(), self.height()))
+        printPath(self.blockArea)
             
     def mouseReleaseEvent(self, event):
         

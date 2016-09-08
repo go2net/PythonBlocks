@@ -35,6 +35,12 @@ class Block():
       obj = cls(canvas)
       obj.linkToStubs = linkToStubs
       obj._blockID = id
+    
+      genus = BlockGenus.getGenusWithName(genusName)
+      
+      if(genus == None):
+          return None
+          raise Exception("genusName: "+genusName+" does not exist.")
 
       if (label == None):
          label = BlockGenus.getGenusWithName(genusName).getInitialLabel()
@@ -43,12 +49,6 @@ class Block():
       #  dup = Block.ALL_BLOCKS.get(id);
       #  print("pre-existing block is: {0} with genus {1} and label {2}".format(id,dup.getGenusName(),dup.getBlockLabel()));
       #  raise Exception("Block id: {0} already exists!  BlockGenus {1}, label: {2}".format(id,genusName,label))
-      
-      # copy connectors from BlockGenus
-      genus = BlockGenus.getGenusWithName(genusName)
-
-      if(genus == None):
-          raise Exception("genusName: "+genusName+" does not exist.")
 
       # copy the block connectors from block genus
       iter = genus.getInitSockets();

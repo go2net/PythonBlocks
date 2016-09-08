@@ -138,13 +138,17 @@ class GenusListWidget(QListWidget):
         
     def contextMenuEvent(self, event):
         self.popMenu.clear() 
-        genusName =  self.currentItem().text()
         
-        remove_genus_action = self.popMenu.addAction('Delete - "' + genusName+'"')
-        remove_genus_action.triggered.connect(lambda: self.onRemoveGenus(self.currentItem()))
+        currentItem = self.currentItem()
         
-        clone_genus_action = self.popMenu.addAction('Clone - "' + genusName+'"')
-        clone_genus_action.triggered.connect(lambda: self.onCloneGenus(self.currentItem()))
+        if(currentItem != None):
+            genusName =  self.currentItem().text()
+            
+            remove_genus_action = self.popMenu.addAction('Delete - "' + genusName+'"')
+            remove_genus_action.triggered.connect(lambda: self.onRemoveGenus(self.currentItem()))
+            
+            clone_genus_action = self.popMenu.addAction('Clone - "' + genusName+'"')
+            clone_genus_action.triggered.connect(lambda: self.onCloneGenus(self.currentItem()))
         
         add_genus_action = self.popMenu.addAction('Add new item')
         add_genus_action.triggered.connect(self.onAddNewGenus)

@@ -1,0 +1,90 @@
+{
+  "BlockGenuses": [
+    {
+      "BlockConnectors": [],
+      "Images": [],
+      "LangSpecProperties": [
+        {
+          "key": "module_name",
+          "value": ""
+        },
+        {
+          "key": "function_name",
+          "value": ""
+        }
+      ],
+      "color": {
+        "b": 50,
+        "g": 205,
+        "r": 154
+      },
+      "editable-label": false,
+      "family_name": "",
+      "initlabel": "",
+      "is-label-value": false,
+      "is-starter": true,
+      "is-terminator": true,
+      "kind": "function",
+      "label-prefix": "",
+      "label-suffix": "",
+      "label-unique": false,
+      "name": "ee",
+      "page-label-enabled": false,
+      "var-label": false
+    },
+    {
+      "BlockConnectors": [
+        {
+          "con-block-id": "",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "plug",
+          "label": "",
+          "position": 0,
+          "type": "number"
+        },
+        {
+          "con-block-id": "",
+          "editable": false,
+          "expand-group": "",
+          "expandable": false,
+          "kind": "socket",
+          "label": "",
+          "position": 0,
+          "type": "boolean"
+        }
+      ],
+      "Images": [],
+      "LangSpecProperties": [
+        {
+          "key": "module_name",
+          "value": ""
+        },
+        {
+          "key": "function_name",
+          "value": ""
+        }
+      ],
+      "color": {
+        "b": 50,
+        "g": 205,
+        "r": 154
+      },
+      "editable-label": false,
+      "family_name": "",
+      "initlabel": "",
+      "is-label-value": false,
+      "is-starter": true,
+      "is-terminator": true,
+      "kind": "function",
+      "label-prefix": "",
+      "label-suffix": "",
+      "label-unique": false,
+      "name": "w",
+      "page-label-enabled": false,
+      "var-label": false
+    }
+  ],
+  "Families": []
+}
