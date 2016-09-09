@@ -457,14 +457,16 @@ class RenderableBlock(QtGui.QWidget):
         brush = QtGui.QBrush(blockColor);
         p.setPen(QtGui.QColor(blockColor.red(), blockColor.green(), blockColor.blue(), 180));
         p.fillPath(self.blockArea,brush)
-        printPath(self.blockArea)
+        #printPath(self.blockArea)
+        p.drawImage(0,0,bevelImage);
         if(self.mouse_enter == True):
             pen = QtGui.QPen()
             pen.setColor(QtGui.QColor(255,170,0,255))
             pen.setWidth(3)
             p.setPen(pen);            
             p.drawPath(self.blockArea)
-        #p.drawImage(0,0,bevelImage);
+        #print('w=%d,h=%d'%(bevelImage.width(), bevelImage.height()))    
+
         
         # DRAW BLOCK IMAGES
         self.repositionBlockImages(self.blockArea.controlPointRect().width(),
@@ -1200,8 +1202,8 @@ class RenderableBlock(QtGui.QWidget):
                 
             self.focusedBlock = rb          
 
-        print('%d:%d'%(self.width(), self.height()))
-        printPath(self.blockArea)
+        #print('%d:%d'%(self.width(), self.height()))
+        #printPath(self.blockArea)
             
     def mouseReleaseEvent(self, event):
         

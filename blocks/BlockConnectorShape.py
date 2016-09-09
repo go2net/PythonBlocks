@@ -81,7 +81,7 @@ class BlockConnectorShape():
    def getConnenctionShapeMapping(shapeName):
 
       if (shapeName not in BlockConnectorShape.SHAPE_MAPPINGS):
-         assert False, ("Unknown Connection Type: " + shapeName)
+         #assert False, ("Unknown Connection Type: " + shapeName)
          return -1;
       else:
          return BlockConnectorShape.SHAPE_MAPPINGS[shapeName]
@@ -112,12 +112,12 @@ class BlockConnectorShape():
       if(integer == BlockConnectorShape.COMMAND):
          BlockConnectorShape.COMMAND_SHAPE_NAME = shapeName;
 
-   def getConnenctionShapeMapping(shapeName):
-      if (BlockConnectorShape.SHAPE_MAPPINGS.get(shapeName) == None):
-         #assert false : ("Unknown Connection Type: " + shapeName);
-         return -1;
-      else:
-         return BlockConnectorShape.SHAPE_MAPPINGS.get(shapeName);
+   #def getConnenctionShapeMapping(shapeName):
+    #  if (BlockConnectorShape.SHAPE_MAPPINGS.get(shapeName) == None):
+    #     #assert false : ("Unknown Connection Type: " + shapeName);
+    #     return -1;
+    #  else:
+    #     return BlockConnectorShape.SHAPE_MAPPINGS.get(shapeName);
 
 
    def isCommandConnector(connector):
@@ -151,8 +151,8 @@ class BlockConnectorShape():
          self.startPoint = blockPath.currentPosition();
 
          self._curveTo( BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
-   			  BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
-   			  BlockConnectorShape.CONTROL_PLUG_WIDTH, 0);
+              BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
+              BlockConnectorShape.CONTROL_PLUG_WIDTH, 0);
       else:
          # then the centerPoint is to the left of the current location on the generalPath
          self._lineTo(- distanceToCenter + BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, 0);
@@ -160,8 +160,8 @@ class BlockConnectorShape():
          self.startPoint = blockPath.currentPosition();
 
          self._curveTo( - BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
-   			 - BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
-   			 - BlockConnectorShape.CONTROL_PLUG_WIDTH, 0);
+             - BlockConnectorShape.CONTROL_PLUG_WIDTH / 2, BlockConnectorShape.CONTROL_PLUG_HEIGHT * 4/3,
+             - BlockConnectorShape.CONTROL_PLUG_WIDTH, 0);
 
       # to catch bugs
       self.currentConnectorPath = None;
@@ -173,11 +173,12 @@ class BlockConnectorShape():
 
 
    def _curveTo(self, x1, y1,  x2,  y2, x3,  y3):
+      #print('x0=%d,y0=%d,x1=%d,y1=%d,x2=%d,y2=%d,x3=%d,y3=%d'%(self.startPoint.x(), self.startPoint.y(), x1, y1,  x2,  y2, x3,  y3)) 
       BlockShapeUtil.cubicTo (
          self.currentConnectorPath,
          x1 + self.startPoint.x(), y1 + self.startPoint.y(),
          x2 + self.startPoint.x(), y2 + self.startPoint.y(),
-   	   x3 + self.startPoint.x(), y3 + self.startPoint.y());
+         x3 + self.startPoint.x(), y3 + self.startPoint.y());
 
 
    def addDataConnection(self,blockPath,  connectionShape,  startFromTop, convexRight):
@@ -211,16 +212,17 @@ class BlockConnectorShape():
          self._lineTo( 0, BlockConnectorShape.DATA_PLUG_HEIGHT);
          #Starlogo Boolean
       elif (connectionShapeInt == BlockConnectorShape.CIRCLE_1):
+         #print('CIRCLE_1') 
          self._curveTo(
-         		(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH) * 4.0 / 3, 0,
-         		(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH) * 4.0 / 3, BlockConnectorShape.DATA_PLUG_HEIGHT,
+         		(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH) * 4.0 / 4, 0,
+         		(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH) * 4.0 / 4, BlockConnectorShape.DATA_PLUG_HEIGHT,
          		0, BlockConnectorShape.DATA_PLUG_HEIGHT);
       elif (connectionShapeInt == BlockConnectorShape.CIRCLE_2):
          self._curveTo(
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, 0,
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 1/4,
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH * 1/2, BlockConnectorShape.DATA_PLUG_HEIGHT * 1.0/2);
-         self._curveTo(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 3.0/4,
+         self._curveTo(BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 4.0/4,
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT,
          		0, BlockConnectorShape.DATA_PLUG_HEIGHT);
       elif (connectionShapeInt == BlockConnectorShape.CIRCLE_3):
@@ -229,10 +231,10 @@ class BlockConnectorShape():
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 1/4,
          		BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH * 1/2, BlockConnectorShape.DATA_PLUG_HEIGHT * 1.0/2);
          # inversion
-         self._curveTo(-BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 3.0/4,
+         self._curveTo(-BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 4.0/4,
          		-BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT,
          		0, BlockConnectorShape.DATA_PLUG_HEIGHT);
-   	     #Starlogo String
+         #Starlogo String
       elif (connectionShapeInt == BlockConnectorShape.SQUARE_1):
          self._lineTo( 0, BlockConnectorShape.DATA_PLUG_HEIGHT * 0.15);
          self._lineTo( BlockConnectorShape.NORMAL_DATA_PLUG_WIDTH, BlockConnectorShape.DATA_PLUG_HEIGHT * 0.15);

@@ -396,7 +396,6 @@ class BlockShape():
         if (self.block.getPlug() != None):
 
              self.appendConnectorOffset(self.gpLeft, self.botLeftCorner, self.topLeftCorner, self.block.getPlug(), False);
-
              # add the plug shape to the gpLeft
              p = BlockShape.BCS.addDataPlug(self.gpLeft, self.block.getPlug().type, True,False);
              self.rb.updateSocketPoint(self.block.getPlug(), p);
